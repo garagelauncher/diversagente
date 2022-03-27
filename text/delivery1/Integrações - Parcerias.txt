@@ -1,0 +1,27 @@
+Formtação Original - https://docs.google.com/document/d/1lwa_28oU6TRcW9sIMBTTXGgDdHCkiK_EBznTqL506gk/edit
+
+
+SIMULAR POSSÍVEIS INTEGRAÇÕES. 
+
+A partir de uma análise, foram constatados que algumas integrações com outras aplicações e API externas podem ser feitas. Levando em consideração que o projeto a ser desenvolvido é uma rede social, algumas partes vão ser feitas através de integrações para melhor experiência do usuário para compartilhamento de posts, login e visualização daquilo que lhe é pertinente. 
+Login: as ferramentas necessárias aqui são as principais de redes sociais de e-mails, caso o usuário não queira fazer o cadastro diretamente pela aplicação. 
+Feed de notícias: API de noticiais do governo e google news 
+Comunicação instantânea: chat bot pelo para FAQ, chat Pro. 
+Localização: google maps 
+Compartilhamento: principais redes de conversa e sociais além do e-mail. 
+    
+    
+
+
+
+PARCERIAS 
+
+Escolhemos parcerias para que mais pessoas possam saber da nossa rede social, indicar amigos que são, possuem filhos ou conhecem alguém no espectro de autismo. 
+    As parcerias além de ajudarem a divulgar a nossa rede social para inclusão e reconhecimento de pessoas nessa condição, também podem auxiliar para uma maior inserção na sociedade através de cursos com pessoas devidamente capacitadas.
+
+canal autismo (revista periódica especializada em transtorno do Espectro do Autismo (TEA) ).
+Fundação Getúlio Vargas - FGV  (Fundação de educação e pesquisa de grande excelência no Brasil).
+Generation Brasil - ONG mundial que qualifica alunos para estudarem programação.
+Meios de comunicação impressos trazem mais credibilidade e solidez.
+Influenciadores diversos, especialmente os que possuem algum espectro autista. 
+
