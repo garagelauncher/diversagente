@@ -25,3 +25,22 @@ Generation Brasil - ONG mundial que qualifica alunos para estudarem programaçã
 Meios de comunicação impressos trazem mais credibilidade e solidez.
 Influenciadores diversos, especialmente os que possuem algum espectro autista. 
 
+
+===================================================================================================================================================
+
+POWER POINT 
+
+
+Integrações para melhor experiência do usuário
+	- Login
+	- Feed de notícia 
+	- Comunicação intatânea
+	- Compartilhamento 
+
+
+Divulgação da rede social
+	- Canal Autismo
+	- Generation Brasil 
+	- Meios de comunicação online e impressa 
+	- Influenciadores diversos
+
