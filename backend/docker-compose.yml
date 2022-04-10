@@ -1,0 +1,11 @@
+version: '3.9'
+
+
+services:
+  api:
+    build: .
+    container_name: api
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/app
