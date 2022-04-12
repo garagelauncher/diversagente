@@ -1,5 +1,7 @@
-# compiled output
+#  custom
 .env
+data
+# compiled output
 /dist
 /node_modules
 
