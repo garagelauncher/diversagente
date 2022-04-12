@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma, User } from '@prisma/client';
 import { PrismaService } from 'src/database/prisma.service';
-import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-
+import crypto from 'crypto';
 @Injectable()
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
@@ -27,7 +26,10 @@ export class UsersService {
 
   async create(data: Prisma.UserCreateInput): Promise<User> {
     return await this.prisma.user.create({
-      data,
+      data: {
+        ...data,
+        id: crypto.randomUUID(),
+      },
     });
   }
 

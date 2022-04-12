@@ -14,10 +14,36 @@ services:
     depends_on:
       - database
   database:
-    image: mongo
+    image:  mongo:4.2 #alternative flqw/docker-mongo-local-replicaset
     container_name: database
     ports:
       - 27017:27017
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USER}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD}
+    command: ["--replSet", "my-replica-set", "--bind_ip_all", "--port", "27017"]
+    volumes:
+      - ./data/mongo-1:/data/db
+    healthcheck:
+      test: test $$(echo "rs.initiate({_id:'my-replica-set',members:[{_id:0,host:\"database:27017\"},{_id:1,host:\"mongo2:27018\"},{_id:2,host:\"mongo3:27019\"}]}).ok || rs.status().ok" | mongo --port 27017 --quiet) -eq 1
+      interval: 10s
+      start_period: 30s
+
+  mongo2:
+    image: mongo:4.2
+    container_name: mongo2
+    command: ["--replSet", "my-replica-set", "--bind_ip_all", "--port", "27018"]
+    volumes:
+      - ./data/mongo-2:/data/db
+    ports:
+      - 27018:27018
+
+  mongo3:
+    image: mongo:4.2
+    container_name: mongo3
+    command: ["--replSet", "my-replica-set", "--bind_ip_all", "--port", "27019"]
+    volumes:
+      - ./data/mongo-3:/data/db
+    ports:
+      - 27019:27019
+# mongodb://joao:123@172.25.127.71:27017,172.25.127.71:27018,172.25.127.71:27019/admin?replicaSet=my-replica-set
