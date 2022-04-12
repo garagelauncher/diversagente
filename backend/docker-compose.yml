@@ -6,44 +6,65 @@ services:
     build: .
     container_name: api
     ports:
-      - 3000:3000
+      - 3001:3000
     volumes:
       - .:/usr/app
     links:
-      - database
+      - mongo1
     depends_on:
-      - database
-  database:
-    image:  mongo:4.2 #alternative flqw/docker-mongo-local-replicaset
-    container_name: database
-    ports:
-      - 27017:27017
+      - mongo1
+    networks:
+      - mongo-replica-set-bridge
+  mongo1:
+    image: mongo:5.0
+    container_name: mongo1
+    command: ["--replSet", "my-replica-set", "--bind_ip_all", "--port", "30001"]
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USER}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD}
-    command: ["--replSet", "my-replica-set", "--bind_ip_all", "--port", "27017"]
+      - MONGODB_DATABASE=app
     volumes:
       - ./data/mongo-1:/data/db
+    ports:
+      - 30001:30001
     healthcheck:
-      test: test $$(echo "rs.initiate({_id:'my-replica-set',members:[{_id:0,host:\"database:27017\"},{_id:1,host:\"mongo2:27018\"},{_id:2,host:\"mongo3:27019\"}]}).ok || rs.status().ok" | mongo --port 27017 --quiet) -eq 1
+      test: test $$(echo "rs.initiate({_id:'my-replica-set',members:[{_id:0,host:\"localhost:30001\"},{_id:1,host:\"mongo2:30002\"},{_id:2,host:\"mongo3:30003\"}]}).ok || rs.status().ok" | mongo --port 30001 --quiet) -eq 1
       interval: 10s
       start_period: 30s
+    depends_on:
+      - mongo2
+      - mongo3
+    networks:
+      - mongo-replica-set-bridge
 
   mongo2:
-    image: mongo:4.2
+    image: mongo:5.0
     container_name: mongo2
-    command: ["--replSet", "my-replica-set", "--bind_ip_all", "--port", "27018"]
+    command: ["--replSet", "my-replica-set", "--bind_ip_all", "--port", "30002"]
+    environment:
+      - MONGODB_DATABASE=app
     volumes:
       - ./data/mongo-2:/data/db
     ports:
-      - 27018:27018
+      - 30002:30002
+    networks:
+      - mongo-replica-set-bridge
 
   mongo3:
-    image: mongo:4.2
+    image: mongo:5.0
     container_name: mongo3
-    command: ["--replSet", "my-replica-set", "--bind_ip_all", "--port", "27019"]
+    command: ["--replSet", "my-replica-set", "--bind_ip_all", "--port", "30003"]
+    environment:
+      - MONGODB_DATABASE=app
     volumes:
       - ./data/mongo-3:/data/db
     ports:
-      - 27019:27019
-# mongodb://joao:123@172.25.127.71:27017,172.25.127.71:27018,172.25.127.71:27019/admin?replicaSet=my-replica-set
+      - 30003:30003
+    networks:
+      - mongo-replica-set-bridge
+
+networks:
+  mongo-replica-set-bridge:
+    driver: bridge
+
+# volumes:
+#   mongoDBvolume:
+#     driver: local
