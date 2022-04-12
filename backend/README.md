@@ -1,73 +1,64 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+## Setup
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+É necessário ter o [docker](https://docs.docker.com/get-docker/) e o [docker-compose](https://docs.docker.com/compose/install/) e o [Node Version Manager](https://github.com/nvm-sh/nvm#about) instalados na sua máquina, ou pelo menos o Node.js (16.x) e uma base de dados MongoDB (4.x).
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+### 🚀 Como rodar o projeto?
 
-## Description
+#### Iniciando rápido:
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- Copie as variáveis ambientes e rode o comando `npm run docker:dev` e acesse o endpoint `http://localhost:${PORT}/docs`.
 
-## Installation
+#### Novo por aqui ? Siga o passo a passo detalhado:
+
+- Copie o arquivo o arquivo `.env.example` para um novo chamado `.env` e preencha suas variáveis ambientes. Para copiar você pode executar o comando:
 
 ```bash
-$ npm install
+cp .env.example .env
 ```
 
-## Running the app
+> Tenha certeza de no formato da String de conexão do MongoDB `mongodb://USER:PASSWORD@HOST:PORT/DATABASE?schema=SCHEMA`, você tenha trocado a palavra `HOST` pelo nome do serviço de banco de dados no docker-compose, chamado `database`.
+
+- Para assegurar que caso você tente executar o projeto fora do container localmente, use a mesma versão do Node que o projeto utiliza, antes de rodar um script do projeto, rode o comando:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+nvm use
 ```
 
-## Test
+> Caso não conheça o Node Version Manager (NVM), você pode saber mais e baixar para MacOS e Linux por meio desse link [NVM](https://github.com/nvm-sh/nvm#about) e para Windows você pode utilizar o [Nvm For Windows](https://github.com/coreybutler/nvm-windows#overview). Recomende que instale-o com algum gerenciado de pacotes do sistema operacional como o [Homebrew para MacOS](https://brew.sh/), [Chocolatey para Windows](https://chocolatey.org/), e APT ou semelhante para distribuições linux. Esse comando acessará o arquivo .nvmrc e instalará a versão do Node utilizada no projeto.
+
+Se não quiser instalar o NVM, terá de remover a chave "engine" do package.json para executar os scripts do projeto, mas não estará de acordo com os padrões do projeto.
+
+- Para inicializar o container da aplicação em ambiente de desenvolvimento, execute o comando:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run docker:dev
 ```
 
-## Support
+ou use `yarn docker:dev`.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Para ter certeza que o projeto está rodando, acesse o endereço `http://localhost:${PORT}/docs` e veja a documentação swagger do projeto.
 
-## Stay in touch
+Para subir a aplicação sem cache algum do Docker, basta utilizar:
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+docker compose up --build --force-recreate
+```
 
-## License
+> Se quiser tentar conectar no MongoDB que você subiu no Docker sem utilizar a aplicação, tente utilizar o [Compass](https://www.mongodb.com/try/download/compass).
 
-Nest is [MIT licensed](LICENSE).
+Se tiver escolhido rodar o banco de dados em container ou tiver instalado, e quiser rodar a aplicação localmente, precisará executar o comando:
+
+```bash
+npm run start:dev
+```
+
+ou use `yarn start:dev`.
+
+#### Problemas comuns com o localhost
+
+##### Banco de dados
+
+É comum no MacOS ou no Windows WSL o "database" do HOST se associar ao IP dinâmico, ou seja, o IP que você está utilizando para acessar o computador ao invés de fazer o binding com o nome do serviço de banco de dados `database`. Existem alternativas para contornar esse problema:
+
+- Se estiver utilizando WSL, verifique o IP `hostname -I | awk '{print $1}'` do seu WSL para poder colocar como HOST na variável ambiente DATABASE_URL no arquivo `.env`.
+- Se estiver utilizando o MacOS, verifique o IP `ipconfig getifaddr en0` do seu Mac para poder colocar como HOST na variável ambiente DATABASE_URL no arquivo `.env`.
