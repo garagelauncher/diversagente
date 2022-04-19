@@ -1,0 +1,38 @@
+% ----------------------------------------------------------
+% Anexos
+% Documentos gerados por outros autores
+% ----------------------------------------------------------
+
+% ---
+% Inicia os anexos
+% ---
+\begin{anexosenv}
+\anexos
+% Imprime uma página indicando o início dos anexos
+\partanexos
+
+% ---
+\chapter{Manual todonotes(parcial)}
+\label{manual-todonotes}
+% ---
+\index{pdf}
+% se pages = "-"  fica com arquivo completo
+\includepdf[pages=1-3,scale=0.8,frame=true,pagecommand={}]{anexos/todonotes.pdf}
+
+% ---
+% Para incluir sem gerar a quebra de página inicial no anexo
+\includepdf[pages=1,scale=0.7,frame=true,pagecommand=\chapter{Manual pdfpages(parcial)}\label{manual-pdfpages}]{anexos/pdfpages.pdf}
+\includepdf[pages=2-3,scale=0.8,frame=true,pagecommand={}]{anexos/pdfpages.pdf}
+
+% ---
+\chapter{Manual acronym(parcial)}
+\index{pdf}
+% somente algumas páginas para exemplo sem borda
+\includepdf[pages=1-3,frame=false,pagecommand={}]{anexos/acronym.pdf}
+
+
+
+\includepdf[frame=true,scale=0.7,pagecommand=\chapter{Referência Rápida pifont}\label{pifont-quickref}]{anexos/pifont.pdf}
+
+
+\end{anexosenv}

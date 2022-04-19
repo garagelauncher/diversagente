@@ -1,0 +1,108 @@
+\subsection{Citações / Referências}
+\label{referencias}
+
+Em um trabalho acadêmico você deve buscar referencias que servem de base para seus estudos, essas referencias devem ser confiáveis, normalmente artigos e livros são confiáveis pois passam por um processo de revisão por especialistas na área. É importante buscar as referencias primárias e não utilizar a informação escrita por outra pessoa (referencia secundária). As citações são definidas pela \citetitle{NBR10520:2002} e as referencias pela \citetitle{NBR6023:2018}, sendo interessante observar que a \citeonline{NBR6023:2018_alteracoes} fez uma resumo com algumas das mudanças ocorridas em 2018.
+
+
+A \ac{abnt} define a citação da citação (\textit{apud}), mas sua utilização não deve ser feita exceto em casos onde o documento original não possa ser acessado de nenhuma forma. Atualmente a maioria dos documentos se encontra disponível de forma digital o que permite a busca das informações em suas fontes primárias de forma que o \textit{apud} não é bem visto. 
+
+Não é indicada a utilização de sites como Wikipedia como fonte de informações pois a Wikipedia é uma referencia secundária, já que exige que seus artigos tenham referencias da informação, e com isso a utilização da Wikipedia cai no mesmo caso da utilização de \textit{apud} indicada anteriormente, já que é possível buscar a informação diretamente na fonte primária.
+
+Quando for necessário citar sites deve ser utilizada a ferramenta \url{https://web.archive.org}, caso não exista uma referencia salva anteriormente basta salvar e utilizar. O uso dessa ferramenta muitas vezes ajuda também a determinar a data estimada de publicação de informação quando o site já foi salvo anteriormente e não possui data de publicação disponível.
+
+
+
+Existem diversas formas de citação que devem ser escolhidas de acordo com o contexto do texto onde são utilizadas, observe os exemplos :
+
+\begin{itemize}
+    \item \mostraComandoLaTeX{cite} - utilizada normalmente em final de paragrafo: \newline
+    \cite{UML:JACOBSON} | \cite{POWELL:2006} \\ 
+        \cite{SCRUMGUIDE:2013} | \cite{urani1994} |\\
+        \cite{ETAL5} | \cite{ETAL4}; 
+    
+    \explicacao{Se as duas ultimas referencias aparecem somente com um autor, você está compilando o documento com uma versão antiga do \mostraPacoteLaTeX{abntexcite}, o overleaf em 2021-07-06 estava desatualizado}
+    \explicacao{ABNT 6023:2018 8.1.1.2 recomenda para utilizar TODOS autores sempre, mas permite utilizar et al, dependendo da versão do \mostraPacoteLaTeX{abntexcite} isso não está acontecendo corretamente}
+
+    \item \mostraComandoLaTeX{citeonline}  - utilizada normalmente em textos como \enquote{(segundo|de acordo| com) ...}: \newline
+    \citeonline{UML:JACOBSON} | \citeonline{POWELL:2006} \\
+        \citeonline{SCRUMGUIDE:2013} | \citeonline{urani1994} \\
+        \citeonline{ETAL5} | \citeonline{ETAL4};
+
+    \item \mostraComandoLaTeX{citeauthoronline} - raramente utilizado, quando se deseja citar somente o autor: \newline
+    \citeauthoronline{UML:JACOBSON}| \citeauthoronline{POWELL:2006} \\
+        \citeauthoronline{SCRUMGUIDE:2013} | \citeauthoronline{urani1994} \\
+        \citeauthoronline{ETAL5} | \citeauthoronline{ETAL4};
+
+    \item \mostraComandoLaTeX{citeauthor} - muito pouco utilizado: \newline \citeauthor{UML:JACOBSON}| \citeauthor{POWELL:2006} \\
+        \citeauthor{SCRUMGUIDE:2013}| \citeauthor{urani1994} \\
+        \citeauthor{ETAL5} | \citeauthor{ETAL4};
+    
+    \explicacao{Se as duas ultimas referencias aparecem somente com um autor, você está compilando o documento com uma versão antiga do \mostraPacoteLaTeX{abntexcite}, o overleaf em 2021-07-06 estava desatualizado}
+
+    \item \mostraComandoLaTeX{citetitle} - muito pouco utilizado: \newline
+    \citetitle{UML:JACOBSON}|\citetitle{POWELL:2006} \\
+        \citetitle{SCRUMGUIDE:2013}| \citetitle{urani1994} 
+        
+    \explicacao{O comando \mostraComandoLaTeX{citetitle} está disponível utilizando a biblioteca \mostraPacoteLaTeX{biblatex}}
+
+\end{itemize}
+
+A documentação do abntex2cite possui muitos exemplos de como utilizar corretamente cada formato de citação : \url{https://mirrors.ibiblio.org/CTAN/macros/latex/contrib/abntex2/doc/abntex2cite-alf.pdf}.
+
+Cada formato de citação deve ser utilizado em um contexto especifico :
+\begin{itemize}
+    \item De acordo com \citeonline{SCRUMGUIDE:2013} .....;
+    
+    \item Fonte: \citeonline{SCRUMGUIDE:2013};
+    
+    \item sua explicação de um assunto baseado em uma referência \cite{SCRUMGUIDE:2013}.
+    
+\end{itemize}
+
+ATENÇÃO : Alguns parâmetros de formatação foram alterados em 2018, mas não foram corrigidos ainda nos pacotes do \ac{abntex}, devem ser alterados manualmente ou utilizar as versões de desenvolvimento
+\begin{itemize}
+    \item \url{https://github.com/abntex/abntex2/issues/210}
+    
+    \item \url{https://github.com/abntex/biblatex-abnt/issues/42}
+\end{itemize}
+
+Os dados devem ser definidos corretamente nos arquivos \textquote{.bib} para a correta formatação no texto e na lista de referências.
+
+Para autor com diversas publicações no mesmo ano : são geradas letras automaticamente pelo compilador de acordo com a ordem que são apresentadas na bibliografia, a letra não aparece na lista de referencias. \footnote{\url{https://github.com/abntex/biblatex-abnt/issues/20}}
+
+
+
+
+\subsection{Abreviaturas / Siglas / Glossário}
+\label{siglas-glossario}
+
+Palavras que devem ser apresentadas no glossário devem ser citadas especificamente no texto utilizando os comandos de glossário como : \gls{tag}. Nesse modelo as definições de glossário devem ser feitas no arquivo \textbf{defs-glossario.tex}.
+
+As abreviaturas nesse modelo devem ser feitas no arquivo \textbf{defs-siglas.tex}, tomando o cuidado de definir corretamente as siglas de outras línguas e as da língua portuguesa. Abreviaturas normalmente são referenciadas utilizando \mostraComandoLaTeX{ac}, mas podem ser referenciadas diretamente na versão reduzida \textquote{\acs{ifsp}} (\mostraComandoLaTeX{acs}) \space  
+ou longa \textquote{\acl{ifsp}} (\mostraComandoLaTeX{acl}).
+
+Na primeira vez que a sigla aparecer no texto o compilador {\LaTeX} mostra por extenso e a partir dai mostra somente a sigla:
+
+\begin{itemize}
+    \item \ac{se}
+    
+    \item \ac{se}
+    
+\end{itemize}
+
+Quando uma sigla é utilizada em titulo de figura ela não deve aparecer por extenso. A maneira correta para que isso aconteça é utilizar a sigla com \mostraComandoLaTeX{acs} no titulo da figura como apresentado na \autoref{fig_sge1} pela sigla \ac{sge1}.
+
+\begin{figure}[hb]
+    \centering
+	\caption{\label{fig_sge1}Exemplo de sigla em titulo de ilustração \acs{sge1}}
+    \missingfigure[figwidth=6cm]{Exemplo para uso de sigla em titulo \ldots}	
+	\fonte{Os autores.}
+\end{figure}
+
+
+
+Lembre que o {\LaTeX} tem vários passos de compilação, sempre que alterar as chamadas de siglas / referencias é recomendável uma compilação completa do documento.
+
+
+
+
