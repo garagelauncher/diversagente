@@ -1,0 +1,540 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Referencias bibliograficas utilizadas
+% Para mais informações ver documentação do abntex2 e http://www.bibtex.org/
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% https://github.com/AdrianoRuseler/abntex2-modelo-experimento/blob/master/abntex2-modelo-references.bib
+
+% É importante observar que em casos onde o nome do autor ou organização tem acentos é importante fazer na forma separada \'e \~a de forma que a versão em maiúsculas fique correta.
+
+
+@manual{NBR6028:2003,
+	Address = {Rio de Janeiro},
+	Date-Added = {2012-12-15 21:02:12 +0000},
+	Date-Modified = {2012-12-15 21:02:50 +0000},
+	Month = {11},
+	Org-Short = {ABNT},
+	Organization = {Associação Brasileira de Normas T\'ecnicas},
+	Pages = 2,
+	Subtitle = {Resumo - Apresenta{\c c}{\~a}o},
+	Title = {{NBR} 6028},
+	Year = 2003}
+	
+% versão errada para demonstração onde foi utilizado author em vez de organization
+@manual{NBR6028:2003-errado,
+	Address = {Rio de Janeiro},
+	Date-Added = {2012-12-15 21:02:12 +0000},
+	Date-Modified = {2012-12-15 21:02:50 +0000},
+	author = {Associação Brasileira de Normas T\'ecnicas},
+	Pages = 2,
+	Subtitle = {EXEMPLO DE DEFINIÇÃO ERRADA : COM AUTHOR EM VEZ DE ORGANIZATION},
+	Title = {{NBR} 6028},
+	Year = 2003,
+	Month = {11},
+}
+@manual{NBR6023:2018,
+	Address = {Rio de Janeiro},
+	Org-Short = {ABNT},
+	Organization = {Associação Brasileira de Normas T\'ecnicas},
+	Subtitle = {Informação e documentação — Referências — Elaboração},
+	Title = {{NBR} 6023},
+	Year = 2018,
+	Month = {11},
+	}
+
+@manual{NBR6023:2018_alteracoes,
+	Org-Short = {UFSC},
+	Organization = {Universidade Federal de Santa Catarina},
+	Title = {Alterações ABNT NBR 6023 2018},
+    Year = 2018,
+    month=11,
+    url={https://web.archive.org/web/20210121083727/https://periodicos.paginas.ufsc.br/files/2018/11/Altera%C3%A7%C3%B5es-ABNT-NBR-6023_2018.pdf},
+    address={Santa Catarina}
+}
+	
+	
+
+@manual{NBR14724:2005,
+	Address = {Rio de Janeiro},
+	Date-Added = {2012-12-15 20:34:08 +0000},
+	Date-Modified = {2012-12-15 20:35:25 +0000},
+	Month = {12},
+	Org-Short = {ABNT},
+	Organization = {Associação Brasileira de Normas T\'ecnicas},
+	Pages = 9,
+	Subtitle = {Informa{\c c}\~ao e documenta{\c c}\~ao --- trabalhos acad\^emicos --- apresenta{\c c}\~ao},
+	Title = {{NBR} 14724},
+Year = 2005}
+
+
+@manual{NBR14724:2011,
+	Address = {Rio de Janeiro},
+	Date-Added = {2012-12-15 20:34:08 +0000},
+	Date-Modified = {2012-12-15 20:35:25 +0000},
+	Month = {3},
+	Note = {Substitui a Ref.~\citeonline{NBR14724:2005}},
+	Org-Short = {ABNT},
+	Organization = {Associação Brasileira de Normas T\'ecnicas},
+	Pages = 15,
+	Subtitle = {Informa{\c c}\~ao e documenta{\c c}\~ao --- trabalhos acad\^emicos --- apresenta{\c c}\~ao},
+	Title = {{NBR} 14724},
+Year = 2011}
+
+@manual{NBR10520:2002,
+	Address = {Rio de Janeiro},
+	Month = {8},
+	Org-Short = {ABNT},
+	Organization = {Associação Brasileira de Normas T\'ecnicas},
+	Subtitle = {Informação e documentação – Citações em documentos – Apresentação},
+	Title = {{NBR} 10520},
+Year = 2002}
+
+
+@book{UML:JACOBSON,
+  title={The Unified Modeling Language User Guide},
+  author={Ivar Jacobson and Grady Booch and James Rumbaugh},
+  year={1998},
+  publisher={Addison-Wesley Professional},
+  address = {Redwood City, CA, USA}
+}
+
+@misc{tabular-ibge,
+  title={Normas de apresenta{\c{c}}{\~a}o tabular},
+  organization={Fundação Instituto Brasileiro de Geografia e Estat{\'i}stica - IBGE},
+  org-short={IBGE},
+  year={1993},
+  url={https://web.archive.org/web/20210624204314/https://biblioteca.ibge.gov.br/visualizacao/livros/liv23907.pdf},
+  address={Rio de Janeiro - RJ},
+  publisher={IBGE}
+}
+
+@book{POWELL:2006,
+  title={Beginning Database Design},
+  author={Gavin Powell},
+  year={2006},
+  publisher = {Wiley Publishing},
+  address = {New York, NY, USA}
+}
+
+@book{SCRUMGUIDE:2013,
+  title={Scrum Guide},
+  author={Schwaber, Ken and Sutherland, Jeff},
+  year={2013},
+  publisher={Scrum.Org},
+  address = {Boston, MA, USA}
+}
+
+
+
+% Exemplo para utilização de et al com 5 autores
+@book{ETAL5,
+  title={O ET AL5},
+  author={Silva, José and Doe, John and Carioca, José and Mouse, Mickey and  Parker, Peter},
+  year={2013},
+  Subtitle = {{EXEMPLO DE DEFINI{\c C}{\~A}O ERRADA : SEM ADDRESS}},
+  publisher={DisneyWorld}
+}
+% livros devem ter cidade da publicação em "address" esse fica sem como exemplo , observar na saída que fica com [S.l]  - Sem Local
+
+% Exemplo para utilização de et al com 4 autores
+@book{ETAL4,
+  title={O ET AL4},
+  author={Carioca, José and Silva, José and Doe, John and  Mouse, Mickey },
+  year={2013},
+  Subtitle = {{EXEMPLO DE DEFINI{\c C}{\~A}O ERRADA : SEM ADDRESS}},
+  publisher={Disneyland}
+}
+
+
+
+% Ano estimado pela URL da imagem...
+@misc{engenharia_software_balanca,
+    author={Juliana Jenny Kolb},
+    title={Engenharia de Software},
+    year={2013},
+    url={https://web.archive.org/web/20200427155729/https://jkolb.com.br/engenharia-de-software-2},
+  options = {noslsn},
+ }
+
+@misc{scrum_cartoon,
+    organization={ImplementingScrum.com},
+    title={Scrum Cartoons},
+    year={2006},
+    url={https://web.archive.org/web/20160611092911/http://www.implementingscrum.com/cartoons/},
+  options = {noslsn},
+ }
+
+@misc{meligeni_primeiro_treino,
+    author={Fernando Meligeni},
+    title={Primeiro dia de Treino},
+    year={2019},
+    url={https://web.archive.org/web/20181026163336/https://www.linkedin.com/feed/update/urn:li:activity:6460600769258225664/},
+  options = {noslsn},
+ }
+
+@misc{computer_skills,
+    author={Jakob Nielsen},
+    title={The Distribution of Users’ Computer Skills: Worse Than You Think},
+    year={2016},
+    url={https://web.archive.org/web/20170202090037/https://www.nngroup.com/articles/computer-skill-levels/},
+  options = {noslsn},
+ }
+
+
+@misc{medicina_cachaca,
+    author={Leonardo Muller},
+    title={De Medicina a Produção de Cachaça: entenda como malandros {'}burlaram{'} o {ENEM}},
+    year={2017},
+    url={https://web.archive.org/web/20170207121049/https://www.tecmundo.com.br/seguranca-de-dados/113939-medicina-producao-cachaca-entenda-criminosos.htm},
+  options = {noslsn},
+ }
+
+@misc{invasao_telegram,
+    author={Altieres Rohr},
+    title={{'}Receita de ataque{'} expõe limitações e amadorismo de hackers que acessaram mensagens do Telegram},
+    year={2019},
+    url={https://web.archive.org/web/20201111192822/https://g1.globo.com/economia/tecnologia/blog/altieres-rohr/post/2019/07/26/receita-de-ataque-expoe-limitacoes-e-amadorismo-de-hackers-que-acessaram-mensagens-do-telegram.ghtml},
+  options = {noslsn},
+ }
+ 
+
+@misc{decisions_experience-1,
+    author={Avul Pakir Jainulabdeen Abdul Kalam},
+    title={Good decisions comes from experience, but...},
+    url={https://web.archive.org/web/20201204224643/http://www.thenewsriver.com/featured/dr-apj-abdul-kalam-best-motivational-quote},
+  options = {noslsn},
+ }
+
+@misc{decisions_experience-2,
+    author={Avul Pakir Jainulabdeen Abdul Kalam},
+    title={Abdul Kalam Quotes},
+    url={https://web.archive.org/web/20210228100502/https://quotefancy.com/abdul-kalam-quotes},
+  options = {noslsn},
+ }
+
+
+@misc{xgh-axioms,
+    organization={Daniel Alonso},
+    title={eXtreme Go Horse Methodology (XGH)},
+    year={2018},
+    month={9},
+    url={https://web.archive.org/web/20201127103737/https://medium.com/@dekaah/22-axioms-of-the-extreme-go-horse-methodology-xgh-9fa739ab55b4},
+  options = {noslsn},
+ }
+
+@misc{xgh,
+    organization={Go Horse Process},
+    title={{eXtreme Go Horse (XGH)}},
+    year={2017},
+    month={5},
+    url={https://web.archive.org/web/20190905031651/http://sou.gohorseprocess.com.br/extreme-go-horse-xgh/},
+  options = {noslsn},
+ }
+
+
+@misc{boas_perguntas_dados,
+    author={Carlos Demetrio},
+    title={Não adianta termos bons dados se não fizermos boas perguntas},
+    year={2019},
+    month={7},
+    url={https://web.archive.org/web/20201217152628/https://www.ibm.com/blogs/digital-transformation/br-pt/nao-adianta-termos-bons-dados-se-nao-fizermos-boas-perguntas/},
+  options = {noslsn},
+ }
+ 
+ @misc{vetorizacao,
+    author={Daniele Monteiro},
+    title={Algoritmo capaz de converter desenhos pixelados em vetor},
+    year={2011},
+    month={5},
+    url={https://web.archive.org/web/20210125065452/https://www.techtudo.com.br/artigos/noticia/2011/05/algoritmo-capaz-de-converter-desenhos-pixelados-em-vetor.html},
+  options = {noslsn},
+ }
+
+
+@misc{guerra-matematica,
+    author={Larissa Feregueti},
+    title={Guerras, aviões e matemática: um exercício para refletir},
+    year={2017},
+    month={7},
+    url={https://web.archive.org/web/20210406020103/https://engenharia360.com/exercicio-guerra-matematica/},
+  options = {noslsn},
+ }
+
+
+
+@book{ellenberg2015poder,
+  title={O poder do pensamento matem{\'a}tico: a ci{\^e}ncia de como n{\~a}o estar errado},
+  author={Ellenberg, Jordan},
+  year={2015},
+  publisher={Editora Schwarcz-Companhia das Letras},
+  address={Rio de Janeiro, RJ}
+}
+
+
+@techreport{wald1980reprint,
+  title={A Reprint of 'A Method of Estimating Plane Vulnerability Based on Damage of Survivors'.},
+  author={Wald, Abraham},
+  year={1980},
+  institution={CENTER FOR NAVAL ANALYSES ALEXANDRIA VA OPERATIONS EVALUATION GROUP},
+  url={https://web.archive.org/web/20210417164859/https://apps.dtic.mil/dtic/tr/fulltext/u2/a091073.pdf},
+  address={Alexandria, Virginia}
+}
+% https://apps.dtic.mil/sti/citations/ADA091073
+
+
+
+@misc{fig_aviao_wald,
+  Author = {McGeddon},
+  source = {Wikimedia Commons},
+  title = {Figura Avião representando Viés de Sobrevivência},
+  year={2016},
+  url={https://web.archive.org/web/20201227233242/https://commons.wikimedia.org/wiki/File:Survivorship-bias.png}
+}
+
+
+@misc{tubarao_no_tanque,
+    author={Camilo de Souza Cruz},
+    year={-},
+    title={Um Tubarão no seu Tanque},
+    url={https://web.archive.org/web/20200225123706/http://www.drcamilo.odo.br/parabolas/parabola_028.htm},
+  options = {noslsn},
+}
+
+@misc{tubarao_na_vida,
+    author={Jorge Duarte da Silva},
+    year={2012},
+    month={2},
+    title={Coloca um “Tubarão” na tua vida mantém-te fresco!},
+    url={https://web.archive.org/web/20210424180522/https://neurocrescimento.wordpress.com/2012/02/01/coloca-um-tubarao-na-tua-vida-mantem-te-fresco/},
+  options = {noslsn},
+}
+
+@misc{put_a_shark_in_your_tank,
+    author={PAYAM SHOGHI},
+    year={2013},
+    title={Put a Shark In Your Tank},
+    url={https://pt.slideshare.net/PAYAMSHOGHI/put-a-shark-in-your-tank-oct12},
+  options = {noslsn},
+}
+
+@misc{employees_challenge,
+    author={Diana Martz},
+    year={2013},
+    month={5},
+    title={What Motivates Employees: A Lesson from Japanese Fishermen on the Importance of a Challenge},
+    url={https://web.archive.org/web/20210424175953/https://openviewpartners.com/blog/what-motivates-employees-a-challenge/},
+  options = {noslsn},
+}
+
+
+
+%
+% As imagens originais são do xkcd 
+% mas para esse documento a explicação é um ponto importante a ser mostrado
+%
+@misc{fig_password_strength,
+  organization = {xkcd},
+  author = {xkcd},
+  title = {936: Password Strength},
+  year={2016},
+  url={https://web.archive.org/web/*/https://xkcd.com/936/},
+  options = {noslsn},
+}
+
+@misc{fig_exploits_of_a_mom,
+  organization = {xkcd},
+  author = {xkcd},
+  title = {327: Exploits of a Mom},
+  year={2007},
+  url={https://web.archive.org/web/*/https://xkcd.com/327/},
+  options = {noslsn},
+}
+
+@misc{fig_password_strength_explain,
+  organization = {Explain xkcs},
+  author = {{Explain xkcs}},
+  title = {936: Password Strength},
+  year={2016},
+  url={https://web.archive.org/web/*/https://www.explainxkcd.com/wiki/index.php/936:_Password_Strength},
+  options = {noslsn},
+}
+
+@misc{fig_exploits_of_a_mom_explain,
+  organization = {Explain xkcs},
+  author = {{Explain xkcs}},
+  title = {327: Exploits of a Mom},
+  year={2007},
+  url={https://web.archive.org/web/*/https://www.explainxkcd.com/wiki/index.php/327:_Exploits_of_a_Mom},
+  options = {noslsn},
+}
+
+
+
+
+@misc{ldb,
+  organization = {BRASIL},
+  title        = {Lei de Diretrizes e Bases da Educação Nacional, LDB. 9394/1996},
+  year         = {1996},
+  date         = {1996-12-20},
+  address      = {BR},
+  options = {noslsn},
+}
+
+
+
+@techreport{rfc5322,
+   AUTHOR = "Peter W. Resnick",
+   TITLE = "{RFC 5322 - Internet Message Format}",
+   HOWPUBLISHED = {Internet Requests for Comments},
+   TYPE="{RFC}",
+   NUMBER=5322,
+   YEAR = {2008},
+   MONTH = {10},
+   PUBLISHER = "{RFC Editor}",
+   INSTITUTION = "{RFC Editor}",
+   URL={https://www.rfc-editor.org/rfc/rfc5322.txt},
+   address={{}},
+   }
+   
+   
+@misc{ted_tim_urban_procastinator,
+  author = {Tim Urban},
+  title = {Inside the mind of a master procrastinator},
+  year={2016},
+  month={2},
+  url={https://web.archive.org/web/*/https://www.ted.com/talks/tim_urban_inside_the_mind_of_a_master_procrastinator},
+  options = {noslsn},
+}
+   
+@misc{postman-openapi,
+  author = {Abhihit Kane},
+  title        = {How Postman Uses the OpenAPI Specification},
+  year         = {2020},
+  date         = {2020-07-27},
+  url = {https://web.archive.org/web/20201029013841/https://blog.postman.com/openapi-specification-postman-how-to/},
+  options = {noslsn},
+}
+
+% Observar que quando utilizar o abntex2cite somente no caso de utilizar os escapes corretamente o LaTeX vai ajustar maiúsculas e minusculas.
+% para o biblatex o nome é ajustado corretamente
+@misc{acentuacao-ok,
+  author = {Jos{\'e} Acentua{\c c}{\~a}o},
+  title = {Teste autor acentuado Certo},
+  year={2021},
+  options = {noslsn},
+}
+
+@misc{acentuacao-errada,
+  author = {José Acentuação},
+  title = {Teste autor acentuado Errado},
+  year={2021},
+  options = {noslsn},
+}
+
+
+
+@misc{paulo_maciel_lidar_com_falhas,
+  author = {Paulo Maciel},
+  title = {Você pode lidar com suas falhas de dois modos},
+  year={2020},
+  url={https://www.instagram.com/p/CFe7u9FhCoW/},
+  options = {noslsn},
+}
+
+@misc{paulo_maciel_utilizar_recursos_comparado,
+  author = {Paulo Maciel},
+  title = {Não importa quantos recursos você tem, se você não souber usa-los nunca será suficiente},
+  year={2020},
+  url={https://www.instagram.com/p/CJGv2JFh-59/},
+  options = {noslsn},
+}
+
+@misc{paulo_maciel_utilizar_recursos,
+  author = {Paulo Maciel},
+  title = {Não importa quantos recursos você tem. se você não souber usa-los nunca será suficiente},
+  year={2019},
+  url={https://www.instagram.com/p/B0bLC1Ths-g/},
+  options = {noslsn},
+}
+
+
+@misc{atencao_leitura_vendo_bolo_cenoura,
+  author = {Cesar Vasconcellos de Souza},
+  title = {Poxa! Por que você não presta atenção e pensa?},
+  year={2017},
+  url={https://web.archive.org/web/20210513015817/http://acervo.avozdaserra.com.br/colunas/saude-mental-e-voce/poxa-por-que-voce-nao-presta-atencao-e-pensa},
+  options = {noslsn},
+}
+
+% Homofilia
+@book{jackson2019human,
+  title={The Human Network: How Your Social Position Determines Your Power, Beliefs, and Behaviors},
+  author={Jackson, M.O.},
+  isbn={9781101871447},
+  url={https://books.google.com.br/books?id=X-4sDwAAQBAJ},
+  year={2019},
+  address={New York, NY},
+  publisher={Knopf Doubleday Publishing Group}
+}
+
+@misc{rene_leia_the_human_network,
+  author = {Rene de {PAULA JR}},
+  title = {leia vale a pena: The Human Network, por Matthew Jackson},
+  year={2020},
+  url={https://leiavaleapena.com/post/623289943772577792/leia-vale-a-pena-the-human-network-por-matthew},
+  options = {noslsn},
+}
+
+@misc{rene_como_emperrar_a_inovacao,
+  author = {Rene de {PAULA JR}},
+  title = {um demo ao vivo: como emperrar a inovação!},
+  year={2021},
+  url={https://www.youtube.com/watch?v=yAHxFqKNjLY},
+  options = {noslsn},
+}
+
+@misc{como_fazer_ingresso_com_escalar,
+  author = {Fabio Akita},
+  title = {Como fazer o Ingresso.com escalar? | Conceitos Intermediários de Web},
+  year={2021},
+  url={https://www.youtube.com/watch?v=0TMr8rsmU-k},
+  options = {noslsn},
+}
+
+
+@misc{password_storage_cheat_sheet,
+  Org-Short = {OWASP},
+  organization = {Open Web Application Security Project Foundation},
+  title = {Password Storage Cheat Sheet},
+  year={-},
+  url={https://web.archive.org/web/20211207112546/https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html},
+  options = {noslsn},
+}
+
+@misc{authentication_cheat_sheet,
+  Org-Short = {OWASP},
+  organization = {Open Web Application Security Project Foundation},
+  title = {Authentication Cheat Sheet},
+  year={-},
+  url={https://web.archive.org/web/20211125194613/https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html},
+  options = {noslsn},
+}
+
+@misc{forgot_password_cheat_sheet,
+  Org-Short = {OWASP},
+  organization = {Open Web Application Security Project Foundation},
+  title = {Forgot Password Cheat Sheet},
+  year={-},
+  url={https://web.archive.org/web/20211029025545/https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html},
+  options = {noslsn},
+}
+
+@misc{owasp_cheat_sheet,
+  Org-Short = {OWASP},
+  organization = {Open Web Application Security Project Foundation},
+  title = {OWASP Cheat Sheet Series},
+  year={-},
+  url={https://cheatsheetseries.owasp.org/index.html},
+  options = {noslsn},
+}
+

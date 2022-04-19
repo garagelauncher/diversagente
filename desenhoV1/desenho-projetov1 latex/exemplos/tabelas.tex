@@ -1,0 +1,73 @@
+\subsection{Tabelas e Quadros}
+\label{tabelas-e-quadros}
+Quadros e Tabelas são informações tabulares, mas Tabelas tem como objetivo apresentar números. A ‘norma’ 14724 \cite[3.32]{NBR14724:2011} define a Tabela como sendo uma \enquote{forma não discursiva de apresentar informações das quais o dado numérico se destaca como informação central} e que devem seguir padronização do \ac{ibge}  \cite[5.9]{NBR14724:2011}. O \ac{ibge} padronizou a apresentações de dados tabulares em 1993 \cite{tabular-ibge}.
+
+Informações adicionais sobre o de tabelas no {\LaTeX} podem ser obtidas em  \url{https://en.wikibooks.org/wiki/LaTeX/Tables}.
+
+Antes de utilizar \index{longtable}\textbf{longtable} procure reorganizar o seu layout ou quebrar manualmente em múltiplos quadros / tabelas, pois isso ainda facilita a compreensão pelo leitor.
+
+% https://biblioteca.ibge.gov.br/visualizacao/livros/liv23907.pdf
+
+\index{quadros}O \autoref{quadro-exemplo} é um exemplo de dados tabulares gerados em 
+\LaTeX.
+
+
+
+\begin{quadro}[htb]
+\centering
+\ABNTEXfontereduzida
+\caption[Níveis de investigação]{Níveis de investigação}
+\label{quadro-exemplo}
+\begin{tabular}{|p{2.6cm}|p{6.0cm}|p{2.25cm}|p{3.40cm}|}
+  \hline
+   \thead{Nível de\\Investigação} & \thead{Insumos}  & \thead{Sistemas de\\ Investigação}  & \thead{Produtos}  \\
+    \hline
+    Meta-nível & Filosofia\index{filosofia} da Ciência  & Epistemologia &
+    Paradigma  \\
+    \hline
+    Nível do objeto & Paradigmas do metanível e evidências do nível inferior &
+    Ciência  & Teorias e modelos \\
+    \hline
+    Nível inferior & Modelos e métodos do nível do objeto e problemas do nível inferior & Prática & Solução de problemas  \\
+   \hline
+\end{tabular}
+\fonte{O Autor.}
+\end{quadro}
+
+
+
+\index{tabelas}Já a \autoref{tab-exemplo} foi criada conforme o padrão \citeonline{tabular-ibge} requerido pelas normas da \ac{abnt} para documentos técnicos e acadêmicos. Observe que não existem bordas laterais e nem linhas separadoras em uma Tabela e as colunas numéricas tem alinhamento à direita. 
+
+\begin{table}[htb]
+\centering
+\caption{Métricas de desenvolvimento}
+\label{tab-exemplo}
+\begin{tabular}{p{2.6cm}rrr}
+    \hline
+   \thead{Item} & \thead{Janeiro}  & \thead{Fevereiro}  & \thead{Março}  \\
+    \hline
+    Classes & 2  & 10 & 20  \\
+    Linhas & 100  & 250 & 543 \\
+    \hline
+\end{tabular}
+\fonte{Os autores.}
+\end{table}
+
+\def\equationautorefname~#1\null{%
+  Equação~(#1)\null
+}
+
+
+Para facilitar a criação de tabelas e quadros existem algumas ferramentas como o Tables Generator \url{http://www.tablesgenerator.com/latex_tables} que permite a criação de forma visual gerando o código \LaTeX\ correspondente. E o site \url{https://www.latex-tables.com/} permite converter planilhas em código \LaTeX.
+
+
+\index{equação}\index{Pitágoras}A \autoref{eq-pythagoras} demonstra que também é possível escrever equações diretamente em \LaTeX
+
+\begin{equation}\label{eq-pythagoras}
+a^2+b^2=c^2\,.
+\end{equation}
+
+
+
+
+
