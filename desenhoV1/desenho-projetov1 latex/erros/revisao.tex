@@ -1,0 +1,147 @@
+\chapter{Revisão de Textos e apresentações}
+\label{revisao-de-textos}
+
+\todo[inline]{fazer as ligações com as seções de erros}
+
+A revisão do documento e da apresentação antes da entrega evita que os erros sejam apresentados no resultado final. Esse capítulo indica alguns procedimentos que evitam esse tipo de ocorrência. É importante lembrar que alguns elementos apresentados nos capítulos anteriores como erros também devem ser verificados para garantir a qualidade do seu trabalho.
+
+\begin{itemize}
+    \item Passar corretor ortográfico no documento (o ideal é já utilizar um editor que faça a verificação durante a edição e ir corrigindo durante a edição);
+
+    \item Faça a revisão em cima da versão final em \ac{pdf} com a formatação final;
+    
+    \item Utilize uma ferramenta de online de anotações no \ac{pdf} \url{https://dicas.ivanfm.com/aulas/textos/anotacoes-em-documentos.html} para facilitar o controle de anotações e histórico disponível para todos de forma online e centralizada;
+    
+    \item Faça uma leitura em voz alta, isso reduz a sua velocidade de leitura e aumenta a concentração, facilitando a percepção dos erros no texto;
+    
+    \item Solicite a diversas pessoas que participem da revisão, mesmo as pessoas que não entendem a parte técnica podem ajudar na revisão do texto;
+    
+    \item Coloque a data no nome do arquivo para facilitar a organização das versões compartilhadas;
+    
+    \item Para documentos gerados com \LaTeX, limpe todos os temporários / caches e compile do zero para garantir que todos os índices sejam atualizados;
+    
+    \item Verifique se a numeração das páginas é compatível com o formato de impressão (Frente/Verso ou somente Frente);
+    
+    \item Caso tenha páginas em A3 e impressão Frente/Verso cuidado para não alterar a posição das páginas na mudança;
+    
+    \item Verificar lista de siglas, siglas em outras línguas devem ter a tradução para português;
+
+    \item Verificar listas de figuras, quadros e tabelas - \autoref{revisao-listas};
+
+    \item fazer buscas no documento para encontrar os erros mais comuns - \autoref{buscas-documento};
+    
+    \item Listas de itens devem ser separados ponto e virgula nos itens iniciais e ponto no último item;
+    
+    \item Listas de itens devem seguir uma ordem coerente (lógica ou alfabética) e não aleatória (por exemplo essa lista segue uma sequencia que considera uma ordem a ser seguida para executar a revisão);
+    
+    \item Não devem existir espaços em branco no meio dos capítulos, não forçar quebras manualmente;
+    
+    \item verificar os tempos verbais (a leitura do documento acontece depois do desenvolvimento);
+    
+    \item Todos itens (capítulos, seções, subseções) devem possuir texto ( ideal que tenha pelo menos três parágrafos ) - ver \autoref{erros-comuns-sub1};
+
+    \item Verificar palavras de outras línguas - ver \autoref{revisao-palavras-estrangeiras};
+    
+    \item Padronização de nomenclatura : o é \textbf{XYZ} ou \textbf{Xyz} utilizar um único formato em todos locais.
+    
+\end{itemize}
+
+\section{Verificação das listas de elementos do documento}
+\label{revisao-listas}
+
+As listas de ilustrações (figuras, quadros, tabelas etc) e o sumário devem ser verificadas com cuidado :
+
+\begin{itemize}
+    \item não devem conter elementos com mesmo titulo, cada elemento deve ter um titulo único;
+    
+    \item caso existam vários elementos parecidos verifique se o formato de nomes segue um mesmo padrão.
+    \todo[inline]{vale criar um exemplo na seção de erros}
+    
+\end{itemize}
+
+\section{Buscas que podem encontrar problemas no documento}
+\label{buscas-documento}
+
+\begin{itemize}
+    \item \textbf{??} para encontrar referências quebradas, já que o \LaTeX \space indica com \textbf{??} quando não encontra uma referencia;
+    
+    \item Buscar por \textbf{Figura}, \textbf{Quadro}, \textbf{Tabela} etc
+    
+        \begin{itemize}
+            \item verificar se os artigos ( feminino / masculino ,  a / o  ) estão corretos;
+           
+            \item Verificar se tabelas e quadros foram definidos corretamente, repeitando os formatos de cada tipo;
+            
+            \item verificar se o tipo e o número da ilustração estão como link (autoref);
+           
+            \item Colunas com valores numéricos em tabelas / quadros devem ser alinhadas à direita;
+           
+            \item Verificar se toda ilustração foi citada no texto;
+           
+            \item Verificar se gráfico colorido vai ficar legível na impressão preto e branco;
+            
+            \item Verificar se as citações e referencias estão como links (no caso do \LaTeX \space utilizando esse modelo ficam em cor azul);
+          
+            \item Verifique se as referencias do texto para as ilustrações estão na sequencia correta (a \textbf{figura n} deve ser referenciada antes da \textbf{figura n+x}).  
+        \end{itemize}
+        
+    \item Buscar por cada elemento da lista de siglas / abreviações- ver \autoref{buscas-siglas};
+    
+    \item Buscar por cada elemento do glossário - ver \autoref{buscas-glossario};
+            
+    \item Buscar por \textbf{"} (aspas), verificar se não está grudada no texto anterior / seguinte;
+    
+    \item Buscar por \textbf{(} e \textbf{)} (parênteses) para verificar citações - ver \autoref{erros-citacoes-indiretas}
+        \begin{itemize}
+            \item Verificar se o formato da citação é compatível com o texto / local onde se encontram;
+            
+            \item Verificar se citações não ficaram grudadas no texto.
+        \end{itemize}
+            
+    \item Buscar por \textbf{[S.l.]} e \textbf{[S.n.]}, vai encontrar referencias incompletas de livros.
+\end{itemize}
+
+\section{Revisão de siglas}
+\label{buscas-siglas}
+
+As siglas (ex \ac{ifsp}) devem seguir um padrão dentro do documento, buscar por cada elemento na lista de siglas permite determinar se foram definidas corretamente :
+
+\begin{itemize}
+    \item Primeira ocorrência deve ter nome por extenso;
+    
+    \item Primeira ocorrência por extenso não deve aparecer nas listas (figuras, tabelas etc), ao verificar a lista de siglas se o número de página de utilização de sigla for anterior ao da lista de siglas precisa ajustar para utilizar \mostraComandoLaTeX{acs} no título da ilustração;
+
+    \item No documento gerado com \LaTeX \space todas utilizações devem ser links.
+\end{itemize}
+
+Mas se durante a leitura do documento encontrar alguma sigla que não esteja indicada com o link essa sigla não foi definida corretamente dentro do documento \LaTeX  \space como uma sigla.
+
+\section{Revisão de glossário}
+\label{buscas-glossario}
+
+Como o \LaTeX \space faz a referencia de glossário como um link é importante buscar no documento pelas palavras do glossário e verificar se estão com o link. Também é importante solicitar que os revisores que não fazem parte da escrita do documento anotem os termos que tem dúvidas já que isso é um bom indicador de palavras que devem ser incluídas no glossário.
+
+
+\section{Revisão de Palavras de outras Línguas}
+\label{revisao-palavras-estrangeiras}
+
+De acordo com a \ac{abnt} as palavras estrangeiras devem ser utilizadas com itálico (exceto nomes próprios), mas também deve ser tomado o cuidado já que muitas vezes precisamos incluir um artigo juntamente com a palavra, portanto é necessário verificar  se está utilizando artigo de forma correta :
+
+\begin{itemize}
+    \item \textbf{o \textit{sprint}} ou \textbf{a \textit{sprint}} são validos mas deve ser utilizado de forma uniforme em todo o texto e de acordo com a definição utilizada 
+    \begin{itemize}
+        \item se \textit{sprint} for definido como um período de tempo, ciclo de desenvolvimento deve utilizar o artigo \textbf{o};
+        
+        \item se a definição é como uma etapa ou fase de desenvolvimento deve utilizar o artigo \textbf{a}.
+    \end{itemize}
+    
+\end{itemize}
+
+
+\section{Revisão de Apresentações}
+\label{revisao-apresentacoes}
+
+Em apresentações alguns detalhes adicionais devem ser considerados como contraste entre os elementos utilizados e se cores forem utilizadas para demonstrar alguma informação se todos podem ver essa informação (considerando que algumas pessoas não conseguem visualizar todas as cores é sempre bom utilizar ícones na representação. Se a apresentação for feita com o uso de um projetor é importante testar antecipadamente para garantir que o projetor consiga apresentar corretamente as cores e resolução utilizadas.
+
+
+
