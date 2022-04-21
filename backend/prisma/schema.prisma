@@ -16,3 +16,9 @@ model User {
   username  String   @unique
   createdAt DateTime @default(now())
 }
+
+model Cat {
+  id        String   @id @map("_id")
+  name      String   @unique
+  createdAt DateTime @default(now())
+}
