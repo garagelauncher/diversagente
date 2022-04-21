@@ -12,17 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: backend
+        working-directory: ./backend
 
     steps:
-      - name: Whats happening
-        run: ls
-
       - name: Download code
         uses: actions/checkout@v3
-
-      - name: Whats happening 2
-        run: ls
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
