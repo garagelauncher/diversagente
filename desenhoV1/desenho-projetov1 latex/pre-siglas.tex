@@ -1,0 +1,13 @@
+% ---
+% inserir lista de abreviaturas e siglas
+% ATENCAO o SHARELATEX/OVERLEAF GERA O GLOSSARIO SOMENTE UMA VEZ
+% CASO SEJA FEITA ALGUMA ALTERAÇÃO NA LISTA DE SIGLAS É NECESSARIO UTILIZAR A OPÇÃO :
+% "Clear Cached Files" DISPONIVEL NA VISUALIZAÇÃO DOS LOGS 
+% ---
+% https://www.sharelatex.com/learn/Glossaries
+
+
+\ifdef{\printnoidxglossary}{
+    \printnoidxglossary[type=\acronymtype,title=Lista de abreviaturas e siglas,style=siglas]
+    \cleardoublepage
+}{}

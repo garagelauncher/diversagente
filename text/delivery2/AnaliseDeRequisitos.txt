@@ -1,0 +1,67 @@
+﻿Para visualizar a formatação: https://docs.google.com/document/d/1z8HYpBi1olDnhRXRRNo2Tu_SqA_wOvekgVbwt7zc9ec/edit?usp=sharing
+
+A análise de requisitos do nosso aplicativo está relacionada com a funcionalidade que o nosso sistema deve fazer juntos com as suas prioridades. Abaixo, eles estão divididos com suas respectivas funções que englobam tantos os requisitos funcionais, ou seja, declaração dos comportamentos que o sistema deve fazer e os requisitos não funcionais que são as restrições colocadas sobre como o sistema deve realizar seus requisitos.
+  Requisitos Funcionais:
+            Recomenda-se atenção especial para os seguintes requisitos funcionais descrito na tabela 1:
+Código
+	Requisitos funcionais
+	RF01
+	O sistema deve permitir consultar notícias.
+	RF02
+	O sistema deve permitir criar, manter e excluir subcategorias.
+	RF03
+	O sistema deve permitir receber e excluir mensagens dentro das subcategorias.
+	RF04
+	O sistema deve permitir compartilhar, manter e excluir imagens dentro das subcategorias.
+	RF05
+	O sistema deve permitir compartilhar localização dentro das subcategorias.
+	RF06
+	O sistema deve permitir que o usuário cadastre na plataforma.
+	RF07
+	O sistema deve permitir criar, manter e excluir chats online.
+	RF08
+	O sistema deve permitir participação do usuário nas subcategorias que ele tiver permissão de acesso.
+	RF09
+	O sistema deve permitir que o usuário edite o seu perfil.
+	RF10
+	O sistema deve permitir identificar-se na plataforma ao fazer o login.
+	RF11
+	O sistema deve permitir a solicitação de recuperação de senha por e-mail caso o usuário esqueça a senha.
+	RF12
+	O sistema deve permitir que o usuário compartilhe locais e avalie com notas essas recomendações.
+	 
+ Requisitos Não-Funcionais:
+           Recomenda-se atenção especial para os seguintes requisitos não funcionais descrito na tabela 2:
+Código
+	Requisitos Não-Funcionais
+	RNF01
+	A interface deve ser agradável e de fácil utilização para que o usuário navegue da forma mais simples possível, sem a necessidade de retornar várias telas ou acionar menus complexos já que estamos lidando com número em potencial de cidadãos comuns.
+ 
+	RNF02
+	O sistema deve armazenar as senhas no banco de dados de forma segura.
+ 
+	RNF03
+	O sistema deve ter boa disponibilidade.
+ 
+	RNF04
+	O sistema deve estar disponível 24 horas por dia, 7 dias por semana, com tolerância de 1% de falhas.
+ 
+	RNF05
+	O sistema deve ser rápido e de forma segura, interativa e confiável para executar os processamentos.
+	RNF06
+	Toda interface entre um usuário e o sistema deverá ter um tempo de resposta no máximo de 2 segundos.
+ 
+	RNF07
+	Deve ser fácil dar manutenção no sistema.
+	RNF08
+	O aplicativo deve consumir poucos recursos do navegador.
+	RNF09
+	O aplicativo não deverá armazenar dado localmente, sendo estes redirecionados a um servidor externo.
+	RNF10
+	O Aplicativo será desenvolvido em linguagem Javascript tanto para frontend como para backend utilizando os frameworks React Navite e Node,js.
+	RNF11
+	O banco de dados deve ser desenvolvido no MongoDB.
+	RNF12
+	Compatibilidade com o sistema operacional Android.
+	RNF13
+	O sistema deve solicitar a checagem de seus dados, antes de realizar a etapa final do cadastro no aplicativo.

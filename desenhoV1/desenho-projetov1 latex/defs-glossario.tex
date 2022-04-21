@@ -1,0 +1,64 @@
+
+% Definições para glossario
+
+% ATENCAO o SHARELATEX GERA O GLOSSARIO/LISTAS DE SIGLAS SOMENTE UMA VEZ
+% CASO SEJA FEITA ALGUMA ALTERAÇÃO NA LISTA DE SIGLAS OU GLOSSARIO É NECESSARIO UTILIZAR A OPÇÃO :
+% "Clear Cached Files" DISPONIVEL NA VISUALIZAÇÃO DOS LOGS 
+% ---
+% https://www.sharelatex.com/learn/Glossaries
+
+% Normalmente somente as palavras referenciadas são impressas no glossário, portanto é necessário referenciar utilizando :
+% \gls{identificação}            
+% \Gls{identificação}            
+% \glspl{identificação}            
+% \Glspl{identificação}            
+
+\newglossaryentry{pai}{
+                name={pai},
+                plural={pai},
+                description={este é uma entrada pai, que possui outras
+                subentradas.} }
+
+ \newglossaryentry{componente}{
+                name={componente},
+                plural={componentes},
+                parent=pai,
+                description={descriação da entrada componente.} }
+ 
+ \newglossaryentry{filho}{
+                name={filho},
+                plural={filhos},
+                parent=pai,
+                description={isto é uma entrada filha da entrada de nome
+                \gls{pai}. Trata-se de uma entrada irmã da entrada
+                \gls{componente}.} }
+
+
+
+\newglossaryentry{crud} {
+    name=CRUD,
+    plural= {CRUDs},
+    description={Create Retrieve Update Delete - Interface de usuário para manutenção em banco de dados que consiste somente nas operações básicas do banco de dados, sem nenhum tipo de inteligencia adicional de forma a facilitar ao usuário com o tratamento de algum processo}
+}
+
+\newglossaryentry{jpg} {
+    name=JPG,
+    description={Imagem em formato JPEG}
+}
+
+\newglossaryentry{moodle} {
+    name=Moodle,
+    description={Plataforma para auxiliar na organização de disciplinas de forma online, no IFSP SPO disponível no endereço \url{https://eadcampus.spo.ifsp.edu.br}}
+}
+
+
+\newglossaryentry{tag} {
+    name=tag,
+    plural= {tags},
+    description={Um marcador, a palavra em inglês significa etiqueta}
+}
+                
+\newglossaryentry{telegram} {
+    name=Telegram,
+    description={Aplicativo de mensagens instantâneas que também permite mensagens de texto, voz e conferencias de voz e vídeo}
+}

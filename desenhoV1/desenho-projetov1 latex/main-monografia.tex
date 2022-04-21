@@ -1,0 +1,246 @@
+%% Adaptado a partir de :
+%%    abtex2-modelo-trabalho-academico.tex, v-1.9.2 laurocesar
+%% para ser um modelo para os trabalhos no IFSP-SPO
+
+\documentclass[
+    % -- opções da classe memoir --
+    12pt,               % tamanho da fonte
+    openright,          % capítulos começam em pág ímpar (insere página vazia caso preciso)
+    %twoside,            % para impressão em verso e anverso. Oposto a oneside
+    oneside,
+    a4paper,            % tamanho do papel. 
+    % -- opções da classe abntex2 --
+    %chapter=TITLE,     % títulos de capítulos convertidos em letras maiúsculas
+    %section=TITLE,     % títulos de seções convertidos em letras maiúsculas
+    %subsection=TITLE,  % títulos de subseções convertidos em letras maiúsculas
+    %subsubsection=TITLE,% títulos de subsubseções convertidos em letras maiúsculas
+    % para pacote url reconhecer hifens como separador
+    hyphens,
+%    paginasA3,  % indica que vai utilizar paginas em A3 
+    % Opções que não devem ser utilizadas na versão final do documento
+    draft,              % para compilar mais rápido, remover na versão final
+    MODELO,             % indica que é um documento modelo então precisa dos geradores de texto
+    TODO,               % indica que deve apresentar lista de pendencias 
+    % -- opções do pacote babel --
+    english,            % idioma adicional para hifenização
+    brazil           % o último idioma é o principal do documento
+    ]{ifsp-spo-inf-cpti} % ajustar de acordo com o modelo desejado para o curso
+
+% ---
+% Pacotes básicos 
+% ---
+%\usepackage[utf8]{inputenc}     % Codificacao do documento (conversão automática dos acentos)
+% ---
+
+%\usepackage{style}
+        
+
+
+% --- 
+% CONFIGURAÇÕES DE PACOTES ADICIONAIS UTEIS
+% --- 
+\usepackage{pdfpages}			% para incluir arquivos pdf no documento
+
+
+% ---
+% Informações de dados para CAPA e FOLHA DE ROSTO
+% ---
+\titulo{TÍTULO DO TRABALHO}
+\autor{AUTOR DO TRABALHO}
+
+\preambulo{Modelo canônico de trabalho monográfico acadêmico em conformidade com
+as normas ABNT apresentado à comunidade de usuários \LaTeX.}
+
+% Para versões intermediarias utilizar a data
+% Para versão final de monografia utilizar o ano do depósito
+\data{DATA DO TRABALHO}
+
+% Definir o que for necessário e comentar o que não for necessário
+% Utilizar o Nome Completo
+\orientador{ORIENTADOR}
+\coorientador{COORIENTADOR}
+
+% ---
+
+
+% informações do PDF
+\makeatletter
+\hypersetup{
+        %pagebackref=true,
+        pdftitle={\@title}, 
+        pdfauthor={\@author},
+        pdfsubject={\imprimirpreambulo},
+        pdfcreator={LaTeX with abnTeX2 using IFSP model},
+        pdfkeywords={abnt}{latex}{abntex}{abntex2}{IFSP}{\ifspprefixo}{trabalho acadêmico}, 
+        colorlinks=true,            % false: boxed links; true: colored links
+        linkcolor=blue,             % color of internal links
+        citecolor=blue,             % color of links to bibliography
+        filecolor=magenta,              % color of file links
+        urlcolor=blue,
+        bookmarksdepth=4
+}
+\makeatother
+% --- 
+
+
+% ----
+% Início do documento
+% ----
+\begin{document}
+
+
+% Retira espaço extra obsoleto entre as frases.
+\frenchspacing 
+
+%somente para o exemplo, fica primeiro
+%\input{00-teste}
+\input{00-info}
+
+% -- lista de pendencias gerada pelo todonotes
+% -- altere opções do usepackage para remover na versão final....
+\listoftodos
+\todo[inline]{remover lista de todo da versão final...}
+\newpage
+
+% ----------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS
+% ----------------------------------------------------------
+\pretextual
+
+% ---
+% Capa
+% ---
+\imprimircapa
+
+\newcounter{todocounter}
+\newcommand{\todonum}[2][]
+{\stepcounter{todocounter}\todo[#1]{\thetodocounter: #2}}
+
+
+\todonum[inline]{ajustar titulo do trabalho}
+\todonum[inline]{ajustar autor}
+\todonum[inline]{ajustar data}
+\todonum[inline]{ajustar preambulo}
+\todonum[inline]{ajustar curso}
+\todonum[inline]{ajustar disciplina}
+\todonum[inline]{ajustar departamento}
+\todonum[inline]{ajustar orientador/coorientador/professor(es)}
+% ---
+
+% ---
+% Folha de rosto
+% (o * indica que haverá a ficha bibliográfica)
+% ---
+\imprimirfolhaderosto
+%\imprimirfolhaderosto*
+% ---
+
+% Quando registrado na biblioteca
+%\input{pre-fichacatalografica}
+
+%Caso necessário
+%\input{pre-errata}
+
+%Obrigatório para trabalhos com bancas oficiais
+%\input{pre-aprovacao}
+
+% ---- opcionais 
+\input{pre-dedicatoria}
+\input{pre-agradecimentos}
+\input{pre-epigrafe}
+
+% -- resumo obrigatório
+\input{pre-resumos}
+
+
+% ---
+% inserir lista de ilustrações
+% ---
+\pdfbookmark[0]{\listfigurename}{lof}
+\listoffigures*
+\cleardoublepage
+% ---
+
+% ---
+% inserir lista de tabelas
+% ---
+\pdfbookmark[0]{\listtablename}{lot}
+\listoftables*
+\cleardoublepage
+% ---
+
+% ---
+% inserir lista de quadros
+% ---
+\pdfbookmark[0]{\listofquadrosname}{loq}
+\listofquadros*
+\cleardoublepage
+% ---
+
+\input{pre-siglas}
+
+\input{pre-simbolos}
+\todo[inline]{Remover lista de simbolos se não for necessário}
+
+
+% ---
+% inserir o sumario
+% ---
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage
+% ---
+
+
+% ----------------------------------------------------------
+% ELEMENTOS TEXTUAIS
+% ----------------------------------------------------------
+\textual
+
+\input{textos-introducao}
+\input{textos-revisao-literatura}
+
+% Para facilitar a manutenção é sempre melhore criar um arquivo por capitulo, para exemplo isso não é necessário 
+\input{textos-desenvolvimento}
+% exemplos de escrita LaTeX
+\input{exemplos/exemplos}
+
+
+
+\input{textos-conclusao}
+
+% ----------------------------------------------------------
+% Finaliza a parte no bookmark do PDF
+% para que se inicie o bookmark na raiz
+% e adiciona espaço de parte no Sumário
+% ----------------------------------------------------------
+\phantompart
+
+% ----------------------------------------------------------
+% ELEMENTOS PÓS-TEXTUAIS
+% ----------------------------------------------------------
+\postextual
+% ----------------------------------------------------------
+
+% ----------------------------------------------------------
+% Referências bibliográficas
+% ----------------------------------------------------------
+\bibliography{referencias,exemplos/abntex2-doc-abnt-6023}
+
+\input{pos-glossario.tex}
+
+\input{pos-apendices}
+\input{pos-anexos}
+
+
+%---------------------------------------------------------------------
+% INDICE REMISSIVO - Quando necessário 
+% As palavras indexadas devem ser definidas com \index{} no texto
+%---------------------------------------------------------------------
+\phantompart
+\printindex
+\todonum[inline]{remover indice remissivo se não for necessário}
+
+%---------------------------------------------------------------------
+
+\end{document}

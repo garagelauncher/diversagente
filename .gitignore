@@ -1,4 +1,6 @@
+## Global
 node_modules
+dist
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
