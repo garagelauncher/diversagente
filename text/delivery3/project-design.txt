@@ -1,0 +1,41 @@
+#Arquitetura da solução apresentada
+Nosso app seguirá o seguinte desenho:
+
+>>> Aqui vai a imagem diversagente-arquitetura-v1.png <<<
+
+
+#Tecnologias a serem utilizadas
+Para o lado do cliente, iremos utilizar o React Native com Typescript junto a ferramenta Expo para testar o app com as APIs nativas do Android que essa ferramenta disponibiliza.
+Já para o lado do servidor, utilizaremos Node.js com Typescript e framework NestJS para a construção da API, MongoDB como banco de dados, Prisma como ORM, Cloudinary como storage e para documentação de API, a especificação OpenAPI.
+Para o ambiente de desenvolvimento, será utilizado o Docker a fim de obtermos facilidade em executar o projeto independente do Sistema Operacional local.
+A hospedagem se dará por meio da Play Store para o app em React Native, do Heroku para o backend em Node.js e do MongoDB Atlas para o banco de dados.
+Todo o versionamento será feito por meio das plataformas Github e Subversion.
+Para realizar a prototipação das interfaces, será utilizada a ferramenta Figma e a construção de fluxos e brainstorms da equipe se darão por meio do Miro e Whimsical.
+Por fim, para o gerenciamento do projeto, utilizaremos o Trello para registro de backlog e acompanhamento do status de desenvolvimento das histórias, o Discord para realização das cerimônias semanais da equipe e o WhatsApp para comunicações rápidas e mais urgentes entre o time.
+
+
+#Manutenibilidade da aplicação desenvolvida
+
+##Ferramentas compatíveis com as tecnologias escolhidas para Testes automatizados e Análise Estática
+Usaremos Jest, um framework JavaScript para testes automatizados, e ESLint para análise estática do código.
+
+##Sistemas de log para toda a aplicação
+Papertrail será o sistema de log que utilizaremos para mapear o comportamento da API em Node.js.
+
+
+##Um processo de Integração Contínua
+A partir das Github Actions iremos estabelecer nosso workflow de CI (Continuous Integration).
+
+##Especificação do “Coding Convention” (seja o próprio da linguagem, ou um criado/adaptado pela equipe)
+Usaremos o padrão recomendado pelo próprio ESLint para adequar:
+- Layout e formatação;
+- Sugestão de alternativas para implementação do código (como, por exemplo, o uso do padrão camelCase para nomenclatura);
+- Regras que visam corrigir possíveis problemas de lógica do código.
+Todas as especificações a serem utilizadas estão disponíveis em: https://eslint.org/docs/rules/
+
+
+#Design Patterns pertinentes à aplicação
+Utilizaremos os padrões Observer, Singleton e Injeção de Dependência.
+
+
+#Diagrama de classes do sistema
