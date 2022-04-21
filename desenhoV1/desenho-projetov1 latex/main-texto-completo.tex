@@ -1,0 +1,337 @@
+%% Adaptado a partir de :
+%%    abtex2-modelo-trabalho-academico.tex, v-1.9.2 laurocesar
+%% para ser um modelo para os trabalhos no IFSP-SPO
+
+\documentclass[
+    % -- opções da classe memoir --
+    12pt,               % tamanho da fonte
+    openright,          % capítulos começam em pág ímpar (insere página vazia caso preciso)
+    %twoside,            % para impressão em verso e anverso. Oposto a oneside
+    oneside,
+    a4paper,            % tamanho do papel. 
+    % -- opções da classe abntex2 --schwinn
+    % Opções que não devem ser utilizadas na versão final do documento
+    %draft,              % para compilar mais rápido, remover na versão final
+    paginasA3,  % indica que vai utilizar paginas em A3 
+    BIBLATEX,           % indica para utilizar BIBLATEX em vez do abntex2cite
+    REFINDENT,          % não fica exatamente no formato da ABNT, mas melhora muito a formatação
+                        % não utilizar REFINDENT na versão final
+    MODELO,             % indica que é um documento modelo então precisa dos geradores de texto
+    TODO,               % indica que deve apresentar lista de pendencias 
+    % -- opções do pacote babel --
+    english,            % idioma adicional para hifenização
+    brazil              % o último idioma é o principal do documento
+    ]{ifsp-spo-inf-cemi} % ajustar de acordo com o modelo desejado para o curso
+\AtBeginDocument
+
+% ---
+% Informações de dados para CAPA e FOLHA DE ROSTO
+% ---
+\titulo{DESENHO DO PROJETO}
+
+% Trabalho individual
+%\autor{AUTOR DO TRABALHO}
+
+% Trabalho em Equipe
+% ver também https://github.com/abntex/abntex2/wiki/FAQ#como-adicionar-mais-de-um-autor-ao-meu-projeto
+\renewcommand{\imprimirautor}{
+\begin{tabular}{lr}
+Gabriel de Morais Ruiz & SP3046893 \\
+Grazielli Lima Berti & SP3046966 \\
+Gustavo Lourenço de Freitas & SP3049566 \\
+João Vitor Silva Bispo & SP3052672 \\
+Tayna Rita de França Souza & SP3050173 \\
+Vinicius Almeida Soares & SP3046991 \\
+Viviane de Santana Queiroz & SP3053601 \\
+\end{tabular}
+}
+
+
+\disciplina{PI1A5 - Projeto Integrado I}
+
+\preambulo{Entrega do desenho do projeto para a disciplina de Projeto Integrado I \LaTeX.}
+
+\data{19/04/2022}
+
+% Definir o que for necessário e comentar o que não for necessário
+% Utilizar o Nome Completo, abntex tem orientador e coorientador
+% então vão ser utilizados na definição de professor
+\renewcommand{\orientadorname}{Professor:}
+\orientador{JOSÉ BRAZ DE ARAUJO}
+\renewcommand{\coorientadorname}{Professor:}
+\coorientador{MARCELO TAVARES DE SANTANA}
+
+
+% ---
+
+
+% informações do PDF
+\makeatletter
+\hypersetup{
+        %pagebackref=true,
+        pdftitle={\@title}, 
+        pdfauthor={\@author},
+        pdfsubject={\imprimirpreambulo},
+        pdfcreator={LaTeX with abnTeX2 using IFSP model},
+        pdfkeywords={abnt}{latex}{abntex}{abntex2}{IFSP}{\ifspprefixo}{trabalho acadêmico}, 
+        colorlinks=true,            % false: boxed links; true: colored links
+        linkcolor=blue,             % color of internal links
+        citecolor=blue,             % color of links to bibliography
+        filecolor=magenta,              % color of file links
+        urlcolor=blue,
+        bookmarksdepth=4
+}
+\makeatother
+% --- 
+
+% carregando aqui referencias quando utilizando BIBLATEX
+\IfPackageLoaded{biblatex}{%
+\addbibresource{referencias.bib}
+\addbibresource{exemplos/abntex2-doc-abnt-6023.bib}
+}{}
+
+% ----
+% Início do documento
+% ----
+\begin{document}
+
+
+
+% Retira espaço extra obsoleto entre as frases.
+\frenchspacing 
+
+%somente para o exemplo, fica primeiro
+
+% -- lista de pendencias gerada pelo todonotes
+% -- altere opções do usepackage para remover na versão final....
+
+\newpage
+
+% ----------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS
+% ----------------------------------------------------------
+\pretextual
+
+% ---
+% Capa
+% ---
+\imprimircapa
+
+\newcounter{todocounter}
+\newcommand{\todonum}[2][]
+{\stepcounter{todocounter}\todo[#1]{\thetodocounter: #2}}
+
+% ---
+
+% ---
+% Folha de rosto
+% (o * indica que haverá a ficha bibliográfica)
+% ---
+\imprimirfolhaderosto
+%\imprimirfolhaderosto*
+% ---
+
+% Quando registrado na biblioteca
+%\input{pre-fichacatalografica}
+
+%Caso necessário
+%\input{pre-errata}
+
+%Obrigatório para trabalhos com bancas oficiais
+%\input{pre-aprovacao}
+
+% ---- opcionais 
+
+% -- resumo obrigatório
+\input{pre-resumos}
+
+
+% ---
+% inserir lista de ilustrações
+% ---
+\pdfbookmark[0]{\listfigurename}{lof}
+\listoffigures*
+\cleardoublepage
+% ---
+
+% ---
+% inserir lista de tabelas
+% ---%
+%\pdfbookmark[0]{\listtablename}{lot}
+%\listoftables*
+%\cleardoublepage
+% ---
+
+% ---
+% inserir lista de quadros
+% ---
+\pdfbookmark[0]{\listofquadrosname}{loq}
+\listofquadros*
+\cleardoublepage
+% ---
+
+
+% ---
+% inserir o sumario
+% ---
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage
+% ---
+
+
+% ----------------------------------------------------------
+% ELEMENTOS TEXTUAIS
+% ----------------------------------------------------------
+\textual
+
+\input{textos-introducao}
+\input{textos-revisao-literatura}
+
+% Para facilitar a manutenção é sempre melhore criar um arquivo por capitulo, para exemplo isso não é necessário 
+\input{textos-desenvolvimento}
+
+
+% exemplos de escrita LaTeX e erros comuns
+
+
+
+
+
+\input{textos-conclusao}
+
+% ----------------------------------------------------------
+% Finaliza a parte no bookmark do PDF
+% para que se inicie o bookmark na raiz
+% e adiciona espaço de parte no Sumário
+% ----------------------------------------------------------
+\phantompart
+
+% ----------------------------------------------------------
+% ELEMENTOS PÓS-TEXTUAIS
+% ----------------------------------------------------------
+
+% ----------------------------------------------------------
+
+% ----------------------------------------------------------
+% Referências bibliográficas
+% ----------------------------------------------------------
+% quando não esta utilizando biblatex tem que carregar as referencias aqui
+\IfPackageLoaded{biblatex}{%
+\printbibliography
+
+}{%
+\bibliography{}
+}
+
+\bibliography{EQUIPE PM3. Product Owner: função, salário e tudo que você precisa saber sobre o papel [S.I] [2022]. Disponível <https://www.cursospm3.com.br/product-owner-o-que-faz-salario-habilidades/>. Acesso em: 09 de abr. 2022}
+\\
+
+\bibliography{REHKOPF, Max. Sprints [S.I] [2022?]. Disponível em <https://www.atla-\\ssian.com/br/agile/scrum/sprints> Acesso em: 09 de abr. 2022}
+\\
+
+\bibliography{REHKOPF, Max. O que é um scrum master? [S.I] [2018?]. Disponível em\\ <https://www.atlassian.com/br/agile/scrum/scrum-master>. Acesso em: 09 de abr. 2022}
+\\
+
+\bibliography{WEST, Dave. Planejamento do Sprint [S.I] [2022?]. Disponível em\\ <https://www.atlassian.com/br/agile/scrum/sprint-planning> Acesso em: 17 de abr. 2022}
+
+\bibliography{Ortega, FranciscoDeficiência, autismo e neurodiversidade. Ciência & Saúde Coletiva [online]. 2009, v. 14, n. 1 [Acessado 30 Março 2022] , pp. 67-77. Disponível em: <https://doi.org/10.1590/S1413-81232009000100012>. Epub 20 Jan 2009. ISSN 1678-4561. https://doi.org/10.1590/S1413-81232009000100012.).}
+\\
+
+\bibliography{Moraes, Anna Victória Pandjarjian Mekhitarian, Bialer, Marina Martins e Lerner, RogérioCLÍNICA E PESQUISA DO AUTISMO: OLHAR ÉTICO PARA O SOFRIMENTO DA FAMÍLIA1 1 Apoio e financiamento: Fundação de Amparo a Pesquisa do Estado de São Paulo (FAPESP), pela concessão da bolsa de mestrado,número 18/03306-7 e do auxílio à pesquisa número 13/25332-6. . Psicologia em Estudo [online]. 2021, v. 26 [Acessado 18 Abril 2022] , e48763. Disponível em: <https://doi.org/10.4025/psicolestud.v26i0.48763>. Epub 10 Maio 2021. ISSN 1807-0329. https://doi.org/10.4025/psicolestud.v26i0.48763.}
+\\
+
+\bibliography{CARDIERI, Mariana Prates ESTUDOS CULTURAIS, NEURODIVERSIDADE E PSICANÁLISE: Um lugar para o autismo. UNIVERSIDADE FUMEC MESTRADO EM ESTUDOS CULTURAIS CONTEMPORÂNEOS. 2018, [Acessado 30 março 2022]. Disponível em: <https://repositorio.fumec.br/handle/123456789/139>. }
+\\
+
+\bibliography{Ana Carolina de Holanda Machado¹, Deborah Gerrane Damásio Nascimento¹, José Antônio da Silva Neto ¹, Mariana Ribeiro Rodrigues Alves¹, Vitória Daiany Guimarães Ramos¹, Júlia Maria Rodrigues de Oliveira². 1. Discente do curso de medicina do Centro Universitário de Anápolis - UniEVANGÉLICA. 2. Docente do curso de medicina do Centro Universitário de Anápolis - UniEVANGÉLICA. Revista Educação em saúde [RESU]. A relação entre a neurodiversidade e o Transtorno do Espectro Autista. [Acessado 30 março 2022]. Disponível em: < https://core.ac.uk/download/pdf/270182721.pdf >.}
+\\
+
+\bibliography{DIAS, Fabrízia Miranda de Alvarenga, DENUCCI, Moniki Aguiar, RODRIGUES, Daniele
+Fernandes, SOUZA, Carlos Henrique Medeiros de. Transtorno do espectro autista e as concepções pragmáticas no contexto escolar. UENF, UFF, UENF, v. 27 n. 81 Supl. (2021) [Acessado 30 março 2022]. Disponível em: <https://www.revistaphilologus.org.br\\/index.php/rph/article/view/1056>. 
+}
+\\
+
+\bibliography{RODRIGUES, F. A.; SANTANA, R. C. G. Contextualização de conceitos teóricos no processo de coleta de dados de redes sociais online. Informação & Tecnologia, v. 5, n. 1, p. 18-36, 2018. Disponível em: <http://hdl.handle.net/20.500.11959/brapci/110391>. Acesso em: 18 abr. 2022.}
+\\
+
+\bibliography{TOKARNIA, Mariana. Repórter da Agência Brasil - Rio de Janeiro. Celular é o principal meio de acesso à internet no país. Publicado em 29/04/2020. Disponível em: < https://agenciabrasil.ebc.com.br/economia/noticia/2020-04/celular-e-o-principal-meio-de-acesso-internet-no-pais>. Acesso em: 30 Março. 2022.}
+\\
+
+\bibliography{GABRIELA. Meu filho foi diagnosticado com autismo e agora?. Genial Care, 2020. Disponível em: (https://genialcare.com.br/blog/meu-filho-foi-diagnosticado-com-autismo-e-agora/). Acesso em: (30 março de 2022).}
+\\
+\bibliography{GISABELA. Neurodiversidade: a importância da inclusão. eCycle. Comportamento Disponível em: (https://www.ecycle.com.br/neurodiversidade/). Acesso em: (30 março de 2022).}
+\\
+
+\bibliography{MENDONÇA, Victor, ABREU, Tiago. Tudo o que você precisa saber sobre Neurodiversidade e Autismo. O Mundo Autista. Autismo. Disponível em: (https://omundoautista\\.uai.com.br/tudo-o-que-voce-precisa-saber-sobre-neurodiversidade-e-autismo/amp/). Acesso em: (30 março de 2022).}
+\\
+
+\bibliography{MENEZES, Clara. Redes sociais ajudam famílias a entenderem melhor o autismo. Portaldonic. Disponível em: (http://portaldonic.com.br/jornalismo/2017/07/17/redes-sociais-ajudam-familias-a-entenderem-melhor-o-autismo/). Acesso em: (30 março de 2022).}
+\\
+
+\bibliography{Francisco OrtegaI; Rafaela ZorzanelliI; Lilian Kozslowski MeierhofferII; Celita Almeida RosárioIII; Clarissa Freitas de AlmeidaIV; Bárbara Fonseca da Costa Caldeira de AndradaV; Beatriz da Silva ChagasV; Clara FeldmanV. IDepartamento de Políticas e Instituições de Saúde, IMS/UERJ. IIGraduanda, curso de Medicina, Universidade Federal do Rio de Janeiro. IIIAluna de Pós-graduação Lato Sensu em Saúde Pública, Escola Nacional de Saúde Pública Sérgio Arouca.
+IVMestranda, Programa de Pós-graduação em Psicologia Social, UERJ.
+VDoutorandas, Programa de Pós-graduação em Saúde Coletiva, IMS/UERJ. A construção do diagnóstico do autismo em uma rede social virtual brasileira. [Acessado 30 março 2022]. Disponível em: <https://www.scielosp.org/article/icse/2013.v17n44/119-132/#>.
+}
+\\
+
+\bibliography{MENDONÇA, Sophia. Neurodivergentes: Autismo na Contemporaneidade. Manduruvá Edição Especiais, 2019. Link para o livro: https://www.google.com.br/books/edition\\/Neurodivergentes/xHAaEAAAQBAJ?hl=pt-BR&gbpv=0 }
+\\
+
+\bibliography{ABREU, Thiago. O que é neurodiversidade? Cânone Editoração Ltda, 2022. Link para o livro: https://www.google.com.br/books/edition/O_que_é_neurodiversidade\\/XCpcEAAAQBAJ?hl=pt-BR&gbpv=0}
+\\
+
+\bibliography{ Nicole Baumer, MD, MEd, Contributor, Julia Frueh, MD, Guest Contributor.  What is neurodiversity?. health.harvard. Disponível em: (https://www.health.harvard.edu/blog/what-is-neurodiversity-202111232645). Acesso em: (30 março de 2022).}
+\\
+
+\bibliography{exceptionalindividuals. Neurodiversity: Meanings, Types & Examples Find out more about the different types of neurodivergence. Disponível em: (https://exceptionalindividuals.com\\/neurodiversity/). Acesso em: (30 março de 2022).}
+\\
+
+\bibliography{SOUZA, Brenda, DESENVOLVIMENTO ATÍPICO E INCLUSÃO: CONCEPÇÕES DE ESTUDANTES DE CIÊNCIAS NATURAIS. Ciências Naturais [online]. 2001 [Acessado 30 Março 2022]: <https://bdm.unb.br/bitstream/10483/18192/1\\/2017_BrendaKevellynSouza_tcc.pdf>. }
+\\
+
+\bibliography{CANGUÇU, Raphael. O que são Requisitos Funcionais e Requisitos Não Funcionais? [S.I] [2021]. Disponível em <https://codificar.com.br/requisitos-funcionais-nao-funcionais/>. Acesso em: 15 de abr. 2022 }
+\\
+
+\bibliography{UNESP. Requisitos de Software [S.I] [2005]. Disponível em <https://www.dcce.ibilce.unesp.br/~ines/cursos/eng_soft/aula04.pdf>. Acesso em: 16 de abr. 2022}
+\\
+
+\bibliography{}
+\\
+
+\bibliography{}
+\\
+
+\bibliography{}
+\\
+
+\bibliography{}
+\\
+
+\bibliography{}
+\\
+
+\bibliography{}
+\\
+
+\bibliography{}
+\\
+
+\bibliography{}
+\\
+
+\bibliography{}
+\\
+
+\bibliography{}
+\\
+
+\bibliography{}
+%---------------------------------------------------------------------
+% INDICE REMISSIVO - Quando necessário 
+% As palavras indexadas devem ser definidas com \index{} no texto
+%---------------------------------------------------------------------
+\phantompart
+%---------------------------------------------------------------------
+
+\end{document}
