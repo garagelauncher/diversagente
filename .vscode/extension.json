@@ -1,0 +1,19 @@
+{
+  "recommendations": [
+    "vivaxy.vscode-conventional-commits",
+    "prisma.prisma",
+    "eamodio.gitlens",
+    "mhutchie.git-graph",
+    "naumovs.color-highlight",
+    "kamikillerto.vscode-colorize",
+    "ms-vscode.vscode-typescript-next",
+    "ms-azuretools.vscode-docker",
+    "mikestead.dotenv",
+    "christian-kohler.npm-intellisense",
+    "christian-kohler.path-intellisense",
+    "editorconfig.editorconfig",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "styled-components.vscode-styled-components"
+  ]
+}
