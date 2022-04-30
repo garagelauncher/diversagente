@@ -1,14 +1,11 @@
 ---
-- blog: "https://garagelaunch.blogspot.com/"
-  descr: "Uma rede social que visa facilitar troca de experiências entre pessoas que convivam com crianças neurodiversas."
-  disciplina: PI1A5
-  equipe: "Garage Launch"
-  others:
-    - title: GitHub
-      url: "https://github.com/garagelauncher"
-  periodo: 2022-01
+- disciplina: PI1A5
+  equipe: Garage Launch
   projeto: diversaGente
-  repo: /S202201-PI/GarageLaunch
+  periodo: 2022-01
+  repo: "/S202201-PI/GarageLaunch"
+  blog: "https://garagelaunch.blogspot.com/"
+  youtube: "https://www.youtube.com/channel/UCs1XOD3RrJ2OcNL3p-R0kBQ"
   tags:
     - mobile
     - neurodiversidade
@@ -16,5 +13,5 @@
     - comunicacao
     - app
     - redesocial
-  turma: TER-22
-  youtube: "https://www.youtube.com/channel/UCs1XOD3RrJ2OcNL3p-R0kBQ"
+  turma: TER
+  descr: "Uma rede social que visa facilitar troca de experiências entre pessoas que convivam com crianças neurodiversas."
