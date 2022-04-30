@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="43cm" height="26cm" viewBox="14 22 852 520" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="117.6,250.6 15,250.6 15,38 421.528,38 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="407.764,46 423.764,38 407.764,30 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="17" y="141.281"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:end;font-family:monospace;font-style:normal;font-weight:normal" x="113.6" y="247.581">+Iterators</text>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:end;font-family:monospace;font-style:normal;font-weight:normal" x="113.6" y="263.581"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:end;font-family:monospace;font-style:normal;font-weight:normal" x="406" y="34.9814"/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="484.9,146.236 484.9,184 197.25,184 197.25,236.6 "/>
+    <polygon style="fill: #ffffff" points="492.9,146.236 484.9,130.236 476.9,146.236 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="492.9,146.236 484.9,130.236 476.9,146.236 "/>
+  </g>
+  <g>
+    <rect style="fill: #d8e5e5" x="398.638" y="420.908" width="140.9" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="398.638" y="420.908" width="140.9" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="469.088" y="439.76">Glyph</text>
+    <rect style="fill: #d8e5e5" x="398.638" y="448.908" width="140.9" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="398.638" y="448.908" width="140.9" height="8"/>
+    <rect style="fill: #d8e5e5" x="398.638" y="456.908" width="140.9" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="398.638" y="456.908" width="140.9" height="20"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="401.638" y="470.789">+CreateIterator()</text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="484.9,146.236 484.9,184 412.3,184 412.3,236.6 "/>
+    <polygon style="fill: #ffffff" points="492.9,146.236 484.9,130.236 476.9,146.236 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="492.9,146.236 484.9,130.236 476.9,146.236 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="484.9,146.236 484.9,184 571.7,184 571.7,236.6 "/>
+    <polygon style="fill: #ffffff" points="492.9,146.236 484.9,130.236 476.9,146.236 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="492.9,146.236 484.9,130.236 476.9,146.236 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="484.9,146.236 484.9,184 729.7,184 729.7,236.6 "/>
+    <polygon style="fill: #ffffff" points="492.9,146.236 484.9,130.236 476.9,146.236 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="492.9,146.236 484.9,130.236 476.9,146.236 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="276.9,314.6 306,314.6 306,434.908 394.166,434.908 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="380.402,442.908 396.402,434.908 380.402,426.908 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="308" y="371.735"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="280.9" y="311.581">+root</text>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="280.9" y="327.581"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:end;font-family:monospace;font-style:normal;font-weight:normal" x="378.638" y="431.889"/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="347.974,314.6 327.974,314.6 327.974,420.908 394.166,420.908 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="380.402,428.908 396.402,420.908 380.402,412.908 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="329.974" y="364.735"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:end;font-family:monospace;font-style:normal;font-weight:normal" x="343.974" y="311.581"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:end;font-family:monospace;font-style:normal;font-weight:normal" x="378.638" y="417.889"/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="630.6,314.6 640.8,314.6 640.8,434.908 544.01,434.908 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="557.774,426.908 541.774,434.908 557.774,442.908 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="642.8" y="371.735"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="634.6" y="311.581"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="559.538" y="431.889"/>
+  </g>
+  <g>
+    <polygon style="fill: #ffffb3" points="502,507 692.8,507 704.8,519 704.8,541 502,541 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="502,507 692.8,507 704.8,519 704.8,541 502,541 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" points="692.8,507 692.8,519 704.8,519 "/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:courier new;font-style:normal;font-weight:normal" x="509" y="530.656">
+      <tspan x="509" y="530.656">returns new NullIterator</tspan>
+    </text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="539.538,466.908 603.4,466.908 603.4,500.295 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="598.4,487.647 603.4,503.647 608.4,487.647 "/>
+  </g>
+  <g>
+    <polygon style="fill: #ffffb3" points="713.546,425 811.946,425 823.946,437 823.946,459 713.546,459 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="713.546,425 811.946,425 823.946,437 823.946,459 713.546,459 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" points="811.946,425 811.946,437 823.946,437 "/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:courier new;font-style:normal;font-weight:normal" x="720.546" y="448.656">
+      <tspan x="720.546" y="448.656">returns TRUE</tspan>
+    </text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="788.6,314.6 863.904,314.6 863.904,442 830.651,442 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="843.299,437 827.299,442 843.299,447 "/>
+  </g>
+  <g>
+    <g>
+      <rect style="fill: #d8e5e5" x="426" y="24" width="117.8" height="28"/>
+      <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="426" y="24" width="117.8" height="28"/>
+      <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="484.9" y="42.8516">Iterator</text>
+      <rect style="fill: #d8e5e5" x="426" y="52" width="117.8" height="8"/>
+      <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="426" y="52" width="117.8" height="8"/>
+      <rect style="fill: #d8e5e5" x="426" y="60" width="117.8" height="68"/>
+      <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="426" y="60" width="117.8" height="68"/>
+      <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:italic;font-weight:700" x="429" y="73.8812">+First()</text>
+      <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:italic;font-weight:700" x="429" y="89.8812">+Next()</text>
+      <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:italic;font-weight:700" x="429" y="105.881">+IsDone()</text>
+      <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:italic;font-weight:700" x="429" y="121.881">+CurrentItem()</text>
+    </g>
+    <g>
+      <rect style="fill: #d8e5e5" x="117.6" y="236.6" width="159.3" height="28"/>
+      <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="117.6" y="236.6" width="159.3" height="28"/>
+      <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="197.25" y="255.452">PreorderIterator</text>
+      <rect style="fill: #d8e5e5" x="117.6" y="264.6" width="159.3" height="8"/>
+      <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="117.6" y="264.6" width="159.3" height="8"/>
+      <rect style="fill: #d8e5e5" x="117.6" y="272.6" width="159.3" height="68"/>
+      <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="117.6" y="272.6" width="159.3" height="68"/>
+      <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="120.6" y="286.481">+First()</text>
+      <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="120.6" y="302.481">+Next()</text>
+      <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="120.6" y="318.481">+IsDone()</text>
+      <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="120.6" y="334.481">+CurrentItem()</text>
+    </g>
+    <g>
+      <rect style="fill: #d8e5e5" x="347.974" y="236.6" width="128.65" height="28"/>
+      <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="347.974" y="236.6" width="128.65" height="28"/>
+      <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="412.299" y="255.452">ArrayIterator</text>
+      <rect style="fill: #d8e5e5" x="347.974" y="264.6" width="128.65" height="8"/>
+      <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="347.974" y="264.6" width="128.65" height="8"/>
+      <rect style="fill: #d8e5e5" x="347.974" y="272.6" width="128.65" height="68"/>
+      <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="347.974" y="272.6" width="128.65" height="68"/>
+      <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="350.974" y="286.481">+First()</text>
+      <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="350.974" y="302.481">+Next()</text>
+      <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="350.974" y="318.481">+IsDone()</text>
+      <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="350.974" y="334.481">+CurrentItem()</text>
+    </g>
+    <g>
+      <rect style="fill: #d8e5e5" x="670.8" y="236.6" width="117.8" height="28"/>
+      <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="670.8" y="236.6" width="117.8" height="28"/>
+      <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="729.7" y="255.452">NullIterator</text>
+      <rect style="fill: #d8e5e5" x="670.8" y="264.6" width="117.8" height="8"/>
+      <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="670.8" y="264.6" width="117.8" height="8"/>
+      <rect style="fill: #d8e5e5" x="670.8" y="272.6" width="117.8" height="68"/>
+      <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="670.8" y="272.6" width="117.8" height="68"/>
+      <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="673.8" y="286.481">+First()</text>
+      <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="673.8" y="302.481">+Next()</text>
+      <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="673.8" y="318.481">+IsDone()</text>
+      <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="673.8" y="334.481">+CurrentItem()</text>
+    </g>
+    <g>
+      <rect style="fill: #d8e5e5" x="512.8" y="236.6" width="117.8" height="28"/>
+      <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="512.8" y="236.6" width="117.8" height="28"/>
+      <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="571.7" y="255.452">ListIterator</text>
+      <rect style="fill: #d8e5e5" x="512.8" y="264.6" width="117.8" height="8"/>
+      <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="512.8" y="264.6" width="117.8" height="8"/>
+      <rect style="fill: #d8e5e5" x="512.8" y="272.6" width="117.8" height="68"/>
+      <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="512.8" y="272.6" width="117.8" height="68"/>
+      <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="515.8" y="286.481">+First()</text>
+      <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="515.8" y="302.481">+Next()</text>
+      <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="515.8" y="318.481">+IsDone()</text>
+      <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="515.8" y="334.481">+CurrentItem()</text>
+    </g>
+  </g>
+</svg>
