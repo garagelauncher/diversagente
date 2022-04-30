@@ -1,0 +1,26 @@
+Metodologia de gestão de projeto e desenvolvimento utilizadas.
+ 
+A metodologia que o grupo escolheu para ser usado é o Scrum. Primeiramente pelo fato de ser ágil e também por estarmos em um desenvolvimento de projeto no qual haverá necessidade de programar uma rede social e o Scrum atualmente é amplamente utilizado por equipes de desenvolvedores e também por ser a que o grupo está mais habituado a trabalhar.
+Como estamos seguindo a metodologia ágil Scrum, existe uma “hierarquia” e responsabilidades para que o desenvolvimento seja o mais eficiente possível. Para a nossa equipe decidimos optar pelos cargos de Scrum Master, Product Owner e Desenvolvedores.
+Scrum Master sendo o responsável para que a estrutura do Scrum seja seguida e realizada. Tira empecilhos de membros da equipe para que o desenvolvimento não seja comprometido, verifica a necessidade de adaptação do Scrum e obter um melhor fluxo de trabalho. O Gustavo Freitas ficou com a função de ser o Scrum Master do time.
+Tayna França Soza é a Product Owner (PO) da equipe e “representa os interesses de stakeholders (no sentido de agregar valor ao negócio), define funcionalidades do produto e faz a gestão do backlog, priorizando tarefas segundo métodos ágeis, como o Scrum.” (Equipe PM3, 2022)
+Desenvolvedores são os responsáveis de verificar como que as alterações propostas pelo PO vão ser feitas e se podem ser feitas, integrações, modelagem de banco de dados, programação de código do projeto, definir arquitetura e padronização de commits e documentação do código para que ele tenha uma manutenibilidade alta caso seja necessário manutenções futuras e colocar a aplicação em produção sem nenhum problema futura. Os responsáveis por essas funções são: Gabriel Ruiz, Grazielli Berti, João Bispo, Vinicius Soares e Viviane Queiroz.
+As Sprints que definem o que vamos fazer em um certo período de tempo e devido ao curto espaço de tempo entre as entregas, apresentações e MVP, foi decidido que elas serão de uma semana. 
+Para termos um planejamento eficaz e não passar do prazo em nenhuma entrega, foi acordado que a cada apresentação criaríamos o back log que precisa ser zerado a cada entrega, dessa maneira conseguiríamos ter um visão do esforço que vamos precisar colocar nas tarefas, e também para distribuir conforme conhecimento específico de cada integrante do grupo. 
+Toda terça feira é feita uma nova sprint e também verificamos o que conseguimos fazer de entrega. “O planejamento do sprint deve ser restringido ao máximo de duas horas por cada semana do sprint. Então, por exemplo, a reunião de planejamento do sprint para um sprint de duas semanas teria no máximo duas horas.” (WEST, [S.I]), sendo assim, usamos o começo das aulas de terça-feira para fazer o planejamento da sprint. 
+
+
+
+
+
+
+EQUIPE PM3. Product Owner: função, salário e tudo que você precisa saber sobre o papel [S.I] [2022]. Disponível <https://www.cursospm3.com.br/product-owner-o-que-faz-salario-habilidades/>. Acesso em: 09 de abr. 2022
+ 
+MENVIE. Metodologia de Projeto: O que é e como aplicar na sua empresa? [S.I] [2019?]. Disponível em <https://menvie.com.br/metodologia-de-projeto/> Acesso em:  09 de abr. 2022.
+REHKOPF, Max. Sprints [S.I] [2022?]. Disponível em <https://www.atlassian.com/br/agile/scrum/sprints> Acesso em: 09 de abr. 2022
+REHKOPF, Max. O que é um scrum master? [S.I] [2018?]. Disponível em <https://www.atlassian.com/br/agile/scrum/scrum-master>. Acesso em: 09 de abr. 2022
+
+WEST, Dave. Planejamento do Sprint [S.I] [2022?]. Disponível em <https://www.atlassian.com/br/agile/scrum/sprint-planning> Acesso em: 17 de abr. 2022
+
+ 
+
