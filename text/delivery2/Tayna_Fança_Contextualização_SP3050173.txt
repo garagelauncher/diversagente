@@ -1,0 +1,141 @@
+
+o Contextualização
+De acordo com o Instituto Brasileiro de Geografia e Estatística (IBGE) publicado em(29/04/2020), o uso do celular para acessar a internet cresceu significativamente no Brasil. Os aparelhos são o principal meio de acesso à internet, usado pela grande maioria da população brasileira.  As informações são da Pesquisa Nacional por Amostra de Domicílios Contínua - Tecnologia da Informação e Comunicação (PNAD Contínua TIC) 2018. Seguindo esse contexto, as  redes socias têm ganhado grande relevância nos últimos tempos, modificando significativamente a forma de comunicação e socialização, atividades que são inerentes aos seres humanos e que encontrou nas ferramentas APP’s de redes sociais uma nova forma de praticar antigos hábitos. De acordo com essas circunstâncias, nosso aplicativo é uma rede social, voltada principalmente para pais de crianças neurodiversas, ou seja, direcionada a um público especifico de pessoas.
+
+o Problematização
+
+Todo pai, mãe e responsável de uma criança diagnosticada com alguma neurodiversidade compreende e se lembra de como é difícil receber esse primeiro diagnostico. Este momento costuma ser um misto de emoções, terror e medo do que irá acontecer com a criança dali em diante. Estes são sentimentos normais quando recebe uma informação que até então era desconhecida.
+No meio em que vivemos, pouco se fala sobre neurodiversidades, mas com um pouco de pesquisa descobrimos que muitas pessoas que apresentam essas condições, podem ter uma vida normal, brincar, estudar, trabalhar, e construir relacionamentos. Assim como qualquer outra pessoa. A única diferença é que a pessoa diagnosticada com transtorno global de desenvolvimento se desenvolve de forma específica, muitas vezes com uma preocupação a mais em relação ao ambiente e estímulos.
+Para que seja mais fácil receber esse diagnóstico e para nenhum pai se sentir sozinho estamos criando um aplicativo de rede social voltada para pais e responsáveis de crianças neurodiversas. Para que juntos eles possam compartilhar informações e cuidados, quebrar o preconceito que sentem ao receber o diagnostico, buscar dicas de profissionais especializados em sua região com notas e opiniões, atividades uteis nesse processo de aprendizado e principalmente entender que não precisa se esconder pois agora você faz parte de uma comunidade que te entende, ou seja você nunca estará sozinha.
+
+
+o Objetivos
+
+A falta de informação de qualidade e confiável a respeito do autismo e outros transtornos de desenvolvimento como: Síndrome de Rett, Distúrbio Abrangente do Desenvolvimento , Síndrome de Timothy, Síndrome do X-Frágil, Síndrome de Angelman, Síndrome de Phelan-McDermid, Síndrome de Asperger, TDA: Transtorno do Déficit de Atenção/hiperatividade, entre outras. É um problema que todo pai enfrenta.
+
+
+A diversaGENTE tem como objetivo compartilhar conteúdos de qualidade para todos os pais e responsáveis de crianças neurodiversas. Como por exemplo notícias sobre neurodiversidade, boas escolas, médicos ao redor da sua localidade e aspectos de seus filhos divididos pelos pais em grandes fóruns de discussões. Não é uma rede social comum apenas para fazer amigos, é uma comunidade unida em pró da troca de informação e conhecimento.
+O aplicativo é compatível com Android e é gratuito.
+
+o Justificativa
+
+Ter um filho com alguma neurodiversidade traz consigo alguns desafios. Como por exemplo encontrar escolas adequadas e uma lista longa de profissionais especializados. Queremos facilitar mesmo que um pouco nesse novo desafio, te auxiliar com as escolhas de lugares e notas de profissionais por quem mais entende, os pais. Apesar de existirem diversos grupos de discussões sobre neurodiversidades, muitas vezes as informações se perdem ou deixam de serem relevantes. Com nosso aplicativo esse problema não existira mais, terão informações atualizadas e filtros de fácil acesso.
+Outro ponto importante a ressaltar é que os pais poderão ser agrupados de acordo com o diagnóstico do transtorno global de desenvolvimento do seu filho, favorecendo a troca de informação relevante e mais precisa, facilitando a interação entre famílias.
+Criando assim uma rede de apoio, não só na escolha de médicos e escolas, mas na troca de informação e cuidados.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+o Análise de concorrência refinada (ideal ser feita quando todos os requisitos funcionais estiverem fechados para comparar de forma mais acurada com funcionalidades de outros apps)
+
+ diversaGenteFacebookTwitterTismoo.me.Emergency ChatTippy TalkThe Autism Helper
+ Público NeurodiversoX  XXXXconsultar notíciasX XX   FórunsXX X  XLocais avaliadosX      ChatXXX XX Feed de postagemXXXX  XPerfil PessoalXXXX   Buscar UsuáriosXXXX   CompartilhamentoXXXX  X 
+Informações abaixo retiradas da plataforma GooglePlay
+Facebook
+Conecte-se com amigos, familiares e pessoas que tenham os mesmos interesses que você. Comunique-se de forma privada, assista ao seu conteúdo preferido, compre e venda itens ou simplesmente passe tempo com a sua comunidade. No Facebook, é fácil acompanhar as pessoas mais importantes para você. Descubra, aproveite e faça mais junto com as outras pessoas.
+Fique por dentro do que acontece com quem você ama:
+• Compartilhe o que você está pensando, anuncie acontecimentos importantes por meio de publicações e comemore os momentos do dia a dia com stories.
+• Expresse-se pelo seu perfil e publicações, assista, reaja, interaja e mantenha contato com os seus amigos, durante todo o dia. 
+Conecte com pessoas que tenham os mesmos interesses que você usando grupos:
+• Com milhões de grupos, você encontrará algo para todos os seus interesses e descobrirá mais grupos relevantes para você.
+• Use a guia Grupos como uma central para acessar rapidamente o conteúdo de todos os seus grupos. Encontre grupos relevantes com base nos seus interesses com a nova ferramenta de descoberta e recomendações. 
+Aumente seu envolvimento com a sua comunidade:
+• Descubra eventos que estão acontecendo perto de você, empresas para apoiar, grupos locais e atividades para participar.
+• Confira recomendações locais dos amigos e, depois, combine e faça planos com eles para se encontrarem.
+• Arrecade fundos para uma causa importante para você, seja o mentor de alguém que deseja atingir alguma meta e, no caso de uma situação de emergência local, conecte-se com outras pessoas para encontrar ou fornecer suprimentos, alimento ou abrigo.
+Twitter
+Compartilhe seus interesses, acompanhe seus tópicos favoritos e expresse suas opiniões! O Twitter é a sua rede social e o lugar para saber o que está acontecendo no mundo. Das notícias internacionais aos últimos acontecimentos do Brasil, das fofocas dos famosos e políticos à música e jogos, da política às tendências: o que acontece no mundo, acontece primeiro no Twitter. Encontre amigos ou siga influenciadores — cada voz tem seu impacto!
+Mantenha-se informado e atualizado
+Obtenha informações com facilidade no Twitter: confira a previsão do tempo, descubra os melhores jogos para celular ou explore as novidades tecnológicas. Siga os seus tópicos, políticos e celebridades favoritos. Converse, comente e fale sobre o que mais te interessa. Expresse sua individualidade publicando ou compartilhando fotos, vídeos ao vivo, memes engraçados, emojis animados, gifs e adesivos!
+Tweete, comente, compartilhe e curta
+Fale em particular ou crie uma conversa em grupo com qualquer pessoa que segue você. Acompanhe seus amigos e outros seguidores ou siga sua celebridade favorita, além de centenas de usuários interessantes, para ver seu conteúdo rapidamente. Envolva sua rede social com links, fotos e vídeos instigantes. Descubra quais dos seus tweets foram curtidos ou retweetados.
+O Twitter permite que você encontre pessoas interessantes ou junte seguidores interessados em você. Manter conexões é muito fácil! O Twitter também permite que celebridades formem uma ligação com seus fãs.
+Crie um perfil cativante
+• Personalize seu perfil e adicione uma foto, descrição, localização e imagem de fundo.
+• Tweet com frequência e otimize as suas publicações.
+• Publique conteúdo visual.
+• Use hashtags nos seus tweets.
+• Atraia seguidores de fora do Twitter.
+Participe da conversa ou assista a transmissões ao vivo para interagir com grandes audiências diretamente do seu celular. Entre ao vivo, crie os seus próprios eventos, compartilhe vídeos ou simplesmente acompanhe os acontecimentos pelo mundo.
+Tismoo.me
+TISMOO.ME é uma rede social, especialmente criada com o objetivo de organizar e estruturar suas informações de saúde para ajudar autistas, familiares, profissionais de saúde e educação, instituições, empresas e cientistas a se conectarem, terem acesso a mais informação, além de ampliar o debate a respeito de autismo, síndromes relacionadas e todo este universo ligado ao Transtorno do Espectro do Autismo (TEA).
+Cadastro de perfis de saúde
+Registre as informações de saúde suas e de familiares com autismo, como dados clínicos, genéticos, terapêuticos, enfim, coloque todas as informações num só lugar, de forma organizada e estruturada.
+Armazene seus exames
+Digitalize aquela pasta com vários exames, além de laudos, prescrições médicas, avaliações, relatórios de terapias e diversos documentos, armazenando tudo no seu app Tismoo.me, com total segurança e privacidade. Só você os vê, pois seus dados são seus!
+Feed de rede social
+Publique informações, fotos, vídeos do Youtube ou Vimeo, links de sites e tudo que você quiser relacionado a autismo, inclusive repostar informações de outras pessoas.
+Grupos
+Crie e participe de grupos de discussão especialmente voltados a assuntos relacionados ao Transtorno do Espectro do Autismo.
+Busca de usuários
+Siga os usuários com conteúdo que lhe interessa, buscando por nome ou por categoria.
+Favoritos
+Marque as melhores postagens como favorito para ler depois ou simplesmente para acessá-la facilmente mais tarde. 
+Emergency chat
+chat de emergência pode ser utilizado em qualquer situação onde a fala é impossível, mas a comunicação ainda é necessário.
+A tela inicial tem um texto base que explica à pessoa que você deu seu telefone para que você não pode usar a fala e quer usar este aplicativo para se comunicar. O texto padrão é destinado a pessoas que experimentam um colapso autista, onde seus centros da fala ficar não funcional por um tempo mesmo depois de terem recuperado.
+Tanto o título e o texto pode ser ajustado nas configurações para ser o que você quer que a pessoa que você dá seu telefone para saber.
+Você pode então continuar para a próxima tela que tem um cliente de chat simples.
+TippyTalk
+O aplicativo TippyTalk Community permite que o administrador ou gerente crie imagens que são exclusivamente identificáveis ??e familiares para a pessoa que vive com a deficiência verbal. Você simplesmente adiciona uma imagem de um objeto, lugar ou pessoa e aplica o texto apropriado. Você também pode convidar novas pessoas para a comunidade do TippyTalker e escolher a função apropriada para cada uma dessas pessoas, de gerente a membro da comunidade.
+O aplicativo TippyTalk Community permite que você se comunique e gerencie remotamente qualquer e todos os TippyTalkers para os quais você foi convidado, dependendo da função que lhe foi atribuída.
+O aplicativo TippyTalk Community foi projetado para garantir que a pessoa que vive com o distúrbio verbal tenha acesso ao aplicativo de comunicação TippyTalker em todos os momentos. Isso permite que pais e cuidadores tenham acesso remoto completo ao aplicativo de comunicação TippyTalker sem ter que tirar a comunicação AAC do TippyTalker.
+The Autism Helper
+O Autism Helper fornece recursos e comunidade para aqueles que procuram ajudar a criar a melhor vida possível para indivíduos com autismo.
+Quando você se junta à comunidade Autism Helper, você obtém acesso a:
+* Treinamento em práticas baseadas em evidências de uma forma que seja fácil de acessar e implementar
+* Cursos aprofundados sobre mudança de comportamento e alfabetização
+* Ferramentas e materiais para download para trabalhar as habilidades acadêmicas, funcionais e de comunicação
+* Uma comunidade exclusiva de profissionais afins, prontos para colaborar
+* Live Q and As para obter respostas às suas perguntas
+* Webinars exclusivos para membros com especialistas na área
+
+* Revisão bibliográfica pertinente ao projeto a ser desenvolvido
+
+Ortega, FranciscoDeficiência, autismo e neurodiversidade. Ciência & Saúde Coletiva [online]. 2009, v. 14, n. 1 [Acessado 30 Março 2022] , pp. 67-77. Disponível em: <https://doi.org/10.1590/S1413-81232009000100012>. Epub 20 Jan 2009. ISSN 1678-4561. https://doi.org/10.1590/S1413-81232009000100012.).
+
+Moraes, Anna Victória Pandjarjian Mekhitarian, Bialer, Marina Martins e Lerner, RogérioCLÍNICA E PESQUISA DO AUTISMO: OLHAR ÉTICO PARA O SOFRIMENTO DA FAMÍLIA1 1 Apoio e financiamento: Fundação de Amparo a Pesquisa do Estado de São Paulo (FAPESP), pela concessão da bolsa de mestrado,número 18/03306-7 e do auxílio à pesquisa número 13/25332-6. . Psicologia em Estudo [online]. 2021, v. 26 [Acessado 18 Abril 2022] , e48763. Disponível em: <https://doi.org/10.4025/psicolestud.v26i0.48763>. Epub 10 Maio 2021. ISSN 1807-0329. https://doi.org/10.4025/psicolestud.v26i0.48763.
+
+CARDIERI, Mariana Prates ESTUDOS CULTURAIS, NEURODIVERSIDADE E PSICANÁLISE: Um lugar para o autismo. UNIVERSIDADE FUMEC MESTRADO EM ESTUDOS CULTURAIS CONTEMPORÂNEOS. 2018, [Acessado 30 março 2022]. Disponível em: <https://repositorio.fumec.br/handle/123456789/139>. 
+
+Ana Carolina de Holanda Machado¹, Deborah Gerrane Damásio Nascimento¹, José Antônio da Silva Neto ¹, Mariana Ribeiro Rodrigues Alves¹, Vitória Daiany Guimarães Ramos¹, Júlia Maria Rodrigues de Oliveira². 1. Discente do curso de medicina do Centro Universitário de Anápolis - UniEVANGÉLICA. 2. Docente do curso de medicina do Centro Universitário de Anápolis - UniEVANGÉLICA. Revista Educação em saúde [RESU]. A relação entre a neurodiversidade e o Transtorno do Espectro Autista. [Acessado 30 março 2022]. Disponível em: < https://core.ac.uk/download/pdf/270182721.pdf >.
+
+DIAS, Fabrízia Miranda de Alvarenga, DENUCCI, Moniki Aguiar, RODRIGUES, Daniele
+Fernandes, SOUZA, Carlos Henrique Medeiros de. Transtorno do espectro autista e as concepções pragmáticas no contexto escolar. UENF, UFF, UENF, v. 27 n. 81 Supl. (2021) [Acessado 30 março 2022]. Disponível em: <https://www.revistaphilologus.org.br/index.php/rph/article/view/1056>. 
+
+RODRIGUES, F. A.; SANTANA, R. C. G. Contextualização de conceitos teóricos no processo de coleta de dados de redes sociais online. Informação & Tecnologia, v. 5, n. 1, p. 18-36, 2018. Disponível em: <http://hdl.handle.net/20.500.11959/brapci/110391>. Acesso em: 18 abr. 2022.
+
+TOKARNIA, Mariana. Repórter da Agência Brasil - Rio de Janeiro. Celular é o principal meio de acesso à internet no país. Publicado em 29/04/2020. Disponível em: < https://agenciabrasil.ebc.com.br/economia/noticia/2020-04/celular-e-o-principal-meio-de-acesso-internet-no-pais>. Acesso em: 30 Março. 2022.
+
+GABRIELA. Meu filho foi diagnosticado com autismo e agora?. Genial Care, 2020. Disponível em: (https://genialcare.com.br/blog/meu-filho-foi-diagnosticado-com-autismo-e-agora/). Acesso em: (30 março de 2022).
+
+GISABELA. Neurodiversidade: a importância da inclusão. eCycle. Comportamento Disponível em: (https://www.ecycle.com.br/neurodiversidade/). Acesso em: (30 março de 2022).
+
+MENDONÇA, Victor, ABREU, Tiago. Tudo o que você precisa saber sobre Neurodiversidade e Autismo. O Mundo Autista. Autismo. Disponível em: (https://omundoautista.uai.com.br/tudo-o-que-voce-precisa-saber-sobre-neurodiversidade-e-autismo/amp/). Acesso em: (30 março de 2022).
+
+MENEZES, Clara. Redes sociais ajudam famílias a entenderem melhor o autismo. Portaldonic. Disponível em: (http://portaldonic.com.br/jornalismo/2017/07/17/redes-sociais-ajudam-familias-a-entenderem-melhor-o-autismo/). Acesso em: (30 março de 2022).
+
+Francisco OrtegaI; Rafaela ZorzanelliI; Lilian Kozslowski MeierhofferII; Celita Almeida RosárioIII; Clarissa Freitas de AlmeidaIV; Bárbara Fonseca da Costa Caldeira de AndradaV; Beatriz da Silva ChagasV; Clara FeldmanV. IDepartamento de Políticas e Instituições de Saúde, IMS/UERJ. IIGraduanda, curso de Medicina, Universidade Federal do Rio de Janeiro. IIIAluna de Pós-graduação Lato Sensu em Saúde Pública, Escola Nacional de Saúde Pública Sérgio Arouca.
+IVMestranda, Programa de Pós-graduação em Psicologia Social, UERJ.
+VDoutorandas, Programa de Pós-graduação em Saúde Coletiva, IMS/UERJ. A construção do diagnóstico do autismo em uma rede social virtual brasileira. [Acessado 30 março 2022]. Disponível em: <https://www.scielosp.org/article/icse/2013.v17n44/119-132/#>.
+
+MENDONÇA, Sophia. Neurodivergentes: Autismo na Contemporaneidade. Manduruvá Edição Especiais, 2019. Link para o livro: https://www.google.com.br/books/edition/Neurodivergentes/xHAaEAAAQBAJ?hl=pt-BR&gbpv=0 
+
+ABREU, Thiago. O que é neurodiversidade? Cânone Editoração Ltda, 2022. Link para o livro: https://www.google.com.br/books/edition/O_que_é_neurodiversidade/XCpcEAAAQBAJ?hl=pt-BR&gbpv=0
+
+ Nicole Baumer, MD, MEd, Contributor, Julia Frueh, MD, Guest Contributor.  What is neurodiversity?. health.harvard. Disponível em: (https://www.health.harvard.edu/blog/what-is-neurodiversity-202111232645). Acesso em: (30 março de 2022).
+ 
+exceptionalindividuals. Neurodiversity: Meanings, Types & Examples Find out more about the different types of neurodivergence. Disponível em: (https://exceptionalindividuals.com/neurodiversity/). Acesso em: (30 março de 2022).
+
+SOUZA, Brenda, DESENVOLVIMENTO ATÍPICO E INCLUSÃO: CONCEPÇÕES DE ESTUDANTES DE CIÊNCIAS NATURAIS. Ciências Naturais [online]. 2001 [Acessado 30 Março 2022]: <https://bdm.unb.br/bitstream/10483/18192/1/2017_BrendaKevellynSouza_tcc.pdf>. 
+
