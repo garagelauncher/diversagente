@@ -1,9 +1,9 @@
-import { useState } from 'react';
-
 import { StackRoutes, StackPrivateRoutes } from './stack.routes';
 
+import { useAuth } from '@src/hooks/useAuth';
+
 export const Routes = () => {
-  const [isLoggedIn, setLoggedIn] = useState(false);
+  const { isLoggedIn } = useAuth();
 
   if (isLoggedIn) {
     return <StackPrivateRoutes />;
