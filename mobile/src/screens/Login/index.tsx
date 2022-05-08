@@ -2,10 +2,14 @@ import { AntDesign } from '@expo/vector-icons';
 import { Box, Button, Icon, Text } from 'native-base';
 
 import { TextPink } from '@components/TextPink';
+import { useAuth } from '@src/hooks/useAuth';
 
 export const Login = () => {
-  function handleLogin() {
+  const { signInWithGoogle } = useAuth();
+
+  async function handleLogin() {
     console.log('Login');
+    await signInWithGoogle();
   }
 
   return (
@@ -15,8 +19,9 @@ export const Login = () => {
         leftIcon={<Icon as={AntDesign} name="google" />}
         colorScheme="red"
         borderRadius={4}
+        onPress={handleLogin}
       >
-        <Text fontWeight={'bold'} color="white" onPress={handleLogin}>
+        <Text fontWeight={'bold'} color="white">
           Login with Google
         </Text>
       </Button>
