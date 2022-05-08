@@ -1,3 +1,4 @@
+import { Login } from '@src/screens/Login';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
@@ -5,8 +6,7 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Garage Launcher with TypesScript</Text>
-      <StatusBar style="auto" />
+      <Login />
     </View>
   );
 }
