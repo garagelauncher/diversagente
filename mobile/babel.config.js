@@ -4,17 +4,21 @@ module.exports = function (api) {
   return {
     presets: ['babel-preset-expo'],
     plugins: [
-      ["module-resolver", {
-        root: ["./src"],
-        extensions: [".js", ".jsx", ".ts", ".tsx"],
-        alias: {
-          "@src": "./src",
-          "@components": "./src/components",
-          "@configs": "./src/configs",
-          "@hooks": "./src/hooks",
-          "@assets": "./src/assets",
-        }
-      }]
-    ]
+      [
+        'module-resolver',
+        {
+          root: ['./src'],
+          extensions: ['.js', '.jsx', '.ts', '.tsx'],
+          alias: {
+            '@src': './src',
+            '@components': './src/components',
+            '@configs': './src/configs',
+            '@hooks': './src/hooks',
+            '@assets': './src/assets',
+            '@native-base/icons': '@native-base/icons/lib',
+          },
+        },
+      ],
+    ],
   };
 };
