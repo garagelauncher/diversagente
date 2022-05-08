@@ -1,12 +1,16 @@
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
 import { NativeBaseProvider } from 'native-base';
 import React from 'react';
 
-import { Login } from '@src/screens/Login';
+import { Routes } from '@src/routes';
 
 export default function App() {
   return (
     <NativeBaseProvider>
-      <Login />
+      <NavigationContainer>
+        <Routes />
+      </NavigationContainer>
     </NativeBaseProvider>
   );
 }
