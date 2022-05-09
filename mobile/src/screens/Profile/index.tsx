@@ -3,6 +3,7 @@ import {
   MaterialCommunityIcons,
   SimpleLineIcons,
 } from '@expo/vector-icons';
+import axios from 'axios';
 import {
   Avatar,
   Box,
@@ -15,10 +16,39 @@ import {
   Text,
   VStack,
 } from 'native-base';
+import { useEffect, useState } from 'react';
 
 import { useAuth } from '@src/hooks/useAuth';
 export const Profile = () => {
-  const { signOut, user } = useAuth();
+  const { signOut, user, setUser } = useAuth();
+
+  const [bio, setBio] = useState<string>();
+  const [name, setName] = useState<string>();
+  const [picture, setPicture] = useState<string>();
+  const [username, setUsername] = useState<string>();
+
+  useEffect(() => {
+    setBio(user?.bio ?? '');
+    setName(user?.name);
+    setPicture(user?.picture ?? '');
+    setUsername(user?.username ?? '');
+  }, [user]);
+
+  async function handleUpdateUser() {
+    const response = await axios.patch(
+      `https://dev-diversagente.herokuapp.com/users/${user?.email}`,
+      {
+        bio,
+        name,
+        picture,
+        username,
+      },
+    );
+
+    console.log(response.data);
+    setUser({ ...response.data, googleUserData: user?.googleUserData });
+  }
+
   async function handleLogout() {
     console.log('Login');
     await signOut();
