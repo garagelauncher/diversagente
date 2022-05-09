@@ -9,13 +9,19 @@ export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createUserDto: Omit<Prisma.UserCreateInput, 'id'>) {
-    const newUser = { ...createUserDto, id: crypto.randomUUID() };
+    const userFound = await this.findOne(createUserDto.email);
 
-    const createdCat = await this.prisma.user.create({
-      data: newUser,
-    });
+    if (userFound) {
+      const newUser = { ...createUserDto, id: crypto.randomUUID() };
 
-    return createdCat;
+      const createdCat = await this.prisma.user.create({
+        data: newUser,
+      });
+
+      return createdCat;
+    }
+
+    return userFound;
   }
 
   findAll() {
@@ -23,11 +29,13 @@ export class UsersService {
   }
 
   async findOne(email: string) {
-    return await this.prisma.user.findUnique({
+    const user = await this.prisma.user.findUnique({
       where: {
         email,
       },
     });
+
+    return user;
   }
 
   async update(email: string, updateUserDTO: UpdateUserDto) {
