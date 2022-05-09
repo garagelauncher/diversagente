@@ -14,14 +14,7 @@ export type GoogleUserData = {
 export type User = {
   email: string;
   name: string;
-  picture?: string;
-};
-
-export type UserCreateInput = {
-  id: string;
-  email: string;
-  username: string;
-  name?: string | null;
+  username?: string;
   bio?: string | null;
   picture?: string | null;
   createdAt?: Date | string;
@@ -36,6 +29,7 @@ export type AuthContextProps = {
   signInWithGoogle: () => Promise<void>;
   signOut: () => Promise<void>;
   user: UserData | undefined;
+  setUser: (user: UserData | undefined) => void;
 };
 
 export const AuthContext = createContext<AuthContextProps>(
