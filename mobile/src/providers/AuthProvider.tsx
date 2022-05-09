@@ -69,6 +69,7 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
   async function signOut() {
     console.log('Sign out'); // TODO: Make logout
     setLoggedIn(false);
+    setUser(undefined);
   }
 
   return (
