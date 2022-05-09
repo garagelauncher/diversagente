@@ -49,14 +49,19 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
         console.log(JSON.stringify(response.data));
         const googleUserData = response.data;
 
-        const responseCreateUser = await axios.post(
-          'https://dev-diversagente.herokuapp.com/users',
-          {
-            email: googleUserData.email,
-            name: googleUserData.name,
-            username: googleUserData.email,
-          },
-        );
+        const responseCreateUser = await axios.post<{
+          id: string;
+          email: string;
+          username?: string;
+          name: string;
+          bio?: string;
+          picture?: string;
+          createdAt?: string;
+        } | null>('https://dev-diversagente.herokuapp.com/users', {
+          email: googleUserData.email,
+          name: googleUserData.name,
+          username: googleUserData.email,
+        });
 
         console.debug(responseCreateUser);
         console.debug(responseCreateUser.data);
@@ -67,7 +72,10 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
           googleUserData,
           email: googleUserData.email,
           name: googleUserData.name,
-          picture: googleUserData.picture,
+          picture: googleUserData.picture ?? '',
+          username: responseCreateUser.data?.username ?? googleUserData.email,
+          bio: responseCreateUser.data?.bio ?? '',
+          createdAt: responseCreateUser.data?.createdAt ?? '',
         });
       }
       console.log('Sign in with Google'); // TODO: Make login
@@ -88,7 +96,7 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
 
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn, signInWithGoogle, signOut, user }}
+      value={{ isLoggedIn, signInWithGoogle, signOut, user, setUser }}
     >
       {children}
     </AuthContext.Provider>
