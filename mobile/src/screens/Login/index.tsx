@@ -2,6 +2,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { Box, Button, Icon, Text } from 'native-base';
 
 import { TextPink } from '@components/TextPink';
+import { apiBaseUrl } from '@src/configs';
 import { useAuth } from '@src/hooks/useAuth';
 
 export const Login = () => {
@@ -11,7 +12,7 @@ export const Login = () => {
     console.log('Login');
     await signInWithGoogle();
   }
-
+  console.log(apiBaseUrl);
   return (
     <Box flex={1} justifyContent="center" padding={4}>
       <TextPink>Garage Launcher pink</TextPink>
