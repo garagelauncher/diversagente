@@ -17,6 +17,16 @@ export type User = {
   picture?: string;
 };
 
+export type UserCreateInput = {
+  id: string;
+  email: string;
+  username: string;
+  name?: string | null;
+  bio?: string | null;
+  picture?: string | null;
+  createdAt?: Date | string;
+};
+
 export type UserData = {
   googleUserData: GoogleUserData;
 } & User;
