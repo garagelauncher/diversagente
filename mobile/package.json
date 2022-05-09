@@ -5,7 +5,9 @@
     "dev": "npx expo start",
     "android": "npx expo run:android",
     "ios": "npx expo run:ios",
-    "web": "npx expo start --web"
+    "web": "npx expo start --web",
+    "clearCache": "rimraf node_modules/.cache/babel-loader/*,",
+    "clearExpo": "expo r -c"
   },
   "dependencies": {
     "@expo/webpack-config": "~0.16.2",
@@ -45,7 +47,8 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.5.0",
-    "prettier": "^2.6.2"
+    "prettier": "^2.6.2",
+    "rimraf": "^3.0.2"
   },
   "private": true
 }

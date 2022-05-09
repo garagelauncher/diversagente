@@ -1,7 +1,7 @@
 import { AntDesign } from '@expo/vector-icons';
 import { Button, Flex, Heading, Icon, Text } from 'native-base';
 
-import { apiBaseUrl } from '@src/configs';
+import { apiBaseUrl, Oauth2 } from '@src/configs';
 import { useAuth } from '@src/hooks/useAuth';
 
 export const Login = () => {
@@ -11,6 +11,7 @@ export const Login = () => {
     console.log('Login');
     await signInWithGoogle();
   }
+  console.info(Oauth2);
   console.log(apiBaseUrl);
   return (
     <Flex
