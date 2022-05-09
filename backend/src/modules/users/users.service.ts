@@ -10,8 +10,8 @@ export class UsersService {
 
   async create(createUserDto: Omit<Prisma.UserCreateInput, 'id'>) {
     const userFound = await this.findOne(createUserDto.email);
-
-    if (userFound) {
+    console.log(userFound);
+    if (!userFound) {
       const newUser = { ...createUserDto, id: crypto.randomUUID() };
 
       const createdCat = await this.prisma.user.create({
@@ -24,8 +24,8 @@ export class UsersService {
     return userFound;
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll() {
+    return await this.prisma.user.findMany();
   }
 
   async findOne(email: string) {

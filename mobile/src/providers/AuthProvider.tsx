@@ -48,13 +48,27 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
         console.log('sucesss');
         console.log(JSON.stringify(response.data));
         const googleUserData = response.data;
+
+        const responseCreateUser = await axios.post(
+          'https://dev-diversagente.herokuapp.com/users',
+          {
+            email: googleUserData.email,
+            name: googleUserData.name,
+            username: googleUserData.email,
+          },
+        );
+
+        console.debug(responseCreateUser);
+        console.debug(responseCreateUser.data);
+        console.debug(responseCreateUser.status);
+
+        setLoggedIn(true);
         setUser({
           googleUserData,
           email: googleUserData.email,
           name: googleUserData.name,
           picture: googleUserData.picture,
         });
-        setLoggedIn(true);
       }
       console.log('Sign in with Google'); // TODO: Make login
     } catch (error) {
