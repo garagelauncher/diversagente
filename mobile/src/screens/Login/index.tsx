@@ -1,5 +1,6 @@
 import { AntDesign } from '@expo/vector-icons';
 import { Box, Button, Icon, Text } from 'native-base';
+import { Alert } from 'react-native';
 
 import { TextPink } from '@components/TextPink';
 import { apiBaseUrl } from '@src/configs';
