@@ -8,7 +8,7 @@ import { Prisma } from '@prisma/client';
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createUserDto: Prisma.UserCreateInput) {
+  async create(createUserDto: Omit<Prisma.UserCreateInput, 'id'>) {
     const newUser = { ...createUserDto, id: crypto.randomUUID() };
 
     const createdCat = await this.prisma.user.create({
