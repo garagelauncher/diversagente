@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { CatsModule } from './modules/cats/cats.module';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
@@ -10,6 +11,7 @@ import { CatsModule } from './modules/cats/cats.module';
       isGlobal: true,
     }),
     CatsModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

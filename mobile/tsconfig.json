@@ -8,7 +8,8 @@
       "@screens/*": ["src/screens/*"],
       "@assets/*": ["src/assets/*"],
       "@configs/*": ["src/configs/*"]
-    }
+    },
+    "typeRoots": ["./src/@types"],
   },
   "extends": "expo/tsconfig.base"
 }
