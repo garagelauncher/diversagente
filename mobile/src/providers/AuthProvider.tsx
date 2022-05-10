@@ -23,7 +23,7 @@ type AuthResponse = {
 
 export const AuthProvider = ({ children }: AuthProvidersProps) => {
   const [isLoggedIn, setLoggedIn] = useState(false);
-  const [user, setUser] = useState<UserData>();
+  const [user, setUser] = useState<UserData | undefined>();
 
   async function signInWithGoogle() {
     try {
@@ -91,7 +91,7 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
   async function signOut() {
     console.log('Sign out'); // TODO: Make logout
     setLoggedIn(false);
-    setUser(undefined);
+    setUser(undefined as UserData | undefined);
   }
 
   return (
