@@ -72,7 +72,8 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
           googleUserData,
           email: googleUserData.email,
           name: googleUserData.name,
-          picture: googleUserData.picture ?? '',
+          picture:
+            responseCreateUser.data?.picture ?? googleUserData.picture ?? '',
           username: responseCreateUser.data?.username ?? googleUserData.email,
           bio: responseCreateUser.data?.bio ?? '',
           createdAt: responseCreateUser.data?.createdAt ?? '',
