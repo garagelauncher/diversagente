@@ -1,0 +1,40 @@
+% ---
+\subsection{QR-Code}
+% ---
+\index{qr-code}
+A utilização de códigos \ac{qr} facilita o acesso de endereços da internet a partir de dispositivos móveis com câmera.
+As figuras \ref{qr-url-1} e \ref{qr-url-2} demonstram dois exemplos de endereços apresentados com essa tecnologia.
+
+
+Para facilitar a utilização dos códigos \ac{qr}, deve-se tomar cuidado para não deixa-los alinhados na vertical pois dificulta a seleção a partir da câmera no dispositivo móvel.
+
+Um exemplo para utilização de mais códigos de barra pode ser visto em : \urlmodelo.
+
+Atenção, alguns compiladores podem ter problemas em utilizar a biblioteca \textbf{pstricks} necessária para gerar QR-Codes, no sharelatex em 2017-05 a compilação ocorre perfeitamente utilizando a opção de compilador "XeLatex", ele é mais lento que outras opções.
+
+
+\begin{figure}
+\begin{pspicture}(25mm,25mm)
+\psbarcode{\urlmodelosimples}{eclevel=H width=1.0 height=1.0}{qrcode}
+\end{pspicture}
+\caption{\label{qr-url-1}QR-Code - URL Documento exemplo}
+\legend{\urlmodelo}
+\fonte{Os Autores}
+\end{figure}
+
+
+
+% colocando figura qrcode na direita para facilitar o uso da camera deixando cada qrcode em um alinhamento diferente
+% se deixar os dois qrcodes um em cima do outro dificulta acessar o desejado
+\begin{figure}
+\begin{flushright}
+\begin{pspicture}(25mm,25mm)
+\psbarcode{https://github.com/ivanfmartinez/latexlib/tree/master/ifsp}{eclevel=H width=1.0 height=1.0}{qrcode}
+\end{pspicture}
+\caption{\label{qr-url-2}QR-Code - Classes IFSP GitHub}
+\legend{\url{https://github.com/ivanfmartinez/latexlib/tree/master/ifsp}}
+\fonte{Os Autores}
+\end{flushright}
+
+\end{figure}
+
