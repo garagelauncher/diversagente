@@ -27,3 +27,9 @@ model Cat {
   name      String   @unique
   createdAt DateTime @default(now())
 }
+
+model Category {
+  id        String   @id @map("_id")
+  name      String   @unique
+  createdAt DateTime @default(now())
+}
