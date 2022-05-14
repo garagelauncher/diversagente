@@ -23,7 +23,6 @@ DevOps:
 
 Backend:
 
-- [ ] Criar models
 - [ ] CRUD de Categoria
   - [ ] CRUD de Subcategoria
   - [ ] CRUD de Posts
@@ -32,6 +31,7 @@ Backend:
 - [ ] CRUD de Localizações
   - [ ] Cálculo do Ranking baseado em data
   - [ ] CRUD de Review
+- [ ] Criar models
 - Responsáveis:
   - Vinicius
   - João
