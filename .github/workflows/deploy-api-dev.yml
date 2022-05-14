@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - develop
-    # paths:
-    #   - backend/**
+    paths:
+      - backend/**
 
 jobs:
   build:
