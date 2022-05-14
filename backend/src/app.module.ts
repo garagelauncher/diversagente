@@ -6,6 +6,7 @@ import { CatsModule } from './modules/cats/cats.module';
 import { UsersModule } from './modules/users/users.module';
 import { CloudinaryModule } from './shared/services/cloudinary/cloudinary.module';
 import { CloudinaryProvider } from './shared/services/cloudinary/cloudinary';
+import { CategoriesModule } from './modules/categories/categories.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { CloudinaryProvider } from './shared/services/cloudinary/cloudinary';
     CatsModule,
     UsersModule,
     CloudinaryModule,
+    CategoriesModule,
   ],
   controllers: [AppController],
   providers: [AppService, CloudinaryProvider],
