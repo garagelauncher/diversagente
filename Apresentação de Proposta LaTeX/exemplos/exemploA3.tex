@@ -1,0 +1,29 @@
+
+\subsection{Impressão em folhas formato A3}
+
+A página seguinte em A3 permite a impressão de diagramas grandes que não podem ser visualizados facilmente em folha padrão A4. Lembre que algumas impressoras podem ter problemas com isso, então selecione somente as páginas A4 ao imprimir e depois imprima separadamente a página A3.
+
+A \autoref{fig_logo_A3} utiliza a mesma imagem da \autoref{fig_logo} e foi ampliada para demonstrar a essa possibilidade de impressão de grandes imagens em A3.
+
+Observe que o código de exemplo vai gerar uma quebra de página no local onde for definida a página A3, por isso não deve ser utilizado entre textos para evitar grandes espaços em branco.
+
+Folhas impressas em A3 ou tamanhos maiores devem ser dobradas seguindo o padrão definido pela ABNT. 
+
+
+Cuidado ao utilizar folhas A3 em um documento impresso em frente e verso pois a numeração das páginas seguintes pode ser impressa de forma incorreta (posição do número na página). Uma alternativa para esta situação é manter todas páginas impressas em A3 no último apêndice, fazendo as referencias corretas durante o texto.
+
+
+
+\afterpage{%
+\begin{PAGINA-A3}
+
+\begin{figure}[p]
+    \centering%
+    \fcolorbox{red}{yellow}{ \includegraphics[height=\textheight,width=\textwidth,keepaspectratio]{\ifspprefixo/logo-02.jpg}}%
+	\caption{\label{fig_logo_A3}Logotipo IFSP em página A3}
+	\legend{Com borda para demonstrar os limites}
+   \fonte{Autor da Figura}
+\end{figure}
+
+\end{PAGINA-A3}
+}
