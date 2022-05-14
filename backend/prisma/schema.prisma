@@ -11,7 +11,7 @@ datasource db {
 }
 
 model User {
-  id        String   @id @map("_id")
+  id        String   @id @map("_id") @db.ObjectId
   email     String   @unique
   username  String   @unique
   name      String?
@@ -19,33 +19,61 @@ model User {
   picture   String?
   createdAt DateTime @default(now())
 
+  Location Location[]
   @@map("users")
 }
 
 model Cat {
-  id        String   @id @map("_id")
-  name      String   @unique
+  id   String @id @map("_id")
+  name String @unique
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Category {
-  id    String @id @map("_id")
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
   name  String @unique
   title String
 
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  Subcategory Subcategory[]
-}
-
-model Subcategory {
-  id        String   @id @map("_id")
-  name      String   @unique
-  title     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  categories   Category @relation(fields: [category_ids], references: [id])
-  category_ids String[]
+  Subcategory Subcategory[]
+  Location    Location[]
+}
+
+model Subcategory {
+  id    String @id @map("_id") @db.ObjectId
+  name  String @unique
+  title String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  category      Category? @relation(fields: [categoriesIds], references: [id])
+  categoriesIds String[]  @db.ObjectId
+}
+
+model Location {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+
+  photos String[]
+
+  latitude  Float
+  longitude Float
+
+  address     String?
+  description String?
+
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ownerId       String   @db.ObjectId
+  categoriesIds String[] @db.ObjectId
+
+  category Category? @relation(fields: [categoriesIds], references: [id])
+  owner    User?     @relation(fields: [ownerId], references: [id])
 }
