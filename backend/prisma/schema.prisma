@@ -20,6 +20,8 @@ model User {
   createdAt DateTime @default(now())
 
   Location Location[]
+  Review   Review[]
+
   @@map("users")
 }
 
@@ -55,6 +57,18 @@ model Subcategory {
   categoriesIds String[]  @db.ObjectId
 }
 
+model Review {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  comment String
+  stars   Int
+
+  ownerId    String @db.ObjectId
+  locationId String @db.ObjectId
+
+  owner    User     @relation(fields: [ownerId], references: [id])
+  location Location @relation(fields: [locationId], references: [id])
+}
+
 model Location {
   id    String @id @default(auto()) @map("_id") @db.ObjectId
   title String
@@ -76,4 +90,6 @@ model Location {
 
   category Category? @relation(fields: [categoriesIds], references: [id])
   owner    User?     @relation(fields: [ownerId], references: [id])
+
+  Review Review[]
 }
