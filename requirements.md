@@ -35,6 +35,7 @@ Backend:
 - Responsáveis:
   - Vinicius
   - João
+  - Gabriel
 - Chats do discord:
   - nodejs
   - mongodb (prisma)
