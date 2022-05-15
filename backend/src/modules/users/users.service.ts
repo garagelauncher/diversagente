@@ -1,9 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from 'src/shared/database/prisma.service';
 import { UpdateUserDto } from './dto/update-user.dto';
-import crypto from 'crypto';
-import { Prisma } from '@prisma/client';
 import { CloudinaryService } from 'src/shared/services/cloudinary/cloudinary.service';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -12,17 +11,20 @@ export class UsersService {
     private readonly cloudinary: CloudinaryService,
   ) {}
 
-  async create(createUserDto: Omit<Prisma.UserCreateInput, 'id'>) {
+  async create(createUserDto: CreateUserDto) {
     const userFound = await this.findOne(createUserDto.email);
-    console.log(userFound);
-    if (!userFound) {
-      const newUser = { ...createUserDto, id: crypto.randomUUID() };
 
-      const createdCat = await this.prisma.user.create({
-        data: newUser,
+    if (!userFound) {
+      const createdUser = await this.prisma.user.create({
+        data: {
+          email: createUserDto.email,
+          username: createUserDto.username,
+          name: createUserDto.name,
+          preferences: createUserDto.preferences ?? {},
+        },
       });
 
-      return createdCat;
+      return createdUser;
     }
 
     return userFound;
@@ -38,6 +40,8 @@ export class UsersService {
         email,
       },
     });
+
+    Logger.debug('recovering user', user);
 
     return user;
   }

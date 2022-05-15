@@ -9,6 +9,7 @@ import {
   UseInterceptors,
   UploadedFile,
   Request,
+  NotFoundException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -31,8 +32,14 @@ export class UsersController {
   }
 
   @Get(':email')
-  findOne(@Param('email') email: string) {
-    return this.usersService.findOne(email);
+  async findOne(@Param('email') email: string) {
+    const user = await this.usersService.findOne(email);
+
+    if (!user) {
+      throw new NotFoundException(`User with email ${email} was not found.`);
+    }
+
+    return user;
   }
 
   @Patch(':email')
