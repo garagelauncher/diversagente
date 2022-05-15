@@ -10,14 +10,37 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        String   @id @map("_id") @db.ObjectId
-  email     String   @unique
-  username  String   @unique
-  name      String?
-  bio       String?
-  picture   String?
+model Cat {
+  id   String @id @map("_id")
+  name String @unique
+
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+type Preference {
+  language          String  @default("en-us")
+  canReceiveMessage Boolean @default(value: true)
+}
+
+model User {
+  id       String @id @map("_id") @db.ObjectId
+  email    String @unique
+  username String @unique
+
+  name                String
+  birthdate           DateTime?
+  biograph            String?
+  picture             String?
+  lovelyCategoriesIds String[]   @db.ObjectId
+  preferences         Preference
+
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+
+  category Category? @relation(fields: [lovelyCategoriesIds], references: [id])
 
   Location Location[]
   Review   Review[]
@@ -26,14 +49,6 @@ model User {
   Comment  Comment[]
 
   @@map("users")
-}
-
-model Cat {
-  id   String @id @map("_id")
-  name String @unique
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model Category {
@@ -46,6 +61,7 @@ model Category {
 
   Subcategory Subcategory[]
   Location    Location[]
+  User        User[]
 }
 
 model Subcategory {
@@ -98,11 +114,11 @@ model Comment {
   postId  String  @db.ObjectId
   replyId String? @db.ObjectId
 
-  owner   User     @relation(fields: [ownerId], references: [id])
-  post    Post     @relation(fields: [postId], references: [id])
-  comment Comment? @relation(name: "CommentReply", fields: [replyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  owner User     @relation(fields: [ownerId], references: [id])
+  post  Post     @relation(fields: [postId], references: [id])
+  reply Comment? @relation(name: "ReplyComment", fields: [replyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
-  comments Comment[] @relation(name: "CommentReply")
+  replies Comment[] @relation(name: "ReplyComment")
 }
 
 model Post {
@@ -117,7 +133,8 @@ model Post {
 
   ownerId String @db.ObjectId
 
-  owner   User      @relation(fields: [ownerId], references: [id])
+  owner User @relation(fields: [ownerId], references: [id])
+
   Like    Like[]
   Comment Comment[]
 }
