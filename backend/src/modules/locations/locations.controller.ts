@@ -22,7 +22,10 @@ export class LocationsController {
 
   @Get()
   findAll() {
-    return this.locationsService.findAll();
+    return this.locationsService.findByLocation({
+      longitude: -46.615965,
+      latitude: -23.5377475,
+    });
   }
 
   @Get(':id')
