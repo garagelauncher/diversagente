@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { UserPreference } from '../entities/user.entity';
 
 export class CreateUserDto {
   @ApiProperty()
@@ -9,4 +10,7 @@ export class CreateUserDto {
 
   @ApiProperty()
   name: string;
+
+  @ApiProperty()
+  preferences?: UserPreference;
 }
