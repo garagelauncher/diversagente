@@ -21,6 +21,9 @@ model User {
 
   Location Location[]
   Review   Review[]
+  Post     Post[]
+  Like     Like[]
+  Comment  Comment[]
 
   @@map("users")
 }
@@ -62,11 +65,61 @@ model Review {
   comment String
   stars   Int
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   ownerId    String @db.ObjectId
   locationId String @db.ObjectId
 
   owner    User     @relation(fields: [ownerId], references: [id])
   location Location @relation(fields: [locationId], references: [id])
+}
+
+model Like {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  createdAt DateTime @default(now())
+
+  ownerId String @db.ObjectId
+  postId  String @db.ObjectId
+
+  owner User @relation(fields: [ownerId], references: [id])
+  post  Post @relation(fields: [postId], references: [id])
+}
+
+model Comment {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  text String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ownerId String  @db.ObjectId
+  postId  String  @db.ObjectId
+  replyId String? @db.ObjectId
+
+  owner   User     @relation(fields: [ownerId], references: [id])
+  post    Post     @relation(fields: [postId], references: [id])
+  comment Comment? @relation(name: "CommentReply", fields: [replyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  comments Comment[] @relation(name: "CommentReply")
+}
+
+model Post {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  title   String
+  content String
+  images  String[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+
+  ownerId String @db.ObjectId
+
+  owner   User      @relation(fields: [ownerId], references: [id])
+  Like    Like[]
+  Comment Comment[]
 }
 
 model Location {
