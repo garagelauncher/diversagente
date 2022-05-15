@@ -1,7 +1,7 @@
 {
-  "name": "backend",
+  "name": "diversagente-api",
   "version": "0.1.0",
-  "description": "",
+  "description": "API do Projeto diversagente do grupo Garage Launcher que são alunos no Instituto Federal de São Paulo.",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
@@ -9,7 +9,7 @@
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "node dist/main",
+    "start": "node dist/src/main",
     "start:dev": "nest start --watch",
     "prestart:dev": "npm run db:generate",
     "start:debug": "nest start --debug --watch",
