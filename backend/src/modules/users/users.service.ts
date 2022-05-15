@@ -31,7 +31,7 @@ export class UsersService {
   }
 
   async findAll() {
-    return await this.prisma.user.findMany();
+    return await this.prisma.user.findMany({});
   }
 
   async findOne(email: string) {
@@ -57,8 +57,12 @@ export class UsersService {
     });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: string) {
+    return await this.prisma.user.delete({
+      where: {
+        id,
+      },
+    });
   }
 
   async uploadImageToCloudinary(userEmail: string, file: Express.Multer.File) {
@@ -74,10 +78,10 @@ export class UsersService {
         picture: result.secure_url,
       });
 
-      console.debug(result);
+      Logger.debug(result);
       return updatedData;
     } catch (error) {
-      console.error(error);
+      Logger.error(error);
       throw new BadRequestException('Invalid file type.');
     }
   }
