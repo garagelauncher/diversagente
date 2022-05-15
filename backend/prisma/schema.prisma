@@ -78,21 +78,6 @@ model Subcategory {
   categoriesIds String[]  @db.ObjectId
 }
 
-model Review {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  comment String
-  stars   Int
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  ownerId    String @db.ObjectId
-  locationId String @db.ObjectId
-
-  owner    User     @relation(fields: [ownerId], references: [id])
-  location Location @relation(fields: [locationId], references: [id])
-}
-
 model Like {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
@@ -121,6 +106,21 @@ model Comment {
   reply Comment? @relation(name: "ReplyComment", fields: [replyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   replies Comment[] @relation(name: "ReplyComment")
+}
+
+model Review {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  comment String
+  stars   Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ownerId    String @db.ObjectId
+  locationId String @db.ObjectId
+
+  owner    User     @relation(fields: [ownerId], references: [id])
+  location Location @relation(fields: [locationId], references: [id])
 }
 
 model Post {
