@@ -21,10 +21,17 @@ export class LocationsController {
   }
 
   @Get()
-  findAll() {
-    return this.locationsService.findByLocation({
-      longitude: -46.615965,
-      latitude: -23.5377475,
+  findAll(
+    @Query('latitude') latitude: number,
+    @Query('longitude') longitude: number,
+    @Query('distanceInKilometer') distanceInKilometer: number,
+    @Query('limit') limit: number,
+  ) {
+    return this.locationsService.findNear({
+      latitude: Number(latitude || 0),
+      longitude: Number(longitude || 0),
+      distanceInKilometer: Number(distanceInKilometer || 1),
+      limit: Number(limit || 1),
     });
   }
 
