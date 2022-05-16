@@ -141,9 +141,9 @@ model Review {
   location Location @relation(fields: [locationId], references: [id])
 }
 
-type Coordinates {
-  latitude  Float
-  longitude Float
+type Geoposition {
+  type        String
+  coordinates Float[]
 }
 
 model Location {
@@ -162,7 +162,7 @@ model Location {
   ownerId       String   @db.ObjectId
   categoriesIds String[] @db.ObjectId
 
-  coordinates Coordinates
+  geoposition Geoposition
 
   category Category? @relation(fields: [categoriesIds], references: [id])
   owner    User?     @relation(fields: [ownerId], references: [id])
