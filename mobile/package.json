@@ -8,8 +8,9 @@
     "android": "npx expo run:android",
     "ios": "npx expo run:ios",
     "web": "npx expo start --web",
-    "clearCache": "rimraf node_modules/.cache/babel-loader/*,",
-    "clearExpo": "expo r -c"
+    "clear:cache": "rimraf node_modules/.cache/babel-loader/*,",
+    "clear:expo": "expo r -c",
+    "generate:apk": "eas build -p android --profile local"
   },
   "dependencies": {
     "@expo/webpack-config": "~0.16.2",
