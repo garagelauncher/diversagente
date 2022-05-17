@@ -66,7 +66,7 @@ export function TabRoutes() {
         component={Profile}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name={'message'} color={color} size={size} />
+            <MaterialIcons name={'person'} color={color} size={size} />
           ),
         }}
       />
