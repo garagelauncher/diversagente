@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 import { Logger } from '@nestjs/common';
+import packageJSON from '../package.json';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -10,9 +11,9 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
 
   const documentationConfig = new DocumentBuilder()
-    .setTitle('API documentation')
-    .setDescription('The API endpoints')
-    .setVersion('1.0')
+    .setTitle(packageJSON.name)
+    .setDescription(packageJSON.description)
+    .setVersion(packageJSON.version)
     .build();
 
   const document = SwaggerModule.createDocument(app, documentationConfig);
