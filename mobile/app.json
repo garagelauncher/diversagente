@@ -3,9 +3,10 @@
     "name": "mobile",
     "slug": "mobile",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "assetBundlePatterns": ["**/*"],
+    "android": {
+      "package": "com.garagelauncher.diversagente"
+    }
   },
   "name": "mobile"
 }
