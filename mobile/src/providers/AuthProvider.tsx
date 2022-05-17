@@ -49,12 +49,21 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
         console.log(JSON.stringify(response.data));
         const googleUserData = response.data;
 
+        // const responseGet = await axios.get<UserData>(
+        //   `https://dev-diversagente.herokuapp.com/users/${googleUserData.email}`,
+        // );
+
+        console.debug({
+          email: googleUserData.email,
+          name: googleUserData.name,
+          username: googleUserData.email,
+        });
         const responseCreateUser = await axios.post<{
           id: string;
           email: string;
           username?: string;
           name: string;
-          bio?: string;
+          biograph?: string;
           picture?: string;
           createdAt?: string;
         } | null>('https://dev-diversagente.herokuapp.com/users', {
@@ -75,13 +84,16 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
           picture:
             responseCreateUser.data?.picture ?? googleUserData.picture ?? '',
           username: responseCreateUser.data?.username ?? googleUserData.email,
-          bio: responseCreateUser.data?.bio ?? '',
+          bio: responseCreateUser.data?.biograph ?? '',
           createdAt: responseCreateUser.data?.createdAt ?? '',
         });
       }
-      console.log('Sign in with Google'); // TODO: Make login
-    } catch (error) {
+      console.log('Sign in with Google');
+    } catch (error: any) {
       console.error(error);
+      console.error(error.name);
+      console.error(error.response.data.message);
+
       Alert.alert(
         'Falha no login',
         'Não foi possível fazer login com o Google, tente novamente mais tarde.',
