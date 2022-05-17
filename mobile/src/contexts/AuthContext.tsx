@@ -30,6 +30,7 @@ export type AuthContextProps = {
   signOut: () => Promise<void>;
   user: UserData | undefined;
   setUser: (user: UserData | undefined) => void;
+  isLoading: boolean;
 };
 
 export const AuthContext = createContext<AuthContextProps>(
