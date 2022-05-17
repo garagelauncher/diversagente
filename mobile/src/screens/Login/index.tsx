@@ -5,7 +5,7 @@ import { apiBaseUrl, Oauth2 } from '@src/configs';
 import { useAuth } from '@src/hooks/useAuth';
 
 export const Login = () => {
-  const { signInWithGoogle } = useAuth();
+  const { signInWithGoogle, isLoading } = useAuth();
 
   async function handleLogin() {
     console.log('Login');
@@ -28,6 +28,7 @@ export const Login = () => {
         borderRadius={4}
         onPress={handleLogin}
         size="sm"
+        isLoading={isLoading}
       >
         <Text color="white">Entrar com o Google</Text>
       </Button>
