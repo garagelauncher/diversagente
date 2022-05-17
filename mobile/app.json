@@ -3,6 +3,7 @@
   "expo": {
     "name": "DiversaGente",
     "slug": "mobile",
+    "scheme": "diversagente",
     "version": "1.0.0",
     "assetBundlePatterns": ["**/*"],
     "android": {
