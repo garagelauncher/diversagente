@@ -1,6 +1,7 @@
 {
+  "displayName": "DiversaGente",
   "expo": {
-    "name": "mobile",
+    "name": "DiversaGente",
     "slug": "mobile",
     "version": "1.0.0",
     "assetBundlePatterns": ["**/*"],
