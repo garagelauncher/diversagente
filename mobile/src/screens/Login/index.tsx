@@ -1,11 +1,13 @@
 import { AntDesign } from '@expo/vector-icons';
 import { Button, Flex, Heading, Icon, Text } from 'native-base';
+import { useState } from 'react';
 
 import { apiBaseUrl, Oauth2 } from '@src/configs';
 import { useAuth } from '@src/hooks/useAuth';
 
 export const Login = () => {
   const { signInWithGoogle, isLoading } = useAuth();
+  const [isActiveDeveloperHelper, setIsActiveDeveloperHelper] = useState(false);
 
   async function handleLogin() {
     console.log('Login');
@@ -13,6 +15,11 @@ export const Login = () => {
   }
   console.info(Oauth2);
   console.log(apiBaseUrl);
+
+  function handleDeveloperHelper() {
+    setIsActiveDeveloperHelper(!isActiveDeveloperHelper);
+  }
+
   return (
     <Flex
       flex={1}
@@ -21,7 +28,7 @@ export const Login = () => {
       alignItems="center"
       backgroundColor="blue.100"
     >
-      <Heading>diversagente</Heading>
+      <Heading>DiversaGente</Heading>
       <Button
         leftIcon={<Icon as={AntDesign} name="google" />}
         colorScheme="red"
@@ -32,6 +39,13 @@ export const Login = () => {
       >
         <Text color="white">Entrar com o Google</Text>
       </Button>
+      <Button
+        size={'lg'}
+        backgroundColor={isActiveDeveloperHelper ? 'pink.600' : 'transparent'}
+        onPress={handleDeveloperHelper}
+        alignSelf={'flex-end'}
+      />
+      {isActiveDeveloperHelper && <Text>{JSON.stringify(Oauth2)}</Text>}
     </Flex>
   );
 };
