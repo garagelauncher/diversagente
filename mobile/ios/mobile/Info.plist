@@ -59,6 +59,18 @@
 					<string>mobile</string>
 				</array>
 			</dict>
+			<dict>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>https</string>
+				</array>
+			</dict>
+			<dict>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>diversagente</string>
+				</array>
+			</dict>
 		</array>
 	</dict>
 </plist>
