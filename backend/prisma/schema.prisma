@@ -108,21 +108,6 @@ model Comment {
   replies Comment[] @relation(name: "ReplyComment")
 }
 
-model Review {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  comment String
-  stars   Int
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  ownerId    String @db.ObjectId
-  locationId String @db.ObjectId
-
-  owner    User     @relation(fields: [ownerId], references: [id])
-  location Location @relation(fields: [locationId], references: [id])
-}
-
 model Post {
   id      String   @id @default(auto()) @map("_id") @db.ObjectId
   title   String
@@ -141,14 +126,31 @@ model Post {
   Comment Comment[]
 }
 
+model Review {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  comment String
+  stars   Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ownerId    String @db.ObjectId
+  locationId String @db.ObjectId
+
+  owner    User     @relation(fields: [ownerId], references: [id])
+  location Location @relation(fields: [locationId], references: [id])
+}
+
+type Geoposition {
+  type        String
+  coordinates Float[]
+}
+
 model Location {
   id    String @id @default(auto()) @map("_id") @db.ObjectId
   title String
 
   photos String[]
-
-  latitude  Float
-  longitude Float
 
   address     String?
   description String?
@@ -160,8 +162,12 @@ model Location {
   ownerId       String   @db.ObjectId
   categoriesIds String[] @db.ObjectId
 
+  geoposition Geoposition
+
   category Category? @relation(fields: [categoriesIds], references: [id])
   owner    User?     @relation(fields: [ownerId], references: [id])
 
   Review Review[]
+
+  @@map("locations")
 }

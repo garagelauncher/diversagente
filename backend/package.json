@@ -1,15 +1,23 @@
 {
-  "name": "backend",
+  "name": "diversagente-api",
   "version": "0.1.0",
-  "description": "",
+  "description": "API do Projeto diversagente do grupo Garage Launcher que são alunos no Instituto Federal de São Paulo.",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/garagelauncher/docs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/garagelauncher/docs/issues"
+  },
+  "homepage": "https://github.com/garagelauncher/docs",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "node dist/main",
+    "start": "node dist/src/main",
     "start:dev": "nest start --watch",
     "prestart:dev": "npm run db:generate",
     "start:debug": "nest start --debug --watch",
@@ -27,11 +35,13 @@
     "@nestjs/common": "^8.0.0",
     "@nestjs/config": "^2.0.0",
     "@nestjs/core": "^8.0.0",
+    "@nestjs/mongoose": "^9.0.3",
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/swagger": "^5.2.1",
     "@prisma/client": "^3.12.0",
     "buffer-to-stream": "^1.0.0",
     "cloudinary": "^1.29.1",
+    "mongoose": "^6.3.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",

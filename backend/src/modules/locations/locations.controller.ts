@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { LocationsService } from './locations.service';
 import { CreateLocationDto } from './dto/create-location.dto';
 import { UpdateLocationDto } from './dto/update-location.dto';
@@ -13,8 +22,18 @@ export class LocationsController {
   }
 
   @Get()
-  findAll() {
-    return this.locationsService.findAll();
+  findAll(
+    @Query('latitude') latitude: number,
+    @Query('longitude') longitude: number,
+    @Query('distanceInKilometer') distanceInKilometer: number,
+    @Query('limit') limit: number,
+  ) {
+    return this.locationsService.findNear({
+      latitude: Number(latitude || 0),
+      longitude: Number(longitude || 0),
+      distanceInKilometer: Number(distanceInKilometer || 1),
+      limit: Number(limit || 1),
+    });
   }
 
   @Get(':id')
@@ -23,7 +42,10 @@ export class LocationsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLocationDto: UpdateLocationDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateLocationDto: UpdateLocationDto,
+  ) {
     return this.locationsService.update(+id, updateLocationDto);
   }
 
