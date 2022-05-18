@@ -5,10 +5,13 @@
     "slug": "mobile",
     "scheme": "diversagente",
     "version": "1.0.0",
-    "assetBundlePatterns": ["**/*"],
-    "android": {
-      "package": "com.garagelauncher.diversagente"
-    }
+    "orientation": "portrait",
+    "splash": {
+      "image": "./src/assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFF1A4"
+    },
+    "assetBundlePatterns": ["**/*"]
   },
   "name": "mobile"
 }
