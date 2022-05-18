@@ -24,8 +24,10 @@ type AuthResponse = {
 export const AuthProvider = ({ children }: AuthProvidersProps) => {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState<UserData | undefined>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   async function signInWithGoogle() {
+    setIsLoading(true);
     try {
       const CLIENT_ID = Oauth2.CLIENT_ID;
       const REDIRECT_URI = Oauth2.REDIRECT_URI;
@@ -92,12 +94,15 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
     } catch (error: any) {
       console.error(error);
       console.error(error.name);
-      console.error(error.response.data.message);
+      console.error(error.message);
 
       Alert.alert(
         'Falha no login',
-        'Não foi possível fazer login com o Google, tente novamente mais tarde.',
+        error.message ||
+          'Não foi possível fazer login com o Google, tente novamente mais tarde.',
       );
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -109,7 +114,14 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
 
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn, signInWithGoogle, signOut, user, setUser }}
+      value={{
+        isLoggedIn,
+        signInWithGoogle,
+        signOut,
+        user,
+        setUser,
+        isLoading,
+      }}
     >
       {children}
     </AuthContext.Provider>

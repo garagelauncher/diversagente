@@ -1,7 +1,9 @@
 {
+  "displayName": "DiversaGente",
   "expo": {
-    "name": "mobile",
+    "name": "DiversaGente",
     "slug": "mobile",
+    "scheme": "diversagente",
     "version": "1.0.0",
     "orientation": "portrait",
     "splash": {

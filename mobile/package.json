@@ -1,13 +1,16 @@
 {
+  "name": "diversagente",
   "main": "index.js",
+  "version": "1.0.0",
   "scripts": {
     "start": "npx expo start --dev-client",
     "dev": "npx expo start",
     "android": "npx expo run:android",
     "ios": "npx expo run:ios",
     "web": "npx expo start --web",
-    "clearCache": "rimraf node_modules/.cache/babel-loader/*,",
-    "clearExpo": "expo r -c"
+    "clear:cache": "rimraf node_modules/.cache/babel-loader/*,",
+    "clear:expo": "expo r -c",
+    "generate:apk": "eas build -p android --profile local"
   },
   "dependencies": {
     "@expo-google-fonts/poppins": "^0.2.2",
