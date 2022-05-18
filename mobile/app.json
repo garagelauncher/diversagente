@@ -3,9 +3,13 @@
     "name": "mobile",
     "slug": "mobile",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "orientation": "portrait",
+    "splash": {
+      "image": "./src/assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#F2F2F2"
+    },
+    "assetBundlePatterns": ["**/*"]
   },
   "name": "mobile"
 }
