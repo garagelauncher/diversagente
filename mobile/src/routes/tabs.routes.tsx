@@ -3,12 +3,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import { Platform } from 'react-native';
 
+import { theme } from '../styles/theme';
+
 import { Forums } from '@src/screens/Forums';
 import { Locations } from '@src/screens/Locations';
 import { Messages } from '@src/screens/Messages';
 import { Profile } from '@src/screens/Profile';
-import { theme } from '../../global/styles/theme';
-
 
 export type RootBottomTabParamList = {
   Locations: undefined;
