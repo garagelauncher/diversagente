@@ -7,6 +7,8 @@ import { Forums } from '@src/screens/Forums';
 import { Locations } from '@src/screens/Locations';
 import { Messages } from '@src/screens/Messages';
 import { Profile } from '@src/screens/Profile';
+import { theme } from '../../global/styles/theme';
+
 
 export type RootBottomTabParamList = {
   Locations: undefined;
@@ -23,7 +25,7 @@ export function TabRoutes() {
     <Navigator
       screenOptions={{
         tabBarActiveTintColor: '#000',
-        tabBarInactiveTintColor: '#ff95ffdd',
+        tabBarInactiveTintColor: theme.colors.orangePrimary,
         tabBarLabelPosition: 'beside-icon',
         tabBarStyle: {
           paddingVertical: Platform.OS === 'ios' ? 20 : 0,
