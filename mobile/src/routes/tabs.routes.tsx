@@ -3,6 +3,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import { Platform } from 'react-native';
 
+import { theme } from '../styles/theme';
+
 import { Forums } from '@src/screens/Forums';
 import { Locations } from '@src/screens/Locations';
 import { Messages } from '@src/screens/Messages';
@@ -22,8 +24,8 @@ export function TabRoutes() {
   return (
     <Navigator
       screenOptions={{
-        tabBarActiveTintColor: '#000',
-        tabBarInactiveTintColor: '#ff95ffdd',
+        tabBarActiveTintColor: theme.colors.bluePrimary,
+        tabBarInactiveTintColor: theme.colors.orangePrimary,
         tabBarLabelPosition: 'beside-icon',
         tabBarStyle: {
           paddingVertical: Platform.OS === 'ios' ? 20 : 0,
