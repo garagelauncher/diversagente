@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Text, Button, VStack } from 'native-base';
 
-import { theme } from '../../../global/styles/theme';
+import { theme } from '../../styles/theme';
 
 type TextSucessPops = {
   title: string;
@@ -18,7 +18,7 @@ export const Sucess = ({ title, subtitle}: TextSucessPops) => {
       borderWidth: 1,
       borderRadius: 8,
       width: 80,
-      color: theme.colors.textColorWhite
+      color: '#FFFFFF'
     }; //@ts-ignore
 
     buttonOkRef.current.setNativeProps({
