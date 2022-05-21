@@ -5,6 +5,6 @@ import { PrismaService } from 'src/shared/database/prisma.service';
 
 @Module({
   controllers: [CategoriesController],
-  providers: [CategoriesService, PrismaService]
+  providers: [CategoriesService, PrismaService],
 })
 export class CategoriesModule {}
