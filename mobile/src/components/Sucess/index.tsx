@@ -13,8 +13,8 @@ export const Sucess = ({ title, subtitle}: TextSucessPops) => {
 
   React.useEffect(() => {
     const buttonStyle = {
-      backgroundColor: theme.colors.orangePrimary,
-      borderColor: theme.colors.textColorWhite,
+      backgroundColor: theme.colors.navyPrimary,
+      borderColor: theme.colors.navyPrimary,
       borderWidth: 1,
       borderRadius: 8,
       width: 80,
@@ -30,12 +30,12 @@ export const Sucess = ({ title, subtitle}: TextSucessPops) => {
       <Box 
         width="100%"
         flex={1}
-        backgroundColor={theme.colors.blueSecondary}
+        backgroundColor={theme.colors.orangePrimary}
         alignItems="center"
         justifyContent="center"
       >
         <Text
-          color={theme.colors.textColorWhite}
+          color={'#FFFFFF'}
           fontSize={40}
           fontWeight={800}
           textAlign="center"
@@ -44,7 +44,7 @@ export const Sucess = ({ title, subtitle}: TextSucessPops) => {
         </Text>
         
         <Text
-          color={theme.colors.textColorWhite}
+           color={'#FFFFFF'}
           fontSize={20}
           fontWeight={600}
           textAlign="center"
@@ -63,7 +63,6 @@ export const Sucess = ({ title, subtitle}: TextSucessPops) => {
               size="lg" 
               colorScheme="primary"
               variant="solid"
-              onPress={() => console.log("Ok")}
               ref={buttonOkRef}>
                 OK
             </Button>
