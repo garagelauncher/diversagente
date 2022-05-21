@@ -1,3 +1,4 @@
+import React from 'react';
 import { Box, Text, Button, VStack } from 'native-base';
 
 import { theme } from '../../../global/styles/theme';
@@ -8,6 +9,23 @@ type TextSucessPops = {
 };
 
 export const Sucess = ({ title, subtitle}: TextSucessPops) => {
+  const buttonOkRef = React.useRef({});
+
+  React.useEffect(() => {
+    const buttonStyle = {
+      backgroundColor: theme.colors.orangePrimary,
+      borderColor: theme.colors.textColorWhite,
+      borderWidth: 1,
+      borderRadius: 8,
+      width: 80,
+      color: theme.colors.textColorWhite
+    }; //@ts-ignore
+
+    buttonOkRef.current.setNativeProps({
+      style: buttonStyle
+    });
+  }, [buttonOkRef]);
+
   return (
       <Box 
         width="100%"
@@ -45,11 +63,11 @@ export const Sucess = ({ title, subtitle}: TextSucessPops) => {
               size="lg" 
               colorScheme="primary"
               variant="solid"
-              onPress={() => console.log("Ok")}>
+              onPress={() => console.log("Ok")}
+              ref={buttonOkRef}>
                 OK
             </Button>
         </VStack>
-
      </Box>
   );
 };
