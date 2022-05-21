@@ -1,16 +1,13 @@
-import { Sucess } from '@src/components/Sucess';
-import { UserAvatar } from '@src/components/UserAvatar';
-import { Avatar, Box, Heading, Text, View, HStack } from 'native-base';
+import { Box } from 'native-base';
 
-import { theme } from '../../styles/theme';
+import { Category } from '@src/components/Category';
+import { UserAvatar } from '@src/components/UserAvatar';
 
 export const Forums = () => {
   return (
-    <Box
-      backgroundColor={theme.colors.bluePrimary}
-      flex={1}
-    >
-      <UserAvatar picture={'https://github.com/bertiGrazi.png'}   />
+    <Box backgroundColor={'#FFFFFF'} flex={1}>
+      <UserAvatar picture={'https://github.com/bertiGrazi.png'} />
+      <Category />
     </Box>
   );
 };
