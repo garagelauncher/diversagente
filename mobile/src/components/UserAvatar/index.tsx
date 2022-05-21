@@ -1,4 +1,4 @@
-import { Avatar , HStack} from 'native-base'
+import { Avatar, HStack } from 'native-base';
 
 type AvatarProps = {
   picture: string;
@@ -6,20 +6,15 @@ type AvatarProps = {
 
 export const UserAvatar = ({ picture }: AvatarProps) => {
   return (
-    <HStack
-      backgroundColor={'#'}
-      height={105}
-      direction="row"
-    >
+    <HStack backgroundColor={'#FFFF'} height={105} direction="row">
       <Avatar
-        size="ms"
+        size="md"
         source={{
           uri: picture,
         }}
         marginTop={12}
         marginLeft={22}
-      >
-      </Avatar>
+      ></Avatar>
     </HStack>
   );
 };
