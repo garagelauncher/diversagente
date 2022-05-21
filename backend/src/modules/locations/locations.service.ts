@@ -141,7 +141,9 @@ export class LocationsService {
     });
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} location`;
+  async remove(id: string) {
+    return await this.prisma.location.delete({
+      where: { id },
+    });
   }
 }
