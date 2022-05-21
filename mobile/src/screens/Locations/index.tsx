@@ -1,13 +1,7 @@
-import { useFocusEffect } from '@react-navigation/native';
-import { Box, Heading, Text } from 'native-base';
-import { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import MapView, {
-  Marker,
-  Callout,
-  Region,
-  PROVIDER_GOOGLE,
-} from 'react-native-maps';
+import { SimpleLineIcons } from '@expo/vector-icons';
+import { Box, Icon, Text } from 'native-base';
+import { useCallback, useEffect, useState } from 'react';
+import MapView, { Marker, Region, PROVIDER_GOOGLE } from 'react-native-maps';
 
 import * as styles from './styles';
 
@@ -19,21 +13,23 @@ export const Locations = () => {
   const [initialPosition, setInitialPosition] = useState<Region | undefined>(
     undefined,
   );
+  console.log('locations state', locations);
 
-  useFocusEffect(() => {
+  const fetchLocations = useCallback(async () => {
     diversaGenteServices
       .getLocationsByProximity({
-        latitude: -23.56498,
-        longitude: -46.63327,
-        distanceInKilometer: 10,
+        latitude: -23.4448752,
+        longitude: -46.5374598,
+        distanceInKilometer: 30,
         limit: 10,
       })
       .then((foundLocations) => {
+        console.debug('foundLocations');
+        console.debug(foundLocations);
         setLocations(foundLocations);
       })
       .catch((error) => console.error('deu ruim'));
-    console.debug('loaded focus on map');
-  });
+  }, []);
 
   const LATITUDE_DELTA = 0.0922;
   const LONGITUDE_DELTA = 0.0421;
@@ -45,7 +41,10 @@ export const Locations = () => {
       latitudeDelta: LATITUDE_DELTA,
       longitudeDelta: LONGITUDE_DELTA,
     });
-  }, []);
+    console.debug('loaded focus on map');
+
+    fetchLocations();
+  }, [fetchLocations]);
 
   return (
     <Box flex={1}>
@@ -58,6 +57,7 @@ export const Locations = () => {
           return (
             <Marker
               key={location.id}
+              style={styles.mapMarker}
               calloutAnchor={{
                 x: 2.7,
                 y: 0.8,
@@ -67,11 +67,18 @@ export const Locations = () => {
                 longitude: location.coordinates.longitude,
               }}
             >
-              <Callout tooltip={true}>
-                <View style={styles.calloutContainer}>
-                  <Text style={styles.calloutText}>{location.title}</Text>
-                </View>
-              </Callout>
+              <Box background={'#000'} borderRadius={5} padding={10}>
+                <Icon
+                  as={<SimpleLineIcons name="pencil" size={24} color="white" />}
+                  color="white"
+                  size={5}
+                  ml="2"
+                  width={'100%'}
+                />
+                <Box style={styles.mapMarkerIcon} />
+                <Text color="white">{location.title}</Text>
+                <Box style={styles.mapPicker} />
+              </Box>
             </Marker>
           );
         })}
