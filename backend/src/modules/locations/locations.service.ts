@@ -1,12 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Document, Model } from 'mongoose';
 import { Coordinates } from 'src/shared/contracts/Coordinates';
+import { LocationRaw } from 'src/shared/contracts/LocationRaw';
 import { PrismaService } from 'src/shared/database/prisma.service';
 import { CreateLocationDto } from './dto/create-location.dto';
 import { NearDTO } from './dto/find-near-location.dto';
 import { UpdateLocationDto } from './dto/update-location.dto';
-import { Location } from './entities/location.entity';
 
 function convertDistanceInKilometersToMeters(
   distanceInKilometers: number,
@@ -16,10 +14,7 @@ function convertDistanceInKilometersToMeters(
 
 @Injectable()
 export class LocationsService {
-  constructor(
-    private readonly prisma: PrismaService,
-    @InjectModel('locations') private locationModel: Model<Location & Document>,
-  ) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(createLocationDto: CreateLocationDto) {
     const {
@@ -72,11 +67,21 @@ export class LocationsService {
       options: {
         limit,
       },
-    })) as any;
+    })) as unknown as LocationRaw[];
 
-    console.log(locations);
+    console.debug(locations);
     Logger.debug(locations);
-    return JSON.parse(JSON.stringify(locations));
+    return locations.map((location) => ({
+      id: location._id.$oid,
+      title: location.title,
+      ownerId: location.ownerId.$oid,
+      createdAt: location.createdAt.$date,
+      updatedAt: location.updatedAt.$date,
+      coordinates: {
+        latitude: location.geoposition.coordinates[1],
+        longitude: location.geoposition.coordinates[0],
+      },
+    }));
   }
 
   async findAll() {
@@ -117,36 +122,28 @@ export class LocationsService {
     return locations;
   }
 
-  async findByLocation({ longitude, latitude }: Coordinates) {
-    const distanceInKilometer = 1000 * 5; // 50km
-
-    // create index 2dsphere into mongodb for field
-    const radius = distanceInKilometer / 6378.1;
-
-    const result = await this.locationModel.find({
-      location: {
-        $near: {
-          $geometry: {
-            type: 'Point',
-            coordinates: [longitude, latitude],
-          },
-        },
+  async findOne(id: string) {
+    const location = await this.prisma.location.findUnique({
+      where: {
+        id,
       },
     });
 
-    Logger.debug(result);
-    return result;
+    Logger.debug('recovering location', location);
+
+    return location;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} location`;
+  async update(id: string, updateLocationDto: UpdateLocationDto) {
+    return await this.prisma.location.update({
+      where: { id },
+      data: updateLocationDto,
+    });
   }
 
-  update(id: number, updateLocationDto: UpdateLocationDto) {
-    return `This action updates a #${id} location`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} location`;
+  async remove(id: string) {
+    return await this.prisma.location.delete({
+      where: { id },
+    });
   }
 }

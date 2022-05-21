@@ -17,18 +17,18 @@ export class LocationsController {
   constructor(private readonly locationsService: LocationsService) {}
 
   @Post()
-  create(@Body() createLocationDto: CreateLocationDto) {
+  async create(@Body() createLocationDto: CreateLocationDto) {
     return this.locationsService.create(createLocationDto);
   }
 
   @Get()
-  findAll(
+  async findAll(
     @Query('latitude') latitude: number,
     @Query('longitude') longitude: number,
     @Query('distanceInKilometer') distanceInKilometer: number,
     @Query('limit') limit: number,
   ) {
-    return this.locationsService.findNear({
+    return await this.locationsService.findNear({
       latitude: Number(latitude || 0),
       longitude: Number(longitude || 0),
       distanceInKilometer: Number(distanceInKilometer || 1),
@@ -37,20 +37,20 @@ export class LocationsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.locationsService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.locationsService.findOne(id);
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateLocationDto: UpdateLocationDto,
   ) {
-    return this.locationsService.update(+id, updateLocationDto);
+    return await this.locationsService.update(id, updateLocationDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.locationsService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.locationsService.remove(id);
   }
 }
