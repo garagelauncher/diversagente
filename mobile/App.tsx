@@ -40,14 +40,14 @@ export default function App() {
   }
 
   return (
-    <NativeBaseProvider>
-      <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-        <NavigationContainer>
-          <AuthProvider>
-            <Routes />
-          </AuthProvider>
-        </NavigationContainer>
-      </View>
-    </NativeBaseProvider>
+      <NativeBaseProvider>
+        <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+          <NavigationContainer>
+            <AuthProvider>
+              <Routes />
+            </AuthProvider>
+          </NavigationContainer>
+        </View>
+      </NativeBaseProvider>
   );
 }
