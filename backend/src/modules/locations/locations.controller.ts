@@ -42,11 +42,11 @@ export class LocationsController {
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateLocationDto: UpdateLocationDto,
   ) {
-    return this.locationsService.update(id, updateLocationDto);
+    return await this.locationsService.update(id, updateLocationDto);
   }
 
   @Delete(':id')
