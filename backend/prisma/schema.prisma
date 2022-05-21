@@ -55,11 +55,11 @@ model User {
 
 model Category {
   id    String @id @default(auto()) @map("_id") @db.ObjectId
-  name  String @unique
-  title String
+  name  String? @unique
+  title String?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
 
   Subcategory Subcategory[]
   Location    Location[]
@@ -67,12 +67,12 @@ model Category {
 }
 
 model Subcategory {
-  id    String @id @map("_id") @db.ObjectId
+  id    String  @id  @default(auto()) @map("_id") @db.ObjectId
   name  String @unique
   title String
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
 
   category      Category? @relation(fields: [categoriesIds], references: [id])
   categoriesIds String[]  @db.ObjectId
