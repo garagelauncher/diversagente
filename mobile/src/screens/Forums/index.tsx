@@ -1,19 +1,15 @@
-import { Sucess } from '@src/components/Sucess';
-import { Box, Heading, Text, View } from 'native-base';
+import { Box } from 'native-base';
 
 import { theme } from '../../styles/theme';
 
+import { Category } from '@src/components/Category';
+import { UserAvatar } from '@src/components/UserAvatar';
+
 export const Forums = () => {
   return (
-    <Box
-      width="100%"
-      backgroundColor={theme.colors.pastelPrimary}
-      flex={1}
-      alignItems="center"
-      justifyContent="center"
-    >
-      <Heading>FORUMS PAGE</Heading>
-      <Text>Work In progress...</Text>
+    <Box backgroundColor={theme.colors.lightGray} flex={1}>
+      <UserAvatar picture={'https://github.com/bertiGrazi.png'} />
+      <Category />
     </Box>
   );
 };

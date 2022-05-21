@@ -11,6 +11,7 @@ import { LocationsModule } from './modules/locations/locations.module';
 import { SubcategoriesModule } from './modules/subcategories/subcategories.module';
 import { LikesModule } from './modules/likes/likes.module';
 import { PostsModule } from './modules/posts/posts.module';
+import { CommentsModule } from './modules/comments/comments.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { PostsModule } from './modules/posts/posts.module';
     SubcategoriesModule,
     LikesModule,
     PostsModule,
+    CommentsModule,
   ],
   controllers: [AppController],
   providers: [AppService, CloudinaryProvider],
