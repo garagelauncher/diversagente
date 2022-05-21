@@ -10,6 +10,8 @@ import { CategoriesModule } from './modules/categories/categories.module';
 import { LocationsModule } from './modules/locations/locations.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { SubcategoriesModule } from './modules/subcategories/subcategories.module';
+import { LikesModule } from './modules/likes/likes.module';
+import { PostsModule } from './modules/posts/posts.module';
 
 @Module({
   imports: [
@@ -23,6 +25,8 @@ import { SubcategoriesModule } from './modules/subcategories/subcategories.modul
     LocationsModule,
     MongooseModule.forRoot(process.env.DATABASE_URL),
     SubcategoriesModule,
+    LikesModule,
+    PostsModule,
   ],
   controllers: [AppController],
   providers: [AppService, CloudinaryProvider],
