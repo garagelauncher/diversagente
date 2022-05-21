@@ -9,6 +9,7 @@ import { CloudinaryProvider } from './shared/services/cloudinary/cloudinary';
 import { CategoriesModule } from './modules/categories/categories.module';
 import { LocationsModule } from './modules/locations/locations.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { SubcategoriesModule } from './modules/subcategories/subcategories.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     CategoriesModule,
     LocationsModule,
     MongooseModule.forRoot(process.env.DATABASE_URL),
+    SubcategoriesModule,
   ],
   controllers: [AppController],
   providers: [AppService, CloudinaryProvider],
