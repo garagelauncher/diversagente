@@ -134,8 +134,11 @@ export class LocationsService {
     return location;
   }
 
-  update(id: string, updateLocationDto: UpdateLocationDto) {
-    return `This action updates a #${id} location`;
+  async update(id: string, updateLocationDto: UpdateLocationDto) {
+    return await this.prisma.location.update({
+      where: { id },
+      data: updateLocationDto,
+    });
   }
 
   remove(id: string) {
