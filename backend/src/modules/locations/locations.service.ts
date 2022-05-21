@@ -122,15 +122,23 @@ export class LocationsService {
     return locations;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} location`;
+  async findOne(id: string) {
+    const location = await this.prisma.location.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    Logger.debug('recovering location', location);
+
+    return location;
   }
 
-  update(id: number, updateLocationDto: UpdateLocationDto) {
+  update(id: string, updateLocationDto: UpdateLocationDto) {
     return `This action updates a #${id} location`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} location`;
   }
 }
