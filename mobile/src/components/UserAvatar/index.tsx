@@ -6,7 +6,7 @@ type AvatarProps = {
 
 export const UserAvatar = ({ picture }: AvatarProps) => {
   return (
-    <HStack backgroundColor={'#FFFF'} height={105} direction="row">
+    <HStack backgroundColor={'#FDA02B'} height={105} direction="row">
       <Avatar
         size="md"
         source={{
