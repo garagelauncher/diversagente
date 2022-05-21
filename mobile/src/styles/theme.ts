@@ -5,5 +5,7 @@ export const theme = {
     pastelPrimary: '#FFF1A4',
     bluePrimary: '#36A9E1',
     navyPrimary: '#004AAD',
+
+    lightGray: '#F2F3F5',
   },
 };
