@@ -50,7 +50,7 @@ export class LocationsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.locationsService.remove(id);
+  async remove(@Param('id') id: string) {
+    return await this.locationsService.remove(id);
   }
 }
