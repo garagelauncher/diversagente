@@ -23,15 +23,28 @@ export class ReviewsService {
     });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} review`;
+  async findOne(id: string) {
+    return await this.prisma.review.findUnique({
+      where: {
+        id,
+      },
+    });
   }
 
-  update(id: number, updateReviewDto: UpdateReviewDto) {
-    return `This action updates a #${id} review`;
+  async update(id: string, updateReviewDto: UpdateReviewDto) {
+    return await this.prisma.review.update({
+      where: {
+        id,
+      },
+      data: updateReviewDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} review`;
+  async remove(id: string) {
+    return await this.prisma.review.delete({
+      where: {
+        id,
+      },
+    });
   }
 }
