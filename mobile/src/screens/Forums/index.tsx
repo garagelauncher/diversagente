@@ -48,12 +48,12 @@ export const Forums = () => {
       </Box>
     </ScrollView>
     <AddSubCategories /> */}
-      <Box backgroundColor={theme.colors.lightGray} flex={1}>
+      {/* <Box backgroundColor={theme.colors.lightGray} flex={1}>
         <UserAvatar />
         <Categories titles={categories} />
         <Subcategories titles={subcategories}></Subcategories>
-      </Box>
-      {/* <AddSubCategories /> */}
+      </Box> */}
+      <AddSubCategories />
     </ScrollView>
   );
 };
