@@ -2,6 +2,7 @@ import { Box, ScrollView } from 'native-base';
 import React from 'react';
 
 import { theme } from '../../styles/theme';
+import { AddSubCategories } from './AddSubCategories';
 
 import { Category } from '@src/components/Category';
 import { Subcategories, Titles } from '@src/components/Subcategories';
@@ -36,12 +37,13 @@ const titles: Titles[] = [
 
 export const Forums = () => {
   return (
-    <ScrollView>
-      <Box backgroundColor={theme.colors.lightGray} flex={1}>
-        <UserAvatar picture={'https://github.com/bertiGrazi.png'} />
-        <Category />
-        <Subcategories titles={titles}></Subcategories>
-      </Box>
-    </ScrollView>
+    // <ScrollView>
+    //   <Box backgroundColor={theme.colors.lightGray} flex={1}>
+    //     <UserAvatar picture={'https://github.com/bertiGrazi.png'} />
+    //     <Category />
+    //     <Subcategories titles={titles}></Subcategories>
+    //   </Box>
+    // </ScrollView>
+    <AddSubCategories />
   );
 };
