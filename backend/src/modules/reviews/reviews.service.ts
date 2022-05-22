@@ -13,8 +13,14 @@ export class ReviewsService {
     });
   }
 
-  findAll() {
-    return `This action returns all reviews`;
+  async findAll({ locationId }: { locationId: string }) {
+    return await this.prisma.review.findMany({
+      where: {
+        location: {
+          id: locationId,
+        },
+      },
+    });
   }
 
   findOne(id: number) {
