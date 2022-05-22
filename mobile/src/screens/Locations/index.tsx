@@ -5,14 +5,20 @@ import MapView, { Marker, Region, PROVIDER_GOOGLE } from 'react-native-maps';
 
 import * as styles from './styles';
 
+import { Category } from '@src/contracts/Category';
 import { Location } from '@src/contracts/Location';
 import { diversaGenteServices } from '@src/services/diversaGente';
+
+const LATITUDE_DELTA = 0.0922;
+const LONGITUDE_DELTA = 0.0421;
 
 export const Locations = () => {
   const [locations, setLocations] = useState<Location[]>([]);
   const [initialPosition, setInitialPosition] = useState<Region | undefined>(
     undefined,
   );
+  const [categories, setCategories] = useState<Category[]>([]);
+
   console.log('locations state', locations);
 
   const fetchLocations = useCallback(async () => {
@@ -29,10 +35,11 @@ export const Locations = () => {
         setLocations(foundLocations);
       })
       .catch((error) => console.error('deu ruim'));
-  }, []);
 
-  const LATITUDE_DELTA = 0.0922;
-  const LONGITUDE_DELTA = 0.0421;
+    const categoriesFromApi = await diversaGenteServices.findAllCategories();
+
+    setCategories(categoriesFromApi);
+  }, []);
 
   useEffect(() => {
     setInitialPosition({
@@ -67,16 +74,21 @@ export const Locations = () => {
                 longitude: location.coordinates.longitude,
               }}
             >
-              <Box background={'#000'} borderRadius={5} padding={10}>
+              <Box background={'blue.400'} borderRadius={5} minWidth={300}>
                 <Icon
-                  as={<SimpleLineIcons name="pencil" size={24} color="white" />}
+                  as={<SimpleLineIcons name={'graduation'} color="white" />}
                   color="white"
-                  size={5}
-                  ml="2"
+                  size={12}
                   width={'100%'}
+                  background={'blue.900'}
                 />
-                <Box style={styles.mapMarkerIcon} />
-                <Text color="white">{location.title}</Text>
+                <Text
+                  color="white"
+                  lineBreakMode={'tail'}
+                  textBreakStrategy="balanced"
+                >
+                  {location.title}
+                </Text>
                 <Box style={styles.mapPicker} />
               </Box>
             </Marker>
