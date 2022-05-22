@@ -20,7 +20,7 @@ type Props = {
 
 export function Subcategories({ titles }: Props) {
   return (
-    <Box mt={10} ml="6">
+    <Box mt={10} ml="4">
       <VStack alignItems="center" justifyContent="center">
         <HStack space={6} flexWrap="wrap" alignItems="center">
           {titles.map((item, index) => {
