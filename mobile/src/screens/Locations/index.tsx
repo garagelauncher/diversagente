@@ -1,8 +1,8 @@
 import { SimpleLineIcons } from '@expo/vector-icons';
 import * as ExpoLocation from 'expo-location';
-import { Box, Button, Icon, Image, Popover, Text, View } from 'native-base';
+import { Box, Image, Text } from 'native-base';
 import { useCallback, useEffect, useState } from 'react';
-import { Alert, StyleSheet } from 'react-native';
+import { Alert } from 'react-native';
 import MapView, { Marker, Region, PROVIDER_GOOGLE } from 'react-native-maps';
 
 import * as customStyles from './styles';
@@ -14,7 +14,6 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = 0.0421;
 
 export const Locations = () => {
-  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [locations, setLocations] = useState<Location[]>([]);
   const [initialPosition, setInitialPosition] = useState<Region | undefined>(
     undefined,
@@ -87,7 +86,7 @@ export const Locations = () => {
           return (
             <Marker
               key={location.id}
-              style={styles.mapMarker}
+              style={customStyles.mapMarker}
               calloutAnchor={{
                 x: 2.7,
                 y: 0.8,
@@ -97,57 +96,71 @@ export const Locations = () => {
                 longitude: location.coordinates.longitude,
               }}
             >
-              {/* <Box background={'blue.400'} borderRadius={5} minWidth={300}>
-                <Icon
-                  as={<SimpleLineIcons name={'graduation'} color="white" />}
-                  color="white"
-                  size={12}
-                  width={'100%'}
-                  background={'blue.900'}
-                />
+              <Box
+                width={200}
+                minHeight={70}
+                backgroundColor="blue.800"
+                borderRadius="md"
+                alignItems="center"
+                position="relative"
+                zIndex={2}
+              >
+                {/* <Image
+                  width="100%"
+                  height={60}
+                  resizeMode={'cover'}
+                  source={{
+                    uri: 'https://images.unsplash.com/photo-1653220329192-ce4d725d352a?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740',
+                  }}
+                  zIndex={2}
+                  borderTopLeftRadius="md"
+                  borderTopRightRadius="md"
+                /> */}
+                <Box
+                  width="100%"
+                  height={60}
+                  // resizeMode={'cover'}
+                  // source={{
+                  //   uri: 'https://images.unsplash.com/photo-1653220329192-ce4d725d352a?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740',
+                  // }}
+                  zIndex={2}
+                  borderTopLeftRadius="md"
+                  borderTopRightRadius="md"
+                  alignItems="center"
+                  justifyContent="center"
+                  backgroundColor="blue.400"
+                >
+                  <SimpleLineIcons
+                    name="location-pin"
+                    size={24}
+                    color="white"
+                  />
+                </Box>
                 <Text
-                  color="white"
-                  lineBreakMode={'tail'}
-                  textBreakStrategy="balanced"
+                  flex={2}
+                  color={'#FFF'}
+                  fontSize={13}
+                  lineHeight={23}
+                  zIndex={2}
+                  lineBreakMode="tail"
+                  textAlign="center"
+                  numberOfLines={1}
+                  marginX={2}
                 >
                   {location.title}
                 </Text>
-                <Box style={styles.mapPicker} />
-              </Box> */}
-
-              <Box h="60%" w="100%" alignItems="center">
-                <Popover
-                  isOpen={isPopoverOpen}
-                  trigger={(triggerProps) => {
-                    return (
-                      <Button
-                        {...triggerProps}
-                        colorScheme="danger"
-                        onPress={() => setIsPopoverOpen(!isPopoverOpen)}
-                      >
-                        Delete Customer
-                      </Button>
-                    );
+                <Box
+                  backgroundColor="blue.800"
+                  position="absolute"
+                  width={8}
+                  height={8}
+                  style={{
+                    transform: [{ rotate: '45deg' }],
                   }}
-                >
-                  <Popover.Content accessibilityLabel="Delete Customerd" w="56">
-                    <Popover.Arrow />
-                    <Popover.CloseButton />
-                    <Popover.Header>Delete Customer</Popover.Header>
-                    <Popover.Body>
-                      This will remove all data relating to Alex. This action
-                      cannot be reversed. Deleted data can not be recovered.
-                    </Popover.Body>
-                    <Popover.Footer justifyContent="flex-end">
-                      <Button.Group space={2}>
-                        <Button colorScheme="coolGray" variant="ghost">
-                          Cancel
-                        </Button>
-                        <Button colorScheme="danger">Deletei</Button>
-                      </Button.Group>
-                    </Popover.Footer>
-                  </Popover.Content>
-                </Popover>
+                  bottom={-8}
+                  margin={0}
+                  zIndex={1}
+                />
               </Box>
             </Marker>
           );
@@ -156,99 +169,3 @@ export const Locations = () => {
     </Box>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 32,
-    paddingTop: 20,
-  },
-
-  title: {
-    fontSize: 20,
-    fontFamily: 'Ubuntu_700Bold',
-    marginTop: 24,
-  },
-
-  description: {
-    color: '#6C6C80',
-    fontSize: 16,
-    marginTop: 4,
-    fontFamily: 'Roboto_400Regular',
-  },
-
-  mapContainer: {
-    flex: 1,
-    width: '100%',
-    borderRadius: 10,
-    overflow: 'hidden',
-    marginTop: 16,
-  },
-
-  map: {
-    width: '100%',
-    height: '100%',
-  },
-
-  mapMarker: {
-    width: 300,
-    height: 150,
-  },
-
-  mapMarkerContainer: {
-    width: 90,
-    height: 70,
-    backgroundColor: '#34CB79',
-    flexDirection: 'column',
-    borderRadius: 8,
-    overflow: 'hidden',
-    alignItems: 'center',
-  },
-
-  mapMarkerImage: {
-    width: 90,
-    height: 45,
-    resizeMode: 'cover',
-  },
-
-  mapMarkerTitle: {
-    flex: 1,
-    fontFamily: 'Roboto_400Regular',
-    color: '#FFF',
-    fontSize: 13,
-    lineHeight: 23,
-  },
-
-  itemsContainer: {
-    flexDirection: 'row',
-    marginTop: 16,
-    marginBottom: 32,
-  },
-
-  item: {
-    backgroundColor: '#fff',
-    borderWidth: 2,
-    borderColor: '#eee',
-    height: 120,
-    width: 120,
-    borderRadius: 8,
-    paddingHorizontal: 16,
-    paddingTop: 20,
-    paddingBottom: 16,
-    marginRight: 8,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-
-    textAlign: 'center',
-  },
-
-  selectedItem: {
-    borderColor: '#34CB79',
-    borderWidth: 2,
-  },
-
-  itemTitle: {
-    fontFamily: 'Roboto_400Regular',
-    textAlign: 'center',
-    fontSize: 13,
-  },
-});
