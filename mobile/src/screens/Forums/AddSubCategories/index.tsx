@@ -71,7 +71,14 @@ export const AddSubCategories = () => {
         justifyContent={'center'}
         marginTop={20}
       >
-        <Button width={200}>Criar Subcategoria</Button>
+        <Button
+          width={200}
+          // isLoading
+          // spinnerPlacement="end"
+          // isLoadingText="Submitting"
+        >
+          Criar Subcategoria
+        </Button>
       </HStack>
     </ScrollView>
   );
