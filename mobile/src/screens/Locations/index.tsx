@@ -1,11 +1,9 @@
 import { SimpleLineIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import * as ExpoLocation from 'expo-location';
-import { Box, Image, Text } from 'native-base';
+import { Box, Text } from 'native-base';
 import { useCallback, useEffect, useState } from 'react';
-import { Alert, Pressable } from 'react-native';
-import { RectButton, TouchableOpacity } from 'react-native-gesture-handler';
+import { Alert } from 'react-native';
 import MapView, { Marker, Region, PROVIDER_GOOGLE } from 'react-native-maps';
 
 import * as customStyles from './styles';
@@ -14,13 +12,13 @@ import { Location } from '@src/contracts/Location';
 import { StackLocationNavigatorParamList } from '@src/routes/locationStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
 
+type LocationScreenNavigationProps = NavigationProp<
+  StackLocationNavigatorParamList,
+  'Locations'
+>;
+
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = 0.0421;
-
-type LocationScreenNavigationProps = NativeStackNavigationProp<
-  StackLocationNavigatorParamList,
-  'Location'
->;
 
 export const Locations = () => {
   const [locations, setLocations] = useState<Location[]>([]);
