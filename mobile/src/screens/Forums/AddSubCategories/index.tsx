@@ -32,8 +32,8 @@ export const AddSubCategories = () => {
   }, [fetchAllCategories]);
 
   return (
-    <ScrollView>
-      <Box backgroundColor={theme.colors.lightGray} flex={1}>
+    <ScrollView backgroundColor={theme.colors.lightGray}>
+      <Box flex={1}>
         <UserAvatar picture={'https://github.com/bertiGrazi.png'} />
       </Box>
       <HStack

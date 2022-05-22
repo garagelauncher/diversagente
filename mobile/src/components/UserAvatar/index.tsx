@@ -29,13 +29,13 @@ export const UserAvatar = ({ picture }: AvatarProps) => {
         marginLeft={22}
       ></Avatar>
       <Center>
-        <VStack space={40} alignItems="center" marginTop={10} marginRight={30}>
+        <VStack space={40} alignItems="center" marginTop={10} marginRight={2}>
           <IconButton
-            size={'md'}
-            variant="solid"
+            size={'lg'}
             _icon={{
               as: AntDesign,
-              name: 'plus',
+              name: 'menuunfold',
+              color: '#000000',
             }}
             onPress={() => goToAddCategoryScreen()}
           />
