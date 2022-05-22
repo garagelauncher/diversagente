@@ -1,17 +1,26 @@
 import { SimpleLineIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import * as ExpoLocation from 'expo-location';
 import { Box, Image, Text } from 'native-base';
 import { useCallback, useEffect, useState } from 'react';
-import { Alert } from 'react-native';
+import { Alert, Pressable } from 'react-native';
+import { RectButton, TouchableOpacity } from 'react-native-gesture-handler';
 import MapView, { Marker, Region, PROVIDER_GOOGLE } from 'react-native-maps';
 
 import * as customStyles from './styles';
 
 import { Location } from '@src/contracts/Location';
+import { StackLocationNavigatorParamList } from '@src/routes/locationStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
 
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = 0.0421;
+
+type LocationScreenNavigationProps = NativeStackNavigationProp<
+  StackLocationNavigatorParamList,
+  'Location'
+>;
 
 export const Locations = () => {
   const [locations, setLocations] = useState<Location[]>([]);
@@ -19,7 +28,14 @@ export const Locations = () => {
     undefined,
   );
 
+  const navigation = useNavigation<LocationScreenNavigationProps>();
+
   console.log('locations state', locations);
+
+  function handleNavigateToLocationDetails(id: string) {
+    console.log('handleNavigateToLocationDetails', id);
+    navigation.navigate('LocationDetails', { id });
+  }
 
   const getUserCurrentLocation = useCallback(async () => {
     const { status } = await ExpoLocation.requestForegroundPermissionsAsync();
@@ -95,6 +111,7 @@ export const Locations = () => {
                 latitude: location.coordinates.latitude,
                 longitude: location.coordinates.longitude,
               }}
+              onPress={() => handleNavigateToLocationDetails(location.id)}
             >
               <Box
                 width={200}
