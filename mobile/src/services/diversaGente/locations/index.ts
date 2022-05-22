@@ -1,4 +1,4 @@
-import { diversagenteBaseApi } from './baseUrl';
+import { diversagenteBaseApi } from '../baseUrl';
 
 import { Location, SearchLocationByProximity } from '@src/contracts/Location';
 
