@@ -9,7 +9,7 @@ type Props = {
 
 export const Categories = ({ titles }: Props) => {
   return (
-    <ScrollView horizontal={true}>
+    <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
       <HStack mt={4}>
         {titles.map((item, index) => {
           return (
