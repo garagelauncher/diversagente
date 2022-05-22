@@ -1,3 +1,4 @@
+import { theme as nativeBaseTheme } from 'native-base';
 import { Dimensions, ViewProps } from 'react-native';
 
 import { theme } from '@src/styles/theme';
@@ -9,14 +10,11 @@ export const mapStyles = {
 };
 
 export const mapMarker = {
-  width: 90,
-  height: 80,
   borderRadius: 10,
   overflow: 'hidden',
 } as ViewProps;
 
 export const mapMarkerContainer = {
-  height: 70,
   backgroundColor: theme.colors.orangePrimary,
   flexDirection: 'column',
   borderRadius: 8,
@@ -27,7 +25,7 @@ export const mapMarkerContainer = {
 
 export const mapMarkerIcon = {
   width: 90,
-  height: 45,
+  min: 45,
   resizeMode: 'cover',
 };
 
@@ -48,6 +46,6 @@ export const mapPicker = {
   bottom: -15,
   width: 15,
   height: 15,
-  backgroundColor: theme.colors.navyPrimary,
+  backgroundColor: nativeBaseTheme.colors.blue[700],
   zIndex: -1,
 } as ViewProps;
