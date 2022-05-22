@@ -22,7 +22,7 @@ type AuthResponse = {
 };
 
 export const AuthProvider = ({ children }: AuthProvidersProps) => {
-  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [isLoggedIn, setLoggedIn] = useState(true);
   const [user, setUser] = useState<UserData | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 

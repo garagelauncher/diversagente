@@ -34,7 +34,7 @@ export function TabRoutes() {
         headerShown: false,
         tabBarShowLabel: false,
       }}
-      initialRouteName="Profile"
+      initialRouteName="Locations"
     >
       <Screen
         name="Forums"
