@@ -17,7 +17,6 @@ export const Locations = () => {
   const [initialPosition, setInitialPosition] = useState<Region | undefined>(
     undefined,
   );
-  const [categories, setCategories] = useState<Category[]>([]);
 
   console.log('locations state', locations);
 
@@ -35,10 +34,6 @@ export const Locations = () => {
         setLocations(foundLocations);
       })
       .catch((error) => console.error('deu ruim'));
-
-    const categoriesFromApi = await diversaGenteServices.findAllCategories();
-
-    setCategories(categoriesFromApi);
   }, []);
 
   useEffect(() => {
