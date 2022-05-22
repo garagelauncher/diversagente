@@ -6,6 +6,7 @@ import { Category } from '@src/contracts/Category';
 type Props = {
   titles: Category[];
 };
+
 export const Categories = ({ titles }: Props) => {
   return (
     <ScrollView horizontal={true}>

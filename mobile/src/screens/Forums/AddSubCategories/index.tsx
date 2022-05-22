@@ -7,13 +7,29 @@ import {
   Select,
   CheckIcon,
 } from 'native-base';
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { UserAvatar } from '@src/components/UserAvatar';
+import { Category } from '@src/contracts/Category';
+import { diversaGenteServices } from '@src/services/diversaGente';
 import { theme } from '@src/styles/theme';
 
 export const AddSubCategories = () => {
+  const [categories, setCategories] = useState<Category[]>([]);
   const [service, setService] = React.useState('');
+
+  const fetchAllCategories = useCallback(async () => {
+    try {
+      const categoriesFromApi = await diversaGenteServices.findAllCategories();
+      setCategories(categoriesFromApi);
+    } catch (error) {
+      console.info('Error while fetching all categories', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchAllCategories();
+  }, [fetchAllCategories]);
 
   return (
     <ScrollView>
@@ -57,11 +73,15 @@ export const AddSubCategories = () => {
           mt={1}
           onValueChange={(itemValue) => setService(itemValue)}
         >
-          <Select.Item label="UX Research" value="ux" />
-          <Select.Item label="Web Development" value="web" />
-          <Select.Item label="Cross Platform Development" value="cross" />
-          <Select.Item label="UI Designing" value="ui" />
-          <Select.Item label="Backend Development" value="backend" />
+          {categories.map((name, index) => {
+            return (
+              <Select.Item
+                label={JSON.stringify(name.title)}
+                value={JSON.stringify(name.title)}
+                key={index}
+              />
+            );
+          })}
         </Select>
       </HStack>
       <HStack
