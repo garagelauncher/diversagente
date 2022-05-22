@@ -127,11 +127,29 @@ export class LocationsService {
       where: {
         id,
       },
+      include: {
+        Review: true,
+        _count: {
+          select: {
+            Review: true,
+          },
+        },
+      },
     });
 
     Logger.debug('recovering location', location);
 
-    return location;
+    const starsAverageFromLocation =
+      location.Review.reduce(
+        (accumulator, review) => accumulator + review.stars,
+        0,
+      ) / location._count.Review;
+
+    delete location.Review;
+    return {
+      ...location,
+      starsAverage: starsAverageFromLocation,
+    };
   }
 
   async update(id: string, updateLocationDto: UpdateLocationDto) {
