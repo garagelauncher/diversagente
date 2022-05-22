@@ -1,13 +1,17 @@
 import { AntDesign } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 import { Avatar, HStack, Center, VStack, IconButton } from 'native-base';
+import { useEffect, useState } from 'react';
 
-type AvatarProps = {
-  picture: string;
-};
+import { useAuth } from '@src/hooks/useAuth';
 
-export const UserAvatar = ({ picture }: AvatarProps) => {
-  const navigate = useNavigation();
+export const UserAvatar = () => {
+  const [picture, setPicture] = useState<string>();
+  const { user, setUser } = useAuth();
+
+  useEffect(() => {
+    setPicture(user?.picture ?? '');
+  }, [user]);
 
   function goToAddCategoryScreen() {
     console.log('add subcategories screen');
