@@ -1,9 +1,11 @@
-import { Box, Heading, ScrollView, Text } from 'native-base';
+import { Box, ScrollView } from 'native-base';
 import React from 'react';
 
 import { theme } from '../../styles/theme';
 
+import { Category } from '@src/components/Category';
 import { Subcategories, Titles } from '@src/components/Subcategories';
+import { UserAvatar } from '@src/components/UserAvatar';
 
 const titles: Titles[] = [
   {
@@ -35,17 +37,9 @@ const titles: Titles[] = [
 export const Forums = () => {
   return (
     <ScrollView>
-      <Box
-        width="100%"
-        backgroundColor={theme.colors.pastelPrimary}
-        flex={1}
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Box mt={100} alignItems="center" alignContent="center">
-          <Heading>FORUMS PAGE</Heading>
-          <Text>Work In progress...</Text>
-        </Box>
+      <Box backgroundColor={theme.colors.lightGray} flex={1}>
+        <UserAvatar picture={'https://github.com/bertiGrazi.png'} />
+        <Category />
         <Subcategories titles={titles}></Subcategories>
       </Box>
     </ScrollView>
