@@ -40,20 +40,20 @@ export const Forums = () => {
   }, [fetchAllCategories, fetchAllSubcategories]);
 
   return (
-    // <ScrollView>
-    //   <Box backgroundColor={theme.colors.lightGray} flex={1}>
-    //     <UserAvatar picture={'https://github.com/bertiGrazi.png'} />
-    //     <Category />
-    //     <Subcategories titles={titles}></Subcategories>
-    //   </Box>
-    // </ScrollView>
-    // <AddSubCategories />
     <ScrollView>
-      <Box backgroundColor={theme.colors.lightGray} flex={1}>
+      {/* {/* <Box backgroundColor={theme.colors.lightGray} flex={1}>
+        <UserAvatar picture={'https://github.com/bertiGrazi.png'} />
+        <Category />
+        <Subcategories titles={titles}></Subcategories>
+      </Box>
+    </ScrollView>
+    <AddSubCategories /> */}
+      {/* <Box backgroundColor={theme.colors.lightGray} flex={1}>
         <UserAvatar picture={'https://github.com/bertiGrazi.png'} />
         <Categories titles={categories} />
         <Subcategories titles={subcategories}></Subcategories>
-      </Box>
+      </Box> */}
+      <AddSubCategories />
     </ScrollView>
   );
 };
