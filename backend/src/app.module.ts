@@ -12,6 +12,7 @@ import { SubcategoriesModule } from './modules/subcategories/subcategories.modul
 import { LikesModule } from './modules/likes/likes.module';
 import { PostsModule } from './modules/posts/posts.module';
 import { CommentsModule } from './modules/comments/comments.module';
+import { ReviewsModule } from './modules/reviews/reviews.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { CommentsModule } from './modules/comments/comments.module';
     LikesModule,
     PostsModule,
     CommentsModule,
+    ReviewsModule,
   ],
   controllers: [AppController],
   providers: [AppService, CloudinaryProvider],
