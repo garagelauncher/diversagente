@@ -25,10 +25,13 @@ export class PostsService {
   }
 
   update(id: string, updatePostDto: UpdatePostDto) {
-    return `This action updates a #${id} post`;
+    return this.prisma.post.update({
+      where: { id },
+      data: updatePostDto,
+    });
   }
 
   remove(id: string) {
-    return `This action removes a #${id} post`;
+    return this.prisma.post.delete({ where: { id } });
   }
 }

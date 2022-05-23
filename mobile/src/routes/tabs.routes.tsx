@@ -4,14 +4,14 @@ import React from 'react';
 import { Platform } from 'react-native';
 
 import { theme } from '../styles/theme';
+import { StackLocationPrivateRoutes } from './locationStack.routes';
 
 import { Forums } from '@src/screens/Forums';
-import { Locations } from '@src/screens/Locations';
 import { Messages } from '@src/screens/Messages';
 import { Profile } from '@src/screens/Profile';
 
 export type RootBottomTabParamList = {
-  Locations: undefined;
+  LocationsStack: undefined;
   Forums: undefined;
   Messages: undefined;
   Profile: undefined;
@@ -34,7 +34,7 @@ export function TabRoutes() {
         headerShown: false,
         tabBarShowLabel: false,
       }}
-      initialRouteName="Profile"
+      initialRouteName="Forums"
     >
       <Screen
         name="Forums"
@@ -46,8 +46,8 @@ export function TabRoutes() {
         }}
       />
       <Screen
-        name="Locations"
-        component={Locations}
+        name="LocationsStack"
+        component={StackLocationPrivateRoutes}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name={'location-on'} color={color} size={size} />

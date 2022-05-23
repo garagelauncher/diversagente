@@ -54,7 +54,7 @@ model User {
 }
 
 model Category {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
   name  String? @unique
   title String?
 
@@ -67,7 +67,7 @@ model Category {
 }
 
 model Subcategory {
-  id    String  @id  @default(auto()) @map("_id") @db.ObjectId
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
   name  String @unique
   title String
 
@@ -127,9 +127,9 @@ model Post {
 }
 
 model Review {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  comment String
-  stars   Int
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  text  String
+  stars Int
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
