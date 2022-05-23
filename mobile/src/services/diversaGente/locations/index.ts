@@ -30,3 +30,22 @@ export const getLocationsByProximity = async ({
     throw error;
   }
 };
+
+export const getLocationById = async (id: string) => {
+  try {
+    const response = await diversagenteBaseApi.get<Location>(
+      `/locations/${id}`,
+    );
+
+    const location = response.data;
+    console.info('location');
+    console.info(location);
+    return location;
+  } catch (error: any) {
+    console.info('error when fetching location');
+    if (error.isAxiosError) {
+      console.error(error.response);
+    }
+    throw error;
+  }
+};
