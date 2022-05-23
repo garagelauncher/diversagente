@@ -1,5 +1,9 @@
-import { SimpleLineIcons } from '@expo/vector-icons';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { SimpleLineIcons, Feather } from '@expo/vector-icons';
+import {
+  NavigationProp,
+  useFocusEffect,
+  useNavigation,
+} from '@react-navigation/native';
 import * as ExpoLocation from 'expo-location';
 import { Box, Text } from 'native-base';
 import { useCallback, useEffect, useState } from 'react';
@@ -65,7 +69,7 @@ export const Locations = () => {
       .getLocationsByProximity({
         latitude: -23.4448752,
         longitude: -46.5374598,
-        distanceInKilometer: 30,
+        distanceInKilometer: 90,
         limit: 10,
       })
       .then((foundLocations) => {
@@ -85,10 +89,13 @@ export const Locations = () => {
     });
     console.debug('loaded focus on map');
 
-    fetchLocations();
     getUserCurrentLocation();
+    fetchLocations();
   }, [fetchLocations, getUserCurrentLocation]);
 
+  useFocusEffect(() => {
+    console.info('focus effect');
+  });
   return (
     <Box flex={1}>
       <MapView
@@ -145,11 +152,7 @@ export const Locations = () => {
                   justifyContent="center"
                   backgroundColor="blue.400"
                 >
-                  <SimpleLineIcons
-                    name="location-pin"
-                    size={24}
-                    color="white"
-                  />
+                  <Feather name="cloud" size={40} color="white" />
                 </Box>
                 <Text
                   flex={2}
