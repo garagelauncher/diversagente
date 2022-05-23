@@ -12,18 +12,28 @@ export class LikesService {
   }
 
   findAll() {
-    return `This action returns all likes`;
+    return this.prisma.like.findMany({});
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} like`;
+  async findOne(id: string) {
+     //return this.prisma.category.findUnique({ where: { id } });
+
+    const like = await this.prisma.like.findUnique({
+      where: {
+        id,
+      },
+    });
+    return like;
   }
 
-  update(id: string, updateLikeDto: UpdateLikeDto) {
-    return `This action updates a #${id} like`;
+  update(id: string, UpdateLikeDto: UpdateLikeDto) {
+    return this.prisma.like.update({
+      where: { id },
+      data: UpdateLikeDto,
+    });
   }
 
   remove(id: string) {
-    return `This action removes a #${id} like`;
+    return this.prisma.like.delete({ where: { id } });
   }
 }

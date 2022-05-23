@@ -1,7 +1,14 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
+import { AddSubCategories } from '@src/screens/Forums/AddSubCategories';
+import { LocationDetails } from '@src/screens/LocationDetails';
+import { Locations } from '@src/screens/Locations';
 import { Login } from '@src/screens/Login';
-import { Profile } from '@src/screens/Profile';
+
+export type StackNavigatorParamList = {
+  Locations: undefined;
+  LocationDetails: { id: string };
+};
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -18,15 +25,15 @@ export const StackRoutes = () => {
   );
 };
 
-export const StackPrivateRoutes = () => {
+export const StackLocationPrivateRoutes = () => {
   return (
     <Navigator
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName="Profile"
     >
-      <Screen name="Profile" component={Profile} />
+      <Screen name="Locations" component={Locations} />
+      <Screen name="LocationDetails" component={LocationDetails} />
     </Navigator>
   );
 };
