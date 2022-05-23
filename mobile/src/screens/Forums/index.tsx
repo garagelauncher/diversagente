@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import { theme } from '../../styles/theme';
 import { AddSubCategories } from './AddSubCategories';
+import { CreatePost } from './CreatePost';
 
 import { Categories } from '@src/components/Categories';
 import { Subcategories } from '@src/components/Subcategories';
@@ -40,20 +41,22 @@ export const Forums = () => {
   }, [fetchAllCategories, fetchAllSubcategories]);
 
   return (
-    <ScrollView>
-      {/* {/* <Box backgroundColor={theme.colors.lightGray} flex={1}>
-        <UserAvatar picture={'https://github.com/bertiGrazi.png'} />
-        <Category />
-        <Subcategories titles={titles}></Subcategories>
-      </Box>
-    </ScrollView>
-    <AddSubCategories /> */}
-      {/* <Box backgroundColor={theme.colors.lightGray} flex={1}>
-        <UserAvatar />
-        <Categories titles={categories} />
-        <Subcategories titles={subcategories}></Subcategories>
-      </Box> */}
-      <AddSubCategories />
-    </ScrollView>
+    // <ScrollView>
+    //   {/* {/* <Box backgroundColor={theme.colors.lightGray} flex={1}>
+    //     <UserAvatar picture={'https://github.com/bertiGrazi.png'} />
+    //     <Category />
+    //     <Subcategories titles={titles}></Subcategories>
+    //   </Box>
+    // </ScrollView>
+    // <AddSubCategories /> */}
+    //   <Box backgroundColor={theme.colors.lightGray} flex={1}>
+    //     {/* <UserAvatar />
+    //     <Categories titles={categories} />
+    //     <Subcategories titles={subcategories}></Subcategories> */}
+
+    //   </Box>
+    //   {/* /* <AddSubCategories /> */}
+    // </ScrollView>
+    <CreatePost />
   );
 };
