@@ -1,6 +1,8 @@
 export interface Location {
   id: string;
   title: string;
+  description: string;
+  address: string;
   ownerId: string;
   createdAt: string;
   updatedAt: string;
