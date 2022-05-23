@@ -146,9 +146,14 @@ export class LocationsService {
       ) / location._count.Review;
 
     delete location.Review;
+    delete location.geoposition;
     return {
       ...location,
       starsAverage: starsAverageFromLocation,
+      coordinates: {
+        latitude: location.geoposition.coordinates[0],
+        longitude: location.geoposition.coordinates[1],
+      },
     };
   }
 
