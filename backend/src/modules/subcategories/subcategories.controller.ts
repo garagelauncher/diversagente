@@ -11,19 +11,13 @@ import { SubcategoriesService } from './subcategories.service';
 import { CreateSubcategoryDto } from './dto/create-subcategory.dto';
 import { UpdateSubcategoryDto } from './dto/update-subcategory.dto';
 
-@Controller('categories/:categoriesIds/subcategories')
+@Controller('subcategories')
 export class SubcategoriesController {
   constructor(private readonly subcategoriesService: SubcategoriesService) {}
 
   @Post()
-  create(
-    @Param('categoriesIds') categoriesIds: string[],
-    @Body() createSubcategoryDto: CreateSubcategoryDto,
-  ) {
-    return this.subcategoriesService.create({
-      categoriesIds,
-      ...createSubcategoryDto,
-    });
+  create(@Body() createSubcategoryDto: CreateSubcategoryDto) {
+    return this.subcategoriesService.create(createSubcategoryDto);
   }
 
   @Get()

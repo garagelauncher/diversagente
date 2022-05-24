@@ -16,7 +16,7 @@ export class LikesService {
   }
 
   async findOne(id: string) {
-    //return this.prisma.category.findUnique({ where: { id } });
+     //return this.prisma.category.findUnique({ where: { id } });
 
     const like = await this.prisma.like.findUnique({
       where: {
