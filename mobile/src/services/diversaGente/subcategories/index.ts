@@ -15,3 +15,22 @@ export const findAllSubcategories = async () => {
     throw error;
   }
 };
+
+export const findOneSubcategory = async (id: string) => {
+  try {
+    const response = await diversagenteBaseApi.get<Subcategory>(
+      `/subcategories`,
+      {
+        params: {
+          id,
+        },
+      },
+    );
+    const category = response.data.category;
+    console.info('SUBCATEGORY!', category);
+    return category;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
