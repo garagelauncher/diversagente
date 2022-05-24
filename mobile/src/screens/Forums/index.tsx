@@ -1,12 +1,8 @@
 import { Box, ScrollView } from 'native-base';
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { theme } from '../../styles/theme';
-import { AddSubCategories } from './AddSubCategories';
+import { SubcategoryForum } from '../SubcategoryForum';
 
-import { Categories } from '@src/components/Categories';
-import { Subcategories } from '@src/components/Subcategories';
-import { UserAvatar } from '@src/components/UserAvatar';
 import { Category } from '@src/contracts/Category';
 import { Subcategory } from '@src/contracts/Subcategory';
 import { diversaGenteServices } from '@src/services/diversaGente';
@@ -41,19 +37,15 @@ export const Forums = () => {
 
   return (
     <ScrollView>
-      {/* {/* <Box backgroundColor={theme.colors.lightGray} flex={1}>
-        <UserAvatar picture={'https://github.com/bertiGrazi.png'} />
-        <Category />
-        <Subcategories titles={titles}></Subcategories>
-      </Box>
-    </ScrollView>
-    <AddSubCategories /> */}
       {/* <Box backgroundColor={theme.colors.lightGray} flex={1}>
         <UserAvatar />
         <Categories titles={categories} />
         <Subcategories titles={subcategories}></Subcategories>
       </Box> */}
-      <AddSubCategories />
+      <SubcategoryForum
+        subcategories={subcategories}
+        id={'62891790b046d56cd0cc6ea5'}
+      ></SubcategoryForum>
     </ScrollView>
   );
 };

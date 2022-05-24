@@ -1,4 +1,4 @@
-import { Center, Button, HStack, VStack, Text, Box } from 'native-base';
+import { Center, Button, HStack, VStack, Text } from 'native-base';
 import React from 'react';
 
 import { Category } from '@src/contracts/Category';
@@ -23,7 +23,12 @@ export function Subcategories({ titles }: Props) {
                 borderRadius="xl"
               >
                 <Center borderRadius="md">
-                  <Button bg={'amber.600'} w={100} p={1.5}>
+                  <Button
+                    bg={'amber.600'}
+                    w={100}
+                    p={1.5}
+                    //onPress={() => handleSelectedSubcategory(item.id)}
+                  >
                     <Text textAlign="center" color={'amber.50'}>
                       {item.title}
                     </Text>
