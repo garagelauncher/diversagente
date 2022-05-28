@@ -1,7 +1,7 @@
 {
-  "displayName": "DiversaGente",
+  "displayName": "diversaGente",
   "expo": {
-    "name": "DiversaGente",
+    "name": "diversaGente",
     "slug": "mobile",
     "scheme": "diversagente",
     "version": "1.0.0",
@@ -22,7 +22,12 @@
         "ACCESS_BACKGROUND_LOCATION",
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION"
-      ]
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": ""
+        }
+      }
     }
   },
   "name": "mobile"
