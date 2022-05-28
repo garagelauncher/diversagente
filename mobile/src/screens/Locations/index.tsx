@@ -39,7 +39,7 @@ export const Locations = () => {
     navigation.navigate('LocationDetails', { id });
   }
 
-  const getUserCurrentLocation = useCallback(async () => {
+  const getCurrentUserLocation = useCallback(async () => {
     const { status } = await ExpoLocation.requestForegroundPermissionsAsync();
 
     if (status !== 'granted') {
@@ -80,22 +80,19 @@ export const Locations = () => {
       .catch((error) => console.error('deu ruim'));
   }, []);
 
-  useEffect(() => {
-    setInitialPosition({
-      latitude: -23.4521335,
-      longitude: -46.63327,
-      latitudeDelta: LATITUDE_DELTA,
-      longitudeDelta: LONGITUDE_DELTA,
-    });
+  // useEffect(() => {}, [fetchLocations, getCurrentUserLocation]);
+
+  const onOpenLocationTab = useCallback(async () => {
     console.debug('loaded focus on map');
 
-    getUserCurrentLocation();
-    fetchLocations();
-  }, [fetchLocations, getUserCurrentLocation]);
+    await getCurrentUserLocation();
+    await fetchLocations();
+  }, [getCurrentUserLocation, fetchLocations]);
 
-  useFocusEffect(() => {
-    console.info('focus effect');
-  });
+  useEffect(() => {
+    onOpenLocationTab();
+  }, [onOpenLocationTab]);
+
   return (
     <Box flex={1}>
       <MapView
