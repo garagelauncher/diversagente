@@ -5,8 +5,8 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import * as ExpoLocation from 'expo-location';
-import { Box, Text } from 'native-base';
-import { useCallback, useEffect, useState } from 'react';
+import { Box, Icon, IconButton, Text } from 'native-base';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import MapView, { Marker, Region, PROVIDER_GOOGLE } from 'react-native-maps';
 
@@ -39,6 +39,10 @@ export const Locations = () => {
     navigation.navigate('LocationDetails', { id });
   }
 
+  function handleNavigateToFormCreateLocation() {
+    navigation.navigate('FormCreateLocation');
+  }
+
   const getCurrentUserLocation = useCallback(async () => {
     const { status } = await ExpoLocation.requestForegroundPermissionsAsync();
 
@@ -57,8 +61,8 @@ export const Locations = () => {
     console.debug('latitude', latitude);
     console.debug('longitude', longitude);
     setInitialPosition({
-      latitude,
-      longitude,
+      latitude: -23.4448752,
+      longitude: -46.5374598,
       latitudeDelta: LATITUDE_DELTA,
       longitudeDelta: LONGITUDE_DELTA,
     });
@@ -95,6 +99,17 @@ export const Locations = () => {
 
   return (
     <Box flex={1}>
+      <IconButton
+        colorScheme="gray"
+        variant={'solid'}
+        icon={<Icon as={<Feather name="plus" />} />}
+        onPress={handleNavigateToFormCreateLocation}
+        position="absolute"
+        top={8}
+        left={4}
+        zIndex={1}
+      />
+
       <MapView
         provider={PROVIDER_GOOGLE}
         style={customStyles.mapStyles}
