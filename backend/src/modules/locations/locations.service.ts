@@ -146,7 +146,6 @@ export class LocationsService {
       ) / location._count.Review;
 
     delete location.Review;
-    delete location.geoposition;
     return {
       ...location,
       starsAverage: starsAverageFromLocation,
