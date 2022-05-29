@@ -8,19 +8,28 @@ import {
 import {
   Box,
   Button,
+  Divider,
+  Flex,
   Heading,
   Icon,
   IconButton,
   Image,
+  ScrollView,
   Stack,
   Text,
+  View,
+  VStack,
 } from 'native-base';
 import { useCallback, useEffect, useState } from 'react';
 import { Linking } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import MapView, { Marker } from 'react-native-maps';
 
+import { LoadingScreen } from '@src/components/LoadingScreen';
 import { Location } from '@src/contracts/Location';
 import { StackLocationNavigatorParamList } from '@src/routes/locationStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
+import { formatDate } from '@src/utils/formatDate';
 
 type LocationDetailsScreenNavigationProps = NavigationProp<
   StackLocationNavigatorParamList,
@@ -28,7 +37,9 @@ type LocationDetailsScreenNavigationProps = NavigationProp<
 >;
 
 export const LocationDetails = () => {
-  const [location, setLocation] = useState<Location>({} as Location);
+  const [location, setLocation] = useState<Location>(
+    null as unknown as Location,
+  );
 
   const navigation = useNavigation<LocationDetailsScreenNavigationProps>();
   const route =
@@ -53,7 +64,7 @@ export const LocationDetails = () => {
     console.log(locationToOpen);
     const { latitude, longitude } = coordinates;
     console.log(latitude, longitude);
-    const url = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
+    const url = `https://www.google.com/maps/search/?api=1&query=${longitude},${latitude}`;
     Linking.openURL(url);
   };
 
@@ -69,8 +80,13 @@ export const LocationDetails = () => {
     fetchLocationById(id);
   }, [fetchLocationById, id]);
 
+  if (!location) {
+    return <LoadingScreen />;
+  }
+  console.debug(location);
+
   return (
-    <Box width="100%" backgroundColor="blue.200" flex={1}>
+    <Box width="100%" backgroundColor="gray.200" flex={1}>
       <IconButton
         colorScheme="gray"
         variant={'solid'}
@@ -78,7 +94,7 @@ export const LocationDetails = () => {
         onPress={handleNavigateGoBack}
         position="absolute"
         top={10}
-        left={10}
+        left={4}
         zIndex={1}
       />
       <Image
@@ -88,32 +104,116 @@ export const LocationDetails = () => {
         resizeMode={'cover'}
         width={'100%'}
         height={200}
+        style={{
+          backgroundColor: 'rgba(0, 0, 0, .5)',
+        }}
       />
-      <Box flex={1} padding={4}>
-        <Text>{id}</Text>
-        <Heading>{location?.title}</Heading>
-        <Text>{location?.description}</Text>
-        <Text>{location?.address}</Text>
-        <Text>{location?.createdAt}</Text>
-
-        <Stack space={4}>
-          <Button
-            colorScheme="blue"
-            onPress={() => handleOpenLocationOnGoogleMaps(location)}
-          >
-            Ver no Google Maps
-          </Button>
-          <Button colorScheme="pink" onPress={handleNavigateToReviews}>
-            Ver reviews (1222)
-          </Button>
-          <Button
-            colorScheme="orange"
-            onPress={handleNavigateToFormCreateReview}
-          >
-            Avaliar local
-          </Button>
+      <ScrollView
+        flex={1}
+        padding={4}
+        paddingBottom={40}
+        _contentContainerStyle={{
+          minW: '72',
+        }}
+      >
+        <Stack space={2}>
+          <Heading fontSize={24} fontWeight={'bold'} color={'black'}>
+            {location?.title}
+          </Heading>
+          <Flex>
+            <Text fontSize={16} color={'blue.500'} fontWeight={'bold'}>
+              Entrou para comunidade em
+            </Text>
+            <Text fontSize={14} color={'black'}>
+              {formatDate(location.createdAt)}
+            </Text>
+          </Flex>
+          <Flex>
+            <Text fontSize={16} color={'blue.500'} fontWeight={'bold'}>
+              Endereço
+            </Text>
+            <Text fontSize={14} color={'black'}>
+              {location.address}
+            </Text>
+          </Flex>
+          <Flex>
+            <Text fontSize={16} color={'blue.500'} fontWeight={'bold'}>
+              Descrição
+            </Text>
+            <Text fontSize={14} color={'black'}>
+              {location.description}
+            </Text>
+          </Flex>
         </Stack>
-      </Box>
+        <Divider my={4} />
+        <Stack space={4} paddingBottom={30} marginTop={1}>
+          <View
+            borderRadius={20}
+            overflow={'hidden'}
+            borderWidth={1.2}
+            borderColor={'#B3DAE2'}
+            backgroundColor={'#E6F7FB'}
+          >
+            <MapView
+              initialRegion={{
+                latitude: location.coordinates.longitude,
+                longitude: location.coordinates.latitude,
+                latitudeDelta: 0.008,
+                longitudeDelta: 0.008,
+              }}
+              zoomEnabled={false}
+              pitchEnabled={false}
+              scrollEnabled={false}
+              rotateEnabled={false}
+              style={{
+                width: '100%',
+                height: 150,
+              }}
+            >
+              <Marker
+                coordinate={{
+                  latitude: location?.coordinates.longitude,
+                  longitude: location?.coordinates.latitude,
+                }}
+              />
+            </MapView>
+            <TouchableOpacity
+              onPress={() => handleOpenLocationOnGoogleMaps(location)}
+              style={{
+                padding: 16,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Text color="blue.800">Ver rotas no Google Maps</Text>
+            </TouchableOpacity>
+          </View>
+          <VStack
+            flexDirection={'row'}
+            justifyContent={'space-between'}
+            alignItems={'center'}
+            width={'100%'}
+            space={2}
+          >
+            <Button
+              fontWeight={'bold'}
+              colorScheme="blue"
+              onPress={handleNavigateToReviews}
+              width={'48%'}
+            >
+              Ver reviews
+            </Button>
+            <Button
+              fontWeight={'bold'}
+              colorScheme="orange"
+              onPress={handleNavigateToFormCreateReview}
+              width={'48%'}
+            >
+              Avaliar local
+            </Button>
+          </VStack>
+        </Stack>
+      </ScrollView>
     </Box>
   );
 };
