@@ -12,6 +12,7 @@ import {
   Icon,
   IconButton,
   Image,
+  Stack,
   Text,
 } from 'native-base';
 import { useCallback, useEffect, useState } from 'react';
@@ -36,6 +37,14 @@ export const LocationDetails = () => {
 
   const handleNavigateGoBack = () => {
     navigation.goBack();
+  };
+
+  const handleNavigateToReviews = () => {
+    navigation.navigate('Reviews', { locationId: id });
+  };
+
+  const handleNavigateToFormCreateReview = () => {
+    navigation.navigate('FormCreateReview', { locationId: id });
   };
 
   const handleOpenLocationOnGoogleMaps = (locationToOpen: Location) => {
@@ -86,12 +95,24 @@ export const LocationDetails = () => {
         <Text>{location?.description}</Text>
         <Text>{location?.address}</Text>
         <Text>{location?.createdAt}</Text>
-        <Button
-          colorScheme="blue"
-          onPress={() => handleOpenLocationOnGoogleMaps(location)}
-        >
-          Ver no Google Maps
-        </Button>
+
+        <Stack space={4}>
+          <Button
+            colorScheme="blue"
+            onPress={() => handleOpenLocationOnGoogleMaps(location)}
+          >
+            Ver no Google Maps
+          </Button>
+          <Button colorScheme="pink" onPress={handleNavigateToReviews}>
+            Ver reviews (1222)
+          </Button>
+          <Button
+            colorScheme="orange"
+            onPress={handleNavigateToFormCreateReview}
+          >
+            Avaliar local
+          </Button>
+        </Stack>
       </Box>
     </Box>
   );

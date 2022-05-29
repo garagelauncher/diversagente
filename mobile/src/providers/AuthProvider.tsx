@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as AuthSession from 'expo-auth-session';
-import { ReactNode, useState } from 'react';
-import { Alert } from 'react-native';
+import { ReactNode, useEffect, useState } from 'react';
+import { Alert, AsyncStorage } from 'react-native';
 
 import { Oauth2 } from '@src/configs';
 import {
@@ -22,7 +22,7 @@ type AuthResponse = {
 };
 
 export const AuthProvider = ({ children }: AuthProvidersProps) => {
-  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [isLoggedIn, setLoggedIn] = useState(true);
   const [user, setUser] = useState<UserData | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -89,6 +89,7 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
           bio: responseCreateUser.data?.biograph ?? '',
           createdAt: responseCreateUser.data?.createdAt ?? '',
         });
+        await AsyncStorage.setItem('diversagente@user', JSON.stringify(user));
       }
       console.log('Sign in with Google');
     } catch (error: any) {
@@ -111,6 +112,18 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
     setLoggedIn(false);
     setUser(undefined as UserData | undefined);
   }
+
+  useEffect(() => {
+    async function getUser() {
+      const user = await AsyncStorage.getItem('diversagente@user');
+      if (user) {
+        setUser(JSON.parse(user));
+        setLoggedIn(true);
+      }
+    }
+
+    getUser();
+  }, []);
 
   return (
     <AuthContext.Provider
