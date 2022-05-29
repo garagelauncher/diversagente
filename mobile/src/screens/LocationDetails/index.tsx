@@ -182,7 +182,7 @@ export const LocationDetails = () => {
               onPress={handleNavigateToReviews}
               width={'48%'}
             >
-              Ver {location.reviewCount > 0 ? '' : location.reviewCount} reviews
+              Ver reviews
             </Button>
             <Button
               fontWeight={'bold'}
