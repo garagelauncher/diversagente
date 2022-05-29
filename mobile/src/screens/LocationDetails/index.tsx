@@ -8,6 +8,7 @@ import {
 import {
   Box,
   Button,
+  Divider,
   Flex,
   Heading,
   Icon,
@@ -119,15 +120,33 @@ export const LocationDetails = () => {
           <Heading fontSize={24} fontWeight={'bold'} color={'black'}>
             {location?.title}
           </Heading>
-          <Text>
-            Entrou para comunidade em: {formatDate(location?.createdAt)}
-          </Text>
-          <Text>{location?.address}</Text>
-          <Text fontSize={14} color={'black'}>
-            {location?.description}
-          </Text>
+          <Flex>
+            <Text fontSize={16} color={'blue.500'} fontWeight={'bold'}>
+              Entrou para comunidade em
+            </Text>
+            <Text fontSize={14} color={'black'}>
+              {formatDate(location.createdAt)}
+            </Text>
+          </Flex>
+          <Flex>
+            <Text fontSize={16} color={'blue.500'} fontWeight={'bold'}>
+              Endereço
+            </Text>
+            <Text fontSize={14} color={'black'}>
+              {location.address}
+            </Text>
+          </Flex>
+          <Flex>
+            <Text fontSize={16} color={'blue.500'} fontWeight={'bold'}>
+              Descrição
+            </Text>
+            <Text fontSize={14} color={'black'}>
+              {location.description}
+            </Text>
+          </Flex>
         </Stack>
-        <Stack space={4} paddingBottom={30} marginTop={10}>
+        <Divider my={4} />
+        <Stack space={4} paddingBottom={30} marginTop={1}>
           <View
             borderRadius={20}
             overflow={'hidden'}
