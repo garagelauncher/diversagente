@@ -153,8 +153,8 @@ export const LocationDetails = () => {
             >
               <Marker
                 coordinate={{
-                  latitude: location?.coordinates.latitude,
-                  longitude: location?.coordinates.longitude,
+                  latitude: location?.coordinates.longitude,
+                  longitude: location?.coordinates.latitude,
                 }}
               />
             </MapView>
@@ -182,7 +182,7 @@ export const LocationDetails = () => {
               onPress={handleNavigateToReviews}
               width={'48%'}
             >
-              Ver 1222 reviews
+              Ver {location.reviewCount > 0 ? '' : location.reviewCount} reviews
             </Button>
             <Button
               fontWeight={'bold'}
