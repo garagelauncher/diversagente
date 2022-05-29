@@ -1,6 +1,7 @@
 import { diversagenteBaseApi } from '../baseUrl';
 
 import { Location, SearchLocationByProximity } from '@src/contracts/Location';
+import { Review } from '@src/contracts/Review';
 
 export const getLocationsByProximity = async ({
   latitude,
@@ -43,6 +44,25 @@ export const getLocationById = async (id: string) => {
     return location;
   } catch (error: any) {
     console.info('error when fetching location');
+    if (error.isAxiosError) {
+      console.error(error.response);
+    }
+    throw error;
+  }
+};
+
+export const getReviewsByLocationId = async (id: string) => {
+  try {
+    const response = await diversagenteBaseApi.get<Review[]>(
+      `/locations/${id}/reviews`,
+    );
+
+    const reviews = response.data;
+    console.info('reviews from a location');
+    console.info(reviews);
+    return reviews;
+  } catch (error: any) {
+    console.info('error when fetching reviews from a location', error);
     if (error.isAxiosError) {
       console.error(error.response);
     }
