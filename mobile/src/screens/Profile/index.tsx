@@ -1,8 +1,10 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 import { AntDesign, SimpleLineIcons, FontAwesome } from '@expo/vector-icons';
 import axios from 'axios';
+import * as ExpoLocation from 'expo-location';
 import { Avatar, Box, Button, Heading, Icon, Input, VStack } from 'native-base';
 import { useEffect, useState } from 'react';
+import { Alert } from 'react-native';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
 import { useAuth } from '@src/hooks/useAuth';
@@ -16,6 +18,9 @@ export const Profile = () => {
   const [name, setName] = useState<string>();
   const [picture, setPicture] = useState<string>();
   const [username, setUsername] = useState<string>();
+  const [location, setLocation] = useState<ExpoLocation.LocationObject>(
+    null as unknown as ExpoLocation.LocationObject,
+  );
 
   useEffect(() => {
     setBio(user?.bio ?? '');
@@ -23,6 +28,23 @@ export const Profile = () => {
     setPicture(user?.picture ?? '');
     setUsername(user?.username ?? '');
   }, [user]);
+
+  async function askUserToUpdateLocation() {
+    const { status } = await ExpoLocation.requestForegroundPermissionsAsync();
+
+    if (status !== 'granted') {
+      Alert.alert(
+        'Você negou a permissão de localização',
+        'Precisamos de sua permissão para obter a localização.',
+      );
+      return;
+    }
+
+    const location = await ExpoLocation.getCurrentPositionAsync();
+
+    console.info('location', location);
+    setLocation(location);
+  }
 
   async function handleUpdateUser() {
     try {
@@ -170,6 +192,18 @@ export const Profile = () => {
       >
         Sair
       </Button>
+      <Button
+        w={{
+          base: '75%',
+          md: '25%',
+        }}
+        marginTop={10}
+        onPress={askUserToUpdateLocation}
+        colorScheme={location ? 'green' : 'gray'}
+      >
+        Localizar
+      </Button>
+      {JSON.stringify(location)}
     </Box>
   );
 };
