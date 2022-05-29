@@ -1,3 +1,5 @@
+import 'intl';
+import 'intl/locale-data/jsonp/pt-BR';
 import 'react-native-gesture-handler';
 import { Poppins_700Bold } from '@expo-google-fonts/poppins';
 import { NavigationContainer } from '@react-navigation/native';
@@ -40,14 +42,14 @@ export default function App() {
   }
 
   return (
-      <NativeBaseProvider>
-        <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-          <NavigationContainer>
-            <AuthProvider>
-              <Routes />
-            </AuthProvider>
-          </NavigationContainer>
-        </View>
-      </NativeBaseProvider>
+    <NativeBaseProvider>
+      <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+        <NavigationContainer>
+          <AuthProvider>
+            <Routes />
+          </AuthProvider>
+        </NavigationContainer>
+      </View>
+    </NativeBaseProvider>
   );
 }
