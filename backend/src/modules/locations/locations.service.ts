@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { Coordinates } from 'src/shared/contracts/Coordinates';
 import { LocationRaw } from 'src/shared/contracts/LocationRaw';
 import { PrismaService } from 'src/shared/database/prisma.service';
@@ -137,6 +137,10 @@ export class LocationsService {
       },
     });
 
+    if (!location) {
+      throw new NotFoundException(`Location with id ${id} not found`);
+    }
+
     Logger.debug('recovering location', location);
 
     const starsAverageFromLocation =
@@ -145,7 +149,11 @@ export class LocationsService {
         0,
       ) / location._count.Review;
 
+    const reviewCount = Number(location._count.Review);
+
     delete location.Review;
+    delete location._count;
+
     return {
       ...location,
       starsAverage: starsAverageFromLocation,
@@ -153,6 +161,7 @@ export class LocationsService {
         latitude: location.geoposition.coordinates[0],
         longitude: location.geoposition.coordinates[1],
       },
+      reviewCount,
     };
   }
 
