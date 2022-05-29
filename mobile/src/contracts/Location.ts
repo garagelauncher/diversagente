@@ -7,6 +7,7 @@ export interface Location {
   createdAt: string;
   updatedAt: string;
   coordinates: Coordinates;
+  reviewCount: number;
 }
 
 export interface Coordinates {
