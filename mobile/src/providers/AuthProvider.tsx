@@ -1,7 +1,8 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import * as AuthSession from 'expo-auth-session';
 import { ReactNode, useEffect, useState } from 'react';
-import { Alert, AsyncStorage } from 'react-native';
+import { Alert } from 'react-native';
 
 import { Oauth2 } from '@src/configs';
 import {
@@ -22,7 +23,7 @@ type AuthResponse = {
 };
 
 export const AuthProvider = ({ children }: AuthProvidersProps) => {
-  const [isLoggedIn, setLoggedIn] = useState(true);
+  const [isLoggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState<UserData | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -78,8 +79,7 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
         console.debug(responseCreateUser.data);
         console.debug(responseCreateUser.status);
 
-        setLoggedIn(true);
-        setUser({
+        const userPayload = {
           googleUserData,
           email: googleUserData.email,
           name: googleUserData.name,
@@ -88,8 +88,13 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
           username: responseCreateUser.data?.username ?? googleUserData.email,
           bio: responseCreateUser.data?.biograph ?? '',
           createdAt: responseCreateUser.data?.createdAt ?? '',
-        });
-        await AsyncStorage.setItem('diversagente@user', JSON.stringify(user));
+        };
+        setUser(userPayload);
+        setLoggedIn(true);
+        await AsyncStorage.setItem(
+          'diversagente@user',
+          JSON.stringify(userPayload),
+        );
       }
       console.log('Sign in with Google');
     } catch (error: any) {
