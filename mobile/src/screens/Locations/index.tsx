@@ -1,9 +1,5 @@
-import { SimpleLineIcons, Feather } from '@expo/vector-icons';
-import {
-  NavigationProp,
-  useFocusEffect,
-  useNavigation,
-} from '@react-navigation/native';
+import { Feather } from '@expo/vector-icons';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import * as ExpoLocation from 'expo-location';
 import {
   Box,
@@ -153,16 +149,18 @@ export const Locations = () => {
           </Modal.Body>
         </Modal.Content>
       </Modal>
+
       <IconButton
         colorScheme="blue"
         variant={'solid'}
         icon={<Icon as={<Feather name="filter" />} />}
         onPress={onOpenModal}
         position="absolute"
-        top={16}
+        top={10}
         right={4}
         zIndex={1}
       />
+
       {isFetchingLocations && (
         <Spinner
           size={'lg'}
