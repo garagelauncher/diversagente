@@ -1,5 +1,4 @@
 import { Feather } from '@expo/vector-icons';
-import Clipboard from '@react-native-clipboard/clipboard';
 import {
   NavigationProp,
   RouteProp,
@@ -30,6 +29,7 @@ import { LoadingScreen } from '@src/components/LoadingScreen';
 import { Location } from '@src/contracts/Location';
 import { StackLocationNavigatorParamList } from '@src/routes/locationStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
+import { copyToClipBoard } from '@src/utils/copyToClipBoard';
 import { formatDate } from '@src/utils/formatDate';
 
 type LocationDetailsScreenNavigationProps = NavigationProp<
@@ -77,8 +77,8 @@ export const LocationDetails = () => {
     setLocation(locationFromApi);
   }, []);
 
-  const copyAddressToClipBoard = (address: string) => {
-    Clipboard.setString(String(address));
+  const copyAddressToClipBoard = async (address: string) => {
+    await copyToClipBoard(address);
     setIsCopyToClipboard(true);
   };
 
@@ -93,7 +93,34 @@ export const LocationDetails = () => {
   console.debug(location);
 
   return (
-    <Box width="100%" backgroundColor="gray.200" flex={1}>
+    <Box width="100%" backgroundColor="gray.100" flex={1}>
+      {/* <Alert
+        w="90%"
+        status={'success'}
+        position="absolute"
+        bottom={10}
+        zIndex={2}
+        alignSelf="center"
+      >
+        <VStack space={2} flexShrink={1} w="100%">
+          <HStack flexShrink={1} space={2} justifyContent="space-between">
+            <HStack space={2} flexShrink={1}>
+              <Alert.Icon mt="1" />
+              <Text fontSize="md" color="coolGray.600">
+                Texto copiado com sucesso
+              </Text>
+            </HStack>
+            <IconButton
+              variant="unstyled"
+              _focus={{
+                borderWidth: 0,
+              }}
+              icon={<Icon as={<Feather name="x" color="coolGray.600" />} />}
+            />
+          </HStack>
+        </VStack>
+      </Alert> */}
+
       <IconButton
         colorScheme="gray"
         variant={'solid'}
