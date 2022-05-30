@@ -4,7 +4,7 @@ export const LoadingScreen = () => {
   return (
     <Box
       width="100%"
-      backgroundColor="blue.200"
+      backgroundColor="gray.100"
       flex={1}
       alignItems="center"
       justifyContent="center"
