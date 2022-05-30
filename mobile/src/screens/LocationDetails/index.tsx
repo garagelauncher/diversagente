@@ -1,4 +1,5 @@
 import { Feather } from '@expo/vector-icons';
+import Clipboard from '@react-native-clipboard/clipboard';
 import {
   NavigationProp,
   RouteProp,
@@ -37,6 +38,7 @@ type LocationDetailsScreenNavigationProps = NavigationProp<
 >;
 
 export const LocationDetails = () => {
+  const [isCopyToClipboard, setIsCopyToClipboard] = useState(false);
   const [location, setLocation] = useState<Location>(
     null as unknown as Location,
   );
@@ -74,6 +76,11 @@ export const LocationDetails = () => {
     );
     setLocation(locationFromApi);
   }, []);
+
+  const copyAddressToClipBoard = (address: string) => {
+    Clipboard.setString(String(address));
+    setIsCopyToClipboard(true);
+  };
 
   useEffect(() => {
     console.log('LocationDetails', id);
@@ -117,14 +124,14 @@ export const LocationDetails = () => {
         }}
       >
         <Stack space={2}>
-          <Heading fontSize={24} fontWeight={'bold'} color={'black'}>
+          <Heading fontSize={24} fontWeight={'bold'} color={'gray.700'}>
             {location?.title}
           </Heading>
           <Flex>
             <Text fontSize={16} color={'blue.500'} fontWeight={'bold'}>
-              Entrou para comunidade em
+              Criado na comunidade em
             </Text>
-            <Text fontSize={14} color={'black'}>
+            <Text fontSize={14} color={'gray.800'}>
               {formatDate(location.createdAt)}
             </Text>
           </Flex>
@@ -132,15 +139,27 @@ export const LocationDetails = () => {
             <Text fontSize={16} color={'blue.500'} fontWeight={'bold'}>
               Endereço
             </Text>
-            <Text fontSize={14} color={'black'}>
-              {location.address}
-            </Text>
+            <Flex
+              flexDirection={'row'}
+              justifyContent={'space-between'}
+              alignItems={'center'}
+            >
+              <Text fontSize={14} color={'gray.800'}>
+                {location.address}
+              </Text>
+              <IconButton
+                colorScheme="black"
+                variant={isCopyToClipboard ? 'outlined' : 'ghost'}
+                icon={<Icon as={<Feather name="clipboard" />} />}
+                onPress={() => copyAddressToClipBoard(location.address)}
+              />
+            </Flex>
           </Flex>
           <Flex>
             <Text fontSize={16} color={'blue.500'} fontWeight={'bold'}>
               Descrição
             </Text>
-            <Text fontSize={14} color={'black'}>
+            <Text fontSize={14} color={'gray.800'}>
               {location.description}
             </Text>
           </Flex>

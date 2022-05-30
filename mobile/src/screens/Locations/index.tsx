@@ -61,8 +61,8 @@ export const Locations = () => {
     console.debug('latitude', latitude);
     console.debug('longitude', longitude);
     setInitialPosition({
-      latitude: -23.4448752,
-      longitude: -46.5374598,
+      latitude,
+      longitude,
       latitudeDelta: LATITUDE_DELTA,
       longitudeDelta: LONGITUDE_DELTA,
     });
@@ -100,12 +100,12 @@ export const Locations = () => {
   return (
     <Box flex={1}>
       <IconButton
-        colorScheme="gray"
+        colorScheme="orange"
         variant={'solid'}
         icon={<Icon as={<Feather name="plus" />} />}
         onPress={handleNavigateToFormCreateLocation}
         position="absolute"
-        top={8}
+        bottom={8}
         left={4}
         zIndex={1}
       />
