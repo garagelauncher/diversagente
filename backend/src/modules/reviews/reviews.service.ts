@@ -24,11 +24,16 @@ export class ReviewsService {
   }
 
   async findOne(id: string) {
-    return await this.prisma.review.findUnique({
+    const review = await this.prisma.review.findUnique({
       where: {
         id,
       },
+      include: {
+        owner: true,
+      },
     });
+    console.debug(review);
+    return review;
   }
 
   async update(id: string, updateReviewDto: UpdateReviewDto) {
