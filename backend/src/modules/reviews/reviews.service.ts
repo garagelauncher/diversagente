@@ -14,11 +14,13 @@ export class ReviewsService {
   }
 
   async findAll({ locationId }: { locationId: string }) {
+    console.log(locationId);
     return await this.prisma.review.findMany({
       where: {
-        location: {
-          id: locationId,
-        },
+        locationId,
+      },
+      include: {
+        owner: true,
       },
     });
   }
@@ -27,6 +29,9 @@ export class ReviewsService {
     return await this.prisma.review.findUnique({
       where: {
         id,
+      },
+      include: {
+        owner: true,
       },
     });
   }
