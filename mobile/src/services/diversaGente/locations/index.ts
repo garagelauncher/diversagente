@@ -59,13 +59,16 @@ export const getLocationById = async (
   }
 };
 
-export const getReviewsByLocationId = async (id: string) => {
+export const getReviewsByLocationId = async (
+  id: string,
+  ratePeriod: RatePeriod = 'week',
+) => {
   try {
     const response = await diversagenteBaseApi.get<Review[]>(
       `/locations/${id}/reviews`,
       {
         params: {
-          period: 'week',
+          period: ratePeriod,
         },
       },
     );

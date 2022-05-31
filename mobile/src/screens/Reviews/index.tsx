@@ -14,6 +14,8 @@ import {
   Icon,
   IconButton,
   ScrollView,
+  Select,
+  Spinner,
   Text,
   VStack,
 } from 'native-base';
@@ -21,7 +23,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { AirbnbRating } from 'react-native-ratings';
 
-import { Review } from '@src/contracts/Review';
+import { RatePeriod, Review } from '@src/contracts/Review';
 import { StackLocationNavigatorParamList } from '@src/routes/locationStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
 import { formatDate } from '@src/utils/formatDate';
@@ -33,6 +35,8 @@ type ReviewsScreenNavigationProps = NavigationProp<
 
 export const Reviews = () => {
   const [reviews, setReviews] = useState<Review[] | null>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [ratePeriod, setRatePeriod] = useState<RatePeriod>('week');
 
   const navigation = useNavigation<ReviewsScreenNavigationProps>();
   const route =
@@ -44,26 +48,32 @@ export const Reviews = () => {
   };
 
   const fetchAllReviewsFromLocation = useCallback(
-    async (locationId: string) => {
+    async (locationId: string, ratePeriod: RatePeriod) => {
       try {
+        setIsLoading(true);
         const reviewsFromApi =
-          await diversaGenteServices.getReviewsByLocationId(locationId);
+          await diversaGenteServices.getReviewsByLocationId(
+            locationId,
+            ratePeriod,
+          );
         setReviews(reviewsFromApi);
       } catch (error) {
         console.info('Error while fetching all reviews', error);
+      } finally {
+        setIsLoading(false);
       }
     },
     [],
   );
 
   useEffect(() => {
-    fetchAllReviewsFromLocation(locationId);
-  }, [fetchAllReviewsFromLocation, locationId]);
+    fetchAllReviewsFromLocation(locationId, ratePeriod);
+  }, [fetchAllReviewsFromLocation, locationId, ratePeriod]);
 
   const statusBarHeight = getStatusBarHeight();
 
   return (
-    <VStack p={4} flex={1} mt={statusBarHeight}>
+    <VStack px={4} flex={1} mt={statusBarHeight}>
       <IconButton
         colorScheme="gray"
         variant={'solid'}
@@ -75,17 +85,39 @@ export const Reviews = () => {
         mb={2}
         zIndex={1}
       />
-      <Heading fontSize={30} alignSelf={'center'} mt={3}>
-        Reviews
+      <Heading fontSize={30} alignSelf={'center'} mt={6}>
+        Avaliações
       </Heading>
 
       <ScrollView mt={6}>
+        <Text
+          fontSize={16}
+          color={'gray.800'}
+          fontWeight={'bold'}
+          flex={1}
+          py={2}
+        >
+          Escolha um período:
+        </Text>
+        <Select
+          accessibilityLabel="Escolha um período para as avaliações"
+          flex={1}
+          selectedValue={ratePeriod}
+          onValueChange={(value) => setRatePeriod(value as RatePeriod)}
+        >
+          <Select.Item label="Dia" value="day" />
+          <Select.Item label="Semana" value="week" />
+          <Select.Item label="Mês" value="month" />
+          <Select.Item label="Ano" value="year" />
+        </Select>
         {reviews?.map((item, index) => {
           return (
             <Box
               key={index}
               size="md"
               borderRadius={20}
+              borderColor={'warning.300'}
+              borderWidth={1}
               _text={{
                 color: 'amber.50',
               }}
@@ -132,13 +164,24 @@ export const Reviews = () => {
                   </VStack>
                 </HStack>
                 <Box>
-                  <AirbnbRating
-                    isDisabled={true}
-                    selectedColor="#d6c103"
-                    size={22}
-                    defaultRating={item.stars}
-                    showRating={false}
-                  />
+                  {isLoading && (
+                    <Spinner
+                      size={'lg'}
+                      position="absolute"
+                      left={'50%'}
+                      top={'50%'}
+                      zIndex={4}
+                    />
+                  )}
+                  {
+                    <AirbnbRating
+                      isDisabled={true}
+                      selectedColor="#d6c103"
+                      size={22}
+                      defaultRating={item.stars}
+                      showRating={false}
+                    />
+                  }
                 </Box>
               </HStack>
             </Box>

@@ -313,7 +313,7 @@ export const LocationDetails = () => {
               onPress={handleNavigateToReviews}
               width={'48%'}
             >
-              Ver reviews
+              Ver avaliações
             </Button>
             <Button
               fontWeight={'bold'}
