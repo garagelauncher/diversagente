@@ -94,7 +94,7 @@ export const Reviews = () => {
               mt={10}
               px={4}
               py={8}
-              bg={'warning.300'}
+              bg={'warning.100'}
             >
               <Fontisto name="quote-a-right" size={28} color="black" />
               <Text mb={5} mt={4} fontSize={20}>
