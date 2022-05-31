@@ -9,8 +9,8 @@ export const Messages = () => {
       alignItems="center"
       justifyContent="center"
     >
-      <Heading>MESSAGES PAGE</Heading>
-      <Text>Work In progress...</Text>
+      <Heading>Em breve</Heading>
+      <Text>Para Dezembro de 2022</Text>
     </Box>
   );
 };

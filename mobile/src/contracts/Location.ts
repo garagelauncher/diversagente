@@ -8,6 +8,7 @@ export interface Location {
   updatedAt: string;
   coordinates: Coordinates;
   reviewCount: number;
+  starsAverage: number;
 }
 
 export interface Coordinates {

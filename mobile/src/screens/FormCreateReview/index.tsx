@@ -17,12 +17,16 @@ import {
   TextArea,
   VStack,
   ScrollView,
+  Alert,
 } from 'native-base';
 import React, { useState } from 'react';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { AirbnbRating } from 'react-native-ratings';
 
+import { Review } from '@src/contracts/Review';
+import { useAuth } from '@src/hooks/useAuth';
 import { StackLocationNavigatorParamList } from '@src/routes/locationStack.routes';
+import { diversaGenteServices } from '@src/services/diversaGente';
 
 type FormCreateReviewScreenNavigationProps = NavigationProp<
   StackLocationNavigatorParamList,
@@ -30,13 +34,29 @@ type FormCreateReviewScreenNavigationProps = NavigationProp<
 >;
 
 export const FormCreateReview = () => {
+  const { user } = useAuth();
+
   const [reviewText, setReviewText] = useState('');
   const [reviewRate, setReviewRate] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const isAllowedToSubmit = reviewText.length > 0 && !isLoading;
 
   const navigation = useNavigation<FormCreateReviewScreenNavigationProps>();
   const route =
     useRoute<RouteProp<StackLocationNavigatorParamList, 'FormCreateReview'>>();
   const { locationId } = route.params;
+  // const [errors, setErrors] = useState({});
+
+  const createReview = async () => {
+    const review: Partial<Review> = {
+      text: reviewText,
+      stars: reviewRate,
+      ownerId: String(user?.id),
+    };
+
+    await diversaGenteServices.createReviewToLocation(locationId, review);
+  };
 
   const handleNavigateGoBack = () => {
     navigation.goBack();
@@ -52,9 +72,35 @@ export const FormCreateReview = () => {
     setReviewText(text);
   };
 
-  const handleSubmit = () => {
-    console.log(reviewText);
-    console.log(reviewRate);
+  // const validate = () => {
+  //   if (reviewText === undefined) {
+  //     setErrors({ ...errors, review: 'Campo obrigatório' });
+  //     return false;
+  //   } else if (reviewText.length < 3) {
+  //     setErrors({
+  //       ...errors,
+  //       review: 'Sua avalição precisa ter pelo menos 3 caracteres.',
+  //     });
+  //     return false;
+  //   }
+
+  //   return true;
+  // };
+
+  const handleSubmit = async () => {
+    try {
+      setIsLoading(true);
+      // validate() ? console.log('Submitted') : console.log('Validation Failed');
+      await createReview();
+      console.log(reviewText);
+      console.log(reviewRate);
+      navigation.navigate('Locations');
+    } catch (error) {
+      console.error('FormCreateReview: handleSubmit: error: reviewText: ');
+    } finally {
+      console.debug('FormCreateReview: handleSubmit: finally: reviewText: ');
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -72,7 +118,7 @@ export const FormCreateReview = () => {
           zIndex={1}
         />
         <Heading fontSize={30} alignSelf={'center'} mt={3} mb={10}>
-          Avaliar local...
+          Avaliar local
         </Heading>
       </VStack>
       <ScrollView>
@@ -105,11 +151,13 @@ export const FormCreateReview = () => {
               />
             </Stack>
             <Button
+              borderRadius={20}
               mt={10}
               bg={'warning.600'}
               onPress={handleSubmit}
-              colorScheme={'orange'}
-              isDisabled={true}
+              colorScheme={isAllowedToSubmit ? 'orange' : 'gray'}
+              disabled={!isAllowedToSubmit}
+              isLoading={isLoading}
             >
               <Text fontSize={20}>Enviar avaliação</Text>
             </Button>

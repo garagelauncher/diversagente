@@ -10,3 +10,5 @@ export interface Review {
   updatedAt: string;
   ownerId: string;
 }
+
+export type RatePeriod = 'week' | 'month' | 'year' | 'day';
