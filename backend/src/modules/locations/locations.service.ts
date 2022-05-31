@@ -5,6 +5,7 @@ import { PrismaService } from 'src/shared/database/prisma.service';
 import { CreateLocationDto } from './dto/create-location.dto';
 import { NearDTO } from './dto/find-near-location.dto';
 import { UpdateLocationDto } from './dto/update-location.dto';
+import dayjs from 'dayjs';
 
 function convertDistanceInKilometersToMeters(
   distanceInKilometers: number,
@@ -124,13 +125,20 @@ export class LocationsService {
     return locations;
   }
 
-  async findOne(id: string) {
+  async findOne(id: string, reviewPeriod: dayjs.ManipulateType = 'week') {
+    Logger.debug(reviewPeriod);
     const location = await this.prisma.location.findUnique({
       where: {
         id,
       },
       include: {
-        Review: true,
+        Review: {
+          where: {
+            createdAt: {
+              gt: dayjs().subtract(1, reviewPeriod).toDate(),
+            },
+          },
+        },
         _count: {
           select: {
             Review: true,

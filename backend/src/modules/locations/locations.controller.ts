@@ -11,7 +11,7 @@ import {
 import { LocationsService } from './locations.service';
 import { CreateLocationDto } from './dto/create-location.dto';
 import { UpdateLocationDto } from './dto/update-location.dto';
-
+import dayjs from 'dayjs';
 @Controller('locations')
 export class LocationsController {
   constructor(private readonly locationsService: LocationsService) {}
@@ -37,8 +37,11 @@ export class LocationsController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return await this.locationsService.findOne(id);
+  async findOne(
+    @Param('id') id: string,
+    @Query('reviewPeriod') period: dayjs.ManipulateType = 'week',
+  ) {
+    return await this.locationsService.findOne(id, period);
   }
 
   @Patch(':id')
