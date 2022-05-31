@@ -94,17 +94,16 @@ export const SelectLocationMap = () => {
 
   return (
     <Box flex={1}>
+      {position.latitude === 0 && (
+        <Button style={styles.topButton} disabled={true}>
+          <Text style={styles.nextButtonText}>Selecione um local no mapa</Text>
+        </Button>
+      )}
       <MapView
         initialRegion={initialPosition}
         style={styles.mapStyle}
         onPress={handleSelectMapPosition}
       >
-        {position.latitude === 0 && (
-          <Button style={styles.topButton} disabled={true}>
-            <Text style={styles.nextButtonText}>Selecione um local</Text>
-          </Button>
-        )}
-
         {position.latitude !== 0 && (
           <Marker
             coordinate={{
@@ -149,11 +148,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 24,
     right: 24,
-    bottom: 40,
+    bottom: 20,
   },
 
   topButton: {
-    backgroundColor: theme.colors.pastelPrimary,
+    backgroundColor: 'gray',
     justifyContent: 'center',
     alignItems: 'center',
     height: 56,
@@ -162,6 +161,7 @@ const styles = StyleSheet.create({
     left: 24,
     right: 24,
     top: 40,
+    zIndex: 3,
   },
 
   createBottom: {

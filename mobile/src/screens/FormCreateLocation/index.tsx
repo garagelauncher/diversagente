@@ -153,7 +153,24 @@ export const FormCreateLocation = () => {
                 height: 150,
               }}
             >
-              {initialPosition && <Marker coordinate={initialPosition} />}
+              <Marker
+                coordinate={{
+                  latitude: selectedLocation.latitude,
+                  longitude: selectedLocation.longitude,
+                }}
+                calloutAnchor={{
+                  x: 2.7,
+                  y: 0.8,
+                }}
+                style={{
+                  borderRadius: 10,
+                  maxWidth: 300,
+                  maxHeight: 500,
+                  minHeight: 100,
+                  backgroundColor: 'transparent',
+                  alignItems: 'center',
+                }}
+              />
             </MapView>
             <TouchableOpacity
               onPress={handleNavigateToSelectMapLocation}
