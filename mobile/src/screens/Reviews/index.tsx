@@ -63,7 +63,7 @@ export const Reviews = () => {
   const statusBarHeight = getStatusBarHeight();
 
   return (
-    <VStack p={4} flex={1} marginTop={statusBarHeight}>
+    <VStack p={4} flex={1} mt={statusBarHeight}>
       <IconButton
         colorScheme="gray"
         variant={'solid'}
@@ -75,7 +75,7 @@ export const Reviews = () => {
         mb={2}
         zIndex={1}
       />
-      <Heading alignSelf={'center'} mt={4}>
+      <Heading fontSize={30} alignSelf={'center'} mt={3}>
         Reviews
       </Heading>
 
