@@ -72,39 +72,37 @@ export const FormCreateReview = () => {
           zIndex={1}
         />
         <Heading fontSize={30} alignSelf={'center'} mt={3} mb={10}>
-          Avaliar local
+          Avaliar local...
         </Heading>
       </VStack>
       <ScrollView>
         <VStack>
           <FormControl px={9}>
             <Stack space={5}>
-              <Stack justifyContent={'initial'} w={'100%'}>
-                <FormControl.Label mb={5}>
-                  <Text fontSize={22}> Como foi a sua experiência? </Text>
-                </FormControl.Label>
-                <TextArea
-                  bg={'warning.50'}
-                  p={5}
-                  h={200}
-                  fontSize={16}
-                  placeholder="Conte aqui!"
-                  maxW="100%"
-                  autoCompleteType={undefined}
-                  onChangeText={textValue}
-                />
-              </Stack>
-              <Stack mt={5}>
-                <FormControl.Label mb={5}>
-                  <Text fontSize={22}>Dê uma nota: </Text>
-                </FormControl.Label>
-                <AirbnbRating
-                  defaultRating={0}
-                  selectedColor="#0284c7"
-                  showRating={false}
-                  onFinishRating={ratingCompleted}
-                />
-              </Stack>
+              <FormControl.Label mb={5}>
+                <Text fontSize={22}> Como foi a sua experiência? </Text>
+              </FormControl.Label>
+              <TextArea
+                bg={'warning.50'}
+                p={5}
+                h={200}
+                fontSize={16}
+                placeholder="Conte aqui!"
+                maxW="100%"
+                autoCompleteType={undefined}
+                onChangeText={textValue}
+              />
+            </Stack>
+            <Stack mt={5}>
+              <FormControl.Label mb={5}>
+                <Text fontSize={22}>Dê uma nota: </Text>
+              </FormControl.Label>
+              <AirbnbRating
+                defaultRating={0}
+                selectedColor="#d6c103"
+                showRating={false}
+                onFinishRating={ratingCompleted}
+              />
             </Stack>
             <Button
               mt={10}

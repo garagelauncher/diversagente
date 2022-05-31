@@ -33,7 +33,9 @@ export const SelectLocationMap = () => {
 
       let newAddress = '';
       for (const item of locationData) {
-        newAddress = `${item.name}, ${item.street}, ${item.postalCode}, ${item.city}`;
+        newAddress = `${item.name ?? ''}, ${item.street ?? ''}, ${
+          item.postalCode ?? ''
+        }, ${item.city ?? ''}`;
       }
 
       setAddress(newAddress);
