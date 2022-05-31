@@ -22,6 +22,7 @@ import { Alert, Dimensions, Linking, StyleSheet } from 'react-native';
 import { RectButton, TouchableOpacity } from 'react-native-gesture-handler';
 import MapView, { LatLng, MapEvent, Marker, Region } from 'react-native-maps';
 
+import { baseCoordinates } from '@src/configs';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackLocationNavigatorParamList } from '@src/routes/locationStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
@@ -39,16 +40,29 @@ export const FormCreateLocation = () => {
   const { user } = useAuth();
   const navigation = useNavigation<FormCreateLocationScreenNavigationProps>();
 
-  // form state
-  const [description, setDescription] = useState('');
-  const [title, setTitle] = useState('');
-  const [address, setAddress] = useState('');
+  const route =
+    useRoute<
+      RouteProp<StackLocationNavigatorParamList, 'FormCreateLocation'>
+    >();
+  const { address: selectedAddress, coordinates: selectedLocation } =
+    route.params;
 
-  const [isSelectingLocation, setIsSelectingLocation] = useState(false);
-  const [initialPosition, setInitialPosition] = useState<Region | undefined>(
-    undefined,
-  );
-  const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+
+  const [initialPosition, setInitialPosition] = useState<Region | undefined>({
+    ...selectedLocation,
+    latitudeDelta: baseCoordinates.LATITUDE_DELTA,
+    longitudeDelta: baseCoordinates.LONGITUDE_DELTA,
+  });
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const shouldNotActiveForm = !title || !description || !selectedAddress;
+
+  const handleNavigateToSelectMapLocation = () => {
+    navigation.navigate('SelectLocationMap');
+  };
 
   const getCurrentUserLocation = useCallback(async () => {
     const { status } = await ExpoLocation.requestForegroundPermissionsAsync();
@@ -75,53 +89,28 @@ export const FormCreateLocation = () => {
     });
   }, []);
 
-  const onSelectLocation = useCallback(
-    async (
-      value: boolean,
-      event?: {
-        latitude: number;
-        longitude: number;
-      },
-    ) => {
-      setIsSelectingLocation(value);
-
-      if (event) {
-        const locationData = await ExpoLocation.reverseGeocodeAsync(event);
-
-        let newAddress = '';
-        for (const item of locationData) {
-          newAddress = `${item.name}, ${item.street}, ${item.postalCode}, ${item.city}`;
-        }
-
-        setAddress(newAddress);
-      }
-    },
-    [],
-  );
-
-  function handleSelectMapPosition(event: MapEvent) {
-    setInitialPosition({
-      ...event.nativeEvent.coordinate,
-      latitudeDelta: LATITUDE_DELTA,
-      longitudeDelta: LONGITUDE_DELTA,
-    });
-    setPosition(event.nativeEvent.coordinate);
-  }
-
   async function createLocation() {
-    const location = {
-      title,
-      description,
-      address,
-      coordinates: {
-        latitude: position.latitude,
-        longitude: position.longitude,
-      },
-      ownerId: String(user?.id),
-    };
+    setIsLoading(true);
+    try {
+      const location = {
+        title,
+        description,
+        address: selectedAddress,
+        coordinates: {
+          latitude: selectedLocation.latitude,
+          longitude: selectedLocation.longitude,
+        },
+        ownerId: String(user?.id),
+      };
 
-    await diversaGenteServices.createLocation(location);
-    navigation.navigate('Locations');
+      await diversaGenteServices.createLocation(location);
+      navigation.navigate('Locations');
+    } catch (error) {
+      console.error('failed to create');
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -131,48 +120,6 @@ export const FormCreateLocation = () => {
       setInitialPosition(undefined);
     };
   }, [getCurrentUserLocation]);
-
-  const shouldNotActiveForm = !title || !description || !address;
-
-  if (isSelectingLocation) {
-    return (
-      <Box flex={1}>
-        <MapView
-          initialRegion={initialPosition}
-          style={styles.mapStyle}
-          onPress={handleSelectMapPosition}
-        >
-          {position.latitude === 0 && (
-            <Button
-              style={styles.topButton}
-              onPress={() => onSelectLocation(false, position)}
-              disabled={true}
-            >
-              <Text style={styles.nextButtonText}>Selecione um local</Text>
-            </Button>
-          )}
-
-          {position.latitude !== 0 && (
-            <Marker
-              coordinate={{
-                latitude: position.latitude,
-                longitude: position.longitude,
-              }}
-            />
-          )}
-        </MapView>
-
-        {position.latitude !== 0 && (
-          <RectButton
-            style={styles.nextButton}
-            onPress={() => onSelectLocation(false, position)}
-          >
-            <Text style={styles.nextButtonText}>Próximo</Text>
-          </RectButton>
-        )}
-      </Box>
-    );
-  }
 
   return (
     <Box width="100%" backgroundColor="gray.100" flex={1}>
@@ -209,14 +156,14 @@ export const FormCreateLocation = () => {
               {initialPosition && <Marker coordinate={initialPosition} />}
             </MapView>
             <TouchableOpacity
-              onPress={() => onSelectLocation(true)}
+              onPress={handleNavigateToSelectMapLocation}
               style={{
                 padding: 16,
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
             >
-              <Text color="blue.800">Selecionar localização</Text>
+              <Text color="blue.800">Mudar localização</Text>
             </TouchableOpacity>
           </View>
 
@@ -256,7 +203,7 @@ export const FormCreateLocation = () => {
             <Input
               disabled={true}
               placeholder="Endereço"
-              value={address}
+              value={selectedAddress}
               fontSize={14}
               color={'gray.800'}
               marginTop={4}
@@ -270,9 +217,11 @@ export const FormCreateLocation = () => {
                 ? 'gray'
                 : theme.colors.navyPrimary,
               marginTop: 20,
+              marginBottom: 40,
             }}
             onPress={() => createLocation()}
-            disabled={shouldNotActiveForm}
+            disabled={shouldNotActiveForm && !isLoading}
+            isLoading={isLoading}
           >
             <Text style={styles.nextButtonText}>Criar local</Text>
           </Button>
