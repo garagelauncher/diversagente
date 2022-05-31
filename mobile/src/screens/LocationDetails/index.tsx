@@ -241,7 +241,7 @@ export const LocationDetails = () => {
                 {location.address}
               </Text>
               <IconButton
-                colorScheme="black"
+                colorScheme={'dark'}
                 variant={isCopyToClipboard ? 'outlined' : 'ghost'}
                 icon={<Icon as={<Feather name="clipboard" />} />}
                 onPress={() => copyAddressToClipBoard(location.address)}
