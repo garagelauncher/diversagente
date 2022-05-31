@@ -17,12 +17,15 @@ import {
   TextArea,
   VStack,
   ScrollView,
+  Alert,
 } from 'native-base';
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { AirbnbRating } from 'react-native-ratings';
 
+import { Review } from '@src/contracts/Review';
 import { StackLocationNavigatorParamList } from '@src/routes/locationStack.routes';
+import { diversaGenteServices } from '@src/services/diversaGente';
 
 type FormCreateReviewScreenNavigationProps = NavigationProp<
   StackLocationNavigatorParamList,
@@ -37,6 +40,23 @@ export const FormCreateReview = () => {
   const route =
     useRoute<RouteProp<StackLocationNavigatorParamList, 'FormCreateReview'>>();
   const { locationId } = route.params;
+  const [errors, setErrors] = useState({});
+
+  const createReview = useCallback(async () => {
+    const review: Partial<Review> = {
+      locationId: locationId,
+      text: reviewText,
+      stars: reviewRate,
+    };
+
+    if (review !== null) {
+      await diversaGenteServices.createReviewToLocation(review);
+    }
+  }, []);
+
+  useEffect(() => {
+    createReview();
+  }, [createReview]);
 
   const handleNavigateGoBack = () => {
     navigation.goBack();
@@ -52,7 +72,24 @@ export const FormCreateReview = () => {
     setReviewText(text);
   };
 
+  const validate = () => {
+    if (reviewText === undefined) {
+      setErrors({ ...errors, review: 'Campo obrigatório' });
+      return false;
+    } else if (reviewText.length < 3) {
+      setErrors({
+        ...errors,
+        review: 'Sua avalição precisa ter pelo menos 3 caracteres.',
+      });
+      return false;
+    }
+
+    return true;
+  };
+
   const handleSubmit = () => {
+    validate() ? console.log('Submitted') : console.log('Validation Failed');
+    createReview();
     console.log(reviewText);
     console.log(reviewRate);
   };
@@ -77,7 +114,7 @@ export const FormCreateReview = () => {
       </VStack>
       <ScrollView>
         <VStack>
-          <FormControl px={9}>
+          <FormControl px={9} isRequired isInvalid={'reviewText' in errors}>
             <Stack space={5}>
               <FormControl.Label mb={5}>
                 <Text fontSize={22}> Como foi a sua experiência? </Text>
@@ -105,11 +142,11 @@ export const FormCreateReview = () => {
               />
             </Stack>
             <Button
+              borderRadius={20}
               mt={10}
               bg={'warning.600'}
               onPress={handleSubmit}
               colorScheme={'orange'}
-              isDisabled={true}
             >
               <Text fontSize={20}>Enviar avaliação</Text>
             </Button>
