@@ -90,13 +90,10 @@ export const createLocation = async (location: Partial<Location>) => {
   }
 };
 
-export const createReviewToLocation = async (
-  review: Partial<Review>,
-  locationId: string,
-) => {
+export const createReviewToLocation = async (review: Partial<Review>) => {
   try {
-    const response = await diversagenteBaseApi.post<Location>(
-      `/locations/${locationId}/reviews`,
+    const response = await diversagenteBaseApi.post<Review>(
+      `/locations/${review.locationId}/reviews`,
     );
 
     const createdReview = response.data;
@@ -111,3 +108,4 @@ export const createReviewToLocation = async (
     throw error;
   }
 };
+
