@@ -131,7 +131,7 @@ export const Reviews = () => {
                 <Box>
                   <AirbnbRating
                     isDisabled={true}
-                    selectedColor="#0284c7"
+                    selectedColor="#d6c103"
                     size={22}
                     defaultRating={item.stars}
                     showRating={false}
