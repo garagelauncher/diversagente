@@ -111,6 +111,7 @@ export const FormCreateReview = () => {
               bg={'warning.600'}
               onPress={handleSubmit}
               colorScheme={'orange'}
+              isDisabled={true}
             >
               <Text fontSize={20}>Enviar avaliação</Text>
             </Button>
