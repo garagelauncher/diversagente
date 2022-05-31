@@ -139,6 +139,16 @@ export const FormCreateLocation = () => {
           style={styles.mapStyle}
           onPress={handleSelectMapPosition}
         >
+          {position.latitude === 0 && (
+            <Button
+              style={styles.topButton}
+              onPress={() => onSelectLocation(false, position)}
+              disabled={true}
+            >
+              <Text style={styles.nextButtonText}>Selecione um local</Text>
+            </Button>
+          )}
+
           {position.latitude !== 0 && (
             <Marker
               coordinate={{
@@ -291,6 +301,18 @@ const styles = StyleSheet.create({
     left: 24,
     right: 24,
     bottom: 40,
+  },
+
+  topButton: {
+    backgroundColor: theme.colors.pastelPrimary,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 56,
+
+    position: 'absolute',
+    left: 24,
+    right: 24,
+    top: 40,
   },
 
   createBottom: {
