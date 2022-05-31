@@ -1,7 +1,7 @@
 import { diversagenteBaseApi } from '../baseUrl';
 
 import { Location, SearchLocationByProximity } from '@src/contracts/Location';
-import { Review } from '@src/contracts/Review';
+import { RatePeriod, Review } from '@src/contracts/Review';
 
 export const getLocationsByProximity = async ({
   latitude,
@@ -32,10 +32,18 @@ export const getLocationsByProximity = async ({
   }
 };
 
-export const getLocationById = async (id: string) => {
+export const getLocationById = async (
+  id: string,
+  ratePeriod: RatePeriod = 'week',
+) => {
   try {
     const response = await diversagenteBaseApi.get<Location>(
       `/locations/${id}`,
+      {
+        params: {
+          reviewPeriod: ratePeriod,
+        },
+      },
     );
 
     const location = response.data;
