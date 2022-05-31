@@ -99,7 +99,6 @@ export const Reviews = () => {
               <Fontisto name="quote-a-right" size={28} color="black" />
               <Text mb={5} mt={4} fontSize={20}>
                 {item.text}
-                lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               </Text>
               <Divider my={5} bg={'muted.800'} />
               <HStack
@@ -114,9 +113,13 @@ export const Reviews = () => {
                       source={{
                         uri: item.owner.picture,
                       }}
-                    ></Avatar>
+                    >
+                      {item.owner.name}
+                    </Avatar>
                   ) : (
-                    <Avatar size="md" bg={'info.600'}></Avatar>
+                    <Avatar size="md" bg={'info.600'}>
+                      {item.owner.name[0]}
+                    </Avatar>
                   )}
 
                   <VStack pl={2} pr={5}>
