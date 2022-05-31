@@ -80,6 +80,7 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
         console.debug(responseCreateUser.status);
 
         const userPayload = {
+          id: responseCreateUser.data?.id || '',
           googleUserData,
           email: googleUserData.email,
           name: googleUserData.name,
@@ -113,9 +114,10 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
   }
 
   async function signOut() {
-    console.log('Sign out'); // TODO: Make logout
+    console.log('Sign out');
     setLoggedIn(false);
     setUser(undefined as UserData | undefined);
+    await AsyncStorage.removeItem('diversagente@user');
   }
 
   useEffect(() => {
