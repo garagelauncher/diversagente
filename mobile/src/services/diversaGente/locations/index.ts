@@ -69,3 +69,23 @@ export const getReviewsByLocationId = async (id: string) => {
     throw error;
   }
 };
+
+export const createLocation = async (location: Partial<Location>) => {
+  try {
+    const response = await diversagenteBaseApi.post<Location>(
+      `/locations`,
+      location,
+    );
+
+    const createdLocation = response.data;
+    console.info('created location');
+    console.info(createdLocation);
+    return createdLocation;
+  } catch (error: any) {
+    console.info('error when creating location');
+    if (error.isAxiosError) {
+      console.error(error.response);
+    }
+    throw error;
+  }
+};
