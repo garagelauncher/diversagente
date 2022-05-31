@@ -1,11 +1,16 @@
-import { SimpleLineIcons, Feather } from '@expo/vector-icons';
-import {
-  NavigationProp,
-  useFocusEffect,
-  useNavigation,
-} from '@react-navigation/native';
+import { Feather } from '@expo/vector-icons';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import * as ExpoLocation from 'expo-location';
-import { Box, Icon, IconButton, Text } from 'native-base';
+import {
+  Box,
+  FormControl,
+  Icon,
+  IconButton,
+  Input,
+  Modal,
+  Spinner,
+  Text,
+} from 'native-base';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import MapView, { Marker, Region, PROVIDER_GOOGLE } from 'react-native-maps';
@@ -25,6 +30,10 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = 0.0421;
 
 export const Locations = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [isFetchingLocations, setIsFetchingLocations] = useState(false);
+  const [radius, setRadius] = useState(10);
+  const [quantity, setQuantity] = useState(50);
   const [locations, setLocations] = useState<Location[]>([]);
   const [initialPosition, setInitialPosition] = useState<Region | undefined>(
     undefined,
@@ -39,8 +48,8 @@ export const Locations = () => {
     navigation.navigate('LocationDetails', { id });
   }
 
-  function handleNavigateToFormCreateLocation() {
-    navigation.navigate('FormCreateLocation');
+  function handleNavigateToSelectLocationMap() {
+    navigation.navigate('SelectLocationMap');
   }
 
   const getCurrentUserLocation = useCallback(async () => {
@@ -61,28 +70,34 @@ export const Locations = () => {
     console.debug('latitude', latitude);
     console.debug('longitude', longitude);
     setInitialPosition({
-      latitude: -23.4448752,
-      longitude: -46.5374598,
+      latitude,
+      longitude,
       latitudeDelta: LATITUDE_DELTA,
       longitudeDelta: LONGITUDE_DELTA,
     });
   }, []);
 
   const fetchLocations = useCallback(async () => {
-    diversaGenteServices
-      .getLocationsByProximity({
-        latitude: -23.4448752,
-        longitude: -46.5374598,
-        distanceInKilometer: 90,
-        limit: 10,
-      })
-      .then((foundLocations) => {
-        console.debug('foundLocations');
-        console.debug(foundLocations);
-        setLocations(foundLocations);
-      })
-      .catch((error) => console.error('deu ruim'));
-  }, []);
+    setIsFetchingLocations(true);
+    try {
+      const foundLocations = await diversaGenteServices.getLocationsByProximity(
+        {
+          latitude: -23.4448752,
+          longitude: -46.5374598,
+          distanceInKilometer: radius,
+          limit: quantity,
+        },
+      );
+      console.debug('foundLocations');
+      console.debug(foundLocations);
+      setLocations(foundLocations);
+    } catch (error) {
+      console.error(error);
+      console.error('deu ruim');
+    } finally {
+      setIsFetchingLocations(false);
+    }
+  }, [quantity, radius]);
 
   // useEffect(() => {}, [fetchLocations, getCurrentUserLocation]);
 
@@ -93,19 +108,79 @@ export const Locations = () => {
     await fetchLocations();
   }, [getCurrentUserLocation, fetchLocations]);
 
+  const onOpenModal = useCallback(() => {
+    setShowModal(true);
+  }, []);
+
+  const onCloseModal = useCallback(async () => {
+    setShowModal(false);
+    await onOpenLocationTab();
+  }, [onOpenLocationTab]);
+
   useEffect(() => {
     onOpenLocationTab();
+
+    return () => {
+      setInitialPosition(undefined);
+    };
   }, [onOpenLocationTab]);
 
   return (
     <Box flex={1}>
+      <Modal isOpen={showModal} onClose={onCloseModal}>
+        <Modal.Content maxWidth="400px">
+          <Modal.CloseButton />
+          <Modal.Header>Filtros</Modal.Header>
+          <Modal.Body>
+            <FormControl>
+              <FormControl.Label>Quantidade</FormControl.Label>
+              <Input
+                value={String(quantity)}
+                onChangeText={(text) => setQuantity(Number(text || 10))}
+                keyboardType="numeric"
+                placeholder="Quantidade de lugares"
+              />
+            </FormControl>
+            <FormControl mt="3">
+              <FormControl.Label>Raio em Km</FormControl.Label>
+              <Input
+                value={String(radius)}
+                onChangeText={(text) => setRadius(Number(text || 10))}
+                keyboardType="numeric"
+                placeholder="Raio em Km"
+              />
+            </FormControl>
+          </Modal.Body>
+        </Modal.Content>
+      </Modal>
+
       <IconButton
-        colorScheme="gray"
+        colorScheme="blue"
+        variant={'solid'}
+        icon={<Icon as={<Feather name="filter" />} />}
+        onPress={onOpenModal}
+        position="absolute"
+        top={10}
+        right={4}
+        zIndex={1}
+      />
+
+      {isFetchingLocations && (
+        <Spinner
+          size={'lg'}
+          position="absolute"
+          left={'48%'}
+          top={'48%'}
+          zIndex={1}
+        />
+      )}
+      <IconButton
+        colorScheme="orange"
         variant={'solid'}
         icon={<Icon as={<Feather name="plus" />} />}
-        onPress={handleNavigateToFormCreateLocation}
+        onPress={handleNavigateToSelectLocationMap}
         position="absolute"
-        top={8}
+        bottom={8}
         left={4}
         zIndex={1}
       />
