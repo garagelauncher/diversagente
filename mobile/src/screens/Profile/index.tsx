@@ -192,7 +192,7 @@ export const Profile = () => {
       >
         Sair
       </Button>
-      <Button
+      {/* <Button
         w={{
           base: '75%',
           md: '25%',
@@ -203,7 +203,7 @@ export const Profile = () => {
       >
         Localizar
       </Button>
-      {JSON.stringify(location)}
+      {JSON.stringify(location)} */}
     </Box>
   );
 };

@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from 'src/shared/database/prisma.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
+import dayjs from 'dayjs';
 
 @Injectable()
 export class ReviewsService {
@@ -13,11 +14,21 @@ export class ReviewsService {
     });
   }
 
-  async findAll({ locationId }: { locationId: string }) {
-    console.log(locationId);
+  async findAll({
+    locationId,
+    period,
+  }: {
+    locationId: string;
+    period: dayjs.ManipulateType;
+  }) {
+    Logger.debug(locationId);
+    Logger.debug(period);
     return await this.prisma.review.findMany({
       where: {
         locationId,
+        createdAt: {
+          gt: dayjs().subtract(1, period).toDate(),
+        },
       },
       include: {
         owner: true,

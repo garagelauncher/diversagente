@@ -7,11 +7,12 @@ import {
   Param,
   Delete,
   Logger,
+  Query,
 } from '@nestjs/common';
 import { ReviewsService } from './reviews.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
-
+import dayjs from 'dayjs';
 @Controller('locations/:locationId/reviews')
 export class ReviewsController {
   constructor(private readonly reviewsService: ReviewsService) {}
@@ -27,8 +28,12 @@ export class ReviewsController {
   }
 
   @Get()
-  async findAll(@Param('locationId') locationId: string) {
-    return await this.reviewsService.findAll({ locationId });
+  async findAll(
+    @Param('locationId') locationId: string,
+    @Query('period')
+    period: dayjs.ManipulateType = 'week',
+  ) {
+    return await this.reviewsService.findAll({ locationId, period });
   }
 
   @Get(':id')

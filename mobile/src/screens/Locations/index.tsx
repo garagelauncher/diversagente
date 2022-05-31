@@ -32,8 +32,8 @@ const LONGITUDE_DELTA = 0.0421;
 export const Locations = () => {
   const [showModal, setShowModal] = useState(false);
   const [isFetchingLocations, setIsFetchingLocations] = useState(false);
-  const [radius, setRadius] = useState(10);
-  const [quantity, setQuantity] = useState(50);
+  const [radius, setRadius] = useState(20);
+  const [quantity, setQuantity] = useState(2);
   const [locations, setLocations] = useState<Location[]>([]);
   const [initialPosition, setInitialPosition] = useState<Region | undefined>(
     undefined,
@@ -75,37 +75,39 @@ export const Locations = () => {
       latitudeDelta: LATITUDE_DELTA,
       longitudeDelta: LONGITUDE_DELTA,
     });
+
+    return { latitude, longitude };
   }, []);
 
-  const fetchLocations = useCallback(async () => {
-    setIsFetchingLocations(true);
-    try {
-      const foundLocations = await diversaGenteServices.getLocationsByProximity(
-        {
-          latitude: -23.4448752,
-          longitude: -46.5374598,
-          distanceInKilometer: radius,
-          limit: quantity,
-        },
-      );
-      console.debug('foundLocations');
-      console.debug(foundLocations);
-      setLocations(foundLocations);
-    } catch (error) {
-      console.error(error);
-      console.error('deu ruim');
-    } finally {
-      setIsFetchingLocations(false);
-    }
-  }, [quantity, radius]);
-
-  // useEffect(() => {}, [fetchLocations, getCurrentUserLocation]);
+  const fetchLocations = useCallback(
+    async (position: { latitude: number; longitude: number } | undefined) => {
+      setIsFetchingLocations(true);
+      try {
+        const foundLocations =
+          await diversaGenteServices.getLocationsByProximity({
+            latitude: position?.latitude ?? 0,
+            longitude: position?.longitude ?? 0,
+            distanceInKilometer: radius,
+            limit: quantity,
+          });
+        console.debug('foundLocations');
+        console.debug(foundLocations);
+        setLocations(foundLocations);
+      } catch (error) {
+        console.error(error);
+        console.error('deu ruim');
+      } finally {
+        setIsFetchingLocations(false);
+      }
+    },
+    [quantity, radius],
+  );
 
   const onOpenLocationTab = useCallback(async () => {
     console.debug('loaded focus on map');
 
-    await getCurrentUserLocation();
-    await fetchLocations();
+    const coordinates = await getCurrentUserLocation();
+    await fetchLocations(coordinates);
   }, [getCurrentUserLocation, fetchLocations]);
 
   const onOpenModal = useCallback(() => {
@@ -169,8 +171,8 @@ export const Locations = () => {
         <Spinner
           size={'lg'}
           position="absolute"
-          left={'48%'}
-          top={'48%'}
+          left={'50%'}
+          top={'50%'}
           zIndex={1}
         />
       )}
