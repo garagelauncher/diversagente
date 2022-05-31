@@ -25,7 +25,7 @@ export function TabRoutes() {
     <Navigator
       screenOptions={{
         tabBarActiveTintColor: theme.colors.bluePrimary,
-        tabBarInactiveTintColor: theme.colors.orangePrimary,
+        tabBarInactiveTintColor: 'gray',
         tabBarLabelPosition: 'beside-icon',
         tabBarStyle: {
           paddingVertical: Platform.OS === 'ios' ? 20 : 0,

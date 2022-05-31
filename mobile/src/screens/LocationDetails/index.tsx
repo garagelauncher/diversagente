@@ -29,6 +29,7 @@ import { LoadingScreen } from '@src/components/LoadingScreen';
 import { Location } from '@src/contracts/Location';
 import { StackLocationNavigatorParamList } from '@src/routes/locationStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
+import { copyToClipBoard } from '@src/utils/copyToClipBoard';
 import { formatDate } from '@src/utils/formatDate';
 
 type LocationDetailsScreenNavigationProps = NavigationProp<
@@ -37,6 +38,7 @@ type LocationDetailsScreenNavigationProps = NavigationProp<
 >;
 
 export const LocationDetails = () => {
+  const [isCopyToClipboard, setIsCopyToClipboard] = useState(false);
   const [location, setLocation] = useState<Location>(
     null as unknown as Location,
   );
@@ -75,6 +77,11 @@ export const LocationDetails = () => {
     setLocation(locationFromApi);
   }, []);
 
+  const copyAddressToClipBoard = async (address: string) => {
+    await copyToClipBoard(address);
+    setIsCopyToClipboard(true);
+  };
+
   useEffect(() => {
     console.log('LocationDetails', id);
     fetchLocationById(id);
@@ -86,7 +93,34 @@ export const LocationDetails = () => {
   console.debug(location);
 
   return (
-    <Box width="100%" backgroundColor="gray.200" flex={1}>
+    <Box width="100%" backgroundColor="gray.100" flex={1}>
+      {/* <Alert
+        w="90%"
+        status={'success'}
+        position="absolute"
+        bottom={10}
+        zIndex={2}
+        alignSelf="center"
+      >
+        <VStack space={2} flexShrink={1} w="100%">
+          <HStack flexShrink={1} space={2} justifyContent="space-between">
+            <HStack space={2} flexShrink={1}>
+              <Alert.Icon mt="1" />
+              <Text fontSize="md" color="coolGray.600">
+                Texto copiado com sucesso
+              </Text>
+            </HStack>
+            <IconButton
+              variant="unstyled"
+              _focus={{
+                borderWidth: 0,
+              }}
+              icon={<Icon as={<Feather name="x" color="coolGray.600" />} />}
+            />
+          </HStack>
+        </VStack>
+      </Alert> */}
+
       <IconButton
         colorScheme="gray"
         variant={'solid'}
@@ -117,14 +151,14 @@ export const LocationDetails = () => {
         }}
       >
         <Stack space={2}>
-          <Heading fontSize={24} fontWeight={'bold'} color={'black'}>
+          <Heading fontSize={24} fontWeight={'bold'} color={'gray.700'}>
             {location?.title}
           </Heading>
           <Flex>
             <Text fontSize={16} color={'blue.500'} fontWeight={'bold'}>
-              Entrou para comunidade em
+              Criado na comunidade em
             </Text>
-            <Text fontSize={14} color={'black'}>
+            <Text fontSize={14} color={'gray.800'}>
               {formatDate(location.createdAt)}
             </Text>
           </Flex>
@@ -132,15 +166,27 @@ export const LocationDetails = () => {
             <Text fontSize={16} color={'blue.500'} fontWeight={'bold'}>
               Endereço
             </Text>
-            <Text fontSize={14} color={'black'}>
-              {location.address}
-            </Text>
+            <Flex
+              flexDirection={'row'}
+              justifyContent={'space-between'}
+              alignItems={'center'}
+            >
+              <Text fontSize={14} color={'gray.800'}>
+                {location.address}
+              </Text>
+              <IconButton
+                colorScheme="black"
+                variant={isCopyToClipboard ? 'outlined' : 'ghost'}
+                icon={<Icon as={<Feather name="clipboard" />} />}
+                onPress={() => copyAddressToClipBoard(location.address)}
+              />
+            </Flex>
           </Flex>
           <Flex>
             <Text fontSize={16} color={'blue.500'} fontWeight={'bold'}>
               Descrição
             </Text>
-            <Text fontSize={14} color={'black'}>
+            <Text fontSize={14} color={'gray.800'}>
               {location.description}
             </Text>
           </Flex>
