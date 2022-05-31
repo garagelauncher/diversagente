@@ -48,8 +48,8 @@ export const Locations = () => {
     navigation.navigate('LocationDetails', { id });
   }
 
-  function handleNavigateToFormCreateLocation() {
-    navigation.navigate('FormCreateLocation');
+  function handleNavigateToSelectLocationMap() {
+    navigation.navigate('SelectLocationMap');
   }
 
   const getCurrentUserLocation = useCallback(async () => {
@@ -169,8 +169,8 @@ export const Locations = () => {
         <Spinner
           size={'lg'}
           position="absolute"
-          left={'50%'}
-          top={'50%'}
+          left={'48%'}
+          top={'48%'}
           zIndex={1}
         />
       )}
@@ -178,7 +178,7 @@ export const Locations = () => {
         colorScheme="orange"
         variant={'solid'}
         icon={<Icon as={<Feather name="plus" />} />}
-        onPress={handleNavigateToFormCreateLocation}
+        onPress={handleNavigateToSelectLocationMap}
         position="absolute"
         bottom={8}
         left={4}
