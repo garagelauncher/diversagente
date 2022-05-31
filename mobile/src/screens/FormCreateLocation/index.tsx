@@ -22,6 +22,7 @@ import { Alert, Dimensions, Linking, StyleSheet } from 'react-native';
 import { RectButton, TouchableOpacity } from 'react-native-gesture-handler';
 import MapView, { LatLng, MapEvent, Marker, Region } from 'react-native-maps';
 
+import { useAuth } from '@src/hooks/useAuth';
 import { StackLocationNavigatorParamList } from '@src/routes/locationStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
 import { theme } from '@src/styles/theme';
@@ -35,6 +36,7 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = 0.0421;
 
 export const FormCreateLocation = () => {
+  const { user } = useAuth();
   const navigation = useNavigation<FormCreateLocationScreenNavigationProps>();
 
   // form state
@@ -115,6 +117,7 @@ export const FormCreateLocation = () => {
         latitude: position.latitude,
         longitude: position.longitude,
       },
+      ownerId: String(user?.id),
     };
 
     await diversaGenteServices.createLocation(location);
@@ -139,6 +142,16 @@ export const FormCreateLocation = () => {
           style={styles.mapStyle}
           onPress={handleSelectMapPosition}
         >
+          {position.latitude === 0 && (
+            <Button
+              style={styles.topButton}
+              onPress={() => onSelectLocation(false, position)}
+              disabled={true}
+            >
+              <Text style={styles.nextButtonText}>Selecione um local</Text>
+            </Button>
+          )}
+
           {position.latitude !== 0 && (
             <Marker
               coordinate={{
@@ -291,6 +304,18 @@ const styles = StyleSheet.create({
     left: 24,
     right: 24,
     bottom: 40,
+  },
+
+  topButton: {
+    backgroundColor: theme.colors.pastelPrimary,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 56,
+
+    position: 'absolute',
+    left: 24,
+    right: 24,
+    top: 40,
   },
 
   createBottom: {
