@@ -15,6 +15,7 @@ import {
   IconButton,
   Image,
   ScrollView,
+  Select,
   Stack,
   Text,
   View,
@@ -27,6 +28,7 @@ import MapView, { Marker } from 'react-native-maps';
 
 import { LoadingScreen } from '@src/components/LoadingScreen';
 import { Location } from '@src/contracts/Location';
+import { RatePeriod } from '@src/contracts/Review';
 import { StackLocationNavigatorParamList } from '@src/routes/locationStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
 import { copyToClipBoard } from '@src/utils/copyToClipBoard';
@@ -38,6 +40,8 @@ type LocationDetailsScreenNavigationProps = NavigationProp<
 >;
 
 export const LocationDetails = () => {
+  const [ratePeriod, setRatePeriod] = useState<RatePeriod>('week');
+
   const [isCopyToClipboard, setIsCopyToClipboard] = useState(false);
   const [location, setLocation] = useState<Location>(
     null as unknown as Location,
@@ -70,12 +74,16 @@ export const LocationDetails = () => {
     Linking.openURL(url);
   };
 
-  const fetchLocationById = useCallback(async (locationId: string) => {
-    const locationFromApi = await diversaGenteServices.getLocationById(
-      locationId,
-    );
-    setLocation(locationFromApi);
-  }, []);
+  const fetchLocationById = useCallback(
+    async (locationId: string, ratePeriod: RatePeriod) => {
+      const locationFromApi = await diversaGenteServices.getLocationById(
+        locationId,
+        ratePeriod,
+      );
+      setLocation(locationFromApi);
+    },
+    [],
+  );
 
   const copyAddressToClipBoard = async (address: string) => {
     await copyToClipBoard(address);
@@ -84,8 +92,8 @@ export const LocationDetails = () => {
 
   useEffect(() => {
     console.log('LocationDetails', id);
-    fetchLocationById(id);
-  }, [fetchLocationById, id]);
+    fetchLocationById(id, ratePeriod);
+  }, [fetchLocationById, id, ratePeriod]);
 
   if (!location) {
     return <LoadingScreen />;
@@ -154,6 +162,48 @@ export const LocationDetails = () => {
           <Heading fontSize={24} fontWeight={'bold'} color={'gray.700'}>
             {location?.title}
           </Heading>
+
+          <Flex marginTop={2}>
+            <Flex
+              flexDirection="row"
+              justifyContent="flex-start"
+              alignItems="center"
+            >
+              <Text fontSize={16} color={'gray.800'} fontWeight={'bold'}>
+                Nota média:{' '}
+              </Text>
+              <Text fontSize={32} color={'yellow.400'} fontWeight={'bold'}>
+                {location.starsAverage}
+              </Text>
+            </Flex>
+            <Flex
+              flexDirection="row"
+              justifyContent="flex-start"
+              alignItems="center"
+              width="100%"
+            >
+              <Text
+                fontSize={16}
+                color={'gray.800'}
+                fontWeight={'bold'}
+                flex={1}
+              >
+                Nota da(o) última(o):
+              </Text>
+              <Select
+                accessibilityLabel="Choose Service"
+                placeholder="Choose Service"
+                flex={1}
+                selectedValue={ratePeriod}
+                onValueChange={(value) => setRatePeriod(value as RatePeriod)}
+              >
+                <Select.Item label="Dia" value="day" />
+                <Select.Item label="Semana" value="week" />
+                <Select.Item label="Mês" value="month" />
+                <Select.Item label="Ano" value="year" />
+              </Select>
+            </Flex>
+          </Flex>
           <Flex>
             <Text fontSize={16} color={'blue.500'} fontWeight={'bold'}>
               Criado na comunidade em
