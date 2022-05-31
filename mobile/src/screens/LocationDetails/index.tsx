@@ -16,6 +16,7 @@ import {
   Image,
   ScrollView,
   Select,
+  Spinner,
   Stack,
   Text,
   View,
@@ -41,6 +42,7 @@ type LocationDetailsScreenNavigationProps = NavigationProp<
 
 export const LocationDetails = () => {
   const [ratePeriod, setRatePeriod] = useState<RatePeriod>('week');
+  const [isLoading, setIsLoading] = useState(false);
 
   const [isCopyToClipboard, setIsCopyToClipboard] = useState(false);
   const [location, setLocation] = useState<Location>(
@@ -92,7 +94,12 @@ export const LocationDetails = () => {
 
   useEffect(() => {
     console.log('LocationDetails', id);
-    fetchLocationById(id, ratePeriod);
+    try {
+      setIsLoading(true);
+      fetchLocationById(id, ratePeriod);
+    } finally {
+      setIsLoading(false);
+    }
   }, [fetchLocationById, id, ratePeriod]);
 
   if (!location) {
@@ -102,6 +109,15 @@ export const LocationDetails = () => {
 
   return (
     <Box width="100%" backgroundColor="gray.100" flex={1}>
+      {isLoading && (
+        <Spinner
+          size={'lg'}
+          position="absolute"
+          left={'50%'}
+          top={'50%'}
+          zIndex={4}
+        />
+      )}
       {/* <Alert
         w="90%"
         status={'success'}
@@ -173,7 +189,7 @@ export const LocationDetails = () => {
                 Nota média:{' '}
               </Text>
               <Text fontSize={32} color={'yellow.400'} fontWeight={'bold'}>
-                {location.starsAverage}
+                {!isLoading && location.starsAverage}
               </Text>
             </Flex>
             <Flex

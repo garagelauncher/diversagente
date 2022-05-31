@@ -63,6 +63,11 @@ export const getReviewsByLocationId = async (id: string) => {
   try {
     const response = await diversagenteBaseApi.get<Review[]>(
       `/locations/${id}/reviews`,
+      {
+        params: {
+          period: 'week',
+        },
+      },
     );
 
     const reviews = response.data;
