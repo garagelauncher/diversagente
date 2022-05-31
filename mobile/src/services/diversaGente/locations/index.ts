@@ -69,3 +69,45 @@ export const getReviewsByLocationId = async (id: string) => {
     throw error;
   }
 };
+
+export const createLocation = async (location: Partial<Location>) => {
+  try {
+    const response = await diversagenteBaseApi.post<Location>(
+      `/locations`,
+      location,
+    );
+
+    const createdLocation = response.data;
+    console.info('created location');
+    console.info(createdLocation);
+    return createdLocation;
+  } catch (error: any) {
+    console.info('error when creating location');
+    if (error.isAxiosError) {
+      console.error(error.response);
+    }
+    throw error;
+  }
+};
+
+export const createReviewToLocation = async (
+  review: Partial<Review>,
+  locationId: string,
+) => {
+  try {
+    const response = await diversagenteBaseApi.post<Location>(
+      `/locations/${locationId}/reviews`,
+    );
+
+    const createdReview = response.data;
+    console.info('created review');
+    console.info(createdReview);
+    return createdReview;
+  } catch (error: any) {
+    console.info('error when creating review');
+    if (error.isAxiosError) {
+      console.error(error.response);
+    }
+    throw error;
+  }
+};

@@ -71,7 +71,7 @@ export class LocationsService {
 
     console.debug(locations);
     Logger.debug(locations);
-    return locations.map((location) => ({
+    const parsedLocations = locations.map((location) => ({
       id: location._id.$oid,
       title: location.title,
       ownerId: location.ownerId.$oid,
@@ -82,6 +82,8 @@ export class LocationsService {
         longitude: location.geoposition.coordinates[0],
       },
     }));
+
+    return parsedLocations;
   }
 
   async findAll() {
