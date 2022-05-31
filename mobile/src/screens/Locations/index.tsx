@@ -119,6 +119,10 @@ export const Locations = () => {
 
   useEffect(() => {
     onOpenLocationTab();
+
+    return () => {
+      setInitialPosition(undefined);
+    };
   }, [onOpenLocationTab]);
 
   return (
