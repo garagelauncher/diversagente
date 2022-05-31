@@ -130,6 +130,7 @@ export const Reviews = () => {
                 </HStack>
                 <Box>
                   <AirbnbRating
+                    isDisabled={true}
                     selectedColor="#0284c7"
                     size={22}
                     defaultRating={item.stars}
