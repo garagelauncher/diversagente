@@ -7,3 +7,8 @@ export const Oauth2 = {
   CLIENT_ID,
   REDIRECT_URI,
 };
+
+export const baseCoordinates = {
+  LATITUDE_DELTA: 0.0922,
+  LONGITUDE_DELTA: 0.0421,
+};
