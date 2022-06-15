@@ -6,17 +6,19 @@
 \index{figuras}Figuras podem ser criadas diretamente em \LaTeX,
 como o exemplo da \autoref{fig_circulo}, ou inseridas a partir de arquivos externos como a \autoref{fig_logo}, que é o Logotipo do \ac{ifsp}. \index{logotipo}
 
-As figuras externas devem possuir boa qualidade e preferencialmente serem vetorizadas para se obter o melhor resultado. Procure criar suas imagens e diagramas pensando em utilizar impressão em preto-e-branco ou escala de cinza. Isto é importante, principalmente quando se pretende publicar o trabalho, uma vez que a maioria das publicações são somente em preto-e-branco. Outro benefício é o custo de impressão, normalmente menor para páginas preto-e-branco em relação a páginas coloridas.
+% Aqui foi utilizada uma figura unica para demostrar a diferença de qualidade entr e vetorizado e não vetorizado pois fica mais simples, já que cada leitor pode ver esse documento em monitores com diferentes qualidades...
+As figuras externas devem possuir boa qualidade e preferencialmente serem vetorizadas para se obter o melhor resultado. A \autoref{fig:nao_vetorizado_e_vetorizado} apresenta duas versões de uma mesma imagem demonstrando a variação de qualidade que pode acontecer quando não for utilizada a versão vetorizada, quando a figura possui elementos textuais pode até inviabilizar a leitura. As Figuras \ref{fig:uml_dia_nao_vetorizado_jpeg}, \ref{fig:uml_dia_vetorizado_eps} e \ref{fig:uml_dia_vetorizado_svg} foram reduzidas propositalmente no documento para demonstrar a diferença entre os formatos de arquivo. A diferença fica mais perceptível quando o documento é impresso ou quando existem textos pequenos e é necessário fazer zoom para visualização.
 
-Para diagramas em UML o PlantUML pode ser utilizado para gerar código \LaTeX como exemplo na  \autoref{diagramauml}.
+Procure criar suas imagens e diagramas pensando em utilizar impressão em preto-e-branco ou escala de cinza. Isto é importante, principalmente quando se pretende publicar o trabalho, uma vez que a maioria das publicações são somente em preto-e-branco. Outro benefício é o custo de impressão, normalmente menor para páginas preto-e-branco em relação a páginas coloridas.
+
+Para diagramas em \ac{uml} o PlantUML pode ser utilizado para gerar código {\LaTeX} como exemplo na  \autoref{diagramauml}.
 
 
-Quando existem diversos detalhes utilize \ac{png} em vez de JPG \footnote{Abreviado de \ac{jpeg}}, observe a diferença no exemplo em \url{https://tex.stackexchange.com/questions/136087/selecting-best-file-extension-for-graphics-figures-pictures}.
-
-O número da seção que contém as informações sobre figuras é \ref{sec_figuras}.
+Se não houver a possibilidade de utilização de uma imagem vetorizada e existem diversos detalhes utilize \ac{png} em vez de \gls{jpg} ou outros formatos de menor qualidade, observe as diferenças nos exemplos apresentados em :  \waUrlTitle{https://tex.stackexchange.com/questions/136087/selecting-best-file-extension-for-graphics-figures-pictures}{Selecting best file extension for graphics figures pictures}.
 
 
 \begin{figure}[htb]
+	\caption{\label{fig_circulo}A delimitação do espaço}
 	\begin{center}
 	    \setlength{\unitlength}{5cm}
 		\begin{picture}(1,1)
@@ -47,16 +49,50 @@ O número da seção que contém as informações sobre figuras é \ref{sec_figu
 		\put(0,0){\line(6,5){1}}
 		\end{picture}
 	\end{center}
-	\caption{\label{fig_circulo}A delimitação do espaço}
-	\fonte{Os Autores}
+	\fonte{Modelo Canônico ABNTeX2.}
 \end{figure}
 
 
 \begin{figure}[htb]
     \centering
-	\includegraphics{\ifspprefixo/logo-02.jpg}
 	\caption{\label{fig_logo}Logotipo \ac{ifsp}}
-	\fonte{\ac{ifsp}}
+	\includegraphics{\ifspprefixo/logo-02.jpg}
+	\fonte{\ac{ifsp}.}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \caption{Exemplo de imagem não vetorizada e vetorizada}
+    \label{fig:nao_vetorizado_e_vetorizado}
+	\includegraphics[width=0.95\textwidth]{erros/exemploVetorizacao.png}
+    \fonte{\citeonline{vetorizacao}.}
+\end{figure}
+    
+
+% Essas imagens foram reduzidas na apresentação para demonstrar o efeito da alteração de escala em imagens não vetorizadas
+\begin{figure}
+    \centering
+    \caption{Exemplo de diagrama - salvo em imagem não vetorizada - JPEG}
+    \label{fig:uml_dia_nao_vetorizado_jpeg}
+	\includegraphics[width=0.6\textwidth]{exemplos/diagramas/ER.jpeg}
+    \fonte{Indicar autor original.}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+    \caption{Exemplo de diagrama - salvo imagem vetorizada - EPS}
+    \label{fig:uml_dia_vetorizado_eps}
+	\includegraphics[width=0.6\textwidth]{exemplos/diagramas/ER.eps}
+    \fonte{Indicar autor original.}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \caption{Exemplo de diagrama - salvo imagem vetorizada - SVG}
+    \label{fig:uml_dia_vetorizado_svg}
+    \includesvg[inkscapelatex=false,width=0.6\textwidth]{exemplos/diagramas/ER.svg}
+    \fonte{Indicar autor original.}
 \end{figure}
 
 
@@ -70,6 +106,7 @@ O número da seção que contém as informações sobre figuras é \ref{sec_figu
 
 \begin{figure}[htb]
     \centering
+    \caption{\label{diagramauml}Exemplo de Diagrama UML gerado a partir do PlantUML}
 \begin{tikzpicture}[yscale=-1]
 \draw[color=plantucolor0001,fill=plantucolor0000,line width=1.5pt] (131pt,29pt) rectangle (223pt,90.8359pt);
 \draw[color=plantucolor0001,fill=plantucolor0002,line width=1.0pt] (146pt,45pt) ellipse (11pt and 11pt);
@@ -104,17 +141,17 @@ O número da seção que contém as informações sobre figuras é \ref{sec_figu
 \node at (143.0082pt,98.7264pt)[below right]{1};
 \node at (101.801pt,187.522pt)[below right]{0..1};
 \end{tikzpicture}
-\caption{\label{diagramauml}Exemplo de Diagrama UML gerado a partir do PlantUML}
-	\legend{Fonte: Os Autores}
+	\legend{Fonte: Exemplos PlantUML.}
 \end{figure}
 
-A \autoref{fig_diag_virado} exemplifica como utilizar uma imagem qualquer em formato paisagem (página inteira). Obs: Utilizamos a imagem de forma a ilustrar o procedimento. Considere a legibilidade da figura quando for utilizar no trabalho final.
+A \autoref{fig_diag_virado} exemplifica como utilizar uma imagem em formato paisagem (página inteira). Obs: Utilizamos propositalmente uma imagem não vetorizada de forma a ilustrar o procedimento e também para apresentar que a qualidade não fica boa o suficiente para leitura. Uma versão vetorizada dessa figura teria qualidade melhor.
 
-Para casos onde a figura referenciada está muito distante por algum motivo é possível fazer uma referencia indicando a página : \autorefwithpage{fig_diag_virado}
 
+% observe que a imagem a seguir teve que ser ajustada para caber corretamente na página
+% por não ser uma imagem vetorizada a qualidade não é a melhor possivel
 \begin{sidewaysfigure}[htb]
     \centering
-	\includegraphics[width=0.9\textwidth]{exemplos/exemplo_diag_horizontal.png}
 	\caption{\label{fig_diag_virado}Diagrama Virado - Exemplo}
-	\fonte{\cite{openehrCompositionEntry}}
+	\includegraphics[width=0.9\textwidth]{exemplos/exemplo_diag_horizontal.png}
+	\fonte{\citeonline{openehrCompositionEntry}.}
 \end{sidewaysfigure}
