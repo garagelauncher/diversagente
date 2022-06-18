@@ -51,6 +51,8 @@
 \preambulo{Modelo canônico de trabalho monográfico acadêmico em conformidade com
 as normas ABNT apresentado à comunidade de usuários \LaTeX.}
 
+% Para versões intermediarias utilizar a data
+% Para versão final de monografia utilizar o ano do depósito
 \data{DATA DO TRABALHO}
 
 % Definir o que for necessário e comentar o que não for necessário
@@ -86,17 +88,18 @@ as normas ABNT apresentado à comunidade de usuários \LaTeX.}
 % ----
 \begin{document}
 
+
 % Retira espaço extra obsoleto entre as frases.
 \frenchspacing 
 
 %somente para o exemplo, fica primeiro
 %\input{00-teste}
-\input{00-info}
+%\input{00-info}
 
 % -- lista de pendencias gerada pelo todonotes
 % -- altere opções do usepackage para remover na versão final....
-\listoftodos
-\todo[inline]{remover lista de todo da versão final...}
+%\listoftodos
+%\todo[inline]{remover lista de todo da versão final...}
 \newpage
 
 % ----------------------------------------------------------
@@ -113,15 +116,6 @@ as normas ABNT apresentado à comunidade de usuários \LaTeX.}
 \newcommand{\todonum}[2][]
 {\stepcounter{todocounter}\todo[#1]{\thetodocounter: #2}}
 
-
-\todonum[inline]{ajustar titulo do trabalho}
-\todonum[inline]{ajustar autor}
-\todonum[inline]{ajustar data}
-\todonum[inline]{ajustar preambulo}
-\todonum[inline]{ajustar curso}
-\todonum[inline]{ajustar disciplina}
-\todonum[inline]{ajustar departamento}
-\todonum[inline]{ajustar orientador/coorientador/professor(es)}
 % ---
 
 % ---
