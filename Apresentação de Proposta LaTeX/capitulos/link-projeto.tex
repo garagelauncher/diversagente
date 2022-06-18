@@ -1,0 +1,188 @@
+\chapter{Links do Projeto}
+
+Apresentação dos links e QRcodes necessários para acessar na internet itens relacionados ao projeto diversaGente.  
+
+
+\begin{itemize}
+	\item Link do Youtube
+\end{itemize}
+\begin{figure}[htb]
+	\includegraphics[width=0.40\textwidth]{anexos/youtube.png} \\
+	\hyperlink {Link Youtube}{https://www.youtube.com/channel/UCs1XOD3RrJ2OcNL3p-R0kBQ}
+\end{figure}
+
+\newline
+
+\begin{itemize}
+	\item Link do Blog,
+\end{itemize}
+\begin{figure}[htb]
+	\includegraphics[width=0.40\textwidth]{anexos/blog.png} \\
+	\hyperlink {Link do Blog}{https://garagelaunch.blogspot.com/}
+\end{figure}
+
+\pagebreak
+
+\begin{itemize}
+	\item Link do Git
+\end{itemize}
+\begin{figure}[htb]
+	\includegraphics[width=0.40\textwidth]{anexos/blog.png} \\
+	\hyperlink {Link do Blog}{https://garagelaunch.blogspot.com/}
+\end{figure}
+
+\newline
+
+\begin{itemize}
+	\item Link do SVN
+\end{itemize}
+\begin{figure}[htb]
+	\includegraphics[width=0.40\textwidth]{anexos/svn.png} \\
+	\hyperlink {Link do Blog}{https://https://svn.spo.ifsp.edu.br/svn/a6pgp/}
+\end{figure}
+
+\pagebreak
+
+\begin{itemize}
+	\item Link da Prova Conceito
+\end{itemize}
+\begin{figure}[htb]
+	\includegraphics[width=0.40\textwidth]{anexos/heroku.png} \\
+	\hyperlink {Link do Blog}{https://https://dev-diversagente.herokuapp.com}
+\end{figure}
+
+\newline
+
+%---------------------------------------------------------------
+
+% Please add the following required packages to your document preamble:
+% \usepackage{lscape}
+% \usepackage{longtable}
+% Note: It may be necessary to compile the document several times to get a multi-page table to line up properly
+\renewcommand\LTcaptype{quadro}
+\begin{quadro}
+	\centering
+	\ABNTEXfontereduzida
+	\caption[Custo das ferramentas]{Custo das ferramentas}
+	\label{quadro-exemplo}
+	\begin{longtable}[]{|l|c|c|c|}
+		\hline
+		& Prova Conceito  &  MVP  & Projeto Finalizado   \\ \hline
+		\endfirsthead
+		%
+		\multicolumn{4}{c}{\scriptsize Fonte: Equipe diversaGente (2022).}%
+		{{\bfseries Quadro \thetable\ continued from previous page}} \\
+		\endhead
+		%
+		Ambientalização & X & X & X \\ \hline
+		Integração de ferramentas & X & X & X \\ \hline
+		Fórum &  & X & X \\ \hline
+		Chat  &  &  & X \\ \hline
+		Avaliações &  & X & X \\ \hline
+		Feed de notícias &  &  & X \\ \hline
+				Ambientalização & X & X & X \\ \hline
+	\end{longtable}
+\fonte{Equipe diversaGente (2022)}
+\end{quadro}
+
+
+
+%-------------------------------------------------------------
+
+\begin{quadro}[htb]
+	\centering
+	\ABNTEXfontereduzida
+	\caption[Quadro Teste ]{Quadro Teste}
+	\label{item}
+\end{quadro}
+
+\begin{landscape}
+	\begin{longtable}{|p{3.3cm}|p{10.3cm}|}
+		\hline
+		\thead{} & \thead{Ator} \\
+		\hline
+				\endfirsthead
+		%
+		\multicolumn{2}{c}{\scriptsize Fonte: Equipe diversaGente (2022).}%
+		{{\bfseries Quadro \autoref{item}\ continued from previous page}} \\
+		\endhead
+		Descrição & Ao criar uma subcategoria, o cliente poderá excluir sua própria mensagem dentro do canal de texto e poderá excluir as mensagens de outros dentro dessa subcategoria que ele criou. O Administrador terá permissão de excluir as mensagens das subcategorias, até mesmo do criador dela.\\
+		\hline
+		Fluxo Básico  & 
+		Para o cliente:
+		\begin{enumerate}
+			\item O usuário seleciona a seção "Fórum";
+			\item O usuário seleciona a categoria desejada;
+			\item O sistema mostra todas as subcategorias relacionadas à categoria escolhida pelo usuário;
+			\item O usuário escolhe uma subcategoria;
+			\item O sistema mostra todas as mensagens ocorridas nesse canal de texto até o momento. 
+			\item O usuário seleciona a mensagem que deseja excluir;
+			\item O sistema atualiza o canal de texto retirando a mensagem excluída. 
+			\item O  caso de uso é encerrado. 
+		\end{enumerate}\\
+		\hline
+		Fluxo Básico  & 
+		Para o Administrador:
+		\begin{enumerate}
+			\item O administrador seleciona a seção "Fórum";
+			\item O administrador seleciona a categoria desejada;
+			\item O administrador mostra todas as subcategorias relacionadas à categoria escolhida pelo usuário;
+			\item O administrador escolhe uma subcategoria;
+			\item O sistema mostra todas as mensagens ocorridas nesse canal de texto até o momento. 
+			\item O administrador seleciona a mensagem que deseja excluir;
+			\item O sistema atualiza o canal de texto retirando a mensagem excluída. 
+			\item O caso de uso é encerrado. 
+		\end{enumerate}\\
+		\hline
+		Pré-condições & Para o Cliente: 
+		
+		O cliente deve estar logado no app e ser o criador do subcategoria escolhida.\\
+		\hline
+		Pré-Condições & Para o Administrador:
+		
+		Deve-ser ter o permissionamento de acesso necessário.\\
+		\hline
+		Pós-condições & O sistema deve atualizar o canal de texto já retirando a mensagem de texto excluída.\\
+		\hline
+		\thead{} & \thead{Ator} \\
+		\hline
+		Descrição & Ao criar uma subcategoria, o cliente poderá excluir sua própria mensagem dentro do canal de texto e poderá excluir as mensagens de outros dentro dessa subcategoria que ele criou. O Administrador terá permissão de excluir as mensagens das subcategorias, até mesmo do criador dela.\\
+		\hline
+		Fluxo Básico  & 
+		Para o cliente:
+		\begin{enumerate}
+			\item O usuário seleciona a seção "Fórum";
+			\item O usuário seleciona a categoria desejada;
+			\item O sistema mostra todas as subcategorias relacionadas à categoria escolhida pelo usuário;
+			\item O usuário escolhe uma subcategoria;
+			\item O sistema mostra todas as mensagens ocorridas nesse canal de texto até o momento. 
+			\item O usuário seleciona a mensagem que deseja excluir;
+			\item O sistema atualiza o canal de texto retirando a mensagem excluída. 
+			\item O  caso de uso é encerrado. 
+		\end{enumerate}\\
+		\hline
+		Fluxo Básico  & 
+		Para o Administrador:
+		\begin{enumerate}
+			\item O administrador seleciona a seção "Fórum";
+			\item O administrador seleciona a categoria desejada;
+			\item O administrador mostra todas as subcategorias relacionadas à categoria escolhida pelo usuário;
+			\item O administrador escolhe uma subcategoria;
+			\item O sistema mostra todas as mensagens ocorridas nesse canal de texto até o momento. 
+			\item O administrador seleciona a mensagem que deseja excluir;
+			\item O sistema atualiza o canal de texto retirando a mensagem excluída. 
+			\item O caso de uso é encerrado. 
+		\end{enumerate}\\
+		\hline
+		Pré-condições & Para o Cliente: 
+		
+		O cliente deve estar logado no app e ser o criador do subcategoria escolhida.\\
+		\hline
+		Pré-Condições & Para o Administrador:
+		
+		Deve-ser ter o permissionamento de acesso necessário.\\
+		\hline
+		Pós-condições & O sistema deve atualizar o canal de texto já retirando a mensagem de texto excluída.\\
+		\hline
+	\end{longtable}
+\end{landscape}

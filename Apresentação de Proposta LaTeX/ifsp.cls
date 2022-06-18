@@ -10,6 +10,8 @@
 \newboolean{gerandoMODELO}
 \newboolean{mostrandoTODO}
 \newboolean{imprimirLOGOnaCAPA}
+\newboolean{utilizarBIBLATEX}
+\newboolean{utilizarREFINDENT}
 %
 % Repassa todos os parametros a classe abntex2, 
 \DeclareOption*{%
@@ -22,9 +24,15 @@
 \DeclareOption{GLOSSARIO}{\setboolean{gerarGLOSSARIO}{true}}
 \DeclareOption{TODO}{\setboolean{mostrandoTODO}{true}}
 \DeclareOption{logoCAPA}{\setboolean{imprimirLOGOnaCAPA}{true}}
+\DeclareOption{BIBLATEX}{\setboolean{utilizarBIBLATEX}{true}}
+\DeclareOption{REFINDENT}{\setboolean{utilizarREFINDENT}{true}}
 \ProcessOptions\relax
+% para permitir a quebra de urls nos hifens
+\usepackage[hyphens]{url}
+%\usepackage[breaklinks=true]{hyperref}
+%\usepackage{breakurl}
 % https://www.ctan.org/pkg/abntex2
-\LoadClass{abntex2}
+\LoadClass[hyphens]{abntex2}
 
 	        
 % ---
@@ -41,8 +49,8 @@
 \usepackage{lastpage}           
 % Indenta o primeiro parágrafo de cada seção. https://www.ctan.org/pkg/indentfirst
 \usepackage{indentfirst}        
-% Controle das cores https://www.ctan.org/pkg/color
-\usepackage{color}              
+% Controle das cores https://www.ctan.org/pkg/xcolor
+\usepackage[dvipsnames]{xcolor}              
 % https://www.ctan.org/pkg/graphicx
 \usepackage{graphicx}
 % idioma https://www.ctan.org/pkg/babel
@@ -58,13 +66,54 @@
 % Permite definir barreira para floats
 \usepackage{placeins}
 % para incluir arquivos pdf no documento
-\usepackage{pdfpages}			
+\usepackage{pdfpages}
+% para permitir floats adicionais nas figuras e já definir titulo no topo
+%\usepackage[capposition=top]{floatrow}
+% Para permitir melhor formatação de celulas de tabelas/quadros
+\usepackage{makecell}
+\renewcommand\theadalign{bc}
+\renewcommand\theadfont{\bfseries}
+
+% Para carregar imagens vetorizadas
+\usepackage{svg}
+
+% permite utilizar markdown diretamente no documento
+% 2021-03 Parece ter incompatilbilidade no overleaf gerando dezenas de erros...
+%\usepackage[footnotes,definitionLists,hashEnumerators,smartEllipses,hybrid]{markdown}
+
+
+% Para caracteres adicionais
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{52}}%
+\newcommand{\xmark}{\ding{54}}%
+\newcommand{\circlemark}{\ding{108}}%
+
+% para gerenciar lista de pendencias do documento
+\ifthenelse{\boolean{mostrandoTODO}}{%
+    \RequirePackage{todonotes}			
+}{%
+    % para não imprimir pendencias na versão final
+    \RequirePackage[final,obeyFinal]{todonotes}			
+}
+
+\ifthenelse{\boolean{gerandoMODELO}}{%
+    % para geração de dummy text
+    
+    \RequirePackage{lipsum}             
+    \RequirePackage{blindtext}          
+    \input{00-comandos-modelo}
+
+}{}
+
 
 % ---
 % Pacotes de citações
 % ---
 % Paginas com as citações na bibl https://www.ctan.org/pkg/backref
+\ifthenelse{\boolean{utilizarBIBLATEX}}{%
+}{%
 \usepackage[brazilian,hyperpageref]{backref}     
+}
 
 \ifthenelse{\boolean{utilizarQRCODE}}{%
     % para gerar códigos de barra incluindo qrcode
@@ -141,22 +190,6 @@
 }{}
 
 
-\ifthenelse{\boolean{gerandoMODELO}}{%
-
-    % para geração de dummy text
-    
-    \RequirePackage{lipsum}             
-    \RequirePackage{blindtext}          
-
-}{}
-% para gerenciar lista de pendencias do documento
-\ifthenelse{\boolean{mostrandoTODO}}{%
-    \RequirePackage{todonotes}			
-
-}{%
-    % para não imprimir pendencias na versão final
-    \RequirePackage[final,obeyFinal]{todonotes}			
-}
 \ifthenelse{\boolean{utilizarPaginasA3}}{%
     %--- Utilizados para gerar pagina A3 com KOMAOptions
     \RequirePackage{layouts}%
@@ -343,3 +376,19 @@
         {\autoref{#1} (pág \pageref{#1})}%
         {\autoref{#1}}%
 }
+
+
+%-------------------------------------------------
+% Tratamento para bug ABNTex ao referenciar Anexo
+% https://github.com/abntex/abntex2/issues/76
+\newcommand{\refanexo}[1]{\hyperref[#1]{Anexo~\ref{#1}}}
+
+\newcommand{\IfPackageLoaded}[3]{\ltx@ifpackageloaded{#1}{#2}{#3}}
+
+
+% URL via web archive
+% Permite referenciar uma URL colocando o link do web.archive, mas mostrando a URL original.
+%\newcommand{\waUrl}[1]{\url{http://web.archive.org/web/*/#1}}
+% Utilizando uma data futura ele mostra a mais recente
+\newcommand{\waUrl}[1]{\href{http://web.archive.org/web/20990229123340/#1}{#1}}
+\newcommand{\waUrlTitle}[2]{\href{http://web.archive.org/web/20990229123340/#1}{#2}}
