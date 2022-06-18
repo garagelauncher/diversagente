@@ -1,0 +1,19 @@
+%
+% Definições de comandos que são utilizados no modelo para facilitar demonstrações
+%
+%
+\newcommand{\urlmodelosimples}{https://www.overleaf.com/project/58a3a66af9bb74023ba1bd56}
+\newcommand{\urlmodelo}{\url{\urlmodelosimples}}
+
+\newcommand{\explicacao}[1]{\todo[nolist,inline,color=yellow]{#1}}
+\newcommand{\explicacaoErro}[1]{\todo[nolist,inline,color=VioletRed]{ERRADO: #1}}
+
+\newcommand{\mostraComandoLaTeX}[1]{\textbf{\textit{$\backslash$#1}}\index{#1}}
+\newcommand{\mostraPacoteLaTeX}[1]{\textbf{\textit{#1}}\index{#1}}
+
+\newcommand{\textoFalso}[2]{\textcolor{RawSienna}{\textit{\textbf{#1} \lipsum[#2]}}}
+\newcommand{\preencheComTexto}{\textoFalso{Texto para preenchimento do espaço, simulando texto real. Esse texto está com cor diferente para facilitar a identificação, mas esse tipo de mudança de cor no texto não deve ser utilizado no trabalho.}{3-5}}
+
+% Para facilitar mudanças no site a página 404 tem um redirecionamento pelas chaves
+% utiliza diretamente esse sistema de redirecionamento
+\newcommand{\dicasIvan}[1]{\href{https://dicas.ivanfm.com/404.html?key=#1}{https://dicas.ivanfm.com/#1}}
