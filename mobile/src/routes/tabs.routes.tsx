@@ -34,7 +34,7 @@ export function TabRoutes() {
         headerShown: false,
         tabBarShowLabel: false,
       }}
-      initialRouteName="Forums"
+      initialRouteName="LocationsStack"
     >
       <Screen
         name="Forums"

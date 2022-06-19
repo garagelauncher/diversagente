@@ -17,7 +17,7 @@ export const StackRoutes = () => {
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName="Locations"
+      initialRouteName="Login"
     >
       <Screen name="Login" component={Login} />
     </Navigator>
