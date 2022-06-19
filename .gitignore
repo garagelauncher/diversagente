@@ -1,4 +1,5 @@
 .env
+env
 ## Global
 node_modules
 dist
