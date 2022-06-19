@@ -11,7 +11,9 @@
     "web": "npx expo start --web",
     "clear:cache": "rimraf node_modules/.cache/babel-loader/*,",
     "clear:expo": "expo r -c",
-    "generate:apk": "eas build -p android --profile local"
+    "generate:apk": "eas build -p android --profile local",
+    "lint:fix": "eslint src/** --fix",
+    "style:fix": "prettier --write src/**"
   },
   "dependencies": {
     "@expo-google-fonts/poppins": "^0.2.2",
