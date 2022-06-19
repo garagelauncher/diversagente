@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gitstats Diversagente</title>
+</head>
+
+<body>
+
+  <script>
+    // redirect user to baseurl/general.html
+    const currentUrl = window.location.href;
+    const lastIndex = currentUrl.lastIndexOf("/");
+    const baseUrl = currentUrl.substring(0, lastIndex);
+
+    window.location.replace(baseUrl + '/general.html');
+  </script>
+</body>
+
+</html>
