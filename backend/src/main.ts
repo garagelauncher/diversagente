@@ -10,7 +10,10 @@ import helmet from 'helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  // security
   app.enableCors();
+  app.use(helmet());
 
   // serve static files
   app.useStaticAssets(join(__dirname, '..', '..', 'public'), {
@@ -19,9 +22,6 @@ async function bootstrap() {
   app.setViewEngine('html');
 
   const configService = app.get(ConfigService);
-
-  // security
-  app.use(helmet());
 
   // setup documentation
   const documentationConfig = new DocumentBuilder()
