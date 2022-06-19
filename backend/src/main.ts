@@ -6,6 +6,7 @@ import { Logger } from '@nestjs/common';
 import packageJSON from '../package.json';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
+import helmet from 'helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -18,6 +19,9 @@ async function bootstrap() {
   app.setViewEngine('html');
 
   const configService = app.get(ConfigService);
+
+  // security
+  app.use(helmet());
 
   // setup documentation
   const documentationConfig = new DocumentBuilder()
