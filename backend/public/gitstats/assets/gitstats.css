@@ -1,0 +1,165 @@
+/**
+ * GitStats - default style
+ */
+body {
+	color: black;
+	background-color: #ffffff;
+	font-family: Charcoal, sans-serif;
+}
+
+dt {
+	font-weight: bold;
+	float: left;
+	margin-right: 1em;
+}
+
+dt:after {
+	content: ': ';
+}
+
+dd {
+	display: block;
+	clear: left;
+}
+
+table {
+	border: 1px solid black;
+	border-collapse: collapse;
+	font-size: 80%;
+	margin-bottom: 1em;
+}
+
+table.noborders {
+	border: none;
+}
+
+table.noborders td {
+	border: none;
+}
+
+.vtable {
+	float: right;
+	clear: both;
+}
+
+td {
+	background-color: white;
+}
+
+th {
+	background-color: #ccc;
+}
+
+th a {
+	text-decoration: none;
+}
+
+tr:hover {
+	background-color: #eef;
+}
+
+td {
+	padding: 0.2em;
+	padding-left: 0.3em;
+	padding-right: 0.2em;
+}
+
+/* Navigation bar; tabbed style */
+.nav {
+	border-bottom: 1px solid grey;
+	padding: 0.3em;
+	font-variant: small-caps;
+}
+
+.nav ul {
+	list-style-type: none;
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+
+.nav li {
+	display: inline;
+}
+
+.nav li a {
+	padding: 0.3em;
+	text-decoration: none;
+	color: black;
+	border: 1px solid black;
+	margin: 0.5em;
+	background-color: #ddf;
+}
+
+.nav li:not(.active) a:hover {
+	background-color: #fff;
+	border-bottom: 1px solid #fff;
+}
+
+.nav li.active a {
+    color:#fff;
+    font-weight:bold;
+    background-color:#222;
+}
+
+img {
+	border: 1px solid grey;
+	padding: 0.5em;
+	background-color: white;
+}
+
+th img {
+	border: 0px;
+	padding: 0px;
+	background-color: #ddf;
+}
+
+h1 a, h2 a {
+	color: black;
+	text-decoration: none;
+}
+
+h1:hover a:after,
+h2:hover a:after {
+	content: '¶';
+	color: #555;
+}
+
+h1 {
+	font-size: x-large;
+	font-variant: small-caps;
+}
+
+h2 {
+	background-color: #222;
+	border: 1px solid black;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	color: white;
+	font-size: large;
+	clear: both;
+}
+
+h2 a {
+	color: white;
+}
+
+.nontop {
+  columns: 60px 6;
+  font-size: 80%;
+}
+
+.moreauthors {
+	font-size: 80%;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+    flex: 50%;
+    padding: 10px;
+}
+
+/* Clear floats after the columns */
+.row {
+  display: flex;
+}
