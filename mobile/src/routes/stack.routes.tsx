@@ -1,6 +1,5 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { AddSubCategories } from '@src/screens/Forums/AddSubCategories';
 import { LocationDetails } from '@src/screens/LocationDetails';
 import { Locations } from '@src/screens/Locations';
 import { Login } from '@src/screens/Login';
@@ -18,7 +17,7 @@ export const StackRoutes = () => {
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName="Login"
+      initialRouteName="Locations"
     >
       <Screen name="Login" component={Login} />
     </Navigator>
