@@ -18,7 +18,8 @@
   <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#rocket-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-layout">Layout</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-como-contribuir">Como contribuir</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#%EF%B8%8F-contribuidores">Contribuidores</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#%EF%B8%8F-como-contribuir">Como contribuir</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#memo-licença">Licença</a>
 </p>
 
@@ -50,7 +51,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 ### Wireframe
 Você pode visualizar o layout do projeto no formato através [desse link](https://www.figma.com/file/tAK6gFJICW2ClcDUpbAS5t/diversaGente?node-id=0%3A1). Lembrando que você irá precisar ter uma conta no [Figma](http://figma.com/).
 
-## Contribuidores
+## ⛹️ Contribuidores
 
 | Nome                     | GitHub                                              |
 | ------------------------ | --------------------------------------------------- |
