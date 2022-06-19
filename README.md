@@ -33,7 +33,7 @@ Uma rede social que visa facilitar troca de experiências entre pessoas que conv
 
 Esse projeto foi desenvolvido com as seguintes tecnologias:
 
-### Comum aos ambientes
+### Comum
 - [✨ TypeScript](https://www.typescriptlang.org) — Linguagem de programação com uso de tipagem estática para JavaScript.
 
 ### Client-side
