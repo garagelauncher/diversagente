@@ -9,6 +9,9 @@ import { join } from 'path';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  app.enableCors();
+
+  // serve static files
   app.useStaticAssets(join(__dirname, '..', '..', 'public'), {
     prefix: '/public',
   });
@@ -16,6 +19,7 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
 
+  // setup documentation
   const documentationConfig = new DocumentBuilder()
     .setTitle(packageJSON.name)
     .setDescription(packageJSON.description)
@@ -25,6 +29,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, documentationConfig);
   SwaggerModule.setup('docs', app, document);
 
+  // setup app
   const PORT = configService.get<number>('PORT') || 3000;
   Logger.debug(`Starting server on port ${PORT}...`);
   await app.listen(PORT);
