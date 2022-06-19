@@ -42,7 +42,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [💅 Native Base](https://nativebase.io) — Um framework CSS para fazer aplicativos nativos accesíveis.
 
 ### Server-side
-- [🧰 Node.js](https://nodejs.org/) — Um ambiente de desenvolvimento de aplicações para o servidor.
+- [🧰 Node.js](https://nodejs.org/) — Executor de código JavaScript no servidor.
 - [💾 MongoDB](https://www.mongodb.com) — Banco de dados NoSQL.
 - [🐱 NestJS](https://nestjs.com/) - Uma estrutura progressiva do Node.js para criar aplicativos do lado do servidor eficientes, confiáveis e escaláveis
 
