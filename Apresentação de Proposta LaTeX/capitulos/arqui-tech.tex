@@ -70,12 +70,11 @@ O diagrama de casos de uso apresentado na \autoref{diagrama-caso-uso} representa
 \end{figure}
 
 
-
 As especificações de casos de uso informam através de texto a utilização do usuário ou administrador dentro da aplicação. São identificadas através de códigos que se iniciam com UC, indo do
-UC01 \autoref{casos-de-uso1} até o UC21 do \autoref{casos-de-uso21}. Os textos e quadros estão apresentados dentro do \autoref{casos-de-uso-especificacao}
-
+UC01 \autoref{casos-de-uso1} até o UC21 do \autoref{casos-de-uso21}. Os textos podem ser encontrados no \autoref{casos-de-uso-especificacao}
 
 No diagrama de classe,  \autoref{diagrama-classe}, a classe User é a principal e representa o usuário que está atrelado a grande parte das outras classes, já que o objetivo principal é ser um fórum para postagem e compartilhamento de informações. 
+
 
 \begin{figure}[htb]
 	\centering
@@ -205,7 +204,7 @@ Para as regras de negócio, \autoref{regra-negocio}, são úteis para definir co
 
 %----------------------------------------------------------
 \section{Casos de Uso}
-Os casos de uso apresentados neste capítulos representam uma possível utilização do nosso sistema por ator, seja ele o usuário ou administrador. Pode sem visto através de um diagrama de casos de uso no \autoref{diagrama-caso-uso} tanto em quadros que são apresentados através do código UC01 do \autoref{casos-de-uso1} até o UC21 do \autoref{casos-de-uso21}. \\
+Os casos de uso apresentados neste capítulos representam uma possível utilização do nosso sistema por ator, seja ele o usuário ou administrador. Pode sem visto através de um diagrama de casos de uso no \autorefwithpage{diagrama-caso-uso} tanto em quadros que são apresentados através do código UC01 do  \autorefwithpage{casos-de-uso1} até o UC21 do  \autorefwithpage{casos-de-uso21}. \\
 
 
 
@@ -351,5 +350,13 @@ Pelo fato da equipe ter sete pessoas, foi necessário adotar alguns protocolos, 
 De início foi acertado que seria usado o Firebase para fazer a autenticação da aplicação, entretanto foi resolvido usar o OAuth2 que nada mais é que um protocolo de autorização que permite uma aplicação se autentique em outra. Essa mudança foi devido aos conhecimentos da equipe para aplicar o protocolo que estava mais próximo da entrega, além de ser uma aplicação mais simples, leve e rápida para implementar e autenticar usuários dentro do aplicativo. 
  
 \section{Métricas}
-Nesse capítulos iremos apresentar as métricas necessárias para mensurar a qualidade do código e tamanho em disco e de banco de dados que a aplicação está e pretende ocupar no futuro. 
+Nesse capítulos é apresentado as métricas necessárias para mensurar a qualidade do código e tamanho em disco e de banco de dados que a aplicação está e pretende ocupar no futuro. 
 
+Uma das métricas utilizadas é relatório SSL (Secure Software Layer) é um protocolo de segurança que cria um link criptografado de um servidor para o navegador, sendo possível que seja mais difícil que o intrusos consigam acessar e modificar dados transmitidos entre dois sistemas. O site utilizado para verificar essa métricas é \waUrlTitle{https://www.ssllabs.com}{SSL Labs}. Na figura \autoref{ssl-metrica} é possível ver que foi obtido A em todos os quesitos que o site analisa. 
+
+\begin{figure}[htb]
+	\centering
+	\caption{\label{ssl-metrica}Avaliação SSL}
+	\includegraphics[width=1\textwidth]{anexos/SSLMetrica.png}
+	\fonte{Fonte: Equipe diversaGente} 
+\end{figure}
