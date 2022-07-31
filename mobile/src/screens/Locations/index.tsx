@@ -18,6 +18,7 @@ import MapView, { Marker, Region, PROVIDER_GOOGLE } from 'react-native-maps';
 import * as customStyles from './styles';
 
 import { Location } from '@src/contracts/Location';
+import { translate } from '@src/i18n';
 import { StackLocationNavigatorParamList } from '@src/routes/locationStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
 
@@ -132,7 +133,7 @@ export const Locations = () => {
       <Modal isOpen={showModal} onClose={onCloseModal}>
         <Modal.Content maxWidth="400px">
           <Modal.CloseButton />
-          <Modal.Header>Filtros</Modal.Header>
+          <Modal.Header>{translate('filters')}</Modal.Header>
           <Modal.Body>
             <FormControl>
               <FormControl.Label>Quantidade</FormControl.Label>
