@@ -6,7 +6,7 @@ import { Platform, NativeModules } from 'react-native';
 import * as enUs from './en-US';
 import * as ptBr from './pt-BR';
 
-const normalizeTranslate = {
+export const normalizeTranslate = {
   en_US: 'en_US',
   pt_BR: 'pt_BR',
   en: 'en_US',
@@ -26,8 +26,12 @@ I18n.translations = {
   pt_BR: ptBr,
 };
 
-const setLanguageToI18n = () => {
-  const language = getLanguageByDevice() as keyof typeof normalizeTranslate;
+const setLanguageToI18n = (
+  selectedLanguage?: keyof typeof normalizeTranslate,
+) => {
+  const language =
+    selectedLanguage ??
+    (getLanguageByDevice() as keyof typeof normalizeTranslate);
   const translateNormalize = normalizeTranslate[language];
 
   const iHaveThisLanguage =
