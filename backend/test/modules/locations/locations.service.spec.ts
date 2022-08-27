@@ -117,4 +117,12 @@ describe('LocationsService', () => {
 
     expect(foundLocation).toEqual(expect.objectContaining(expectedLocation));
   });
+
+  it('should not be able to get one location that doesnt exist', async () => {
+    prisma.location.findUnique = jest.fn().mockResolvedValue(undefined);
+
+    await expect(locationService.findOne('1')).rejects.toThrowError(
+      'Location with id 1 not found',
+    );
+  });
 });
