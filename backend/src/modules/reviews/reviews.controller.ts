@@ -24,7 +24,7 @@ export class ReviewsController {
   ) {
     Logger.debug(`Creating a new review for location ${locationId}`);
     Logger.debug(createReviewDto);
-    return await this.reviewsService.create({ locationId, ...createReviewDto });
+    return await this.reviewsService.create({ ...createReviewDto, locationId });
   }
 
   @Get()
