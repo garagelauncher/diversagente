@@ -4,9 +4,9 @@ import { PrismaService } from 'src/shared/database/prisma.service';
 import {
   findNearLocationListMock,
   locationMock,
+  locationsRawMock,
 } from 'test/__mocks__/location';
 import { createPrismaProviderMock } from 'test/__mocks__/prisma';
-import { LocationRaw } from 'src/shared/contracts/LocationRaw';
 
 describe('LocationsService', () => {
   let locationService: LocationsService;
@@ -22,6 +22,10 @@ describe('LocationsService', () => {
 
     prisma.location.create = jest.fn().mockResolvedValue(locationMock);
     prisma.location.delete = jest.fn().mockResolvedValue(locationMock);
+    prisma.location.update = jest.fn().mockResolvedValue({
+      ...locationMock,
+      description: 'Nova descrição da localização mock',
+    });
   });
 
   it('should be defined', () => {
@@ -58,31 +62,25 @@ describe('LocationsService', () => {
       limit: 10,
     };
 
-    const locationsRawMock: LocationRaw[] = [
-      {
-        _id: {
-          $oid: 'hjudasfhasdu-18473-mnksadfjs-1924903',
-        },
-        createdAt: {
-          $date: '2021-01-01T00:00:00.000Z',
-        },
-        updatedAt: {
-          $date: '2021-01-01T00:00:00.000Z',
-        },
-        ownerId: {
-          $oid: '01923408oaskfjoasdj=jiasfjsdi-oiashjdfk',
-        },
-        geoposition: {
-          type: 'Point',
-          coordinates: [0, 0],
-        },
-        title: 'Localização mock',
-      },
-    ];
-
     prisma.location.findRaw = jest.fn().mockResolvedValue(locationsRawMock);
 
     const locations = await locationService.findNear(nearDTO);
     expect(locations).toEqual(findNearLocationListMock);
+  });
+
+  it('should be able update a location with success', async () => {
+    const locationToUpdate = {
+      description: 'Nova descrição da localização mock',
+    };
+
+    const locationUpdated = await locationService.update(
+      locationMock.id,
+      locationToUpdate,
+    );
+
+    expect(locationUpdated).toEqual({
+      ...locationMock,
+      description: 'Nova descrição da localização mock',
+    });
   });
 });
