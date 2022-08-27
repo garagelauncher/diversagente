@@ -1,11 +1,8 @@
 export const theme = {
   colors: {
-    orangePrimary: '#FA9600',
-    yellowPrimary: '#FFDB11',
-    pastelPrimary: '#FFF1A4',
-    bluePrimary: '#36A9E1',
-    navyPrimary: '#004AAD',
+    headerColor: '#1743B4',
 
-    lightGray: '#F2F3F5',
+    primaryColor: '#FFFFFF',
+    secondaryColor: '#E5E5E5',
   },
 };
