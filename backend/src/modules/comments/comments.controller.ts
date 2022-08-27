@@ -20,7 +20,7 @@ export class CommentsController {
     @Param('postId') postId: string,
     @Body() createCommentDto: CreateCommentDto,
   ) {
-    return this.commentsService.create({ postId, ...createCommentDto });
+    return this.commentsService.create({ ...createCommentDto, postId });
   }
 
   @Get()

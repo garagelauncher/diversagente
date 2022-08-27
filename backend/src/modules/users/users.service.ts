@@ -3,6 +3,7 @@ import { PrismaService } from 'src/shared/database/prisma.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CloudinaryService } from 'src/shared/services/cloudinary/cloudinary.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import { NotFoundError } from 'rxjs';
 
 @Injectable()
 export class UsersService {
@@ -69,6 +70,11 @@ export class UsersService {
     try {
       const userFound = await this.findOne(userEmail);
       console.debug(userFound);
+
+      if (!userFound) {
+        throw new Error('User not found');
+      }
+
       const result = await this.cloudinary.uploadImage({
         ...file,
         destination: `users/${userFound.id}`,

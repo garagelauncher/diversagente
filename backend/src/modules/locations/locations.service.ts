@@ -161,8 +161,8 @@ export class LocationsService {
 
     const reviewCount = Number(location._count.Review);
 
-    delete location.Review;
-    delete location._count;
+    // delete location.Review;
+    // delete location._count;
 
     return {
       ...location,
