@@ -1,14 +1,13 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Forums } from '@src/screens/Forums';
+import { Messages } from '@src/screens/Messages';
+import { Profile } from '@src/screens/Profile';
 import React from 'react';
 import { Platform } from 'react-native';
 
 import { theme } from '../styles/theme';
 import { StackLocationPrivateRoutes } from './locationStack.routes';
-
-import { Forums } from '@src/screens/Forums';
-import { Messages } from '@src/screens/Messages';
-import { Profile } from '@src/screens/Profile';
 
 export type RootBottomTabParamList = {
   LocationsStack: undefined;
@@ -34,7 +33,7 @@ export function TabRoutes() {
         headerShown: false,
         tabBarShowLabel: false,
       }}
-      initialRouteName="LocationsStack"
+      initialRouteName="Forums"
     >
       <Screen
         name="Forums"

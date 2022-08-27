@@ -1,7 +1,6 @@
+import { Category } from '@src/contracts/Category';
 import { Button, ScrollView, HStack } from 'native-base';
 import React from 'react';
-
-import { Category } from '@src/contracts/Category';
 
 type Props = {
   titles: Category[];
