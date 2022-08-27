@@ -26,6 +26,22 @@ describe('LocationsService', () => {
       ...locationMock,
       description: 'Nova descrição da localização mock',
     });
+
+    prisma.location.findUnique = jest.fn().mockResolvedValue({
+      ...locationMock,
+      Review: [
+        {
+          stars: 5,
+        },
+      ],
+      _count: {
+        Review: 1,
+      },
+      geoposition: {
+        type: 'Point',
+        coordinates: [0, 0],
+      },
+    });
   });
 
   it('should be defined', () => {
@@ -82,5 +98,23 @@ describe('LocationsService', () => {
       ...locationMock,
       description: 'Nova descrição da localização mock',
     });
+  });
+
+  it('should be able to get one location by id with success', async () => {
+    const foundLocation = await locationService.findOne(
+      'hjudasfhasdu-18473-mnksadfjs-1924903',
+    );
+
+    const expectedLocation = {
+      ...locationMock,
+      starsAverage: 5,
+      coordinates: {
+        latitude: 0,
+        longitude: 0,
+      },
+      reviewCount: 1,
+    };
+
+    expect(foundLocation).toEqual(expect.objectContaining(expectedLocation));
   });
 });
