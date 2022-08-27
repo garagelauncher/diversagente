@@ -128,7 +128,7 @@ export class LocationsService {
 
     return {
       ...location,
-      starsAverage: starsAverageFromLocation,
+      starsAverage: starsAverageFromLocation ?? 0,
       coordinates: {
         latitude: location.geoposition.coordinates[0],
         longitude: location.geoposition.coordinates[1],
