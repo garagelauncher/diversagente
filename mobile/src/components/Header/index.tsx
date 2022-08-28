@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-unresolved
 import { theme } from '@src/styles/theme';
-import { Box, Avatar, Text } from 'native-base';
+import { Box, Flex, Avatar, Text, AspectRatio } from 'native-base';
 
 type HeaderProps = {
   title: string;
@@ -11,25 +11,19 @@ export const Header = ({ title, description }: HeaderProps) => {
   return (
     <Box
       width="100%"
-      height={225}
+      height={150}
       backgroundColor={theme.colors.headerColor}
       alignItems="center"
       justifyContent="center"
     >
-      <Avatar
-        bg="amber.500"
-        alignItems={{
-          base: 'right',
-          md: 'flex-start',
-        }}
-        marginTop={0}
-        marginRight={-250}
-      ></Avatar>
+      <Flex direction="row-reverse" marginLeft={-250}>
+        {/* <Avatar bg="amber.500"></Avatar> */}
+      </Flex>
       <Text
         fontSize="4xl"
         color={theme.colors.primaryColor}
+        marginTop={0}
         marginRight={120}
-        bold
         italic
       >
         {title}
@@ -37,8 +31,8 @@ export const Header = ({ title, description }: HeaderProps) => {
       <Text
         fontSize="sm"
         color={theme.colors.secondaryColor}
-        paddingRight={20}
         italic
+        marginRight={10}
       >
         {description}
       </Text>
