@@ -1,35 +1,34 @@
 // eslint-disable-next-line import/no-unresolved
 import { theme } from '@src/styles/theme';
-import { HStack, Flex, Button } from 'native-base';
+import { HStack, Flex, Button, Stack } from 'native-base';
+// eslint-disable-next-line import/default
 import React from 'react';
 
-type ButtonCategoryProps = {
-  title: string;
-};
-
-export const ButtonCategory = ({ title }: ButtonCategoryProps) => {
+export const ButtonCategory = () => {
   const myRef = React.useRef({});
   React.useEffect(() => {
     const styleObj = {
-      backgroundColor: '#facc15',
-      borderColor: '#CA8A04',
       borderWidth: 1,
       borderRadius: 4,
     };
   }, [myRef]);
   return (
-    <HStack space={4}>
-      <Button
-        size="sm"
-        variant={'solid'}
-        _text={{
-          color: '#1F2937',
-        }}
-        ref={myRef}
-        px="3"
-      >
-        {title}
-      </Button>
-    </HStack>
+    <Stack
+      direction={{
+        base: 'row',
+        md: 'row',
+      }}
+      space={10}
+      alignItems={{
+        base: 'center',
+        md: 'flex-start',
+      }}
+    >
+      {['POPULAR', 'RECOMENDADO'].map((size) => (
+        <Button key={size} size={'lg'} marginTop={0}>
+          {size}
+        </Button>
+      ))}
+    </Stack>
   );
 };
