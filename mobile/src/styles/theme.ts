@@ -10,5 +10,6 @@ export const theme = {
     secondaryColor: '#E5E5E5',
 
     orange: '##FF5F1F',
+    grey: '#8F8F8F',
   },
 };

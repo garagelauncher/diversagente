@@ -5,13 +5,6 @@ import { HStack, Flex, Button, Stack } from 'native-base';
 import React from 'react';
 
 export const ButtonCategory = () => {
-  const myRef = React.useRef({});
-  React.useEffect(() => {
-    const styleObj = {
-      borderWidth: 1,
-      borderRadius: 4,
-    };
-  }, [myRef]);
   return (
     <Stack
       direction={{
@@ -25,7 +18,13 @@ export const ButtonCategory = () => {
       }}
     >
       {['POPULAR', 'RECOMENDADO'].map((size) => (
-        <Button key={size} size={'lg'} marginTop={0}>
+        <Button
+          key={size}
+          size={'lg'}
+          marginTop={0}
+          variant={'solid'}
+          colorScheme="primary"
+        >
           {size}
         </Button>
       ))}
