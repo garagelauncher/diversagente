@@ -2,7 +2,7 @@
 import { ButtonCategory } from '@src/components/ButtonCategory/index';
 import { Header } from '@src/components/Header/index';
 import { theme } from '@src/styles/theme';
-import { Box, Flex, Text, VStack, InfoIcon } from 'native-base';
+import { Box, Flex, Text, VStack, InfoIcon, HStack } from 'native-base';
 
 export const Forums = () => {
   return (
@@ -30,7 +30,7 @@ export const Forums = () => {
         >
           <Flex direction="row">
             <VStack py="3" my={3} mx={3} boxSize="30" alignItems="center">
-              <InfoIcon />
+              <InfoIcon color={theme.colors.orange} />
             </VStack>
             <Text paddingTop={3} fontSize="sm" paddingLeft={0}>
               Caso tenha uma sugestão de uma nova categoria,
@@ -42,21 +42,29 @@ export const Forums = () => {
             </Text>
           </Flex>
         </Box>
-        <VStack
+        <HStack
           width="100%"
-          height={300}
+          height={100}
           backgroundColor={theme.colors.primaryColor}
         >
-          <Flex
-            direction="row"
-            marginTop={5}
-            justifyItems="space-between"
-            marginLeft={10}
-          >
-            <ButtonCategory title={'Popular'}></ButtonCategory>
-            <ButtonCategory title={'Recomendado'}></ButtonCategory>
+          <Flex direction="row" marginTop={5} paddingLeft={10}>
+            <ButtonCategory></ButtonCategory>
           </Flex>
-        </VStack>
+        </HStack>
+        <HStack
+          width="100%"
+          height={210}
+          backgroundColor={theme.colors.primaryColor}
+        >
+          <Flex direction="row">
+            <Text fontSize="xl" paddingLeft={8} paddingTop={2} bold>
+              Categorias Populares
+            </Text>
+            <VStack py="2" my={2} mx={2} boxSize="30" alignItems="center">
+              <InfoIcon color={theme.colors.headerColor} />
+            </VStack>
+          </Flex>
+        </HStack>
       </Box>
     </>
   );
