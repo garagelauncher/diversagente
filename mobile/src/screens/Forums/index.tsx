@@ -1,4 +1,6 @@
 import { Box, Heading, ScrollView, Text } from 'native-base';
+
+import { logger } from '@src/utils/logger';
 // import React, { useCallback, useEffect, useState } from 'react';
 
 // import { theme } from '../../styles/theme';
@@ -56,6 +58,7 @@ export const Forums = () => {
   //     <AddSubCategories />
   //   </ScrollView>
   // );
+  logger.success('Forums');
 
   return (
     <Box

@@ -26,7 +26,6 @@ describe('LocationsService', () => {
       ...locationMock,
       description: 'Nova descrição da localização mock',
     });
-
     prisma.location.findUnique = jest.fn().mockResolvedValue({
       ...locationMock,
       Review: [

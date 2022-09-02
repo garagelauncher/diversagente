@@ -31,17 +31,22 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
     setIsLoading(true);
     try {
       const CLIENT_ID = Oauth2.CLIENT_ID;
-      const REDIRECT_URI = Oauth2.REDIRECT_URI;
 
+      const REDIRECT_URI = Oauth2.REDIRECT_URI;
+      console.debug('@REDIRECT_URI', REDIRECT_URI);
       const RESPONSE_TYPE = 'token';
       const SCOPE = encodeURI('profile email');
 
       const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`;
       console.debug('authUrl:', authUrl);
-      const { type, params } = (await AuthSession.startAsync({
+
+      const authresult = (await AuthSession.startAsync({
         authUrl,
       })) as AuthResponse;
-      console.log('type', type);
+      console.debug('debug authresult', authresult);
+
+      const { type, params } = authresult;
+      console.debug('type', type);
 
       if (type === 'success') {
         console.log('fetching user data');
