@@ -2,6 +2,14 @@
 LOCALDIR = $(shell pwd)/
 SCRIPTS_FOLDER = scripts
 
+# install all scripts
+install:
+	@echo
+	@echo "Baixando repostats com Python..."
+	@echo
+	pip3 install git+https://github.com/vifactor/repostat
+	@echo "Gitstats baixado com sucesso"
+
 # generate venv
 venv:
 	@echo
@@ -28,10 +36,6 @@ mailmap:
 
 # generate gitstats
 gitstats:
-	@echo
-	@echo "Baixando repostats com Python..."
-	@echo
-	pip3 install git+https://github.com/vifactor/repostat
 	@echo "Gerando o gitstats..."
 	@echo
 	@echo "$(shell date)"
