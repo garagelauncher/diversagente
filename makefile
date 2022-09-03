@@ -2,7 +2,18 @@
 LOCALDIR = $(shell pwd)/
 SCRIPTS_FOLDER = scripts
 
-#
+# generate venv
+venv:
+	@echo
+	@echo "Ativando venv..."
+	@echo
+	@echo "$(shell date)"
+	@echo
+	python -m venv venv
+	@echo
+	source venv/bin/activate
+
+# generate mailmap
 mailmap:
 	@echo
 	@echo "Gerando .mailmap..."
@@ -15,6 +26,7 @@ mailmap:
 	@echo
 	@echo "Use para gerar o repostas/gitstats"
 
+# generate gitstats
 gitstats:
 	@echo
 	@echo "Baixando repostats com Python..."
