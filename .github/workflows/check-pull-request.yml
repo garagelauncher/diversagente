@@ -30,7 +30,6 @@ jobs:
         with:
           working-directory: backend
           github-token: ${{ secrets.GH_TOKEN }}
-          test-script: npm run test:ci
 
       - name: Sucesso - Discord
         uses: Ilshidur/action-discord@master
