@@ -13,7 +13,7 @@ import { logger } from '@src/utils/logger';
 // import { Subcategory } from '@src/contracts/Subcategory';
 // import { diversaGenteServices } from '@src/services/diversaGente';
 
-export const Forums = () => {
+export const Forum = () => {
   // const [categories, setCategories] = useState<Category[]>([]);
   // const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
 
