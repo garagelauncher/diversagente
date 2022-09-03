@@ -2,23 +2,22 @@ interface ID {
     $oid: string;
   }
 
-interface ownerID {
+interface ownerId {
     $oid: string;
   }
 
-  interface postID {
+  interface postId {
     $oid: string;
   }
 
   interface LikeRawDate {
     $date: string;
   }
-  
+
   export interface LikeRaw {
     _id: ID;
-    ownerId: ownerID;
-    postID : postID;
+    ownerId: ownerId;
+    postId : postId;
     createdAt: LikeRawDate;
     deletedAt: LikeRawDate;
   }
-  
