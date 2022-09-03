@@ -1,4 +1,4 @@
-name: "coverage"
+name: Enforce code coverage
 
 on:
   pull_request:
