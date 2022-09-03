@@ -29,8 +29,24 @@ jobs:
       - name: Run linters
         run: npm run lint
 
-      # - name: Run tests
-      #   run: npm test
+      - name: Run tests
+        run: npm test
+
+      - name: Sucesso no deploy - Discord
+        if: success()
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@master
+        with:
+          args: "Sucesso no Deploy de {{ EVENT_PAYLOAD.repository.full_name }} em produção"
+
+      - name: Falha no deploy - Discord
+        if: failure()
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@master
+        with:
+          args: "Falha no deploy de {{ EVENT_PAYLOAD.repository.full_name }} em produção"
 
       - name: Deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.12.12
