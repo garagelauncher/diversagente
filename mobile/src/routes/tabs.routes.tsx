@@ -4,9 +4,9 @@ import React from 'react';
 import { Platform } from 'react-native';
 
 import { theme } from '../styles/theme';
+import { StackForumPrivateRoutes } from './forumStack.routes';
 import { StackLocationPrivateRoutes } from './locationStack.routes';
 
-import { Forums } from '@src/screens/Forums';
 import { Messages } from '@src/screens/Messages';
 import { Profile } from '@src/screens/Profile';
 
@@ -38,7 +38,7 @@ export function TabRoutes() {
     >
       <Screen
         name="Forums"
-        component={Forums}
+        component={StackForumPrivateRoutes}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name={'forum'} color={color} size={size} />
