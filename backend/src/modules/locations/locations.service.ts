@@ -70,8 +70,6 @@ export class LocationsService {
       },
     })) as unknown as LocationRaw[];
 
-    console.debug(locations);
-    Logger.debug(locations);
     const parsedLocations = locations.map((location) => ({
       id: location._id.$oid,
       title: location.title,
