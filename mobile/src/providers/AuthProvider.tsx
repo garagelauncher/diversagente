@@ -1,30 +1,153 @@
-import { ReactNode, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import * as AuthSession from 'expo-auth-session';
+import { ReactNode, useEffect, useState } from 'react';
+import { Alert } from 'react-native';
 
-import { AuthContext } from '@src/contexts/AuthContext';
+import { Oauth2 } from '@src/configs';
+import {
+  AuthContext,
+  GoogleUserData,
+  UserData,
+} from '@src/contexts/AuthContext';
 
 type AuthProvidersProps = {
   children: ReactNode;
 };
 
+type AuthResponse = {
+  params: {
+    access_token: string;
+  };
+  type: string;
+};
+
 export const AuthProvider = ({ children }: AuthProvidersProps) => {
   const [isLoggedIn, setLoggedIn] = useState(false);
+  const [user, setUser] = useState<UserData | undefined>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   async function signInWithGoogle() {
+    setIsLoading(true);
     try {
-      console.log('Sign in with Google'); // TODO: Make login
-      setLoggedIn(true);
-    } catch (error) {
-      console.log(error);
+      const CLIENT_ID = Oauth2.CLIENT_ID;
+
+      const REDIRECT_URI = Oauth2.REDIRECT_URI;
+      console.debug('@REDIRECT_URI', REDIRECT_URI);
+      const RESPONSE_TYPE = 'token';
+      const SCOPE = encodeURI('profile email');
+
+      const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`;
+      console.debug('authUrl:', authUrl);
+
+      const authresult = (await AuthSession.startAsync({
+        authUrl,
+      })) as AuthResponse;
+      console.debug('debug authresult', authresult);
+
+      const { type, params } = authresult;
+      console.debug('type', type);
+
+      if (type === 'success') {
+        console.log('fetching user data');
+        const response = await axios.get<GoogleUserData>(
+          `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${params.access_token}`,
+        );
+        console.log('sucesss');
+        console.log(JSON.stringify(response.data));
+        const googleUserData = response.data;
+
+        // const responseGet = await axios.get<UserData>(
+        //   `https://dev-diversagente.herokuapp.com/users/${googleUserData.email}`,
+        // );
+
+        console.debug({
+          email: googleUserData.email,
+          name: googleUserData.name,
+          username: googleUserData.email,
+        });
+        const responseCreateUser = await axios.post<{
+          id: string;
+          email: string;
+          username?: string;
+          name: string;
+          biograph?: string;
+          picture?: string;
+          createdAt?: string;
+        } | null>('https://dev-diversagente.herokuapp.com/users', {
+          email: googleUserData.email,
+          name: googleUserData.name,
+          username: googleUserData.email,
+        });
+
+        console.debug(responseCreateUser);
+        console.debug(responseCreateUser.data);
+        console.debug(responseCreateUser.status);
+
+        const userPayload = {
+          id: responseCreateUser.data?.id || '',
+          googleUserData,
+          email: googleUserData.email,
+          name: googleUserData.name,
+          picture:
+            responseCreateUser.data?.picture ?? googleUserData.picture ?? '',
+          username: responseCreateUser.data?.username ?? googleUserData.email,
+          bio: responseCreateUser.data?.biograph ?? '',
+          createdAt: responseCreateUser.data?.createdAt ?? '',
+        };
+        setUser(userPayload);
+        setLoggedIn(true);
+        await AsyncStorage.setItem(
+          'diversagente@user',
+          JSON.stringify(userPayload),
+        );
+      }
+      console.log('Sign in with Google');
+    } catch (error: any) {
+      console.error(error);
+      console.error(error.name);
+      console.error(error.message);
+
+      Alert.alert(
+        'Falha no login',
+        error.message ||
+          'Não foi possível fazer login com o Google, tente novamente mais tarde.',
+      );
+    } finally {
+      setIsLoading(false);
     }
   }
 
   async function signOut() {
-    console.log('Sign out'); // TODO: Make logout
+    console.log('Sign out');
     setLoggedIn(false);
+    setUser(undefined as UserData | undefined);
+    await AsyncStorage.removeItem('diversagente@user');
   }
 
+  useEffect(() => {
+    async function getUser() {
+      const user = await AsyncStorage.getItem('diversagente@user');
+      if (user) {
+        setUser(JSON.parse(user));
+        setLoggedIn(true);
+      }
+    }
+
+    getUser();
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ isLoggedIn, signInWithGoogle, signOut }}>
+    <AuthContext.Provider
+      value={{
+        isLoggedIn,
+        signInWithGoogle,
+        signOut,
+        user,
+        setUser,
+        isLoading,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

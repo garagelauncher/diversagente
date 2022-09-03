@@ -1,11 +1,41 @@
 {
+  "displayName": "diversaGente",
   "expo": {
-    "name": "mobile",
+    "name": "diversaGente",
     "slug": "mobile",
+    "scheme": "mobile",
     "version": "1.0.0",
+    "orientation": "portrait",
+    "splash": {
+      "image": "./src/assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFF1A4"
+    },
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "android": {
+      "package": "com.garagelauncher.diversagente",
+      "versionCode": 10,
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "ACCESS_BACKGROUND_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION"
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": ""
+        }
+      }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "657d1f33-6d6e-4657-afc0-4609527f20f3"
+      }
+    }
   },
   "name": "mobile"
 }

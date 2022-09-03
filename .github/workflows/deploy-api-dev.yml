@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - develop
-    # paths:
-    #   - backend/**
+    paths:
+      - backend/**
 
 jobs:
   build:
@@ -29,8 +29,28 @@ jobs:
       - name: Run linters
         run: npm run lint
 
-      # - name: Run tests
-      #   run: npm test
+      - name: Run tests
+        run: npm test
+
+      - name: Sucesso no deploy - Discord
+        if: success()
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_USERNAME: Jarvis
+          DISCORD_AVATAR: https://static.wikia.nocookie.net/universocinematograficomarvel/images/b/b0/JuARaVeInSy.png/revision/latest?cb=20150919150102&path-prefix=pt
+        uses: Ilshidur/action-discord@master
+        with:
+          args: "@everyone ${{ github.actor }} Fez um deploy com SUCESSO do {{ EVENT_PAYLOAD.repository.full_name }} em DESENVOLVIMENTO."
+
+      - name: Falha no deploy - Discord
+        if: failure()
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_USERNAME: Jarvis
+          DISCORD_AVATAR: https://static.wikia.nocookie.net/universocinematograficomarvel/images/b/b0/JuARaVeInSy.png/revision/latest?cb=20150919150102&path-prefix=pt
+        uses: Ilshidur/action-discord@master
+        with:
+          args: "@everyone ${{ github.actor }} Tentou fazer um deploy com FALHA do {{ EVENT_PAYLOAD.repository.full_name }} em DESENVOLVIMENTO."
 
       - name: Deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.12.12
