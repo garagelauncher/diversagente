@@ -3,7 +3,7 @@
   "expo": {
     "name": "diversaGente",
     "slug": "mobile",
-    "scheme": "diversagente",
+    "scheme": "mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "splash": {
@@ -11,7 +11,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#FFF1A4"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "android": {
       "package": "com.garagelauncher.diversagente",
       "versionCode": 10,
@@ -27,6 +29,11 @@
         "googleMaps": {
           "apiKey": ""
         }
+      }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "657d1f33-6d6e-4657-afc0-4609527f20f3"
       }
     }
   },
