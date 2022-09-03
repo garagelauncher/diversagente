@@ -101,6 +101,9 @@
       "/src/generated/"
     ],
     "testEnvironment": "node",
+    "setupFilesAfterEnv": [
+      "<rootDir>/test/test-setup.ts"
+    ],
     "testPathIgnorePatterns": [
       "/node_modules/",
       "/dist/",
