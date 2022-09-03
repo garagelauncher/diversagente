@@ -1,0 +1,41 @@
+name: Enforce code coverage
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+    paths:
+      - backend/**
+
+jobs:
+  coverage:
+    permissions:
+      checks: write
+      pull-requests: write
+      contents: write
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Executando testes...
+        uses: ArtiomTr/jest-coverage-report-action@v2
+        with:
+          working-directory: backend
+          github-token: ${{ github.token }}
+
+      - name: Sucesso - Discord
+        uses: Ilshidur/action-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_USERNAME: Jarvis
+          DISCORD_AVATAR: https://static.wikia.nocookie.net/universocinematograficomarvel/images/b/b0/JuARaVeInSy.png/revision/latest?cb=20150919150102&path-prefix=pt
+        with:
+          args: "${{ github.actor }} mandou bem! Fez funcionalidades novas em {{ EVENT_PAYLOAD.repository.full_name }} e os testes estão passando."
