@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Repostat: git repository statistics.</title>
+	<link type="text/css" rel="stylesheet" href="assets/gitstats.css">
+    <link type="text/css" rel="stylesheet" href="assets/nv.d3.css">
+	<script type="text/javascript" src="assets/d3.v3.min.js"></script>
+	<script type="text/javascript" src="assets/nv.d3.min.js"></script>
+    <script type="text/javascript" src="assets/sortable.js"></script>
+    <meta name="author" content="Viktor Kopp">
+    <meta name="generator" content="Repostat ">
+</head>
+<body>
+    <h1>Authors</h1>
+    <ul class="nav">
+                    <li>
+                <a href="general.html">General</a></li>
+                    <li>
+                <a href="activity.html">Activity</a></li>
+                    <li class="active">
+                <a href="authors.html">Authors</a></li>
+                    <li>
+                <a href="files.html">Files</a></li>
+                    <li>
+                <a href="tags.html">Tags</a></li>
+                    <li>
+                <a href="about.html">About</a></li>
+        </ul>
+    <h2 id="list_of_authors"><a href="#list_of_authors">Authors statistics (top-10) </a></h2>
+<table class="authors sortable" id="authors">
+    <tr>
+        <th>Author</th>
+        <th>Commits</th><th>Merge commits</th>
+        <th>+ lines</th><th>- lines</th>
+        <th>First commit</th><th>Latest commit</th>
+        <th>Contributed (days)</th><th>Actively contributed (days)</th>
+    </tr>
+        <tr>
+        <td>João Bispo</td>
+        <td>242 (68.56%)</td>
+        <td>49 (13.88%)</td>
+        <td>97589</td><td>35683</td>
+        <td>2022-03-26</td>
+        <td>2022-06-19</td>
+        <td>84</td><td>26</td>
+    </tr>
+        <tr>
+        <td>Viviane-Queiroz</td>
+        <td>49 (13.88%)</td>
+        <td>10 (2.83%)</td>
+        <td>13609</td><td>12823</td>
+        <td>2022-03-26</td>
+        <td>2022-05-31</td>
+        <td>65</td><td>11</td>
+    </tr>
+        <tr>
+        <td>Grazielli Lima Berti</td>
+        <td>28 (7.93%)</td>
+        <td>9 (2.55%)</td>
+        <td>553</td><td>163</td>
+        <td>2022-03-26</td>
+        <td>2022-05-22</td>
+        <td>56</td><td>5</td>
+    </tr>
+        <tr>
+        <td>vini-alm</td>
+        <td>12 (3.40%)</td>
+        <td>1 (0.28%)</td>
+        <td>32144</td><td>62</td>
+        <td>2022-03-29</td>
+        <td>2022-05-23</td>
+        <td>55</td><td>7</td>
+    </tr>
+        <tr>
+        <td>Gustavo Freitas</td>
+        <td>6 (1.70%)</td>
+        <td>1 (0.28%)</td>
+        <td>10527</td><td>127</td>
+        <td>2022-03-27</td>
+        <td>2022-06-15</td>
+        <td>79</td><td>4</td>
+    </tr>
+        <tr>
+        <td>Viviane Queiroz</td>
+        <td>5 (1.42%)</td>
+        <td>5 (1.42%)</td>
+        <td>0</td><td>0</td>
+        <td>2022-05-10</td>
+        <td>2022-05-31</td>
+        <td>21</td><td>4</td>
+    </tr>
+        <tr>
+        <td>Gabriel Ruiz</td>
+        <td>4 (1.13%)</td>
+        <td>1 (0.28%)</td>
+        <td>186</td><td>7</td>
+        <td>2022-03-27</td>
+        <td>2022-05-21</td>
+        <td>55</td><td>3</td>
+    </tr>
+        <tr>
+        <td>tayfrs</td>
+        <td>3 (0.85%)</td>
+        <td>0 (0.00%)</td>
+        <td>141</td><td>0</td>
+        <td>2022-05-02</td>
+        <td>2022-06-16</td>
+        <td>44</td><td>2</td>
+    </tr>
+        <tr>
+        <td>Tayna França</td>
+        <td>2 (0.57%)</td>
+        <td>2 (0.57%)</td>
+        <td>0</td><td>0</td>
+        <td>2022-06-16</td>
+        <td>2022-06-16</td>
+        <td>1</td><td>1</td>
+    </tr>
+        <tr>
+        <td>Vinicius Soares</td>
+        <td>2 (0.57%)</td>
+        <td>2 (0.57%)</td>
+        <td>0</td><td>0</td>
+        <td>2022-05-14</td>
+        <td>2022-05-21</td>
+        <td>6</td><td>2</td>
+    </tr>
+    </table>
+<div>
+<p class="moreauthors">These didn't make it to the top:</p>
+<ul class="nontop">
+</ul>
+</div>
+
+
+<h2 id="cumulated_added_lines_of_code_per_author"><a href="#cumulated_added_lines_of_code_per_author">Cumulated Added Lines of Code per Author</a></h2>
+<div id="chart_loc" style="border: 1px solid #808080; width: 1014px"><svg style="height: 480px; width: 100%"></svg></div>
+
+<h2 id="commits_per_author"><a href="#commits_per_author">Commits per Author</a></h2>
+
+<div style="border: 1px solid #808080; width: 1014px">
+<div id="chart_commits"><svg style="height: 480px; width: 100%"></svg></div>
+<div id="chart_steam"><svg style="height: 480px; width: 100%"></svg></div>
+</div>
+
+<h2 id="author_of_month"><a href="#author_of_month">Author of the Month</a></h2>
+<table class="sortable" id="aom">
+    <tr>
+        <th>Month</th>
+        <th>Author</th><th>Commits count</th>
+        <th class="unsortable">Next top 5</th>
+        <th>Total authors count</th>
+    </tr>
+        <tr>
+        <td>2022-06</td>
+        <td>João Bispo</td>
+        <td align="center">23 (of 28)</td>
+        <td>Tayna França, tayfrs, Gustavo Freitas, Gabriel Ruiz</td>
+        <td align="center">10</td>
+    </tr>
+        <tr>
+        <td>2022-05</td>
+        <td>João Bispo</td>
+        <td align="center">180 (of 267)</td>
+        <td>Viviane-Queiroz, Grazielli Lima Berti, vini-alm, Viviane Queiroz</td>
+        <td align="center">10</td>
+    </tr>
+        <tr>
+        <td>2022-04</td>
+        <td>João Bispo</td>
+        <td align="center">37 (of 45)</td>
+        <td>Viviane-Queiroz, Gustavo Freitas, Gabriel Ruiz, Grazielli Lima Berti</td>
+        <td align="center">10</td>
+    </tr>
+        <tr>
+        <td>2022-03</td>
+        <td>Viviane-Queiroz</td>
+        <td align="center">4 (of 13)</td>
+        <td>Gustavo Freitas, Grazielli Lima Berti, João Bispo, Gabriel Ruiz</td>
+        <td align="center">10</td>
+    </tr>
+    </table>
+
+<h2 id="author_of_year"><a href="#author_of_year">Author of the Year</a></h2>
+<table class="sortable" id="aoy">
+    <tr>
+        <th>Year</th>
+        <th>Author</th><th>Commits count</th>
+        <th class="unsortable">Next top 5</th>
+        <th>Total authors count</th>
+    </tr>
+        <tr>
+        <td>2022</td>
+        <td>João Bispo</td>
+        <td align="center">242 (of 353)</td>
+        <td>Viviane-Queiroz, Grazielli Lima Berti, vini-alm, Gustavo Freitas, Viviane Queiroz</td>
+        <td align="center">10</td>
+    </tr>
+    </table>
+
+
+<h2 id="commits_by_domains"><a href="#commits_by_domains">Commits by Email Domains</a></h2>
+<div id="chart_domains" style="border: 1px solid #808080; width: 507px"><svg style="height: 480px; width: 100%"></svg></div>
+<script src="authors.js"></script>
+</body>
+</html>

@@ -15,10 +15,12 @@
     "incremental": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "strictNullChecks": false,
+    "strictNullChecks": true,
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "resolveJsonModule": true,
+    "strictPropertyInitialization": false
   }
 }

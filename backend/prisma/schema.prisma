@@ -10,15 +10,164 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        String   @id @map("_id")
-  email     String   @unique
-  username  String   @unique
+model Cat {
+  id   String @id @map("_id")
+  name String @unique
+
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
-model Cat {
-  id        String   @id @map("_id")
-  name      String   @unique
+type Preference {
+  language          String  @default("en-us")
+  canReceiveMessage Boolean @default(value: true)
+}
+
+model User {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  email    String @unique
+  username String @unique
+
+  name String
+
+  birthdate           DateTime?
+  biograph            String?
+  picture             String?
+  preferences         Preference?
+  lovelyCategoriesIds String[]    @db.ObjectId
+
+
+
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+
+  category Category? @relation(fields: [lovelyCategoriesIds], references: [id])
+
+  Location Location[]
+  Review   Review[]
+  Post     Post[]
+  Like     Like[]
+  Comment  Comment[]
+
+  @@map("users")
+}
+
+model Category {
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  name  String? @unique
+  title String?
+
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  Subcategory Subcategory[]
+  Location    Location[]
+  User        User[]
+}
+
+model Subcategory {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  name  String @unique
+  title String
+
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  category      Category? @relation(fields: [categoriesIds], references: [id])
+  categoriesIds String[]  @db.ObjectId
+}
+
+model Like {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  createdAt DateTime @default(now())
+
+  ownerId String @db.ObjectId
+  postId  String @db.ObjectId
+
+  owner User @relation(fields: [ownerId], references: [id])
+  post  Post @relation(fields: [postId], references: [id])
+}
+
+model Comment {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  text String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ownerId String  @db.ObjectId
+  postId  String  @db.ObjectId
+  replyId String? @db.ObjectId
+
+  owner User     @relation(fields: [ownerId], references: [id])
+  post  Post     @relation(fields: [postId], references: [id])
+  reply Comment? @relation(name: "ReplyComment", fields: [replyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  replies Comment[] @relation(name: "ReplyComment")
+}
+
+model Post {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  title   String
+  content String
+  images  String[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+
+  ownerId String @db.ObjectId
+
+  owner User @relation(fields: [ownerId], references: [id])
+
+  Like    Like[]
+  Comment Comment[]
+}
+
+model Review {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  text  String
+  stars Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ownerId    String @db.ObjectId
+  locationId String @db.ObjectId
+
+  owner    User     @relation(fields: [ownerId], references: [id])
+  location Location @relation(fields: [locationId], references: [id])
+}
+
+type Geoposition {
+  type        String
+  coordinates Float[]
+}
+
+model Location {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+
+  photos String[]
+
+  address     String?
+  description String?
+
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ownerId       String   @db.ObjectId
+  categoriesIds String[] @db.ObjectId
+
+  geoposition Geoposition
+
+  category Category? @relation(fields: [categoriesIds], references: [id])
+  owner    User?     @relation(fields: [ownerId], references: [id])
+
+  Review Review[]
+
+  @@map("locations")
 }
