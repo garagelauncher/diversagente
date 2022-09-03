@@ -1,5 +1,7 @@
-import { Box, Heading, ScrollView, Text } from 'native-base';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { Box, Button, Heading, ScrollView, Text } from 'native-base';
 
+import { StackForumNavigatorParamList } from '@src/routes/forumStack.routes';
 import { logger } from '@src/utils/logger';
 // import React, { useCallback, useEffect, useState } from 'react';
 
@@ -12,8 +14,17 @@ import { logger } from '@src/utils/logger';
 // import { Category } from '@src/contracts/Category';
 // import { Subcategory } from '@src/contracts/Subcategory';
 // import { diversaGenteServices } from '@src/services/diversaGente';
+type ForumScreenNavigationProps = NavigationProp<
+  StackForumNavigatorParamList,
+  'Forum'
+>;
 
 export const Forum = () => {
+  const navigation = useNavigation<ForumScreenNavigationProps>();
+
+  function handleNavigateToSelectLocationMap() {
+    navigation.navigate('FormCreatePost');
+  }
   // const [categories, setCategories] = useState<Category[]>([]);
   // const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
 
@@ -58,7 +69,7 @@ export const Forum = () => {
   //     <AddSubCategories />
   //   </ScrollView>
   // );
-  logger.success('Forums');
+  logger.success('Forum');
 
   return (
     <Box
@@ -68,8 +79,12 @@ export const Forum = () => {
       alignItems="center"
       justifyContent="center"
     >
+      <Heading>Forum</Heading>
       <Heading>Em breve</Heading>
       <Text>Para Dezembro de 2022</Text>
+      <Button onPress={handleNavigateToSelectLocationMap}>
+        Criar categoria
+      </Button>
     </Box>
   );
 };
