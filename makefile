@@ -31,7 +31,9 @@ gitstats:
 	@echo
 	@echo "Baixando repostats com Python..."
 	@echo
-	pip3 install git+https://github.com/vifactor/repostat
+	@echo "Executando... se não funcionar, tente com pip3 install git+https://github.com/vifactor/repostat"
+	@echo
+  python -m pip install repostat-app
 	@echo "Gerando o gitstats..."
 	@echo
 	@echo "$(shell date)"
