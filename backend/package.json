@@ -27,6 +27,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:ci": "jest --ci --json --coverage --testLocationInResults --outputFile=report.json",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "docker:dev": " docker compose up --build",
     "db:generate": "npx prisma generate"
@@ -100,6 +101,9 @@
       "/src/generated/"
     ],
     "testEnvironment": "node",
+    "setupFilesAfterEnv": [
+      "<rootDir>/test/test-setup.ts"
+    ],
     "testPathIgnorePatterns": [
       "/node_modules/",
       "/dist/",
