@@ -6,7 +6,7 @@ import { Alert, Dimensions, StyleSheet } from 'react-native';
 import MapView, { MapEvent, Marker, Region } from 'react-native-maps';
 
 import { baseCoordinates } from '@src/configs';
-import { StackLocationNavigatorParamList } from '@src/routes/locationStack.routes';
+import { StackLocationNavigatorParamList } from '@src/routes/stacks/locationStack.routes';
 import { theme } from '@src/styles/theme';
 
 type SelectLocationMapScreenNavigationProps = NavigationProp<

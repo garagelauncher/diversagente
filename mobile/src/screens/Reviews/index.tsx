@@ -24,7 +24,7 @@ import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { AirbnbRating } from 'react-native-ratings';
 
 import { RatePeriod, Review } from '@src/contracts/Review';
-import { StackLocationNavigatorParamList } from '@src/routes/locationStack.routes';
+import { StackLocationNavigatorParamList } from '@src/routes/stacks/locationStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
 import { formatDate } from '@src/utils/formatDate';
 
