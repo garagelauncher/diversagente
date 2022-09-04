@@ -134,7 +134,7 @@ export const FormCreatePost = () => {
                   Título
                 </Text>
               </FormControl.Label>
-              <Input size="md" placeholder="Máximo de 40 caracteres" />
+              <Input size="md" placeholder="Máximo de 40 caracteres." />
               <FormControl.ErrorMessage
                 leftIcon={<WarningOutlineIcon size="s" />}
               >
