@@ -38,7 +38,13 @@ it('it should be able to create a like in a post with success', async () => {
 // it('should not be able to create a like in a post with success', async () => {
 //     prisma.like.create = jest.fn().mockResolvedValue(undefined)
 
-//     expect(likeService.create()).rejects.toThrowError('Não deu.');
+//     const like = {
+//         ownerId: '1',
+//         postId: '1',
+//     }
+//     const createdLike = await likeService.create(like);
+
+//     await expect(likeService.create(like)).rejects.toThrowError('Something wrong happened when you tried to like this post.');
 // });
 
 it('should be able to delete a like from a post', async () => {
