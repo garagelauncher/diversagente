@@ -10,7 +10,7 @@ describe('ReviewsService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [ReviewsService, createPrismaProviderMock ()],
+      providers: [ReviewsService, createPrismaProviderMock()],
     }).compile();
 
     reviewService = module.get<ReviewsService>(ReviewsService);
@@ -25,30 +25,28 @@ describe('ReviewsService', () => {
     });
   });
 
-    it('should be defined', () => {
-      expect(reviewService).toBeDefined();
-    });
+  it('should be defined', () => {
+    expect(reviewService).toBeDefined();
+  });
 
-    it('should be able to create a review for a location', async () => {
-      const review = {
-        id: 'pipipipipi-00000-popopopo-000000',
-        ownerId: 'aaaaaa',
-        locationId: 'abbbbbbbb',
-        createdAt: '2022-01-01T01:01:01.000Z',
-        deletedAt: '2022-01-01T01:01:01.000Z',
-        stars: 2,
-        text: 'iiiiii'
-      };
+  it('should be able to create a review for a location', async () => {
+    const review = {
+      id: 'pipipipipi-00000-popopopo-000000',
+      ownerId: 'aaaaaa',
+      locationId: 'abbbbbbbb',
+      createdAt: '2022-01-01T01:01:01.000Z',
+      deletedAt: '2022-01-01T01:01:01.000Z',
+      stars: 2,
+      text: 'iiiiii',
+    };
     const createdReview = await reviewService.create(review);
-    expect(createdReview).toEqual(reviewMock)
-    })
+    expect(createdReview).toEqual(reviewMock);
+  });
 
-    it('should be able to delete a location with success', async () => {
-      const deletedReview = await reviewService.remove(
-        'pipipipipi-00000-popopopo-001111',
-      );
-      expect(deletedReview).toEqual(reviewMock);
-    });
-
-
-  })
+  it('should be able to delete a location with success', async () => {
+    const deletedReview = await reviewService.remove(
+      'pipipipipi-00000-popopopo-001111',
+    );
+    expect(deletedReview).toEqual(reviewMock);
+  });
+});
