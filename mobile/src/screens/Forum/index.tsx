@@ -1,7 +1,7 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Box, Button, Heading, ScrollView, Text } from 'native-base';
 
-import { StackForumNavigatorParamList } from '@src/routes/forumStack.routes';
+import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
 import { logger } from '@src/utils/logger';
 // import React, { useCallback, useEffect, useState } from 'react';
 

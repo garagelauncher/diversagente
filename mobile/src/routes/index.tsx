@@ -1,5 +1,5 @@
-import { StackRoutes } from './stack.routes';
-import { TabRoutes } from './tabs.routes';
+import { StackRoutes } from './stacks';
+import { TabRoutes } from './tabs';
 
 import { useAuth } from '@src/hooks/useAuth';
 

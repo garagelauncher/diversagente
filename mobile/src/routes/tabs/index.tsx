@@ -3,11 +3,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import { Platform } from 'react-native';
 
-import { theme } from '../styles/theme';
-import { StackChatPrivateRoutes } from './chatStack.routes';
-import { StackForumPrivateRoutes } from './forumStack.routes';
-import { StackLocationPrivateRoutes } from './locationStack.routes';
-import { StackProfilePrivateRoutes } from './profileStack.routes';
+import { theme } from '../../styles/theme';
+import { StackChatPrivateRoutes } from '../stacks/chatStack.routes';
+import { StackForumPrivateRoutes } from '../stacks/forumStack.routes';
+import { StackLocationPrivateRoutes } from '../stacks/locationStack.routes';
+import { StackProfilePrivateRoutes } from '../stacks/profileStack.routes';
 
 export type RootBottomTabParamList = {
   LocationsStack: undefined;
