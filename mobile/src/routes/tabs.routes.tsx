@@ -4,17 +4,16 @@ import React from 'react';
 import { Platform } from 'react-native';
 
 import { theme } from '../styles/theme';
+import { StackChatPrivateRoutes } from './chatStack.routes';
 import { StackForumPrivateRoutes } from './forumStack.routes';
 import { StackLocationPrivateRoutes } from './locationStack.routes';
-
-import { Messages } from '@src/screens/Messages';
-import { Profile } from '@src/screens/Profile';
+import { StackProfilePrivateRoutes } from './profileStack.routes';
 
 export type RootBottomTabParamList = {
   LocationsStack: undefined;
-  Forums: undefined;
-  Messages: undefined;
-  Profile: undefined;
+  ForumStack: undefined;
+  ChatStack: undefined;
+  ProfileStack: undefined;
 };
 
 const { Navigator, Screen } =
@@ -37,7 +36,7 @@ export function TabRoutes() {
       initialRouteName="LocationsStack"
     >
       <Screen
-        name="Forums"
+        name="ForumStack"
         component={StackForumPrivateRoutes}
         options={{
           tabBarIcon: ({ color, size }) => (
@@ -55,8 +54,8 @@ export function TabRoutes() {
         }}
       />
       <Screen
-        name="Messages"
-        component={Messages}
+        name="ChatStack"
+        component={StackChatPrivateRoutes}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name={'message'} color={color} size={size} />
@@ -64,8 +63,8 @@ export function TabRoutes() {
         }}
       />
       <Screen
-        name="Profile"
-        component={Profile}
+        name="ProfileStack"
+        component={StackProfilePrivateRoutes}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name={'person'} color={color} size={size} />
