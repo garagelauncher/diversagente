@@ -30,7 +30,7 @@ import MapView, { Marker } from 'react-native-maps';
 import { LoadingScreen } from '@src/components/LoadingScreen';
 import { Location } from '@src/contracts/Location';
 import { RatePeriod } from '@src/contracts/Review';
-import { StackLocationNavigatorParamList } from '@src/routes/locationStack.routes';
+import { StackLocationNavigatorParamList } from '@src/routes/stacks/locationStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
 import { copyToClipBoard } from '@src/utils/copyToClipBoard';
 import { formatDate } from '@src/utils/formatDate';

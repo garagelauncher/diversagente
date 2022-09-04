@@ -24,7 +24,7 @@ import MapView, { LatLng, MapEvent, Marker, Region } from 'react-native-maps';
 
 import { baseCoordinates } from '@src/configs';
 import { useAuth } from '@src/hooks/useAuth';
-import { StackLocationNavigatorParamList } from '@src/routes/locationStack.routes';
+import { StackLocationNavigatorParamList } from '@src/routes/stacks/locationStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
 import { theme } from '@src/styles/theme';
 
