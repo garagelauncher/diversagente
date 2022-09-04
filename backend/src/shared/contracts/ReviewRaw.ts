@@ -25,7 +25,7 @@ interface text {
 export interface ReviewRaw {
   _id: ID;
   ownerId: ownerId;
-  locationId : locationId;
+  locationId: locationId;
   createdAt: ReviewRawDate;
   deletedAt: ReviewRawDate;
   stars: stars;
