@@ -1,6 +1,6 @@
 import { Box, Heading, ScrollView, Text } from 'native-base';
 
-export const Forums = () => {
+export const SubcategoriesList = () => {
   return (
     <Box
       width="100%"
