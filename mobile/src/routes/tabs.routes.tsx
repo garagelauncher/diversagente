@@ -1,6 +1,7 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Forums } from '@src/screens/Forums';
+import { CategoriesList } from '@src/screens/Forums/CategoriesList';
 import { Messages } from '@src/screens/Messages';
 import { Profile } from '@src/screens/Profile';
 import React from 'react';
@@ -23,7 +24,7 @@ export function TabRoutes() {
   return (
     <Navigator
       screenOptions={{
-        tabBarActiveTintColor: theme.colors.bluePrimary,
+        tabBarActiveTintColor: theme.colors.darkBlue700,
         tabBarInactiveTintColor: 'gray',
         tabBarLabelPosition: 'beside-icon',
         tabBarStyle: {
@@ -37,7 +38,7 @@ export function TabRoutes() {
     >
       <Screen
         name="Forums"
-        component={Forums}
+        component={CategoriesList}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name={'forum'} color={color} size={size} />
