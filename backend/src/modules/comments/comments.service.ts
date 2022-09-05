@@ -8,7 +8,8 @@ export class CommentsService {
   constructor(private readonly prisma: PrismaService) {}
 
   create(createCommentDto: CreateCommentDto) {
-    return this.prisma.comment.create({ data: createCommentDto });  }
+    return this.prisma.comment.create({ data: createCommentDto });
+  }
 
   findAll() {
     return this.prisma.comment.findMany({});
