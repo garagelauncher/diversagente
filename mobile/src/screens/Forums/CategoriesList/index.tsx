@@ -14,6 +14,7 @@ import {
   Alert,
   Stack,
   IconButton,
+  Link,
 } from 'native-base';
 // eslint-disable-next-line import/default
 import React from 'react';
@@ -22,8 +23,7 @@ export const CategoriesList = () => {
   const statusArray = [
     {
       status: 'warning',
-      title:
-        'Caso tenha uma sugestão de uma nova categoria, nos enviei um e-mail!',
+      title: 'Caso tenha uma sugestão de uma nova categoria,',
     },
   ];
   return (
@@ -58,6 +58,19 @@ export const CategoriesList = () => {
                         <Alert.Icon mt="4" />
                         <Text fontSize="md" color="coolGray.800">
                           {status.title}
+                          <Link
+                            href="https://nativebase.io"
+                            isExternal
+                            _text={{
+                              color: 'info.600',
+                              bold: true,
+                            }}
+                            _web={{
+                              mb: -2,
+                            }}
+                          >
+                            nos envie um e-mail!
+                          </Link>
                         </Text>
                       </HStack>
                       <IconButton
@@ -72,10 +85,10 @@ export const CategoriesList = () => {
               );
             })}
           </Stack>
-          ;
           <HStack
             width="100%"
             height={60}
+            marginTop={4}
             backgroundColor={theme.colors.light50}
           >
             <Flex direction="row" paddingLeft={10}>
