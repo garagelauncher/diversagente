@@ -11,62 +11,82 @@ import {
   InfoIcon,
   HStack,
   ScrollView,
+  Alert,
+  Stack,
+  IconButton,
+  CloseIcon,
 } from 'native-base';
 // eslint-disable-next-line import/default
 import React from 'react';
 
 export const Forums = () => {
+  const statusArray = [
+    {
+      status: 'warning',
+      title:
+        'Caso tenha uma sugestão de uma nova categoria, nos enviei um e-mail!',
+    },
+  ];
   return (
     <>
       <Header
         title={'Olá, Katarina'}
         description={'Encontre mais categorias de seu interesse'}
       ></Header>
-      <ScrollView backgroundColor={theme.colors.primaryColor} height={'100%'}>
+      <ScrollView backgroundColor={theme.colors.blue50} height={'100%'}>
         <Box
           width="100%"
           flex={1}
           marginTop={-3}
-          backgroundColor={theme.colors.primaryColor}
+          backgroundColor={theme.colors.blue50}
           alignItems="center"
           justifyContent="center"
           borderTopLeftRadius={14}
           borderTopRightRadius={14}
         >
-          <Box
-            width="85%"
-            height={70}
-            backgroundColor={theme.colors.infoBoxColor}
-            borderRadius={4}
-            marginTop={10}
-          >
-            <Flex direction="row">
-              <VStack py="3" my={3} mx={3} boxSize="30" alignItems="center">
-                <InfoIcon color={theme.colors.orange} />
-              </VStack>
-              <Text paddingTop={3} fontSize="sm" paddingLeft={0}>
-                Caso tenha uma sugestão de uma nova categoria,
-                <Text color={theme.colors.headerColor} bold underline>
-                  {' '}
-                  nos enviei um e-mail!
-                </Text>
-                :)
-              </Text>
-            </Flex>
-          </Box>
+          <Stack space={3} w="95%" maxW="600" marginTop={8}>
+            {statusArray.map((status) => {
+              return (
+                // eslint-disable-next-line react/jsx-key
+                <Alert w="100%" status={status.status}>
+                  <VStack space={2} flexShrink={1} w="100%">
+                    <HStack
+                      flexShrink={1}
+                      space={2}
+                      justifyContent="space-between"
+                    >
+                      <HStack space={2} flexShrink={1}>
+                        <Alert.Icon mt="4" />
+                        <Text fontSize="md" color="coolGray.800">
+                          {status.title}
+                        </Text>
+                      </HStack>
+                      <IconButton
+                        variant="unstyled"
+                        _focus={{
+                          borderWidth: 0,
+                        }}
+                      />
+                    </HStack>
+                  </VStack>
+                </Alert>
+              );
+            })}
+          </Stack>
+          ;
           <HStack
             width="100%"
-            height={100}
-            backgroundColor={theme.colors.primaryColor}
+            height={60}
+            backgroundColor={theme.colors.blue50}
           >
-            <Flex direction="row" marginTop={5} paddingLeft={10}>
+            <Flex direction="row" paddingLeft={10}>
               <ButtonCategory></ButtonCategory>
             </Flex>
           </HStack>
           <HStack
             width="100%"
             height={50}
-            backgroundColor={theme.colors.primaryColor}
+            backgroundColor={theme.colors.blue50}
             marginTop={0}
           >
             <Flex direction="row">
@@ -74,7 +94,7 @@ export const Forums = () => {
                 Categorias Populares
               </Text>
               <VStack py="2" my={2} mx={2} boxSize="30" alignItems="center">
-                <InfoIcon color={theme.colors.headerColor} />
+                <InfoIcon color={theme.colors.darkBlue700} />
               </VStack>
             </Flex>
           </HStack>
