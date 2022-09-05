@@ -12,7 +12,7 @@ export const Header = ({ title, description }: HeaderProps) => {
     <Box
       width="100%"
       height={150}
-      backgroundColor={theme.colors.headerColor}
+      backgroundColor={theme.colors.darkBlue700}
       alignItems="center"
       justifyContent="center"
     >
