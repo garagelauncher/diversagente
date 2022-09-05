@@ -3,6 +3,7 @@
 import { EvilIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Header } from '@src/components/Header/index';
+import { Subcategory } from '@src/components/Subcategory';
 import { theme } from '@src/styles/theme';
 import {
   Box,
@@ -30,7 +31,7 @@ export const SubcategoriesList = () => {
           width={'100%'}
           height={70}
         >
-          <Box marginTop={6} width={'100%'} marginLeft={4}>
+          <Box marginTop={8} width={'100%'} marginLeft={4}>
             <HStack space={4} alignItems="center" width={'100%'}>
               <Flex direction="row" width={'100%'}>
                 <Input
@@ -52,6 +53,9 @@ export const SubcategoriesList = () => {
             </HStack>
           </Box>
         </HStack>
+        <Box marginTop={4} width={'100%'} marginLeft={4}>
+          <Subcategory></Subcategory>
+        </Box>
       </ScrollView>
     </>
   );
