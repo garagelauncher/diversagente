@@ -1,7 +1,9 @@
 export const theme = {
   colors: {
     darkBlue700: '#004282',
-    blue50: '#fafaf9',
+    light50: '#fafaf9',
+    blue200: '#bfdbfe',
+
     infoBoxColor: '#FED7AA',
 
     selectButtonTextColor: '#F2867C6',
