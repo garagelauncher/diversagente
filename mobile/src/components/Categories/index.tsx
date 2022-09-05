@@ -18,7 +18,7 @@ export const Categories = () => {
           space={3}
           h="73"
           w="303"
-          bg={theme.colors.secondaryColor}
+          bg={theme.colors.warmGray200}
           rounded="md"
           marginTop={4}
           marginLeft={2}

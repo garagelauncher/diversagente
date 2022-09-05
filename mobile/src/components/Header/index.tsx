@@ -30,7 +30,7 @@ export const Header = ({ title, description }: HeaderProps) => {
       </Text>
       <Text
         fontSize="sm"
-        color={theme.colors.secondaryColor}
+        color={theme.colors.warmGray200}
         italic
         marginRight={10}
       >
