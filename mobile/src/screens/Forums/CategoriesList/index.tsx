@@ -32,12 +32,12 @@ export const CategoriesList = () => {
         title={'Olá, Katarina'}
         description={'Encontre mais categorias de seu interesse'}
       ></Header>
-      <ScrollView backgroundColor={theme.colors.blue50} height={'100%'}>
+      <ScrollView backgroundColor={theme.colors.light50} height={'100%'}>
         <Box
           width="100%"
           flex={1}
           marginTop={-3}
-          backgroundColor={theme.colors.blue50}
+          backgroundColor={theme.colors.light50}
           alignItems="center"
           justifyContent="center"
           borderTopLeftRadius={14}
@@ -76,7 +76,7 @@ export const CategoriesList = () => {
           <HStack
             width="100%"
             height={60}
-            backgroundColor={theme.colors.blue50}
+            backgroundColor={theme.colors.light50}
           >
             <Flex direction="row" paddingLeft={10}>
               <ButtonCategory></ButtonCategory>
@@ -85,7 +85,7 @@ export const CategoriesList = () => {
           <HStack
             width="100%"
             height={50}
-            backgroundColor={theme.colors.blue50}
+            backgroundColor={theme.colors.light50}
             marginTop={0}
           >
             <Flex direction="row">

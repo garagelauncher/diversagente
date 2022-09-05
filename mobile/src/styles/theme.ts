@@ -9,6 +9,7 @@ export const theme = {
 
     primaryColor: '#FFFFFF',
     warmGray200: '#e7e5e4',
+    warmGray700: '#44403c',
 
     orange: '#FF5F1F',
     grey: '#fafaf9',
