@@ -39,7 +39,7 @@ export function TabRoutes() {
     >
       <Screen
         name="Forums"
-        component={SubcategoriesList}
+        component={Forums}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name={'forum'} color={color} size={size} />
