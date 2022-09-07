@@ -1,10 +1,6 @@
 /* eslint-disable import/no-unresolved */
 // eslint-disable-next-line import/no-unresolved
-import { EvilIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-import { HeaderSubcategories } from '@src/components/HeaderSubcategories';
-import { Subcategory } from '@src/components/Subcategory';
-import { theme } from '@src/styles/theme';
 import {
   Box,
   HStack,
@@ -15,15 +11,21 @@ import {
   IconButton,
   Button,
 } from 'native-base';
-// eslint-disable-next-line import/default
 import React from 'react';
+
+import { HeaderSubcategories } from '@src/components/HeaderSubcategories';
+import { Subcategory } from '@src/components/Subcategory';
+import { theme } from '@src/styles/theme';
+// eslint-disable-next-line import/default
 
 export const SubcategoriesList = () => {
   return (
     <>
       <HeaderSubcategories
         title={'Saúde'}
-        description={'Aqui você pode visualizar todas as subcategorias que\nse relacionam com a categoria Saúde.\nVocê pode criar novas subcategorias para esse tema \ne dentro delas criar, curtir e comentar post.'}
+        description={
+          'Aqui você pode visualizar todas as subcategorias que\nse relacionam com a categoria Saúde.\nVocê pode criar novas subcategorias para esse tema \ne dentro delas criar, curtir e comentar post.'
+        }
       ></HeaderSubcategories>
       <ScrollView backgroundColor={theme.colors.light50} height={'100%'}>
         <HStack
@@ -38,17 +40,33 @@ export const SubcategoriesList = () => {
                   mx="3"
                   placeholder="Pesquise uma subcategoria"
                   borderRadius={90}
-                  width={'60%'}
+                  width={'65%'}
                   borderColor={theme.colors.warmGray700}
                   InputRightElement={
                     <Icon
-                      as={<EvilIcons name="search" />}
-                      size={5}
-                      mr="2"
+                      as={AntDesign}
+                      name="search1"
+                      size={4}
+                      marginRight={3}
                       color={theme.colors.warmGray700}
                     />
                   }
                 />
+                <Button
+                  size={'sm'}
+                  variant={'solid'}
+                  width={35}
+                  height={35}
+                  marginLeft={2}
+                  backgroundColor={theme.colors.primaryColor}
+                >
+                  <Icon
+                    as={AntDesign}
+                    name="plussquareo"
+                    size={8}
+                    color={theme.colors.warmGray700}
+                  />
+                </Button>
               </Flex>
             </HStack>
           </Box>
