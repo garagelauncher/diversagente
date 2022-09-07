@@ -7,9 +7,7 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  async index(
-    @NestResponse() response: ExpressResponse,
-  ): Promise<ExpressResponse> {
+  async index(@NestResponse() response: ExpressResponse): Promise<void> {
     response.status(301).redirect('/public');
     return;
   }
