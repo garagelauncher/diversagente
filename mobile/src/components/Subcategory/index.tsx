@@ -1,8 +1,18 @@
 // eslint-disable-next-line import/no-unresolved
-import { theme } from '@src/styles/theme';
-import { VStack, Text, Button, Stack, Center } from 'native-base';
+import { AntDesign } from '@expo/vector-icons';
+import {
+  VStack,
+  Text,
+  Button,
+  Flex,
+  HStack,
+  ArrowForwardIcon,
+  Icon,
+} from 'native-base';
 // eslint-disable-next-line import/default
 import React from 'react';
+
+import { theme } from '@src/styles/theme';
 
 export const Subcategory = () => {
   return (
@@ -25,18 +35,40 @@ export const Subcategory = () => {
           marginTop={2}
           marginLeft={2}
           justifyContent="center"
+          borderRadius={16}
         >
-          <Text
-            key={size}
-            fontSize="lg"
-            justifyContent="center"
-            py={2}
-            px={2}
-            paddingLeft={4}
-            bold
-          >
-            {size}
-          </Text>
+          <Flex direction="row" grow={4} justify={'space-around'}>
+            <HStack width={140} justifyContent={'left'}>
+              <Text
+                key={size}
+                fontSize="lg"
+                justifyContent="center"
+                py={2}
+                px={2}
+                paddingLeft={4}
+                bold
+              >
+                {size}
+              </Text>
+            </HStack>
+            <HStack width={100} justifyContent={'center'}>
+              <Button
+                size={'sm'}
+                variant={'solid'}
+                width={35}
+                height={35}
+                marginTop={2}
+                marginLeft={39}
+                backgroundColor={theme.colors.darkBlue700}
+              >
+                <Icon
+                  as={AntDesign}
+                  name="arrowright"
+                  color={theme.colors.light50}
+                />
+              </Button>
+            </HStack>
+          </Flex>
         </VStack>
       ))}
     </>
