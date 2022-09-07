@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-unresolved
-import { theme } from '@src/styles/theme';
 import { Box, Flex, Avatar, Text, AspectRatio } from 'native-base';
+
+import { theme } from '@src/styles/theme';
 
 type HeaderProps = {
   title: string;
@@ -28,11 +29,7 @@ export const HeaderSubcategories = ({ title, description }: HeaderProps) => {
       >
         {title}
       </Text>
-      <Text
-        fontSize="sm"
-        color={theme.colors.warmGray200}
-        italic
-      >
+      <Text fontSize="sm" color={theme.colors.warmGray200} italic>
         {description}
       </Text>
     </Box>
