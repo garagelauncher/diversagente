@@ -1,4 +1,3 @@
-import { Categories } from '@src/components/Categories';
 import { Box, Heading, ScrollView, Text } from 'native-base';
 
 export const Forums = () => {
