@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved */
 import { ButtonCategory } from '@src/components/ButtonCategory/index';
 import { Categories } from '@src/components/Categories';
-import { Header } from '@src/components/Header/index';
+import { Header } from '@src/components/HeaderCategories/index';
 import { theme } from '@src/styles/theme';
 import {
   Box,

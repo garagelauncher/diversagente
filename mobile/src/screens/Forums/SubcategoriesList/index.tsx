@@ -2,7 +2,7 @@
 // eslint-disable-next-line import/no-unresolved
 import { EvilIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-import { Header } from '@src/components/Header/index';
+import { HeaderSubcategories } from '@src/components/HeaderSubcategories';
 import { Subcategory } from '@src/components/Subcategory';
 import { theme } from '@src/styles/theme';
 import {
@@ -21,10 +21,10 @@ import React from 'react';
 export const SubcategoriesList = () => {
   return (
     <>
-      <Header
-        title={'Olá, Katarina'}
-        description={'Encontre mais categorias de seu interesse'}
-      ></Header>
+      <HeaderSubcategories
+        title={'Saúde'}
+        description={'Aqui você pode visualizar todas as subcategorias que\nse relacionam com a categoria Saúde.\nVocê pode criar novas subcategorias para esse tema \ne dentro delas criar, curtir e comentar post.'}
+      ></HeaderSubcategories>
       <ScrollView backgroundColor={theme.colors.light50} height={'100%'}>
         <HStack
           backgroundColor={theme.colors.light50}
