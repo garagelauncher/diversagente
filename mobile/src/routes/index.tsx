@@ -9,6 +9,6 @@ export const Routes = () => {
   if (isLoggedIn) {
     return <TabRoutes />;
   }
-  return <TabRoutes />;
-  // return <StackRoutes />;
+
+  return <StackRoutes />;
 };
