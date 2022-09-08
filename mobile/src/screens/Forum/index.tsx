@@ -11,6 +11,14 @@ type ForumScreenNavigationProps = NavigationProp<
 export const Forum = () => {
   const navigation = useNavigation<ForumScreenNavigationProps>();
 
+  const handleSelectCategory = () => {
+    navigation.navigate('SelectCategory');
+  };
+
+  const handleSelectSubcategory = () => {
+    navigation.navigate('SelectSubcategory', { categoryId: '1' });
+  };
+
   return (
     <Box
       width="100%"
@@ -22,7 +30,8 @@ export const Forum = () => {
       <Heading>Forum</Heading>
       <Heading>Em breve</Heading>
       <Text>Para Dezembro de 2022</Text>
-      <Button>Criar categoria</Button>
+      <Button onPress={handleSelectCategory}>Selecionar categoria</Button>
+      <Button onPress={handleSelectSubcategory}>Selecionar subcategoria</Button>
     </Box>
   );
 };

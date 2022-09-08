@@ -21,7 +21,7 @@ import { theme } from '@src/styles/theme';
 export const CategoriesList = () => {
   const statusArray = [
     {
-      status: 'warning',
+      type: 'warning',
       title: 'Caso tenha uma sugestão de uma nova categoria,',
     },
   ];
@@ -46,8 +46,7 @@ export const CategoriesList = () => {
           <Stack space={3} w="95%" maxW="600" marginTop={8}>
             {statusArray.map((status) => {
               return (
-                // eslint-disable-next-line react/jsx-key
-                <Alert w="100%" status={status.status}>
+                <Alert key={status.type} w="100%" status={status.type}>
                   <VStack space={2} flexShrink={1} w="100%">
                     <HStack
                       flexShrink={1}
