@@ -2,12 +2,12 @@ import { HStack, Input } from 'native-base';
 import React, { useState } from 'react';
 import { TextInputProps } from 'react-native';
 
-export type InputProps = TextInputProps & {
+export type FormInputProps = TextInputProps & {
   value?: string;
   placeholder?: string;
 };
 
-export function FormInput({ value, placeholder, ...rest }: InputProps) {
+export function FormInput({ value, placeholder, ...rest }: FormInputProps) {
   const [isFocused, setIsFocused] = useState(false);
 
   function handleInputFocus() {
