@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
   VStack,
   Button,
@@ -27,10 +28,30 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
 } from 'react-native';
+import * as yup from 'yup';
 
 import { Categories } from '@src/components/Categories';
+import { FormInput } from '@src/components/FormInput';
 import { Category } from '@src/contracts/Category';
 import { logger } from '@src/utils/logger';
+
+type CreatePostFormData = {
+  title: string;
+  content: string;
+  image?: string;
+};
+
+const schema = yup.object({
+  title: yup
+    .string()
+    .min(40, 'Máximo de 40 caracteres.')
+    .required('Informe o título da postagem.'),
+  content: yup
+    .string()
+    .min(1800, 'Mínimo de 6 caracteres')
+    .required('Informe o conteúdo da postagem.'),
+  image: yup.mixed().nullable(),
+});
 
 export const FormCreatePost = () => {
   logger.success('FormCreatePost');
@@ -135,6 +156,7 @@ export const FormCreatePost = () => {
                 </Text>
               </FormControl.Label>
               <Input size="md" placeholder="Máximo de 40 caracteres." />
+              <FormInput value="" />
               <FormControl.ErrorMessage
                 leftIcon={<WarningOutlineIcon size="s" />}
               >
