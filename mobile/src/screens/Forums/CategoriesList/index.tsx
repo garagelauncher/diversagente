@@ -1,8 +1,3 @@
-/* eslint-disable import/no-unresolved */
-import { ButtonCategory } from '@src/components/ButtonCategory/index';
-import { Categories } from '@src/components/Categories';
-import { Header } from '@src/components/HeaderCategories/index';
-import { theme } from '@src/styles/theme';
 import {
   Box,
   Flex,
@@ -16,8 +11,12 @@ import {
   IconButton,
   Link,
 } from 'native-base';
-// eslint-disable-next-line import/default
 import React from 'react';
+
+import { ButtonCategory } from '@src/components/ButtonCategory/index';
+import { Categories } from '@src/components/Categories';
+import { Header } from '@src/components/HeaderCategories/index';
+import { theme } from '@src/styles/theme';
 
 export const CategoriesList = () => {
   const statusArray = [
@@ -26,6 +25,7 @@ export const CategoriesList = () => {
       title: 'Caso tenha uma sugestão de uma nova categoria,',
     },
   ];
+
   return (
     <>
       <Header
