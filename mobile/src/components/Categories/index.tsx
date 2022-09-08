@@ -1,34 +1,41 @@
-import { Button, ScrollView, HStack } from 'native-base';
+// eslint-disable-next-line import/no-unresolved
+import { theme } from '@src/styles/theme';
+import { VStack, Text, Button, Stack, Center } from 'native-base';
+// eslint-disable-next-line import/default
 import React from 'react';
 
-import { Category } from '@src/contracts/Category';
-
-type Props = {
-  titles: Category[];
-};
-
-export const Categories = ({ titles }: Props) => {
+export const Categories = () => {
   return (
-    <ScrollView horizontal={true}>
-      <HStack mt={4}>
-        {titles.map((item, index) => {
-          return (
-            <Button
-              size="md"
-              _text={{
-                color: 'amber.50',
-              }}
-              marginTop={2}
-              marginLeft={2}
-              key={index}
-              w={140}
-              bg={'darkBlue.700'}
-            >
-              {item.title}
-            </Button>
-          );
-        })}
-      </HStack>
-    </ScrollView>
+    <>
+      {[
+        'Brincadeiras',
+        'Música',
+        'Livros e artigos',
+        'Paternidade e maternidade',
+      ].map((size) => (
+        <VStack
+          key={size}
+          space={3}
+          h="73"
+          w="303"
+          bg={theme.colors.warmGray200}
+          rounded="md"
+          marginTop={4}
+          marginLeft={2}
+          justifyContent="center"
+        >
+          <Text
+            key={size}
+            fontSize="xl"
+            justifyContent="center"
+            py={5}
+            px={5}
+            bold
+          >
+            {size}
+          </Text>
+        </VStack>
+      ))}
+    </>
   );
 };
