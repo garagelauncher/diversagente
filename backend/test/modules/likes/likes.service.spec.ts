@@ -49,5 +49,4 @@ describe('LikesService', () => {
     );
     expect(deletedLike).toEqual(likeMock);
   });
-
 });
