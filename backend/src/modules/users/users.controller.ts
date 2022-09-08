@@ -8,15 +8,13 @@ import {
   Delete,
   UseInterceptors,
   UploadedFile,
-  Request,
   NotFoundException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { Request as ExpressRequest } from 'express';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('users')
 @Controller('users')
@@ -50,18 +48,28 @@ export class UsersController {
   }
 
   @Patch(':email/avatar')
+  @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('file'))
+  @ApiBody({
+    schema: {
+      type: 'object',
+      required: ['file'],
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
   uploadFile(
-    @Request() request: ExpressRequest,
+    @Param('email') email: string,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    console.debug(request.params.email);
+    console.debug(email);
     console.debug(file);
 
-    return this.usersService.uploadImageToCloudinary(
-      request.params.email,
-      file,
-    );
+    return this.usersService.uploadAvatar(email, file);
   }
 
   @Delete(':id')

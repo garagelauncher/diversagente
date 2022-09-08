@@ -1,21 +1,22 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Forums } from '@src/screens/Forums';
-import { CategoriesList } from '@src/screens/Forums/CategoriesList';
-import { SubcategoriesList } from '@src/screens/Forums/SubcategoriesList';
-import { Messages } from '@src/screens/Messages';
-import { Profile } from '@src/screens/Profile';
 import React from 'react';
 import { Platform } from 'react-native';
 
 import { theme } from '../styles/theme';
 import { StackLocationPrivateRoutes } from './locationStack.routes';
 
+import { CategoriesList } from '@src/screens/Forums/CategoriesList';
+import { SubcategoriesList } from '@src/screens/Forums/SubcategoriesList';
+import { Messages } from '@src/screens/Messages';
+import { Profile } from '@src/screens/Profile';
+
 export type RootBottomTabParamList = {
   LocationsStack: undefined;
-  Forums: undefined;
-  Messages: undefined;
-  Profile: undefined;
+  ForumStack: undefined;
+  ChatStack: undefined;
+  ProfileStack: undefined;
 };
 
 const { Navigator, Screen } =
@@ -38,8 +39,8 @@ export function TabRoutes() {
       initialRouteName="Forums"
     >
       <Screen
-        name="Forums"
-        component={Forums}
+        name="ForumStack"
+        component={StackForumPrivateRoutes}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name={'forum'} color={color} size={size} />
@@ -56,8 +57,8 @@ export function TabRoutes() {
         }}
       />
       <Screen
-        name="Messages"
-        component={Messages}
+        name="ChatStack"
+        component={StackChatPrivateRoutes}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name={'message'} color={color} size={size} />
@@ -65,8 +66,8 @@ export function TabRoutes() {
         }}
       />
       <Screen
-        name="Profile"
-        component={Profile}
+        name="ProfileStack"
+        component={StackProfilePrivateRoutes}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name={'person'} color={color} size={size} />

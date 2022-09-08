@@ -1,17 +1,13 @@
 ---
 - disciplina: PI1A5
-  equipe: Garage Launch
+  turma: 431
+  periodo: 2022
+  equipe: GarageLaunch
   projeto: diversaGente
-  periodo: 2022-01
-  repo: "/S202201-PI/GarageLaunch"
-  blog: "https://garagelaunch.blogspot.com/"
-  youtube: "https://www.youtube.com/channel/UCs1XOD3RrJ2OcNL3p-R0kBQ"
-  tags:
-    - mobile
-    - neurodiversidade
-    - inclusao
-    - comunicacao
-    - app
-    - redesocial
-  turma: TER
-  descr: "Uma rede social que visa facilitar troca de experiências entre pessoas que convivam com crianças neurodiversas."
+  blog: https://garagelaunch.blogspot.com/
+  youtube: https://www.youtube.com/channel/UCs1XOD3RrJ2OcNL3p-R0kBQ
+  repo: "/S202201-PI/GarageLaunch/"
+  tags: ['mobile', 'neurodiversidade', 'inclusao', 'comunicacao', 'app', 'redesocial', 'aplicativo movel']
+  descr: >- 
+  Uma rede social que visa facilitar troca de experiências entre pessoas que convivam com crianças neurodiversas.
+---

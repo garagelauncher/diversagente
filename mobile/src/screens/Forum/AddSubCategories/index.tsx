@@ -33,7 +33,7 @@ export const AddSubCategories = () => {
   return (
     <ScrollView backgroundColor={theme.colors.warmGray200}>
       <Box flex={1}>
-        <UserAvatar picture={'https://github.com/bertiGrazi.png'} />
+        <UserAvatar />
       </Box>
       <HStack
         space={4}
