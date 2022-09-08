@@ -1,7 +1,3 @@
-import { UserAvatar } from '@src/components/UserAvatar';
-import { Category } from '@src/contracts/Category';
-import { diversaGenteServices } from '@src/services/diversaGente';
-import { theme } from '@src/styles/theme';
 import {
   Box,
   ScrollView,
@@ -12,6 +8,11 @@ import {
   CheckIcon,
 } from 'native-base';
 import React, { useCallback, useEffect, useState } from 'react';
+
+import { UserAvatar } from '@src/components/UserAvatar';
+import { Category } from '@src/contracts/Category';
+import { diversaGenteServices } from '@src/services/diversaGente';
+import { theme } from '@src/styles/theme';
 
 export const AddSubCategories = () => {
   const [categories, setCategories] = useState<Category[]>([]);
