@@ -1,5 +1,3 @@
-import { CategoryRaw } from 'src/shared/contracts/CategoryRaw';
-
 export const categoryMock = {
   id: 'aaaaaa-1111-aaaaaaa-1111',
   name: 'saúde',
