@@ -1,8 +1,9 @@
 // eslint-disable-next-line import/no-unresolved
-import { theme } from '@src/styles/theme';
 import { HStack, Flex, Button, Stack } from 'native-base';
 // eslint-disable-next-line import/default
 import React from 'react';
+
+import { theme } from '@src/styles/theme';
 
 export const ButtonCategory = () => {
   return (
