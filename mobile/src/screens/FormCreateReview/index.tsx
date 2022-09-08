@@ -25,7 +25,7 @@ import { AirbnbRating } from 'react-native-ratings';
 
 import { Review } from '@src/contracts/Review';
 import { useAuth } from '@src/hooks/useAuth';
-import { StackLocationNavigatorParamList } from '@src/routes/locationStack.routes';
+import { StackLocationNavigatorParamList } from '@src/routes/stacks/locationStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
 
 type FormCreateReviewScreenNavigationProps = NavigationProp<

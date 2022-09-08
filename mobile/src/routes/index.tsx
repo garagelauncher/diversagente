@@ -1,7 +1,7 @@
-import { useAuth } from '@src/hooks/useAuth';
+import { StackRoutes } from './stacks';
+import { TabRoutes } from './tabs';
 
-import { StackRoutes } from './stack.routes';
-import { TabRoutes } from './tabs.routes';
+import { useAuth } from '@src/hooks/useAuth';
 
 export const Routes = () => {
   const { isLoggedIn } = useAuth();

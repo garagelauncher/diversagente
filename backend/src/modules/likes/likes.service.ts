@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/shared/database/prisma.service';
 import { CreateLikeDto } from './dto/create-like.dto';
 import { UpdateLikeDto } from './dto/update-like.dto';
@@ -16,13 +16,16 @@ export class LikesService {
   }
 
   async findOne(id: string) {
-     //return this.prisma.category.findUnique({ where: { id } });
-
     const like = await this.prisma.like.findUnique({
       where: {
         id,
       },
     });
+
+    if (!like) {
+      throw new NotFoundException(`Like ${id} was not found`);
+    }
+
     return like;
   }
 
