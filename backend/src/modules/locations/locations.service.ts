@@ -1,5 +1,4 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { Coordinates } from 'src/shared/contracts/Coordinates';
 import { LocationRaw } from 'src/shared/contracts/LocationRaw';
 import { PrismaService } from 'src/shared/database/prisma.service';
 import { CreateLocationDto } from './dto/create-location.dto';
