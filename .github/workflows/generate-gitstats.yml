@@ -33,7 +33,7 @@ jobs:
         with:
           commit_message: "docs: update gitstats"
 
-      - name: Sucesso - Discord
+      - name: Success - Discord
         uses: Ilshidur/action-discord@master
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
