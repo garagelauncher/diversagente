@@ -1,5 +1,3 @@
-/* eslint-disable import/no-unresolved */
-// eslint-disable-next-line import/no-unresolved
 import { AntDesign } from '@expo/vector-icons';
 import {
   Box,
@@ -8,7 +6,6 @@ import {
   Icon,
   Input,
   ScrollView,
-  IconButton,
   Button,
 } from 'native-base';
 import React from 'react';
@@ -16,7 +13,6 @@ import React from 'react';
 import { HeaderSubcategories } from '@src/components/HeaderSubcategories';
 import { Subcategory } from '@src/components/Subcategory';
 import { theme } from '@src/styles/theme';
-// eslint-disable-next-line import/default
 
 export const SubcategoriesList = () => {
   return (
