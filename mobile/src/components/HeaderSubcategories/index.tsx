@@ -1,5 +1,4 @@
-// eslint-disable-next-line import/no-unresolved
-import { Box, Flex, Avatar, Text, AspectRatio } from 'native-base';
+import { Box, Flex, Text } from 'native-base';
 
 import { theme } from '@src/styles/theme';
 

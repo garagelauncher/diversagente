@@ -1,32 +1,24 @@
-// eslint-disable-next-line import/no-unresolved
 import { AntDesign } from '@expo/vector-icons';
-import {
-  VStack,
-  Text,
-  Button,
-  Flex,
-  HStack,
-  ArrowForwardIcon,
-  Icon,
-} from 'native-base';
-// eslint-disable-next-line import/default
+import { VStack, Text, Button, Flex, HStack, Icon } from 'native-base';
 import React from 'react';
 
 import { theme } from '@src/styles/theme';
 
 export const Subcategory = () => {
+  const subcategories = [
+    'Alimentação',
+    'Esporte',
+    'Alergias',
+    'Saúde Mental',
+    'Medicação',
+    'Terapias',
+  ];
+
   return (
     <>
-      {[
-        'Alimentação',
-        'Esporte',
-        'Alergias',
-        'Saúde Mental',
-        'Medicação',
-        'Terapias',
-      ].map((size) => (
+      {subcategories.map((subcategory) => (
         <VStack
-          key={size}
+          key={subcategory}
           space={3}
           h="51"
           w="303"
@@ -40,7 +32,7 @@ export const Subcategory = () => {
           <Flex direction="row" grow={4} justify={'space-around'}>
             <HStack width={140} justifyContent={'left'}>
               <Text
-                key={size}
+                key={subcategory}
                 fontSize="lg"
                 justifyContent="center"
                 py={2}
@@ -48,12 +40,12 @@ export const Subcategory = () => {
                 paddingLeft={4}
                 bold
               >
-                {size}
+                {subcategory}
               </Text>
             </HStack>
             <HStack width={100} justifyContent={'center'}>
               <Button
-                size={'sm'}
+                subcategory={'sm'}
                 variant={'solid'}
                 width={35}
                 height={35}
