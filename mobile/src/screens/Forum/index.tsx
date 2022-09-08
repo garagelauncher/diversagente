@@ -22,7 +22,7 @@ type ForumScreenNavigationProps = NavigationProp<
 export const Forum = () => {
   const navigation = useNavigation<ForumScreenNavigationProps>();
 
-  function handleNavigateToSelectLocationMap() {
+  function handleNavigateToCreatePost() {
     navigation.navigate('FormCreatePost');
   }
   // const [categories, setCategories] = useState<Category[]>([]);
@@ -82,9 +82,7 @@ export const Forum = () => {
       <Heading>Forum</Heading>
       <Heading>Em breve</Heading>
       <Text>Para Dezembro de 2022</Text>
-      <Button onPress={handleNavigateToSelectLocationMap}>
-        Criar categoria
-      </Button>
+      <Button onPress={handleNavigateToCreatePost}>Criar post</Button>
     </Box>
   );
 };
