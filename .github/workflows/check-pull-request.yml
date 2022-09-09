@@ -31,7 +31,7 @@ jobs:
           working-directory: backend
           github-token: ${{ github.token }}
 
-      - name: Sucesso - Discord
+      - name: Success - Discord
         uses: Ilshidur/action-discord@master
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
