@@ -3,18 +3,18 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import { Platform } from 'react-native';
 
-import { theme } from '../styles/theme';
-import { StackLocationPrivateRoutes } from './locationStack.routes';
+import { StackChatPrivateRoutes } from '../stacks/chatStack.routes';
+import { StackForumPrivateRoutes } from '../stacks/forumStack.routes';
+import { StackLocationPrivateRoutes } from '../stacks/locationStack.routes';
+import { StackProfilePrivateRoutes } from '../stacks/profileStack.routes';
 
-import { Forums } from '@src/screens/Forums';
-import { Messages } from '@src/screens/Messages';
-import { Profile } from '@src/screens/Profile';
+import { theme } from '@src/styles/theme';
 
 export type RootBottomTabParamList = {
   LocationsStack: undefined;
-  Forums: undefined;
-  Messages: undefined;
-  Profile: undefined;
+  ForumStack: undefined;
+  ChatStack: undefined;
+  ProfileStack: undefined;
 };
 
 const { Navigator, Screen } =
@@ -24,7 +24,7 @@ export function TabRoutes() {
   return (
     <Navigator
       screenOptions={{
-        tabBarActiveTintColor: theme.colors.bluePrimary,
+        tabBarActiveTintColor: theme.colors.darkBlue700,
         tabBarInactiveTintColor: 'gray',
         tabBarLabelPosition: 'beside-icon',
         tabBarStyle: {
@@ -37,8 +37,8 @@ export function TabRoutes() {
       initialRouteName="LocationsStack"
     >
       <Screen
-        name="Forums"
-        component={Forums}
+        name="ForumStack"
+        component={StackForumPrivateRoutes}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name={'forum'} color={color} size={size} />
@@ -55,8 +55,8 @@ export function TabRoutes() {
         }}
       />
       <Screen
-        name="Messages"
-        component={Messages}
+        name="ChatStack"
+        component={StackChatPrivateRoutes}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name={'message'} color={color} size={size} />
@@ -64,8 +64,8 @@ export function TabRoutes() {
         }}
       />
       <Screen
-        name="Profile"
-        component={Profile}
+        name="ProfileStack"
+        component={StackProfilePrivateRoutes}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name={'person'} color={color} size={size} />

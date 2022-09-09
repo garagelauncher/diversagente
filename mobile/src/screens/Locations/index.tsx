@@ -19,7 +19,7 @@ import * as customStyles from './styles';
 
 import { Location } from '@src/contracts/Location';
 import { translate } from '@src/i18n';
-import { StackLocationNavigatorParamList } from '@src/routes/locationStack.routes';
+import { StackLocationNavigatorParamList } from '@src/routes/stacks/locationStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
 
 type LocationScreenNavigationProps = NavigationProp<
