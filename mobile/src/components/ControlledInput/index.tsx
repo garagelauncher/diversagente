@@ -1,7 +1,7 @@
 import { FormControl } from 'native-base';
 import { Control, Controller, FieldError } from 'react-hook-form';
 
-import { FormInput, FormInputProps } from '../FormInput';
+import { FormInputProps, FormInput } from '../FormInput';
 
 type Props = FormInputProps & {
   control: Control<any>;
