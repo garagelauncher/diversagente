@@ -3,25 +3,17 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import {
   VStack,
   Button,
-  FormControl,
-  TextArea,
   Heading,
   HStack,
   Alert,
   Box,
-  Center,
   CloseIcon,
   IconButton,
-  TextField,
   Text,
   Divider,
-  Badge,
-  Link,
-  WarningOutlineIcon,
-  Input,
   Icon,
 } from 'native-base';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -30,9 +22,8 @@ import {
 } from 'react-native';
 import * as yup from 'yup';
 
-import { Categories } from '@src/components/Categories';
+import { ControlledInput } from '@src/components/ControlledInput';
 import { FormInput } from '@src/components/FormInput';
-import { Category } from '@src/contracts/Category';
 import { logger } from '@src/utils/logger';
 
 type CreatePostFormData = {
@@ -44,13 +35,14 @@ type CreatePostFormData = {
 const schema = yup.object({
   title: yup
     .string()
-    .min(40, 'Máximo de 40 caracteres.')
-    .required('Informe o título da postagem.'),
+    .max(40, 'O título só pode ter até 40 caracteres.')
+    .required('Informe o título.'),
   content: yup
     .string()
-    .min(1800, 'Mínimo de 6 caracteres')
-    .required('Informe o conteúdo da postagem.'),
+    .max(1800, 'Mínimo de 6 caracteres')
+    .required('Informe o conteúdo.'),
   image: yup.mixed().nullable(),
+  imageDescription: yup.string().max(200, 'Máximo de 200 caracteres.'),
 });
 
 export const FormCreatePost = () => {
@@ -59,7 +51,9 @@ export const FormCreatePost = () => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<CreatePostFormData>({
+    resolver: yupResolver(schema),
+  });
 
   const onSubmit = (data: any) => {
     console.log('submiting with ', data);
@@ -149,70 +143,46 @@ export const FormCreatePost = () => {
               </HStack>
             </VStack>
 
-            <FormControl isRequired isInvalid={false}>
-              <FormControl.Label>
-                <Text fontSize="16" fontWeight="bold" marginBottom="2">
-                  Título
-                </Text>
-              </FormControl.Label>
-              <Input size="md" placeholder="Máximo de 40 caracteres." />
-              <FormInput value="" />
-              <FormControl.ErrorMessage
-                leftIcon={<WarningOutlineIcon size="s" />}
-              >
-                O título é obrigatório para conseguir fazer postagens.
-              </FormControl.ErrorMessage>
-            </FormControl>
+            <ControlledInput
+              control={control}
+              name="title"
+              error={errors.title}
+              label={'Título'}
+              isTextArea={false}
+              placeholder="Máximo de 40 caracteres."
+            ></ControlledInput>
 
-            <FormControl
-              isRequired
-              isInvalid={'thought' in errors}
-              marginBottom="2"
-            >
-              <Text fontSize="16" fontWeight="bold" marginBottom="2">
-                Imagem
-              </Text>
-              <HStack justifyContent="space-between" alignItems="center">
-                <Text>Formatos aceitos: png e jpg.</Text>
-                <Button
-                  width="32"
-                  leftIcon={
-                    <Icon as={Ionicons} name="cloud-upload-outline" size="sm" />
-                  }
-                >
-                  Upload
-                </Button>
-              </HStack>
-              <FormControl.Label>
-                <Text fontSize="16" fontWeight="bold" marginBottom="2">
-                  Conteúdo
-                </Text>
-              </FormControl.Label>
-              <Controller
-                control={control}
-                render={({ field: { onChange, value } }) => (
-                  <ScrollView>
-                    <TextArea
-                      size="md"
-                      width="100%"
-                      placeholder="Máximo de 1800 caracteres."
-                      onChangeText={(val) => onChange(val)}
-                      defaultValue={value}
-                      autoCompleteType="off"
-                    />
-                  </ScrollView>
-                )}
-                name="thought"
-                rules={{
-                  required: 'O conteúdo da postagem é obrigatório',
-                  minLength: 3,
-                }}
-              />
-              <FormControl.ErrorMessage>
-                {errors.thought?.message}
-              </FormControl.ErrorMessage>
-            </FormControl>
-            <HStack width="100%" justifyContent="space-between">
+            <ControlledInput
+              control={control}
+              name="content"
+              error={errors.content}
+              isTextArea={true}
+              label={'Conteúdo'}
+              placeholder="Máximo de 1800 caracteres."
+            ></ControlledInput>
+
+            <ControlledInput
+              control={control}
+              name="image"
+              error={errors.image}
+              isTextArea={false}
+              label={'Imagem'}
+              placeholder="Descrição da imagem."
+            ></ControlledInput>
+
+            <HStack alignContent={'center'} justifyContent="space-between">
+              <Text>Formatos aceitos: png e jpg.</Text>
+              <Button
+                width="32"
+                leftIcon={
+                  <Icon as={Ionicons} name="cloud-upload-outline" size="sm" />
+                }
+              >
+                Upload
+              </Button>
+            </HStack>
+
+            <HStack width="100%" marginTop="8" justifyContent="space-between">
               <Button
                 width="40"
                 onPress={handleSubmit(onSubmit)}
