@@ -14,6 +14,7 @@ export type FormInputProps = TextInputProps & {
   placeholder: string;
   label?: string;
   isTextArea: boolean;
+  hasImage?: boolean;
 };
 
 export function FormInput({
@@ -21,18 +22,20 @@ export function FormInput({
   placeholder,
   label,
   isTextArea,
+  hasImage,
   ...rest
 }: FormInputProps) {
   return (
     <VStack>
-      <FormControl.Label isRequired={isTextArea}>
+      <FormControl.Label>
         <Text fontSize="18" fontWeight="bold" marginBottom="2">
           {label}
         </Text>
       </FormControl.Label>
       {!isTextArea && (
         <Input
-          size="lg"
+          borderColor={value?.length || hasImage ? 'green.500' : 'red.500'}
+          size="md"
           placeholder={placeholder}
           width={'100%'}
           value={value}
@@ -40,18 +43,18 @@ export function FormInput({
         />
       )}
       {isTextArea && (
-        <>
-          <ScrollView height="400">
-            <TextArea
-              minHeight={400}
-              size="lg"
-              width="100%"
-              height="600px"
-              placeholder="Máximo de 1800 caracteres."
-              autoCompleteType="off"
-            />
-          </ScrollView>
-        </>
+        <ScrollView height="400">
+          <TextArea
+            borderColor={value?.length ? 'green.500' : 'red.500'}
+            minHeight={400}
+            size="md"
+            width="100%"
+            height="600px"
+            placeholder="Máximo de 1800 caracteres."
+            autoCompleteType="on"
+            {...rest}
+          />
+        </ScrollView>
       )}
     </VStack>
   );
