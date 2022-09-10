@@ -34,13 +34,21 @@ type CreatePostFormData = {
 const schema = yup.object({
   title: yup
     .string()
+    .trim()
     .max(40, 'O título só pode ter até 40 caracteres.')
     .required('Informe o título.'),
   content: yup
     .string()
+    .trim()
     .max(1800, 'Mínimo de 6 caracteres')
     .required('Informe o conteúdo.'),
-  imageDescription: yup.string().max(200, 'Máximo de 200 caracteres.'),
+  imageDescription: yup
+    .string()
+    .notRequired()
+    .min(8)
+    .max(200, 'Máximo de 200 caracteres.')
+    .transform((value) => (value ? value : null))
+    .nullable(),
 });
 
 export const FormCreatePost = () => {
