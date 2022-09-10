@@ -23,13 +23,12 @@ import {
 import * as yup from 'yup';
 
 import { ControlledInput } from '@src/components/ControlledInput';
-import { FormInput } from '@src/components/FormInput';
 import { logger } from '@src/utils/logger';
 
 type CreatePostFormData = {
   title: string;
   content: string;
-  image?: string;
+  imageDescription?: string;
 };
 
 const schema = yup.object({
@@ -41,7 +40,6 @@ const schema = yup.object({
     .string()
     .max(1800, 'Mínimo de 6 caracteres')
     .required('Informe o conteúdo.'),
-  image: yup.mixed().nullable(),
   imageDescription: yup.string().max(200, 'Máximo de 200 caracteres.'),
 });
 
@@ -55,7 +53,7 @@ export const FormCreatePost = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: CreatePostFormData) => {
     console.log('submiting with ', data);
   };
 
@@ -146,8 +144,8 @@ export const FormCreatePost = () => {
             <ControlledInput
               control={control}
               name="title"
-              error={errors.title}
               label={'Título'}
+              error={errors.title}
               isTextArea={false}
               placeholder="Máximo de 40 caracteres."
             ></ControlledInput>
@@ -155,19 +153,20 @@ export const FormCreatePost = () => {
             <ControlledInput
               control={control}
               name="content"
+              label={'Conteúdo'}
               error={errors.content}
               isTextArea={true}
-              label={'Conteúdo'}
               placeholder="Máximo de 1800 caracteres."
             ></ControlledInput>
 
             <ControlledInput
               control={control}
-              name="image"
-              error={errors.image}
-              isTextArea={false}
+              name="imageDescription"
               label={'Imagem'}
-              placeholder="Descrição da imagem."
+              error={errors.imageDescription}
+              isTextArea={false}
+              hasImage={true}
+              placeholder="Descrição textual, máximo de 200 caracteres."
             ></ControlledInput>
 
             <HStack alignContent={'center'} justifyContent="space-between">
@@ -196,6 +195,7 @@ export const FormCreatePost = () => {
                 width="40"
                 onPress={handleSubmit(onSubmit)}
                 colorScheme="blue"
+                type="submit"
               >
                 Criar
               </Button>
