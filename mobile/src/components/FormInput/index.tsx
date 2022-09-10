@@ -51,7 +51,7 @@ export function FormInput({
             width="100%"
             height="600px"
             placeholder="Máximo de 1800 caracteres."
-            autoCompleteType="on"
+            autoCompleteType="off"
             {...rest}
           />
         </ScrollView>
