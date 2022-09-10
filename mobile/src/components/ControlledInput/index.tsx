@@ -1,4 +1,4 @@
-import { FormControl } from 'native-base';
+import { FormControl, Text } from 'native-base';
 import { Control, Controller, FieldError } from 'react-hook-form';
 
 import { FormInputProps, FormInput } from '../FormInput';
@@ -11,7 +11,7 @@ type Props = FormInputProps & {
 
 export function ControlledInput({ control, name, error, ...rest }: Props) {
   return (
-    <>
+    <FormControl>
       <Controller
         control={control}
         name={name}
@@ -20,8 +20,10 @@ export function ControlledInput({ control, name, error, ...rest }: Props) {
         )}
       />
       {error && (
-        <FormControl.ErrorMessage>{error.message}</FormControl.ErrorMessage>
+        <Text fontSize={'16'} color="red.500">
+          {error.message}
+        </Text>
       )}
-    </>
+    </FormControl>
   );
 }
