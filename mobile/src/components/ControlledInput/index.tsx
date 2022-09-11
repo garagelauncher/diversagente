@@ -12,7 +12,7 @@ type Props = FormInputProps & {
 
 export function ControlledInput({ control, name, error, ...rest }: Props) {
   return (
-    <FormControl>
+    <>
       <Controller
         control={control}
         name={name}
@@ -33,6 +33,6 @@ export function ControlledInput({ control, name, error, ...rest }: Props) {
           </Text>
         </HStack>
       )}
-    </FormControl>
+    </>
   );
 }
