@@ -135,31 +135,6 @@ export const FormCreatePost = () => {
               </VStack>
             </Alert>
 
-            <VStack space="6">
-              <HStack
-                flexShrink={1}
-                space={2}
-                alignItems="center"
-                justifyContent="space-between"
-              >
-                <Button size="md" variant="outline">
-                  Selecionar categoria
-                </Button>
-                <Text>Saúde</Text>
-              </HStack>
-              <HStack
-                flexShrink={1}
-                space={2}
-                alignItems="center"
-                justifyContent="space-between"
-              >
-                <Button size="md" variant="outline">
-                  Selecionar subcategoria
-                </Button>
-                <Text>Saúde mental</Text>
-              </HStack>
-            </VStack>
-
             <Controller
               control={control}
               name="category"
