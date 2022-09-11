@@ -12,8 +12,13 @@ import {
   Text,
   Divider,
   Icon,
+  FormControl,
+  Select,
+  CheckIcon,
+  WarningOutlineIcon,
 } from 'native-base';
-import { useForm } from 'react-hook-form';
+import React from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -28,6 +33,9 @@ import { logger } from '@src/utils/logger';
 type CreatePostFormData = {
   title: string;
   content: string;
+  category: string;
+  subcategory: string;
+  image?: string;
   imageDescription?: string;
 };
 
@@ -36,12 +44,12 @@ const schema = yup.object({
     .string()
     .trim()
     .max(40, 'O título só pode ter até 40 caracteres.')
-    .required('Informe o título.'),
+    .required('Título é obrigatório.'),
   content: yup
     .string()
     .trim()
     .max(1800, 'Mínimo de 6 caracteres')
-    .required('Informe o conteúdo.'),
+    .required('Conteúdo é obrigatório.'),
   imageDescription: yup
     .string()
     .notRequired()
@@ -49,6 +57,9 @@ const schema = yup.object({
     .max(200, 'Máximo de 200 caracteres.')
     .transform((value) => (value ? value : null))
     .nullable(),
+  category: yup.string().required(),
+  subcategory: yup.string().required(),
+  image: yup.string(),
 });
 
 export const FormCreatePost = () => {
@@ -149,6 +160,94 @@ export const FormCreatePost = () => {
               </HStack>
             </VStack>
 
+            <Controller
+              control={control}
+              name="category"
+              rules={{ required: true }}
+              render={({ field: { onChange, value } }) => (
+                <FormControl
+                  w="100%"
+                  isRequired
+                  isInvalid={value ? false : true}
+                >
+                  <FormControl.Label>Selecione a categoria</FormControl.Label>
+                  <Select
+                    borderColor={'green.500'}
+                    minWidth="200"
+                    accessibilityLabel="Selecione uma categoria"
+                    placeholder="Selecione uma categoria"
+                    _selectedItem={{
+                      bg: 'teal.600',
+                      endIcon: <CheckIcon size={5} />,
+                    }}
+                    mt="1"
+                    onValueChange={onChange}
+                  >
+                    <Select.Item label="UX Research" value="ux" />
+                    <Select.Item label="Web Development" value="web" />
+                    <Select.Item
+                      label="Cross Platform Development"
+                      value="cross"
+                    />
+                    <Select.Item label="UI Designing" value="ui" />
+                    <Select.Item label="Backend Development" value="backend" />
+                  </Select>
+                  {errors.category && (
+                    <FormControl.ErrorMessage
+                      leftIcon={<WarningOutlineIcon size="xs" />}
+                    >
+                      <Text>Categoria é obrigatória.</Text>
+                    </FormControl.ErrorMessage>
+                  )}
+                </FormControl>
+              )}
+            ></Controller>
+
+            <Controller
+              control={control}
+              name="subcategory"
+              rules={{ required: true }}
+              render={({ field: { onChange, value } }) => (
+                <FormControl
+                  w="100%"
+                  isRequired
+                  isInvalid={value ? false : true}
+                >
+                  <FormControl.Label>
+                    Selecione a subcategoria
+                  </FormControl.Label>
+                  <Select
+                    borderColor={'green.500'}
+                    minWidth="200"
+                    accessibilityLabel="Selecione uma categoria"
+                    placeholder="Selecione uma categoria"
+                    _selectedItem={{
+                      bg: 'teal.600',
+                      endIcon: <CheckIcon size={5} />,
+                    }}
+                    mt="1"
+                    onValueChange={onChange}
+                  >
+                    <Select.Item label="UX Research" value="ux" />
+                    <Select.Item label="Web Development" value="web" />
+                    <Select.Item
+                      label="Cross Platform Development"
+                      value="cross"
+                    />
+                    <Select.Item label="UI Designing" value="ui" />
+                    <Select.Item label="Backend Development" value="backend" />
+                  </Select>
+                  {errors.subcategory && (
+                    <FormControl.ErrorMessage
+                      leftIcon={<WarningOutlineIcon size="xs" />}
+                    >
+                      <Text>Categoria é obrigatória.</Text>
+                    </FormControl.ErrorMessage>
+                  )}
+                </FormControl>
+              )}
+            ></Controller>
+
             <ControlledInput
               control={control}
               name="title"
@@ -177,22 +276,48 @@ export const FormCreatePost = () => {
               placeholder="Descrição textual, máximo de 200 caracteres."
             ></ControlledInput>
 
-            <HStack alignContent={'center'} justifyContent="space-between">
-              <Text>Formatos aceitos: png e jpg.</Text>
-              <Button
-                width="32"
-                leftIcon={
-                  <Icon as={Ionicons} name="cloud-upload-outline" size="sm" />
-                }
-              >
-                Upload
-              </Button>
-            </HStack>
+            <Controller
+              control={control}
+              name={'image'}
+              rules={{ required: true }}
+              render={({ field: { value } }) => (
+                <FormControl
+                  w="100%"
+                  isRequired
+                  isInvalid={value ? false : true}
+                >
+                  <HStack
+                    alignContent={'center'}
+                    justifyContent="space-between"
+                  >
+                    <Text>Formatos aceitos: png e jpg.</Text>
+                    <Button
+                      width="32"
+                      leftIcon={
+                        <Icon
+                          as={Ionicons}
+                          name="cloud-upload-outline"
+                          size="sm"
+                        />
+                      }
+                    >
+                      Upload
+                    </Button>
+                  </HStack>
+                  {errors.category && (
+                    <FormControl.ErrorMessage
+                      leftIcon={<WarningOutlineIcon size="xs" />}
+                    >
+                      <Text>Categoria é obrigatória.</Text>
+                    </FormControl.ErrorMessage>
+                  )}
+                </FormControl>
+              )}
+            ></Controller>
 
             <HStack width="100%" marginTop="8" justifyContent="space-between">
               <Button
                 width="40"
-                onPress={handleSubmit(onSubmit)}
                 colorScheme="blue"
                 variant="outline"
                 borderColor="blue.500"

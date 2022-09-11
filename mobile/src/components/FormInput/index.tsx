@@ -11,10 +11,10 @@ import { TextInputProps } from 'react-native';
 
 export type FormInputProps = TextInputProps & {
   value?: string;
-  placeholder: string;
   label?: string;
-  isTextArea: boolean;
+  placeholder?: string;
   hasImage?: boolean;
+  isTextArea: boolean;
 };
 
 export function FormInput({
