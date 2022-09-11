@@ -1,4 +1,5 @@
-import { FormControl, Text } from 'native-base';
+import { FormControl, Text, WarningOutlineIcon, HStack } from 'native-base';
+import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
 
 import { FormInputProps, FormInput } from '../FormInput';
@@ -20,9 +21,17 @@ export function ControlledInput({ control, name, error, ...rest }: Props) {
         )}
       />
       {error && (
-        <Text fontSize={'16'} color="red.500">
-          {error.message}
-        </Text>
+        <HStack marginTop={2} alignItems="center">
+          <WarningOutlineIcon size="xs" color="red.600" paddingRight={4} />
+          <Text
+            alignItems={'center'}
+            fontSize={'12'}
+            color="red.600"
+            marginRight={2}
+          >
+            {error.message}
+          </Text>
+        </HStack>
       )}
     </FormControl>
   );
