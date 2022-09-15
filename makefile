@@ -2,9 +2,9 @@
 LOCALDIR = $(shell pwd)/
 SCRIPTS_FOLDER = scripts
 OS := $(shell uname)
-GOURCE_TITLE = Agosto
-GOURCE_START_DATE = '2022-04-10 23:59:59 +24'
-GOURCE_END_DATE = '2022-05-11 00:00:00 +24'
+GOURCE_TITLE = 'Setembro'
+GOURCE_START_DATE = '2022-09-01 00:00:00 +24'
+GOURCE_END_DATE = '2022-10-01 00:00:00 +24'
 
 # generate venv
 venv:
