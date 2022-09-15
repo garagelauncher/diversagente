@@ -4,6 +4,7 @@ import { FormCreatePost } from '@src/screens/FormCreatePost';
 import { Forum } from '@src/screens/Forum';
 import { CategoriesList } from '@src/screens/Forums/CategoriesList';
 import { SubcategoriesList } from '@src/screens/Forums/SubcategoriesList';
+import { Home } from '@src/screens/Home';
 
 export type StackForumNavigatorParamList = {
   Forum: undefined;
@@ -23,7 +24,7 @@ export const StackForumPrivateRoutes = () => {
       }}
       initialRouteName="Forum"
     >
-      <Screen name="Forum" component={Forum} />
+      <Screen name="Forum" component={Home} />
       <Screen name="FormCreatePost" component={FormCreatePost} />
       <Screen name="SelectCategory" component={CategoriesList} />
       <Screen name="SelectSubcategory" component={SubcategoriesList} />
