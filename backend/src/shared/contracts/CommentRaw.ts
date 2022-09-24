@@ -24,5 +24,5 @@ interface ID {
     updatedAt: CommentRawDate;
     ownerId: ownerId;
     postId: postId;
-    comment: commentText;
+    text: commentText;
   }
