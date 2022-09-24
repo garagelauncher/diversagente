@@ -23,8 +23,7 @@ describe('ReviewsService', () => {
       text: 'Nova descrição do review'
     });
     prisma.review.findUnique = jest.fn().mockResolvedValue({
-      ...reviewMock,
-      id: 'aaaaaaaa'
+      ...reviewMock
     })
   });
 
@@ -85,9 +84,7 @@ describe('ReviewsService', () => {
   it('should not be able to get a review that doest exists', async () => {
     prisma.review.findUnique = jest.fn().mockResolvedValue(undefined);
 
-    await expect(
-      reviewService.findOne('1'),
-    ).rejects.toThrowError(
+    await expect(reviewService.findOne('1')).rejects.toThrowError(
       'Review 1 was not found',
     );
   });

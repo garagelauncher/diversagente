@@ -41,6 +41,7 @@ describe('LocationsService', () => {
         coordinates: [0, 0],
       },
     });
+
   });
 
   it('should be defined', () => {

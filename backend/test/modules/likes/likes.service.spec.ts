@@ -33,6 +33,19 @@ describe('LikesService', () => {
     expect(createdLike).toEqual(likeMock);
   });
 
+  it('should be able to get one like by id with success', async () => {
+    prisma.like.findUnique = jest.fn().mockResolvedValue(likeMock);
+    const foundLike = await likeService.findOne(
+      'aaaaaa-1111-aaaaaaa-1111',
+    );
+
+    const expectedLike = {
+      ...likeMock,
+    };
+
+    expect(foundLike).toEqual(expect.objectContaining(expectedLike));
+  });
+
   it('should not be able to get a like that doest exists', async () => {
     prisma.like.findUnique = jest.fn().mockResolvedValue(undefined);
 
