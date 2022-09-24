@@ -13,6 +13,9 @@ interface CategoryName {
 interface CategoryRawDate {
   $date: string;
 }
+interface description {
+  type?: string;
+}
 
 interface subcategories {}
 
@@ -21,5 +24,6 @@ export interface CategoryRaw {
   name: CategoryName;
   createdAt: CategoryRawDate;
   updatedAt: CategoryRawDate;
-  ownerId: ID;
+  ownerId: ownerId;
+  description?: description;
 }
