@@ -63,4 +63,19 @@ describe('LikesService', () => {
     expect(deletedLike).toEqual(likeMock);
   });
 
+  it('should be able to update a like with success', async () => {
+    const likeToUpdate = {
+      ownerId: 'qqq',
+    };
+
+    const likeUpdated = await likeService.update(
+      likeMock.id,
+      likeToUpdate,
+    );
+
+    expect(likeUpdated).toEqual({
+      ...likeMock,
+      ownerId: 'qqq',
+    });
+});
 });
