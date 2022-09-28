@@ -11,6 +11,7 @@ import {
   ScrollView,
   Text,
 } from 'native-base';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const posts = [
   {
@@ -38,43 +39,45 @@ const posts = [
       'Não faz muito tempo que comecei a pesquisar os benefícios que uma dieta saudável poderiam gerar para o Pedrinho, meu filho mais novo e que   possui TDAH...',
   },
 ];
-
+// flex as TouchableOpacity
 const Post = () => (
-  <Flex backgroundColor="white" borderRadius={6} paddingX={6} paddingY={5}>
-    <Flex direction="row">
-      <Avatar borderRadius={6} backgroundColor="green.600">
-        SS
-      </Avatar>
-      <Flex marginLeft={5}>
-        <Text fontWeight={'bold'}>Samantha Shine</Text>
-        <Text color="gray.500">22 de Outubro de 2022</Text>
+  <TouchableOpacity>
+    <Flex backgroundColor="white" borderRadius={6} paddingX={6} paddingY={5}>
+      <Flex direction="row">
+        <Avatar borderRadius={6} backgroundColor="green.600">
+          SS
+        </Avatar>
+        <Flex marginLeft={5}>
+          <Text fontWeight={'bold'}>Samantha Shine</Text>
+          <Text color="gray.500">22 de Outubro de 2022</Text>
+        </Flex>
       </Flex>
-    </Flex>
-    <Flex marginTop={3}>
-      <Heading>
-        Como incentivei meu filho a ter vontade de comer saudável
-      </Heading>
-      <Text color="gray.500" marginTop={7}>
-        Não faz muito tempo que comecei a pesquisar os benefícios que uma dieta
-        saudável poderiam gerar para o Pedrinho, meu filho mais novo e que
-        possui TDAH...
-      </Text>
-    </Flex>
-    <HStack direction="row" space={5} marginTop={3}>
-      <Flex direction="row" alignItems="center">
-        <Icon as={Fontisto} name="like" size={7} />
-        <Text marginLeft={2} fontSize={18}>
-          123
+      <Flex marginTop={3}>
+        <Heading>
+          Como incentivei meu filho a ter vontade de comer saudável
+        </Heading>
+        <Text color="gray.500" marginTop={7}>
+          Não faz muito tempo que comecei a pesquisar os benefícios que uma
+          dieta saudável poderiam gerar para o Pedrinho, meu filho mais novo e
+          que possui TDAH...
         </Text>
       </Flex>
-      <Flex direction="row" alignItems="center">
-        <Icon as={Fontisto} name="commenting" size={7} />
-        <Text marginLeft={2} fontSize={18}>
-          50
-        </Text>
-      </Flex>
-    </HStack>
-  </Flex>
+      <HStack direction="row" space={5} marginTop={3}>
+        <Flex direction="row" alignItems="center">
+          <Icon as={Fontisto} name="like" size={7} />
+          <Text marginLeft={2} fontSize={18}>
+            123
+          </Text>
+        </Flex>
+        <Flex direction="row" alignItems="center">
+          <Icon as={Fontisto} name="commenting" size={7} />
+          <Text marginLeft={2} fontSize={18}>
+            50
+          </Text>
+        </Flex>
+      </HStack>
+    </Flex>
+  </TouchableOpacity>
 );
 
 const categories = [
