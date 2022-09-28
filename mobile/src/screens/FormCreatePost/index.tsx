@@ -136,156 +136,166 @@ export const FormCreatePost = () => {
             </VStack>
           </Alert>
 
-          <Controller
-            control={control}
-            name="category"
-            rules={{ required: true }}
-            render={({ field: { onChange, value } }) => (
-              <FormControl
-                w="100%"
-                isRequired
-                isInvalid={errors.category ? true : false}
-              >
-                <FormControl.Label>Selecione a categoria</FormControl.Label>
-                <Select
-                  borderColor={value?.length ? 'green.500' : 'gray.400'}
-                  minWidth="200"
-                  accessibilityLabel="Selecione uma categoria"
-                  placeholder="Selecione uma categoria"
-                  _selectedItem={{
-                    bg: 'teal.600',
-                    endIcon: <CheckIcon size={5} />,
-                  }}
-                  mt="1"
-                  onValueChange={onChange}
+          <Box>
+            <Controller
+              control={control}
+              name="category"
+              rules={{ required: true }}
+              render={({ field: { onChange, value } }) => (
+                <FormControl
+                  w="100%"
+                  isRequired
+                  isInvalid={errors.category ? true : false}
                 >
-                  <Select.Item label="UX Research" value="ux" />
-                  <Select.Item label="Web Development" value="web" />
-                  <Select.Item
-                    label="Cross Platform Development"
-                    value="cross"
-                  />
-                  <Select.Item label="UI Designing" value="ui" />
-                  <Select.Item label="Backend Development" value="backend" />
-                </Select>
-                {errors.category && (
-                  <FormControl.ErrorMessage
-                    leftIcon={<WarningOutlineIcon size="xs" />}
+                  <FormControl.Label>Selecione a categoria</FormControl.Label>
+                  <Select
+                    borderColor={value?.length ? 'green.500' : 'gray.400'}
+                    minWidth="200"
+                    accessibilityLabel="Selecione uma categoria"
+                    placeholder="Selecione uma categoria"
+                    _selectedItem={{
+                      bg: 'teal.600',
+                      endIcon: <CheckIcon size={5} />,
+                    }}
+                    mt="1"
+                    onValueChange={onChange}
                   >
-                    <Text>Categoria é obrigatória.</Text>
-                  </FormControl.ErrorMessage>
-                )}
-              </FormControl>
-            )}
-          ></Controller>
+                    <Select.Item label="UX Research" value="ux" />
+                    <Select.Item label="Web Development" value="web" />
+                    <Select.Item
+                      label="Cross Platform Development"
+                      value="cross"
+                    />
+                    <Select.Item label="UI Designing" value="ui" />
+                    <Select.Item label="Backend Development" value="backend" />
+                  </Select>
+                  {errors.category && (
+                    <FormControl.ErrorMessage
+                      leftIcon={<WarningOutlineIcon size="xs" />}
+                    >
+                      <Text>Categoria é obrigatória.</Text>
+                    </FormControl.ErrorMessage>
+                  )}
+                </FormControl>
+              )}
+            ></Controller>
 
-          <Controller
-            control={control}
-            name="subcategory"
-            rules={{ required: true }}
-            render={({ field: { onChange, value } }) => (
-              <FormControl
-                w="100%"
-                isRequired
-                isDisabled={true}
-                isInvalid={errors.subcategory ? true : false}
-              >
-                <FormControl.Label>Selecione a subcategoria</FormControl.Label>
-                <Select
-                  borderColor={value?.length ? 'green.500' : 'gray.400'}
-                  minWidth="200"
-                  accessibilityLabel="Selecione uma categoria"
-                  placeholder="Selecione uma categoria"
-                  _selectedItem={{
-                    bg: 'teal.600',
-                    endIcon: <CheckIcon size={5} />,
-                  }}
-                  mt="1"
-                  onValueChange={onChange}
+            <Controller
+              control={control}
+              name="subcategory"
+              rules={{ required: true }}
+              render={({ field: { onChange, value } }) => (
+                <FormControl
+                  w="100%"
+                  isRequired
+                  isDisabled={true}
+                  isInvalid={errors.subcategory ? true : false}
                 >
-                  <Select.Item label="UX Research" value="ux" />
-                  <Select.Item label="Web Development" value="web" />
-                  <Select.Item
-                    label="Cross Platform Development"
-                    value="cross"
-                  />
-                  <Select.Item label="UI Designing" value="ui" />
-                  <Select.Item label="Backend Development" value="backend" />
-                </Select>
-                {errors.subcategory && (
-                  <FormControl.ErrorMessage
-                    leftIcon={<WarningOutlineIcon size="xs" />}
+                  <FormControl.Label>
+                    Selecione a subcategoria
+                  </FormControl.Label>
+                  <Select
+                    borderColor={value?.length ? 'green.500' : 'gray.400'}
+                    minWidth="200"
+                    accessibilityLabel="Selecione uma categoria"
+                    placeholder="Selecione uma categoria"
+                    _selectedItem={{
+                      bg: 'teal.600',
+                      endIcon: <CheckIcon size={5} />,
+                    }}
+                    mt="1"
+                    onValueChange={onChange}
                   >
-                    <Text>Subctegoria é obrigatória.</Text>
-                  </FormControl.ErrorMessage>
-                )}
-              </FormControl>
-            )}
-          ></Controller>
+                    <Select.Item label="UX Research" value="ux" />
+                    <Select.Item label="Web Development" value="web" />
+                    <Select.Item
+                      label="Cross Platform Development"
+                      value="cross"
+                    />
+                    <Select.Item label="UI Designing" value="ui" />
+                    <Select.Item label="Backend Development" value="backend" />
+                  </Select>
+                  {errors.subcategory && (
+                    <FormControl.ErrorMessage
+                      leftIcon={<WarningOutlineIcon size="xs" />}
+                    >
+                      <Text>Subctegoria é obrigatória.</Text>
+                    </FormControl.ErrorMessage>
+                  )}
+                </FormControl>
+              )}
+            ></Controller>
 
-          <ControlledInput
-            control={control}
-            name="title"
-            label={'Título'}
-            error={errors.title}
-            isTextArea={false}
-            placeholder="Máximo de 40 caracteres."
-          ></ControlledInput>
+            <ControlledInput
+              control={control}
+              name="title"
+              label={'Título'}
+              error={errors.title}
+              isTextArea={false}
+              placeholder="Máximo de 40 caracteres."
+            ></ControlledInput>
 
-          <ControlledInput
-            control={control}
-            name="content"
-            label={'Conteúdo'}
-            error={errors.content}
-            isTextArea={true}
-            placeholder="Máximo de 1800 caracteres."
-          ></ControlledInput>
+            <ControlledInput
+              control={control}
+              name="content"
+              label={'Conteúdo'}
+              error={errors.content}
+              isTextArea={true}
+              placeholder="Máximo de 1800 caracteres."
+            ></ControlledInput>
 
-          <ControlledInput
-            control={control}
-            name="imageDescription"
-            label={'Imagem'}
-            error={errors.imageDescription}
-            isTextArea={false}
-            hasImage={true}
-            placeholder="Descrição textual, máximo de 200 caracteres."
-          ></ControlledInput>
+            <ControlledInput
+              control={control}
+              name="imageDescription"
+              label={'Imagem'}
+              error={errors.imageDescription}
+              isTextArea={false}
+              hasImage={true}
+              placeholder="Descrição textual, máximo de 200 caracteres."
+            ></ControlledInput>
 
-          <Controller
-            control={control}
-            name={'image'}
-            rules={{ required: true }}
-            render={({ field: { value } }) => (
-              <FormControl w="100%" isRequired isInvalid={value ? false : true}>
-                <HStack alignContent={'center'} justifyContent="space-between">
-                  <Text>Formatos aceitos: png e jpg.</Text>
-                  <Button
-                    width="32"
-                    leftIcon={
-                      <Icon
-                        as={Ionicons}
-                        name="cloud-upload-outline"
-                        size="sm"
-                      />
-                    }
+            <Controller
+              control={control}
+              name={'image'}
+              rules={{ required: true }}
+              render={({ field: { value } }) => (
+                <FormControl
+                  w="100%"
+                  isRequired
+                  isInvalid={value ? false : true}
+                >
+                  <HStack
+                    alignContent={'center'}
+                    justifyContent="space-between"
                   >
-                    Upload
-                  </Button>
-                </HStack>
-                {errors.image && (
-                  <FormControl.ErrorMessage
-                    leftIcon={<WarningOutlineIcon size="xs" />}
-                  >
-                    <Text>-.</Text>
-                  </FormControl.ErrorMessage>
-                )}
-              </FormControl>
-            )}
-          ></Controller>
-
+                    <Text>Formatos aceitos: png e jpg.</Text>
+                    <Button
+                      width="32"
+                      leftIcon={
+                        <Icon
+                          as={Ionicons}
+                          name="cloud-upload-outline"
+                          size="sm"
+                        />
+                      }
+                    >
+                      Upload
+                    </Button>
+                  </HStack>
+                  {errors.image && (
+                    <FormControl.ErrorMessage
+                      leftIcon={<WarningOutlineIcon size="xs" />}
+                    >
+                      <Text>-.</Text>
+                    </FormControl.ErrorMessage>
+                  )}
+                </FormControl>
+              )}
+            ></Controller>
+          </Box>
           <HStack width="100%" marginTop="8" justifyContent="space-between">
             <Button
-              width="40"
+              width={'32'}
               colorScheme="blue"
               variant="outline"
               borderColor="blue.500"
@@ -293,7 +303,7 @@ export const FormCreatePost = () => {
               Cancelar
             </Button>
             <Button
-              width="40"
+              width={'32'}
               onPress={handleSubmit(onSubmit)}
               colorScheme="blue"
               type="submit"
