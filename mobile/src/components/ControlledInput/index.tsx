@@ -1,14 +1,16 @@
-import { FormControl, Text, WarningOutlineIcon, HStack } from 'native-base';
+import { Text, WarningOutlineIcon, HStack } from 'native-base';
 import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
+import { TextInputProps } from 'react-native';
 
 import { FormInputProps, FormInput } from '../FormInput';
 
-type Props = FormInputProps & {
-  control: Control<any>;
-  name: string;
-  error?: FieldError;
-};
+type Props = FormInputProps &
+  TextInputProps & {
+    control: Control<any>;
+    name: string;
+    error?: FieldError;
+  };
 
 export function ControlledInput({ control, name, error, ...rest }: Props) {
   return (
@@ -17,7 +19,12 @@ export function ControlledInput({ control, name, error, ...rest }: Props) {
         control={control}
         name={name}
         render={({ field: { onChange, value } }) => (
-          <FormInput onChangeText={onChange} value={value} {...rest} />
+          <FormInput
+            onChangeText={onChange}
+            value={value}
+            error={error}
+            {...rest}
+          />
         )}
       />
       {error && (
