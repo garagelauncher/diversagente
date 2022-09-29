@@ -13,6 +13,22 @@ import {
 } from 'native-base';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import { useAuth } from '@src/hooks/useAuth';
+
+type PostProps = {
+  post: {
+    id: string;
+    username: string;
+    avatar: string;
+    title: string;
+    description?: string;
+    image?: string;
+    likes: number;
+    comments: number;
+    createdAt: string;
+  };
+};
+
 const posts = [
   {
     id: 'jkosdfalasdnklfnm',
@@ -23,7 +39,7 @@ const posts = [
       'https://images.unsplash.com/photo-1611780788889-8f8f0d9f9c0a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
     likes: 123,
     title: 'I love this photo',
-    postedAt: '6 minutos atrás',
+    createdAt: '6 minutos atrás',
   },
   {
     id: 'lasdkfjasdlkfjsadlf',
@@ -33,7 +49,7 @@ const posts = [
     image:
       'https://images.unsplash.com/photo-1611780788889-8f8f0d9f9c0a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
     likes: 123,
-    postedAt: '22 de Outubro de 2022',
+    createdAt: '22 de Outubro de 2022',
     title: 'Como incentivei meu filho a ter vontade de comer saudável',
     content:
       'Não faz muito tempo que comecei a pesquisar os benefícios que uma dieta saudável poderiam gerar para o Pedrinho, meu filho mais novo e que   possui TDAH...',
@@ -59,7 +75,10 @@ const Post = () => (
         <Text color="gray.500" marginTop={7}>
           Não faz muito tempo que comecei a pesquisar os benefícios que uma
           dieta saudável poderiam gerar para o Pedrinho, meu filho mais novo e
-          que possui TDAH...
+          que possui TDAH
+          <Text color="blue.500" marginTop={7} underline>
+            ...Ver mais
+          </Text>
         </Text>
       </Flex>
       <HStack direction="row" space={5} marginTop={3}>
@@ -96,23 +115,24 @@ const categories = [
 ];
 
 export const Home = () => {
+  const { user } = useAuth();
   return (
     <Flex flex={1}>
       <Flex
-        paddingTop={9}
-        paddingX={10}
-        paddingBottom={6}
+        paddingTop={12}
+        paddingX={4}
+        paddingBottom={9}
         backgroundColor="darkBlue.700"
         width="100%"
         direction="row"
       >
         <Flex>
-          <Heading color="white">Olá, Katrina</Heading>
+          <Heading color="white">Olá, {user?.name}</Heading>
           <Text color="gray.400" marginTop={3}>
             Encontre e compartilhe experiências no fórum
           </Text>
         </Flex>
-        <Avatar backgroundColor={'orange.500'}>AK</Avatar>
+        <Avatar backgroundColor={'orange.500'}>{user?.name[0]}</Avatar>
       </Flex>
       <Flex
         backgroundColor="gray.50"
@@ -120,6 +140,7 @@ export const Home = () => {
         borderTopLeftRadius={8}
         borderTopRightRadius={8}
         marginTop={-4}
+        paddingBottom={40}
       >
         <Flex
           marginTop={6}
@@ -162,13 +183,12 @@ export const Home = () => {
         </Flex>
 
         <ScrollView
+          marginTop={6}
+          paddingX={4}
           width={'100%'}
-          display="flex"
-          flexDirection="row"
-          showsHorizontalScrollIndicator={true}
+          height={20}
+          showsHorizontalScrollIndicator
           horizontal={true}
-          paddingTop={6}
-          padding={2}
         >
           {categories.map((category) => (
             <Button
