@@ -71,7 +71,7 @@ export function FormInput({
           {isTextArea && (
             <Stack space={4}>
               <TextArea
-                height={260}
+                h={260}
                 borderColor={[
                   isFilled && !error ? 'green.500' : 'gray.400',
                   error ? 'red.500' : 'gray.400',
