@@ -9,4 +9,7 @@ export class CreateSubcategoryDto {
 
   @ApiProperty()
   title: string;
+
+  @ApiProperty()
+  categoriesIds?: string[];
 }
