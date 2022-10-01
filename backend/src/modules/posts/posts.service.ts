@@ -1,5 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/shared/database/prisma.service';
+import {
+  PaginateOptions,
+  parsePaginationToPrisma,
+} from 'src/shared/utils/parsePaginationToPrisma';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 
@@ -18,8 +23,15 @@ export class PostsService {
     return this.prisma.post.create({ data: createPostDto });
   }
 
-  findAll() {
-    return this.prisma.post.findMany({
+  async findAll(options: PaginateOptions) {
+    const { skip, take, originalTake, where, orderBy } =
+      parsePaginationToPrisma<Prisma.PostWhereInput>(options);
+
+    return await this.prisma.post.findMany({
+      skip,
+      take,
+      where,
+      orderBy,
       include: {
         _count: countLikesAndCommentsQuery,
       },
