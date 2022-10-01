@@ -16,15 +16,20 @@ import {
   Select,
   CheckIcon,
   WarningOutlineIcon,
+  TextArea,
+  Container,
 } from 'native-base';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import {
+  Dimensions,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  TextInput,
   TouchableWithoutFeedback,
+  View,
 } from 'react-native';
 import * as yup from 'yup';
 
@@ -137,7 +142,7 @@ export const FormCreatePost = () => {
           </Alert>
 
           <Box>
-            <Controller
+            {/**<Controller
               control={control}
               name="category"
               rules={{ required: true }}
@@ -224,7 +229,7 @@ export const FormCreatePost = () => {
                   )}
                 </FormControl>
               )}
-            ></Controller>
+                  ></Controller>*/}
 
             <ControlledInput
               control={control}
@@ -260,17 +265,19 @@ export const FormCreatePost = () => {
               rules={{ required: true }}
               render={({ field: { value } }) => (
                 <FormControl
-                  w="100%"
+                  width="100%"
                   isRequired
                   isInvalid={value ? false : true}
                 >
                   <HStack
                     alignContent={'center'}
+                    alignItems={'center'}
                     justifyContent="space-between"
+                    marginTop={'4'}
                   >
                     <Text>Formatos aceitos: png e jpg.</Text>
                     <Button
-                      width="32"
+                      width="24"
                       leftIcon={
                         <Icon
                           as={Ionicons}
@@ -293,6 +300,7 @@ export const FormCreatePost = () => {
               )}
             ></Controller>
           </Box>
+
           <HStack width="100%" marginTop="8" justifyContent="space-between">
             <Button
               width={'32'}
