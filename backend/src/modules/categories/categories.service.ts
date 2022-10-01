@@ -26,11 +26,26 @@ export class CategoriesService {
     return category;
   }
 
-  update(id: string, updateCategoryDto: UpdateCategoryDto) {
-    return this.prisma.category.update({
+  async update(id: string, updateCategoryDto: UpdateCategoryDto) {
+    const category = await this.prisma.category.update({
       where: { id },
       data: updateCategoryDto,
     });
+
+    if (updateCategoryDto.icon) {
+      await this.prisma.subcategory.updateMany({
+        where: {
+          categoriesIds: {
+            has: id,
+          },
+        },
+        data: {
+          icon: updateCategoryDto.icon,
+        },
+      });
+    }
+
+    return category;
   }
 
   remove(id: string) {
