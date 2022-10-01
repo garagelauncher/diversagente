@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/shared/database/prisma.service';
 import { CreateSubcategoryDto } from './dto/create-subcategory.dto';
 import { UpdateSubcategoryDto } from './dto/update-subcategory.dto';
@@ -7,8 +7,26 @@ import { UpdateSubcategoryDto } from './dto/update-subcategory.dto';
 export class SubcategoriesService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(createSubcategoryDto: CreateSubcategoryDto) {
-    return this.prisma.subcategory.create({ data: createSubcategoryDto });
+  async create(createSubcategoryDto: CreateSubcategoryDto) {
+    const categoriesIds = createSubcategoryDto.categoriesIds;
+    const hasCategory =
+      Array.isArray(categoriesIds) && categoriesIds.length > 0;
+
+    if (hasCategory) {
+      const category = await this.prisma.category.findUnique({
+        where: { id: categoriesIds[0] },
+      });
+
+      if (!category) {
+        throw new NotFoundException(`Category ${categoriesIds[0]} not found`);
+      }
+
+      Object.assign(createSubcategoryDto, {
+        icon: category.icon,
+      });
+    }
+
+    return await this.prisma.subcategory.create({ data: createSubcategoryDto });
   }
 
   findAll() {
