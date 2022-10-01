@@ -47,7 +47,7 @@ export function FormInput({
   return (
     <SafeAreaView>
       <KeyboardAvoidingView behavior="padding" flex={1}>
-        <VStack paddingY={'2'}>
+        <VStack>
           <FormControl.Label isRequired={!hasImage ? true : false}>
             <Text fontSize="18" fontWeight="bold" marginBottom="2">
               {label}
@@ -71,7 +71,7 @@ export function FormInput({
           {isTextArea && (
             <Stack space={4}>
               <TextArea
-                h={260}
+                height={260}
                 borderColor={[
                   isFilled && !error ? 'green.500' : 'gray.400',
                   error ? 'red.500' : 'gray.400',
