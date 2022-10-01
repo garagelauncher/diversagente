@@ -19,7 +19,7 @@ import {
   TextArea,
   Container,
 } from 'native-base';
-import React from 'react';
+import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import {
   Dimensions,
@@ -70,6 +70,7 @@ const schema = yup.object({
 });
 
 export const FormCreatePost = () => {
+  const [isClosed, setIsClosed] = useState(false);
   logger.success('FormCreatePost');
   const {
     control,
@@ -82,6 +83,10 @@ export const FormCreatePost = () => {
   const onSubmit = (data: CreatePostFormData) => {
     console.log('submiting with ', data);
   };
+
+  function handleOnClose() {
+    setIsClosed(true);
+  }
 
   return (
     <ScrollView>
@@ -101,45 +106,50 @@ export const FormCreatePost = () => {
             }}
           />
 
-          <Alert maxW="400" status="warning" colorScheme="orange">
-            <VStack space={2} flexShrink={1} w="100%">
-              <HStack
-                flexShrink={1}
-                space={2}
-                alignItems="center"
-                justifyContent="space-between"
-              >
-                <HStack flexShrink={1} space={2} alignItems="center">
-                  <Alert.Icon />
-                  <Text fontSize="16" fontWeight="medium">
-                    Antes de criar postagens
-                  </Text>
+          {!isClosed && (
+            <Alert maxW="400" status="warning" colorScheme="orange">
+              <VStack space={2} flexShrink={1} w="100%">
+                <HStack
+                  flexShrink={1}
+                  space={2}
+                  alignItems="center"
+                  justifyContent="space-between"
+                >
+                  <HStack flexShrink={1} space={2} alignItems="center">
+                    <Alert.Icon />
+                    <Text fontSize="16" fontWeight="medium">
+                      Antes de criar postagens
+                    </Text>
+                  </HStack>
+                  <IconButton
+                    variant="unstyled"
+                    _focus={{
+                      borderWidth: 0,
+                    }}
+                    onPress={() => {
+                      handleOnClose();
+                    }}
+                    icon={<CloseIcon size="3" />}
+                    _icon={{
+                      color: 'coolGray.600',
+                    }}
+                  />
                 </HStack>
-                <IconButton
-                  variant="unstyled"
-                  _focus={{
-                    borderWidth: 0,
-                  }}
-                  icon={<CloseIcon size="3" />}
-                  _icon={{
+                <Box
+                  pl="6"
+                  _text={{
                     color: 'coolGray.600',
                   }}
-                />
-              </HStack>
-              <Box
-                pl="6"
-                _text={{
-                  color: 'coolGray.600',
-                }}
-              >
-                <Text>
-                  Lembre-se de ser respeitoso e de que essa comunidade é voltada
-                  para ajudar pais, familiares e amigos de crianças
-                  neurodiversas.
-                </Text>
-              </Box>
-            </VStack>
-          </Alert>
+                >
+                  <Text>
+                    Lembre-se de ser respeitoso e de que essa comunidade é
+                    voltada para ajudar pais, familiares e amigos de crianças
+                    neurodiversas.
+                  </Text>
+                </Box>
+              </VStack>
+            </Alert>
+          )}
 
           <Box>
             {/**<Controller
