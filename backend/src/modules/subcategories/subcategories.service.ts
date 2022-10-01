@@ -7,8 +7,8 @@ import { UpdateSubcategoryDto } from './dto/update-subcategory.dto';
 export class SubcategoriesService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createSubcategoryDto: CreateSubcategoryDto) {
-    const categoriesIds = createSubcategoryDto.categoriesIds;
+  private async getIconFromSubcategory(subcategoryDto: UpdateSubcategoryDto) {
+    const categoriesIds = subcategoryDto.categoriesIds;
     const hasCategory =
       Array.isArray(categoriesIds) && categoriesIds.length > 0;
 
@@ -21,10 +21,16 @@ export class SubcategoriesService {
         throw new NotFoundException(`Category ${categoriesIds[0]} not found`);
       }
 
-      Object.assign(createSubcategoryDto, {
-        icon: category.icon,
-      });
+      return category.icon;
     }
+
+    return null;
+  }
+
+  async create(createSubcategoryDto: CreateSubcategoryDto) {
+    Object.assign(createSubcategoryDto, {
+      icon: await this.getIconFromSubcategory(createSubcategoryDto),
+    });
 
     return await this.prisma.subcategory.create({ data: createSubcategoryDto });
   }
@@ -40,8 +46,12 @@ export class SubcategoriesService {
     });
   }
 
-  update(id: string, updateSubcategoryDto: UpdateSubcategoryDto) {
-    return this.prisma.subcategory.update({
+  async update(id: string, updateSubcategoryDto: UpdateSubcategoryDto) {
+    Object.assign(updateSubcategoryDto, {
+      icon: await this.getIconFromSubcategory(updateSubcategoryDto),
+    });
+
+    return await this.prisma.subcategory.update({
       where: { id },
       data: updateSubcategoryDto,
     });
