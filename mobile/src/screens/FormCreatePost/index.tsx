@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import {
   VStack,
   Button,
@@ -11,36 +12,28 @@ import {
   IconButton,
   Text,
   Divider,
-  Icon,
-  FormControl,
-  Select,
-  CheckIcon,
-  WarningOutlineIcon,
-  TextArea,
-  Container,
 } from 'native-base';
 import React, { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import {
-  Dimensions,
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  TextInput,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+import { useForm } from 'react-hook-form';
+import { Keyboard, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import * as yup from 'yup';
 
 import { ControlledInput } from '@src/components/ControlledInput';
+import { Post } from '@src/contracts/Post';
+import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
+import { diversaGenteServices } from '@src/services/diversaGente';
 import { logger } from '@src/utils/logger';
+
+type FormCreatePostNavigationProps = NavigationProp<
+  StackForumNavigatorParamList,
+  'FormCreatePost'
+>;
 
 type CreatePostFormData = {
   title: string;
   content: string;
-  category: string;
-  subcategory: string;
+  category?: string;
+  subcategory?: string;
   image?: string;
   imageDescription?: string;
 };
@@ -48,29 +41,33 @@ type CreatePostFormData = {
 const schema = yup.object({
   title: yup
     .string()
-    .trim()
-    .max(40, 'O título só pode ter até 40 caracteres.')
+    .min(6, 'O título deve conter no mínimo 6 caracteres.')
+    .max(40, 'O título deve conter no máximo 40 caracteres.')
     .required('Título é obrigatório.'),
   content: yup
     .string()
-    .trim()
-    .min(140, 'Mínimo de 140 caracteres')
-    .max(1800, 'Mínimo de 6 caracteres')
+    .min(140, 'O conteúdo deve conter no mínimo 140 caracteres')
+    .max(1800, 'O conteúdo deve conter no máximo 1800 caracteres')
     .required('Conteúdo é obrigatório.'),
-  imageDescription: yup
-    .string()
-    .notRequired()
-    .min(8, 'Mínimo de 140 caracteres')
-    .max(200, 'Máximo de 200 caracteres.')
-    .transform((value) => (value ? value : null))
-    .nullable(),
-  category: yup.string().required(),
-  subcategory: yup.string().required(),
-  image: yup.string(),
+  // image: yup.string().optional(),
+  // imageDescription: yup
+  // .string()
+  // .trim()
+  // .optional()
+  // .min(8, 'Mínimo de 140 caracteres')
+  // .max(200, 'Máximo de 200 caracteres.')
+  // .transform((value) => (value ? value : null))
+  // .nullable(),
+  // category: yup.string().optional(),
+  // subcategory: yup.string().optional(),
 });
 
 export const FormCreatePost = () => {
   const [isClosed, setIsClosed] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigation = useNavigation<FormCreatePostNavigationProps>();
+
   logger.success('FormCreatePost');
   const {
     control,
@@ -81,11 +78,32 @@ export const FormCreatePost = () => {
   });
 
   const onSubmit = (data: CreatePostFormData) => {
-    console.log('submiting with ', data);
+    console.log('submiting with ', JSON.stringify(data));
+    createPost(data);
   };
 
-  function handleOnClose() {
+  const handleOnClose = () => {
     setIsClosed(true);
+  };
+
+  const handleNavigateGoBack = () => {
+    navigation.goBack();
+  };
+
+  async function createPost(
+    data: CreatePostFormData,
+  ): Promise<Post | undefined> {
+    setIsLoading(true);
+    try {
+      const createdPost = await diversaGenteServices.createPost(data);
+      navigation.navigate('Forum');
+      return createdPost;
+    } catch (error) {
+      console.error('failed to create');
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -94,7 +112,7 @@ export const FormCreatePost = () => {
         <VStack space={4} marginTop="16" padding="8">
           <HStack alignContent={'center'} justifyContent="space-between">
             <Heading>Nova postagem</Heading>
-            <CloseIcon marginTop="2" />
+            <CloseIcon onPress={handleNavigateGoBack} marginTop="2" />
           </HStack>
           <Divider
             my="2"
@@ -126,9 +144,7 @@ export const FormCreatePost = () => {
                     _focus={{
                       borderWidth: 0,
                     }}
-                    onPress={() => {
-                      handleOnClose();
-                    }}
+                    onPress={handleOnClose}
                     icon={<CloseIcon size="3" />}
                     _icon={{
                       color: 'coolGray.600',
@@ -247,7 +263,7 @@ export const FormCreatePost = () => {
               label={'Título'}
               error={errors.title}
               isTextArea={false}
-              placeholder="Máximo de 40 caracteres."
+              placeholder="Caracteres: máximo de 40 e mínimo de 6"
             ></ControlledInput>
 
             <ControlledInput
@@ -256,10 +272,10 @@ export const FormCreatePost = () => {
               label={'Conteúdo'}
               error={errors.content}
               isTextArea={true}
-              placeholder="Máximo de 1800 caracteres."
+              placeholder="Caracteres: máximo de 1800 e mínimo de 140"
             ></ControlledInput>
 
-            <ControlledInput
+            {/*<ControlledInput
               control={control}
               name="imageDescription"
               label={'Imagem'}
@@ -267,8 +283,9 @@ export const FormCreatePost = () => {
               isTextArea={false}
               hasImage={true}
               placeholder="Descrição textual, máximo de 200 caracteres."
-            ></ControlledInput>
+                ></ControlledInput> */}
 
+            {/*
             <Controller
               control={control}
               name={'image'}
@@ -308,15 +325,16 @@ export const FormCreatePost = () => {
                   )}
                 </FormControl>
               )}
-            ></Controller>
+            ></Controller>*/}
           </Box>
 
-          <HStack width="100%" marginTop="8" justifyContent="space-between">
+          <HStack width="100%" marginTop="5" justifyContent="space-between">
             <Button
               width={'32'}
               colorScheme="blue"
               variant="outline"
               borderColor="blue.500"
+              onPress={handleNavigateGoBack}
             >
               Cancelar
             </Button>
@@ -325,6 +343,7 @@ export const FormCreatePost = () => {
               onPress={handleSubmit(onSubmit)}
               colorScheme="blue"
               type="submit"
+              isLoading={isLoading}
             >
               Criar
             </Button>
