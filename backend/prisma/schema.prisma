@@ -122,8 +122,8 @@ model Post {
 
   owner User @relation(fields: [ownerId], references: [id])
 
-  Like    Like[]
-  Comment Comment[]
+  likes    Like[]
+  comments Comment[]
 }
 
 model Review {
