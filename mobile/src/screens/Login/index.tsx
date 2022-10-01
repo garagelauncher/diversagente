@@ -1,7 +1,8 @@
 import { AntDesign } from '@expo/vector-icons';
-import { Button, Flex, Heading, Icon, Text } from 'native-base';
+import { Box, Button, Flex, Heading, Icon, Image, Text } from 'native-base';
 import { useState } from 'react';
 
+import DiversagenteLogo from '@src/assets/splash.png';
 import { apiBaseUrl, Oauth2 } from '@src/configs';
 import { useAuth } from '@src/hooks/useAuth';
 
@@ -28,16 +29,23 @@ export const Login = () => {
       alignItems="center"
       backgroundColor="blue.100"
     >
-      <Heading>DiversaGente</Heading>
+      <Flex alignItems="center">
+        <Heading>diversaGente</Heading>
+        <Image source={DiversagenteLogo} alt="Diversagente" />
+      </Flex>
       <Button
-        leftIcon={<Icon as={AntDesign} name="google" />}
+        leftIcon={<Icon as={AntDesign} name="google" size={5} />}
         colorScheme="red"
         borderRadius={4}
         onPress={handleLogin}
         size="sm"
         isLoading={isLoading}
+        height={16}
+        width={225}
       >
-        <Text color="white">Entrar com o Google</Text>
+        <Text color="white" fontSize="md">
+          Entrar com o Google
+        </Text>
       </Button>
       <Button
         size={'lg'}
