@@ -31,63 +31,40 @@ export function FormInput({
   error,
   ...rest
 }: FormInputProps) {
-  const [isFocused, setIsFocused] = useState(false);
-  const [isFilled, setIsFilled] = useState(false);
-
   console.log(error);
 
-  function handleInputBlur() {
-    setIsFocused(false);
-    setIsFilled(!!value);
-  }
-
-  function handleInputFocus() {
-    setIsFocused(true);
-  }
   return (
     <SafeAreaView>
-      <KeyboardAvoidingView behavior="padding" flex={1}>
-        <VStack>
-          <FormControl.Label isRequired={!hasImage ? true : false}>
-            <Text fontSize="18" fontWeight="bold" marginBottom="2">
-              {label}
-            </Text>
-          </FormControl.Label>
-          {!isTextArea && (
+      <VStack>
+        <FormControl.Label isRequired={!hasImage ? true : false}>
+          <Text fontSize="18" fontWeight="bold" marginBottom="2">
+            {label}
+          </Text>
+        </FormControl.Label>
+        {!isTextArea && (
+          <Stack space={4}>
             <Input
-              borderColor={[
-                isFilled && !error ? 'green.500' : 'gray.400',
-                error ? 'red.500' : 'gray.400',
-              ]}
+              borderColor={[error ? 'red.500' : 'blue.800']}
               size="md"
-              onBlur={handleInputBlur}
-              onFocus={handleInputFocus}
               placeholder={placeholder}
-              width={'100%'}
               value={value}
               {...rest}
             />
-          )}
-          {isTextArea && (
-            <Stack space={4}>
-              <TextArea
-                h={260}
-                borderColor={[
-                  isFilled && !error ? 'green.500' : 'gray.400',
-                  error ? 'red.500' : 'gray.400',
-                ]}
-                size="md"
-                numberOfLines={450}
-                onBlur={handleInputBlur}
-                onFocus={handleInputFocus}
-                placeholder="Máximo de 1800 caracteres."
-                autoCompleteType="off"
-                {...rest}
-              />
-            </Stack>
-          )}
-        </VStack>
-      </KeyboardAvoidingView>
+          </Stack>
+        )}
+        {isTextArea && (
+          <Stack space={4}>
+            <TextArea
+              h={260}
+              borderColor={[error ? 'red.500' : 'blue.800']}
+              size="md"
+              placeholder={placeholder}
+              autoCompleteType="off"
+              {...rest}
+            />
+          </Stack>
+        )}
+      </VStack>
     </SafeAreaView>
   );
 }

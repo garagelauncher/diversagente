@@ -12,10 +12,17 @@ import {
   IconButton,
   Text,
   Divider,
+  View,
 } from 'native-base';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Keyboard, ScrollView, TouchableWithoutFeedback } from 'react-native';
+import {
+  Keyboard,
+  ScrollView,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import * as yup from 'yup';
 
 import { ControlledInput } from '@src/components/ControlledInput';
@@ -78,7 +85,7 @@ export const FormCreatePost = () => {
   });
 
   const onSubmit = (data: CreatePostFormData) => {
-    console.log('submiting with ', JSON.stringify(data));
+    console.log('submiting with ', data);
     createPost(data);
   };
 
@@ -107,68 +114,69 @@ export const FormCreatePost = () => {
   }
 
   return (
-    <ScrollView>
+    <KeyboardAvoidingView behavior={'height'}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <VStack space={4} marginTop="16" padding="8">
-          <HStack alignContent={'center'} justifyContent="space-between">
-            <Heading>Nova postagem</Heading>
-            <CloseIcon onPress={handleNavigateGoBack} marginTop="2" />
-          </HStack>
-          <Divider
-            my="2"
-            _light={{
-              bg: 'muted.300',
-            }}
-            _dark={{
-              bg: 'muted.50',
-            }}
-          />
+        <ScrollView>
+          <VStack space={4} marginTop="16" padding="8">
+            <HStack alignContent={'center'} justifyContent="space-between">
+              <Heading>Nova postagem</Heading>
+              <CloseIcon onPress={handleNavigateGoBack} marginTop="2" />
+            </HStack>
+            <Divider
+              my="2"
+              _light={{
+                bg: 'muted.300',
+              }}
+              _dark={{
+                bg: 'muted.50',
+              }}
+            />
 
-          {!isClosed && (
-            <Alert maxW="400" status="warning" colorScheme="orange">
-              <VStack space={2} flexShrink={1} w="100%">
-                <HStack
-                  flexShrink={1}
-                  space={2}
-                  alignItems="center"
-                  justifyContent="space-between"
-                >
-                  <HStack flexShrink={1} space={2} alignItems="center">
-                    <Alert.Icon />
-                    <Text fontSize="16" fontWeight="medium">
-                      Antes de criar postagens
-                    </Text>
+            {!isClosed && (
+              <Alert maxW="400" status="warning" colorScheme="orange">
+                <VStack space={2} flexShrink={1} w="100%">
+                  <HStack
+                    flexShrink={1}
+                    space={2}
+                    alignItems="center"
+                    justifyContent="space-between"
+                  >
+                    <HStack flexShrink={1} space={2} alignItems="center">
+                      <Alert.Icon />
+                      <Text fontSize="16" fontWeight="medium">
+                        Antes de criar postagens
+                      </Text>
+                    </HStack>
+                    <IconButton
+                      variant="unstyled"
+                      _focus={{
+                        borderWidth: 0,
+                      }}
+                      onPress={handleOnClose}
+                      icon={<CloseIcon size="3" />}
+                      _icon={{
+                        color: 'coolGray.600',
+                      }}
+                    />
                   </HStack>
-                  <IconButton
-                    variant="unstyled"
-                    _focus={{
-                      borderWidth: 0,
-                    }}
-                    onPress={handleOnClose}
-                    icon={<CloseIcon size="3" />}
-                    _icon={{
+                  <Box
+                    pl="6"
+                    _text={{
                       color: 'coolGray.600',
                     }}
-                  />
-                </HStack>
-                <Box
-                  pl="6"
-                  _text={{
-                    color: 'coolGray.600',
-                  }}
-                >
-                  <Text>
-                    Lembre-se de ser respeitoso e de que essa comunidade é
-                    voltada para ajudar pais, familiares e amigos de crianças
-                    neurodiversas.
-                  </Text>
-                </Box>
-              </VStack>
-            </Alert>
-          )}
+                  >
+                    <Text>
+                      Lembre-se de ser respeitoso e de que essa comunidade é
+                      voltada para ajudar pais, familiares e amigos de crianças
+                      neurodiversas.
+                    </Text>
+                  </Box>
+                </VStack>
+              </Alert>
+            )}
 
-          <Box>
-            {/**<Controller
+            <Box>
+              {/**<Controller
               control={control}
               name="category"
               rules={{ required: true }}
@@ -257,25 +265,25 @@ export const FormCreatePost = () => {
               )}
                   ></Controller>*/}
 
-            <ControlledInput
-              control={control}
-              name="title"
-              label={'Título'}
-              error={errors.title}
-              isTextArea={false}
-              placeholder="Caracteres: máximo de 40 e mínimo de 6"
-            ></ControlledInput>
+              <ControlledInput
+                control={control}
+                name="title"
+                label={'Título'}
+                error={errors.title}
+                isTextArea={false}
+                placeholder="Caracteres: máximo de 40 e mínimo de 6"
+              ></ControlledInput>
 
-            <ControlledInput
-              control={control}
-              name="content"
-              label={'Conteúdo'}
-              error={errors.content}
-              isTextArea={true}
-              placeholder="Caracteres: máximo de 1800 e mínimo de 140"
-            ></ControlledInput>
+              <ControlledInput
+                control={control}
+                name="content"
+                label={'Conteúdo'}
+                error={errors.content}
+                isTextArea={true}
+                placeholder="Caracteres: máximo de 1800 e mínimo de 140"
+              ></ControlledInput>
 
-            {/*<ControlledInput
+              {/*<ControlledInput
               control={control}
               name="imageDescription"
               label={'Imagem'}
@@ -285,7 +293,7 @@ export const FormCreatePost = () => {
               placeholder="Descrição textual, máximo de 200 caracteres."
                 ></ControlledInput> */}
 
-            {/*
+              {/*
             <Controller
               control={control}
               name={'image'}
@@ -326,30 +334,31 @@ export const FormCreatePost = () => {
                 </FormControl>
               )}
             ></Controller>*/}
-          </Box>
+            </Box>
 
-          <HStack width="100%" marginTop="5" justifyContent="space-between">
-            <Button
-              width={'32'}
-              colorScheme="blue"
-              variant="outline"
-              borderColor="blue.500"
-              onPress={handleNavigateGoBack}
-            >
-              Cancelar
-            </Button>
-            <Button
-              width={'32'}
-              onPress={handleSubmit(onSubmit)}
-              colorScheme="blue"
-              type="submit"
-              isLoading={isLoading}
-            >
-              Criar
-            </Button>
-          </HStack>
-        </VStack>
+            <HStack width="100%" marginTop="5" justifyContent="space-between">
+              <Button
+                width={'32'}
+                colorScheme="blue"
+                variant="outline"
+                borderColor="blue.500"
+                onPress={handleNavigateGoBack}
+              >
+                Cancelar
+              </Button>
+              <Button
+                width={'32'}
+                onPress={handleSubmit(onSubmit)}
+                colorScheme="blue"
+                type="submit"
+                isLoading={isLoading}
+              >
+                Criar
+              </Button>
+            </HStack>
+          </VStack>
+        </ScrollView>
       </TouchableWithoutFeedback>
-    </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
