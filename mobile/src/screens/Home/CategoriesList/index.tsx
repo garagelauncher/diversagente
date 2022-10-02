@@ -1,9 +1,7 @@
 import { Button, ScrollView } from 'native-base';
 import { FunctionComponent } from 'react';
 
-type Category = {
-  name: string;
-};
+import { Category } from '@src/contracts/Category';
 
 type CategoriesListProps = {
   categories: Category[];
@@ -32,7 +30,7 @@ export const CategoriesList: FunctionComponent<CategoriesListProps> = ({
           height={10}
           key={category.name}
         >
-          {category.name}
+          {category.title}
         </Button>
       ))}
       <Button variant="outline" height={10} marginLeft={5} marginRight={15}>
