@@ -24,7 +24,7 @@ export class PostsService {
   }
 
   async findAll(options: PaginateOptions) {
-    const { skip, take, originalTake, where, orderBy } =
+    const { skip, take, where, orderBy } =
       parsePaginationToPrisma<Prisma.PostWhereInput>(options);
 
     return await this.prisma.post.findMany({
@@ -34,6 +34,7 @@ export class PostsService {
       orderBy,
       include: {
         _count: countLikesAndCommentsQuery,
+        owner: true,
       },
     });
   }
@@ -45,6 +46,7 @@ export class PostsService {
       },
       include: {
         _count: countLikesAndCommentsQuery,
+        owner: true,
       },
     });
     return post;
