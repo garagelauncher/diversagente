@@ -1,4 +1,4 @@
-import { FlatList, Flex, Heading } from 'native-base';
+import { FlatList, Flex, Heading, Box } from 'native-base';
 
 import { CategoriesList } from './CategoriesList';
 import { CreatePostForm } from './CreatePostForm';
@@ -34,7 +34,7 @@ export const Home = () => {
         subtitle="Compartilhe experiências no fórum"
       />
       <Flex
-        backgroundColor="gray.50"
+        backgroundColor="gray.100"
         width="100%"
         borderTopLeftRadius={8}
         borderTopRightRadius={8}
@@ -52,9 +52,13 @@ export const Home = () => {
         <FlatList
           width={'100%'}
           data={posts}
-          renderItem={({ item }) => <Post post={item} isPreview />}
+          renderItem={({ item }) => (
+            <Box marginY={2}>
+              <Post post={item} isPreview />
+            </Box>
+          )}
           keyExtractor={(item) => item.id}
-          contentContainerStyle={{ paddingBottom: 400 }}
+          contentContainerStyle={{ paddingBottom: 350 }}
           onEndReached={() => console.log('end reached')}
         />
       </Flex>
