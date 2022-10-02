@@ -15,7 +15,6 @@ export const CategoriesList: FunctionComponent<CategoriesListProps> = ({
   return (
     <ScrollView
       marginTop={6}
-      paddingX={4}
       width={'100%'}
       height={20}
       showsHorizontalScrollIndicator
@@ -27,12 +26,13 @@ export const CategoriesList: FunctionComponent<CategoriesListProps> = ({
           fontWeight={600}
           variant="outline"
           marginLeft={5}
+          height={10}
           key={category.name}
         >
           {category.name}
         </Button>
       ))}
-      <Button variant="outline" marginLeft={5}>
+      <Button variant="outline" height={10} marginLeft={5} marginRight={15}>
         Ver mais
       </Button>
     </ScrollView>
