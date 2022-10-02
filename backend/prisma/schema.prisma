@@ -36,11 +36,8 @@ model User {
   preferences         Preference?
   lovelyCategoriesIds String[]    @db.ObjectId
 
-
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
 
   category Category? @relation(fields: [lovelyCategoriesIds], references: [id])
 
@@ -54,9 +51,11 @@ model User {
 }
 
 model Category {
-  id    String  @id @default(auto()) @map("_id") @db.ObjectId
-  name  String? @unique
-  title String?
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String? @unique
+  title       String?
+  icon        String?
+  description String?
 
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
@@ -67,9 +66,11 @@ model Category {
 }
 
 model Subcategory {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  name  String @unique
-  title String
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String  @unique
+  title       String
+  icon        String?
+  description String?
 
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
@@ -117,13 +118,12 @@ model Post {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-
   ownerId String @db.ObjectId
 
   owner User @relation(fields: [ownerId], references: [id])
 
-  Like    Like[]
-  Comment Comment[]
+  likes    Like[]
+  comments Comment[]
 }
 
 model Review {
@@ -154,7 +154,6 @@ model Location {
 
   address     String?
   description String?
-
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

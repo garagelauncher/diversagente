@@ -6,10 +6,12 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+import { ApiQuery } from '@nestjs/swagger';
 
 @Controller('posts')
 export class PostsController {
@@ -20,9 +22,38 @@ export class PostsController {
     return this.postsService.create(createPostDto);
   }
 
+  @ApiQuery({
+    name: 'filter',
+    type: String,
+    description: 'An optional filter',
+    example: `{"title":{"contains": "p"}}`,
+    required: false,
+  })
+  @ApiQuery({
+    name: 'sort',
+    type: String,
+    description: 'An optional sort',
+    example: `["createdAt", "DESC"]`,
+    required: false,
+  })
+  @ApiQuery({
+    name: 'range',
+    type: String,
+    description: 'A optional range',
+    example: `[1, 1]`,
+    required: false,
+  })
   @Get()
-  findAll() {
-    return this.postsService.findAll();
+  findAll(
+    @Query('filter') filter?: string,
+    @Query('sort') sort?: string,
+    @Query('range') range?: string,
+  ) {
+    return this.postsService.findAll({
+      filter,
+      sort,
+      range,
+    });
   }
 
   @Get(':id')
