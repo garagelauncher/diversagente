@@ -1,10 +1,10 @@
 import { diversagenteBaseApi } from '../baseUrl';
 
-import { Post } from '@src/contracts/Post';
+import { PostForm } from '@src/contracts/Post';
 
-export const createPost = async (post: Post) => {
+export const createPost = async (post: PostForm) => {
   try {
-    const response = await diversagenteBaseApi.post<Post>(`/posts`, post);
+    const response = await diversagenteBaseApi.post<PostForm>(`/posts`, post);
 
     const createdPost = response.data;
     console.info('created post');

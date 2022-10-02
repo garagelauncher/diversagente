@@ -1,4 +1,3 @@
-import { Ionicons } from '@expo/vector-icons';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import {
@@ -12,7 +11,6 @@ import {
   IconButton,
   Text,
   Divider,
-  View,
 } from 'native-base';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -21,12 +19,11 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
-  Platform,
 } from 'react-native';
 import * as yup from 'yup';
 
 import { ControlledInput } from '@src/components/ControlledInput';
-import { Post } from '@src/contracts/Post';
+import { PostForm } from '@src/contracts/Post';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
@@ -101,7 +98,7 @@ export const FormCreatePost = () => {
 
   async function createPost(
     data: CreatePostFormData,
-  ): Promise<Post | undefined> {
+  ): Promise<PostForm | undefined> {
     setIsLoading(true);
     try {
       const createdPost = await diversaGenteServices.createPost({
