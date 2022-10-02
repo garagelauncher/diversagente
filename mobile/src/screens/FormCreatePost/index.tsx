@@ -27,6 +27,7 @@ import * as yup from 'yup';
 
 import { ControlledInput } from '@src/components/ControlledInput';
 import { Post } from '@src/contracts/Post';
+import { useAuth } from '@src/hooks/useAuth';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
 import { logger } from '@src/utils/logger';
@@ -72,6 +73,7 @@ const schema = yup.object({
 export const FormCreatePost = () => {
   const [isClosed, setIsClosed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { user } = useAuth();
 
   const navigation = useNavigation<FormCreatePostNavigationProps>();
 
@@ -102,7 +104,10 @@ export const FormCreatePost = () => {
   ): Promise<Post | undefined> {
     setIsLoading(true);
     try {
-      const createdPost = await diversaGenteServices.createPost(data);
+      const createdPost = await diversaGenteServices.createPost({
+        ...data,
+        ownerId: String(user?.id),
+      });
       navigation.navigate('Forum');
       return createdPost;
     } catch (error) {
