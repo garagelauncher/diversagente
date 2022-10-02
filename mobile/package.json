@@ -52,6 +52,7 @@
     "react-native-svg": "12.3.0",
     "react-native-web": "0.17.7",
     "react-native-webview": "11.18.1",
+    "react-query": "^3.39.2",
     "webpack-dev-server": "~3.11.0",
     "yup": "^0.32.11"
   },

@@ -7,9 +7,11 @@ import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { NativeBaseProvider, View } from 'native-base';
 import React, { useCallback, useEffect, useState } from 'react';
+import { QueryClientProvider } from 'react-query';
 
 import { AuthProvider } from '@src/providers/AuthProvider';
 import { Routes } from '@src/routes';
+import { queryClient } from '@src/services/queryClient';
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -43,13 +45,15 @@ export default function App() {
 
   return (
     <NativeBaseProvider>
-      <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-        <NavigationContainer>
-          <AuthProvider>
-            <Routes />
-          </AuthProvider>
-        </NavigationContainer>
-      </View>
+      <QueryClientProvider client={queryClient}>
+        <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+          <NavigationContainer>
+            <AuthProvider>
+              <Routes />
+            </AuthProvider>
+          </NavigationContainer>
+        </View>
+      </QueryClientProvider>
     </NativeBaseProvider>
   );
 }
