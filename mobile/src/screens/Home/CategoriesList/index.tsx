@@ -18,8 +18,11 @@ export const CategoriesList: FunctionComponent<CategoriesListProps> = ({
       width={'100%'}
       height={20}
       showsHorizontalScrollIndicator
-      horizontal={true}
+      horizontal
     >
+      <Button variant="outline" height={10} marginLeft={5}>
+        Todos
+      </Button>
       {categories.map((category) => (
         <Button
           colorScheme={'gray'}
