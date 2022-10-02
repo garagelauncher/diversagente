@@ -7,7 +7,8 @@ import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { NativeBaseProvider, View } from 'native-base';
 import React, { useCallback, useEffect, useState } from 'react';
-import { QueryClientProvider } from 'react-query';
+import { AppState, AppStateStatus, Platform } from 'react-native';
+import { QueryClientProvider, focusManager } from 'react-query';
 
 import { AuthProvider } from '@src/providers/AuthProvider';
 import { Routes } from '@src/routes';
@@ -15,6 +16,18 @@ import { queryClient } from '@src/services/queryClient';
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
+
+  function onAppStateChange(status: AppStateStatus) {
+    if (Platform.OS !== 'web') {
+      focusManager.setFocused(status === 'active');
+    }
+  }
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', onAppStateChange);
+
+    return () => subscription.remove();
+  }, []);
 
   useEffect(() => {
     async function prepareApp() {
