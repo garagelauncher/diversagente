@@ -3,11 +3,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import { Platform } from 'react-native';
 
-import { theme } from '../../styles/theme';
 import { StackChatPrivateRoutes } from '../stacks/chatStack.routes';
 import { StackForumPrivateRoutes } from '../stacks/forumStack.routes';
 import { StackLocationPrivateRoutes } from '../stacks/locationStack.routes';
 import { StackProfilePrivateRoutes } from '../stacks/profileStack.routes';
+
+import { theme } from '@src/styles/theme';
 
 export type RootBottomTabParamList = {
   LocationsStack: undefined;
@@ -23,7 +24,7 @@ export function TabRoutes() {
   return (
     <Navigator
       screenOptions={{
-        tabBarActiveTintColor: theme.colors.bluePrimary,
+        tabBarActiveTintColor: theme.colors.darkBlue700,
         tabBarInactiveTintColor: 'gray',
         tabBarLabelPosition: 'beside-icon',
         tabBarStyle: {

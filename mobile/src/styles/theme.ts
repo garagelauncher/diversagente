@@ -1,11 +1,19 @@
 export const theme = {
   colors: {
-    orangePrimary: '#FA9600',
-    yellowPrimary: '#FFDB11',
-    pastelPrimary: '#FFF1A4',
-    bluePrimary: '#36A9E1',
-    navyPrimary: '#004AAD',
+    darkBlue700: '#004282',
+    light50: '#fafaf9',
+    blue200: '#bfdbfe',
 
-    lightGray: '#F2F3F5',
+    infoBoxColor: '#FED7AA',
+
+    selectButtonTextColor: '#F2867C6',
+    selectButtonBackgroundColor: '#8FB1E3',
+
+    primaryColor: '#FFFFFF',
+    warmGray200: '#e7e5e4',
+    warmGray700: '#44403c',
+
+    orange: '#FF5F1F',
+    grey: '#fafaf9',
   },
 };

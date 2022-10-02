@@ -32,7 +32,7 @@ export const AddSubCategories = () => {
   }, [fetchAllCategories]);
 
   return (
-    <ScrollView backgroundColor={theme.colors.lightGray}>
+    <ScrollView backgroundColor={theme.colors.warmGray200}>
       <Box flex={1}>
         <UserAvatar />
       </Box>
