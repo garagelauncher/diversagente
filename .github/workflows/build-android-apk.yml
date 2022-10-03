@@ -1,0 +1,40 @@
+name: Generate Android APK
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - mobile/**
+  pull_request:
+    branches:
+      - develop
+    paths:
+      - mobile/**
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🏗 Setup repo
+        uses: actions/checkout@v3
+
+      - name: 🏗 Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: 🏗 Setup Expo and EAS
+        uses: expo/expo-github-action@v7
+        with:
+          expo-version: latest
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+          expo-cache: true
+
+      - name: 📦 Install dependencies
+        run: npm install
+
+      - name: 🚀 Build app
+        run: eas build -p android --profile local --non-interactive
