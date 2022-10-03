@@ -1,6 +1,13 @@
 import { Feather } from '@expo/vector-icons';
-import { FlatList, Flex, Heading, Box, IconButton } from 'native-base';
-import { useCallback, useState } from 'react';
+import {
+  FlatList,
+  Flex,
+  Heading,
+  Box,
+  IconButton,
+  useToast,
+} from 'native-base';
+import { useCallback, useEffect, useState } from 'react';
 
 import { CategoriesList } from './CategoriesList';
 import { CreatePostForm } from './CreatePostForm';
@@ -12,21 +19,39 @@ import { useCategories } from '@src/hooks/queries/useCategories';
 import { useAuth } from '@src/hooks/useAuth';
 
 export const Home = () => {
+  const toast = useToast();
   const { user } = useAuth();
+
+  const posts: PostData[] = [];
+
   const {
     data: categories = [],
     isLoading: isLoadingCategories,
     isSuccess: isSuccessCategories,
+    isError: isErrorCategories,
   } = useCategories();
-  const isLoadedCategories = isSuccessCategories && !isLoadingCategories;
+  console.debug('top isErrorCategories', isErrorCategories);
+  const isLoadedCategories =
+    isSuccessCategories && !isLoadingCategories && !isErrorCategories;
 
   const [isReadingModeActive, setIsReadingModeActive] = useState(false);
 
   const toggleReadingMode = useCallback(() => {
-    setIsReadingModeActive((prevState) => !prevState);
+    setIsReadingModeActive(
+      (previousIsReadingModeActive) => !previousIsReadingModeActive,
+    );
   }, []);
 
-  const posts: PostData[] = [];
+  if (isErrorCategories) {
+    toast.show({
+      title: 'Tente novamente mais tarde',
+      description: 'Erro ao carregar categorias ',
+      backgroundColor: 'red.500',
+      duration: 3000,
+      placement: 'top',
+    });
+  }
+
   return (
     <Flex flex={1}>
       <Header
