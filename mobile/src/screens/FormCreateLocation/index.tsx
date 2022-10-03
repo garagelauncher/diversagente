@@ -1,4 +1,3 @@
-import { Feather } from '@expo/vector-icons';
 import {
   NavigationProp,
   RouteProp,
@@ -18,9 +17,9 @@ import {
   VStack,
 } from 'native-base';
 import { useCallback, useEffect, useState } from 'react';
-import { Alert, Dimensions, Linking, StyleSheet } from 'react-native';
-import { RectButton, TouchableOpacity } from 'react-native-gesture-handler';
-import MapView, { LatLng, MapEvent, Marker, Region } from 'react-native-maps';
+import { Alert, Dimensions, StyleSheet } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import MapView, { Marker, Region } from 'react-native-maps';
 
 import { baseCoordinates } from '@src/configs';
 import { useAuth } from '@src/hooks/useAuth';
