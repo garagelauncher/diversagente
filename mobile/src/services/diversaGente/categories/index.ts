@@ -8,8 +8,13 @@ export const findAllCategories = async () => {
     const categories = response.data;
     console.info('CATEGORIES', categories);
     return categories;
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    console.error('error when fetchin all categories');
+
+    if (error.isAxiosError) {
+      console.error(error.response);
+    }
+
     throw error;
   }
 };
