@@ -1,5 +1,5 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { Box, Button, Heading, ScrollView, Text } from 'native-base';
+import { Box, Button, Heading, Text } from 'native-base';
 
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
 
@@ -10,7 +10,12 @@ type ForumScreenNavigationProps = NavigationProp<
 
 export const Forum = () => {
   const navigation = useNavigation<ForumScreenNavigationProps>();
+  // const [categories, setCategories] = useState<Category[]>([]);
+  // const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
 
+  function handleNavigateToCreatePost() {
+    navigation.navigate('FormCreatePost');
+  }
   const handleSelectCategory = () => {
     navigation.navigate('SelectCategory');
   };
@@ -32,6 +37,7 @@ export const Forum = () => {
       <Text>Para Dezembro de 2022</Text>
       <Button onPress={handleSelectCategory}>Selecionar categoria</Button>
       <Button onPress={handleSelectSubcategory}>Selecionar subcategoria</Button>
+      <Button onPress={handleNavigateToCreatePost}>Criar post</Button>
     </Box>
   );
 };

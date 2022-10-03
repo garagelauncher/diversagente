@@ -1,7 +1,19 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/shared/database/prisma.service';
+import {
+  PaginateOptions,
+  parsePaginationToPrisma,
+} from 'src/shared/utils/parsePaginationToPrisma';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+
+const countLikesAndCommentsQuery = {
+  select: {
+    comments: true,
+    likes: true,
+  },
+};
 
 @Injectable()
 export class PostsService {
@@ -11,14 +23,30 @@ export class PostsService {
     return this.prisma.post.create({ data: createPostDto });
   }
 
-  findAll() {
-    return this.prisma.post.findMany({});
+  async findAll(options: PaginateOptions) {
+    const { skip, take, where, orderBy } =
+      parsePaginationToPrisma<Prisma.PostWhereInput>(options);
+
+    return await this.prisma.post.findMany({
+      skip,
+      take,
+      where,
+      orderBy,
+      include: {
+        _count: countLikesAndCommentsQuery,
+        owner: true,
+      },
+    });
   }
 
   async findOne(id: string) {
     const post = await this.prisma.post.findUnique({
       where: {
         id,
+      },
+      include: {
+        _count: countLikesAndCommentsQuery,
+        owner: true,
       },
     });
     return post;
