@@ -1,5 +1,7 @@
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import * as ImagePicker from 'expo-image-picker';
 import {
   VStack,
   Button,
@@ -11,9 +13,12 @@ import {
   IconButton,
   Text,
   Divider,
+  FormControl,
+  Icon,
+  WarningOutlineIcon,
 } from 'native-base';
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import {
   Keyboard,
   ScrollView,
@@ -54,7 +59,7 @@ const schema = yup.object({
     .min(140, 'O conteúdo deve conter no mínimo 140 caracteres')
     .max(1800, 'O conteúdo deve conter no máximo 1800 caracteres')
     .required('Conteúdo é obrigatório.'),
-  // image: yup.string().optional(),
+  image: yup.mixed().optional(),
   // imageDescription: yup
   // .string()
   // .trim()
@@ -74,7 +79,21 @@ export const FormCreatePost = () => {
 
   const navigation = useNavigation<FormCreatePostNavigationProps>();
 
-  logger.success('FormCreatePost');
+  const pickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      console.log('no result');
+    }
+  };
+
   const {
     control,
     handleSubmit,
@@ -177,8 +196,7 @@ export const FormCreatePost = () => {
               </Alert>
             )}
 
-            <Box>
-              {/**<Controller
+            {/**<Controller
               control={control}
               name="category"
               rules={{ required: true }}
@@ -267,25 +285,25 @@ export const FormCreatePost = () => {
               )}
                   ></Controller>*/}
 
-              <ControlledInput
-                control={control}
-                name="title"
-                label={'Título'}
-                error={errors.title}
-                isTextArea={false}
-                placeholder="Caracteres: máximo de 40 e mínimo de 6"
-              ></ControlledInput>
+            <ControlledInput
+              control={control}
+              name="title"
+              label={'Título'}
+              error={errors.title}
+              isTextArea={false}
+              placeholder="Caracteres: máximo de 40 e mínimo de 6"
+            ></ControlledInput>
 
-              <ControlledInput
-                control={control}
-                name="content"
-                label={'Conteúdo'}
-                error={errors.content}
-                isTextArea={true}
-                placeholder="Caracteres: máximo de 1800 e mínimo de 140"
-              ></ControlledInput>
+            <ControlledInput
+              control={control}
+              name="content"
+              label={'Conteúdo'}
+              error={errors.content}
+              isTextArea={true}
+              placeholder="Caracteres: máximo de 1800 e mínimo de 140"
+            ></ControlledInput>
 
-              {/*<ControlledInput
+            {/*<ControlledInput
               control={control}
               name="imageDescription"
               label={'Imagem'}
@@ -295,7 +313,6 @@ export const FormCreatePost = () => {
               placeholder="Descrição textual, máximo de 200 caracteres."
                 ></ControlledInput> */}
 
-              {/*
             <Controller
               control={control}
               name={'image'}
@@ -314,7 +331,8 @@ export const FormCreatePost = () => {
                   >
                     <Text>Formatos aceitos: png e jpg.</Text>
                     <Button
-                      width="24"
+                      width={'40'}
+                      onPress={pickImage}
                       leftIcon={
                         <Icon
                           as={Ionicons}
@@ -335,8 +353,7 @@ export const FormCreatePost = () => {
                   )}
                 </FormControl>
               )}
-            ></Controller>*/}
-            </Box>
+            ></Controller>
 
             <HStack width="100%" marginTop="5" justifyContent="space-between">
               <Button
