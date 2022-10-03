@@ -1,47 +1,50 @@
-name: Deploy API to Development env
+name: Generate Android APK WITHOUT waiting to complete
 
 on:
   push:
     branches:
+      - main
       - develop
     paths:
-      - backend/**
+      - mobile/**
+  pull_request:
+    branches:
+      - develop
+    paths:
+      - mobile/**
 
 jobs:
   build:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./backend
+        working-directory: ./mobile
 
     steps:
-      - name: Download code
+      - name: 🏗 Setup repo
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: 🏗 Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 16
           cache: "npm"
 
-      - name: Install dependencies
+      - name: 🏗 Setup Expo and EAS
+        uses: expo/expo-github-action@v7
+        with:
+          expo-version: latest
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+          expo-cache: true
+
+      - name: 📦 Install dependencies
         run: npm install
 
-      - name: Run linters
-        run: npm run lint
+      - name: 🚀 Build app
+        run: eas build -p android --profile local --non-interactive --no-wait
 
-      - name: Run tests
-        run: npm test
-
-      - name: Deploy to Heroku
-        uses: akhileshns/heroku-deploy@v3.12.12
-        with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ secrets.HEROKU_APP_NAME_DEV }}
-          heroku_email: ${{ secrets.HEROKU_APP_EMAIL }}
-          appdir: backend
-
-      - name: Success deploy - Discord
+      - name: Success build - Discord
         if: success()
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
@@ -49,7 +52,7 @@ jobs:
           DISCORD_AVATAR: https://static.wikia.nocookie.net/universocinematograficomarvel/images/b/b0/JuARaVeInSy.png/revision/latest?cb=20150919150102&path-prefix=pt
         uses: Ilshidur/action-discord@master
         with:
-          args: "@everyone ${{ github.actor }} Fez um deploy com SUCESSO do {{ EVENT_PAYLOAD.repository.full_name }} em DESENVOLVIMENTO."
+          args: "@everyone ${{ github.actor }} requisitou um APK Android com SUCESSO do {{ EVENT_PAYLOAD.repository.full_name }}."
 
       - name: Failed deploy - Discord
         if: failure()
@@ -59,4 +62,4 @@ jobs:
           DISCORD_AVATAR: https://static.wikia.nocookie.net/universocinematograficomarvel/images/b/b0/JuARaVeInSy.png/revision/latest?cb=20150919150102&path-prefix=pt
         uses: Ilshidur/action-discord@master
         with:
-          args: "@everyone ${{ github.actor }} Tentou fazer um deploy com FALHA do {{ EVENT_PAYLOAD.repository.full_name }} em DESENVOLVIMENTO."
+          args: "@everyone ${{ github.actor }} tentou requisitar um APK com FALHA do {{ EVENT_PAYLOAD.repository.full_name }}"
