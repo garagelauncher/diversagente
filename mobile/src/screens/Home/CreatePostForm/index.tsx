@@ -1,7 +1,20 @@
 import { AntDesign } from '@expo/vector-icons';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Button, Flex, Icon, Input } from 'native-base';
 
+import { StackHomeNavigatorParamList } from '@src/routes/stacks/homeStack.routes';
+
+type HomeScreenNavigationProps = NavigationProp<
+  StackHomeNavigatorParamList,
+  'Home'
+>;
+
 export const CreatePostForm = () => {
+  const navigation = useNavigation<HomeScreenNavigationProps>();
+
+  function handleOnPress() {
+    navigation.navigate('FormCreatePost');
+  }
   return (
     <Flex
       marginTop={6}
@@ -33,6 +46,7 @@ export const CreatePostForm = () => {
         height={35}
         marginLeft={2}
         backgroundColor={'white'}
+        onPress={handleOnPress}
       >
         <Icon
           as={AntDesign}

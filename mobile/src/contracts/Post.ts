@@ -16,3 +16,13 @@ export type Post = {
   owner: Owner;
   _count: PostCount;
 };
+
+export interface PostForm {
+  title: string;
+  content: string;
+  ownerId: string;
+  category?: string;
+  subcategory?: string;
+  image?: string;
+  imageDescription?: string;
+}

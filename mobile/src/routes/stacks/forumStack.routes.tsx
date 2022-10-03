@@ -1,7 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { FormCreatePost } from '@src/screens/FormCreatePost';
-import { Forum } from '@src/screens/Forum';
 import { CategoriesList } from '@src/screens/Forums/CategoriesList';
 import { SubcategoriesList } from '@src/screens/Forums/SubcategoriesList';
 import { Home } from '@src/screens/Home';
