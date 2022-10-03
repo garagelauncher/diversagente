@@ -7,22 +7,26 @@ import {
   IconButton,
   useToast,
 } from 'native-base';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { CategoriesList } from './CategoriesList';
 import { CreatePostForm } from './CreatePostForm';
 import { Header } from './Header';
 
 import { Post } from '@src/components/Post';
-import type { Post as PostData } from '@src/contracts/Post';
 import { useCategories } from '@src/hooks/queries/useCategories';
+import { usePosts } from '@src/hooks/queries/usePosts';
 import { useAuth } from '@src/hooks/useAuth';
 
 export const Home = () => {
   const toast = useToast();
   const { user } = useAuth();
 
-  const posts: PostData[] = [];
+  const { data: posts } = usePosts({
+    range: [0, 10],
+    sort: ['createdAt', 'DESC'],
+    filter: {},
+  });
 
   const {
     data: categories = [],

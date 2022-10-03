@@ -2,6 +2,7 @@ import { diversagenteBaseApi } from '../baseUrl';
 
 import { PaginateOptions } from '@src/contracts/PaginateOptions';
 import { PostForm, Post } from '@src/contracts/Post';
+import { parsePagination } from '@src/utils/parsePagination';
 
 export const createPost = async (post: PostForm) => {
   try {
@@ -24,7 +25,7 @@ export const findAllPosts = async (options: PaginateOptions = {}) => {
   try {
     const response = await diversagenteBaseApi.get<Post[]>(`/posts`, {
       params: {
-        ...options,
+        ...parsePagination(options),
       },
     });
 
