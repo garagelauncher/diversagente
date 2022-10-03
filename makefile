@@ -2,9 +2,9 @@
 LOCALDIR = $(shell pwd)/
 SCRIPTS_FOLDER = scripts
 OS := $(shell uname)
-GOURCE_TITLE = Agosto
-GOURCE_START_DATE = '2022-04-10 23:59:59 +24'
-GOURCE_END_DATE = '2022-05-11 00:00:00 +24'
+GOURCE_TITLE = 'Setembro'
+GOURCE_START_DATE = '2022-09-01 00:00:00 +24'
+GOURCE_END_DATE = '2022-10-01 00:00:00 +24'
 
 # generate venv
 venv:
@@ -84,3 +84,18 @@ gource:
 	gource  --font-scale 1.3  --highlight-dirs  --file-idle-time 0  --filename-time 4  --filename-colour 555555  --dir-colour 555555  --key  --max-user-speed 100  --highlight-users  --bloom-multiplier 2.0  --bloom-intensity 0.1  --multi-sampling  --camera-mode overview  --auto-skip-seconds 0.1  --seconds-per-day 2 --title $(GOURCE_TITLE) --start-date  $(GOURCE_START_DATE) --stop-date  $(GOURCE_END_DATE) --user-image-dir ./.github/avatars
 	@echo
 	@echo "Gource executado com sucesso"
+
+enable_npm_proxy:
+	@echo
+	@echo "Ativando proxy do npm..."
+	@echo
+	@echo "$(shell date)"
+	@echo
+	@echo Proxy HTTP "$(http_proxy)"
+	@echo
+	@echo Proxy HTTPS "$(https_proxy)"
+	@echo
+	npm config set proxy $(http_proxy)
+	npm config set https-proxy $(https_proxy)
+	@echo
+	@echo "Proxy do npm ativado com sucesso"
