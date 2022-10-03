@@ -2,6 +2,7 @@ export const theme = {
   colors: {
     darkBlue700: '#004282',
     light50: '#fafaf9',
+    blue100: '#dbeafe',
     blue200: '#bfdbfe',
 
     infoBoxColor: '#FED7AA',
