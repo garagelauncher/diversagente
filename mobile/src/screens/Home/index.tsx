@@ -1,37 +1,27 @@
 import { Feather } from '@expo/vector-icons';
 import { FlatList, Flex, Heading, Box, IconButton } from 'native-base';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { CategoriesList } from './CategoriesList';
 import { CreatePostForm } from './CreatePostForm';
 import { Header } from './Header';
 
 import { Post } from '@src/components/Post';
-import { Category } from '@src/contracts/Category';
+import type { Post as PostData } from '@src/contracts/Post';
+import { useCategories } from '@src/hooks/queries/useCategories';
 import { useAuth } from '@src/hooks/useAuth';
-import { diversaGenteServices } from '@src/services/diversaGente';
-import { posts } from '@src/utils/fakeData';
 
 export const Home = () => {
   const { user } = useAuth();
+  const { data: categories = [] } = useCategories();
 
   const [isReadingModeActive, setIsReadingModeActive] = useState(false);
-
-  const [categories, setCategories] = useState<Category[]>([]);
 
   const toggleReadingMode = useCallback(() => {
     setIsReadingModeActive((prevState) => !prevState);
   }, []);
 
-  const fetchCategories = useCallback(async () => {
-    const foundCategories = await diversaGenteServices.findAllCategories();
-    setCategories(foundCategories);
-  }, [setCategories]);
-
-  useEffect(() => {
-    fetchCategories();
-  }, [fetchCategories]);
-
+  const posts: PostData[] = [];
   return (
     <Flex flex={1}>
       <Header
