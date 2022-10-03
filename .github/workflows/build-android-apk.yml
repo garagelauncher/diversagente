@@ -1,4 +1,4 @@
-name: Generate Android APK
+name: Generate Android APK WITHOUT waiting to complete
 
 on:
   push:
@@ -42,4 +42,4 @@ jobs:
         run: npm install
 
       - name: 🚀 Build app
-        run: eas build -p android --profile local --non-interactive
+        run: eas build -p android --profile local --non-interactive --no-wait
