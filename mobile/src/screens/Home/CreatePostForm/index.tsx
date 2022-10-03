@@ -12,7 +12,7 @@ type HomeScreenNavigationProps = NavigationProp<
 export const CreatePostForm = () => {
   const navigation = useNavigation<HomeScreenNavigationProps>();
 
-  function handleOnPress() {
+  function handleNavigateToFormCreatePost() {
     navigation.navigate('FormCreatePost');
   }
   return (
@@ -46,7 +46,7 @@ export const CreatePostForm = () => {
         height={35}
         marginLeft={2}
         backgroundColor={'white'}
-        onPress={handleOnPress}
+        onPress={handleNavigateToFormCreatePost}
       >
         <Icon
           as={AntDesign}
