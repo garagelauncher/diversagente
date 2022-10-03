@@ -13,7 +13,12 @@ import { useAuth } from '@src/hooks/useAuth';
 
 export const Home = () => {
   const { user } = useAuth();
-  const { data: categories = [] } = useCategories();
+  const {
+    data: categories = [],
+    isLoading: isLoadingCategories,
+    isSuccess: isSuccessCategories,
+  } = useCategories();
+  const isLoadedCategories = isSuccessCategories && !isLoadingCategories;
 
   const [isReadingModeActive, setIsReadingModeActive] = useState(false);
 
@@ -41,7 +46,10 @@ export const Home = () => {
           <>
             <CreatePostForm />
 
-            <CategoriesList categories={categories} />
+            <CategoriesList
+              categories={categories}
+              isLoaded={isLoadedCategories}
+            />
           </>
         )}
 
