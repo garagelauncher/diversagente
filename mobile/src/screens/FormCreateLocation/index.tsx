@@ -230,9 +230,7 @@ export const FormCreateLocation = () => {
           <Button
             style={{
               ...styles.createBottom,
-              backgroundColor: shouldNotActiveForm
-                ? 'gray'
-                : theme.colors.navyPrimary,
+              backgroundColor: shouldNotActiveForm ? 'gray' : 'navy',
               marginTop: 20,
               marginBottom: 40,
             }}
@@ -260,7 +258,7 @@ const styles = StyleSheet.create({
   },
 
   nextButton: {
-    backgroundColor: theme.colors.orangePrimary,
+    backgroundColor: 'orange',
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
@@ -273,7 +271,7 @@ const styles = StyleSheet.create({
   },
 
   topButton: {
-    backgroundColor: theme.colors.pastelPrimary,
+    backgroundColor: theme.colors.infoBoxColor,
     justifyContent: 'center',
     alignItems: 'center',
     height: 56,
@@ -285,7 +283,7 @@ const styles = StyleSheet.create({
   },
 
   createBottom: {
-    backgroundColor: theme.colors.orangePrimary,
+    backgroundColor: 'orange',
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
