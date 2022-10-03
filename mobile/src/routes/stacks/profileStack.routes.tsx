@@ -1,6 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { Profile } from '@src/screens/Profile';
+import { EditPersonalInformation } from '@src/screens/Profile/EditPersonalInformation';
 import { EditProfile } from '@src/screens/Profile/EditProfile';
 
 export type StackProfileNavigatorParamList = {
@@ -19,7 +20,8 @@ export const StackProfilePrivateRoutes = () => {
       }}
     >
       {/* <Screen name="Profile" component={Profile} /> */}
-      <Screen name="Profile" component={EditProfile} />
+      {/* <Screen name="Profile" component={EditProfile} /> */}
+      <Screen name="Profile" component={EditPersonalInformation} />
     </Navigator>
   );
 };
