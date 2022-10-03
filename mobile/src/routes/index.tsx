@@ -10,6 +10,5 @@ export const Routes = () => {
     return <TabRoutes />;
   }
 
-  return <TabRoutes />;
-  //return <StackRoutes />;
+  return <StackRoutes />;
 };
