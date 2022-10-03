@@ -15,8 +15,8 @@ import React from 'react';
 import { theme } from '@src/styles/theme';
 
 export const DeleteAccount = () => (
-  <ScrollView>
-    <VStack width={'100%'} height={500} marginTop={70}>
+  <ScrollView height={'100%'}>
+    <VStack width={'100%'} height={500} marginTop={0}>
       <Text
         fontSize={'2xl'}
         textAlign={'center'}
@@ -68,12 +68,7 @@ export const DeleteAccount = () => (
       </Center>
 
       <Center>
-        <Alert
-          status={'warning'}
-          marginLeft={10}
-          marginRight={10}
-          marginTop={5}
-        >
+        <Alert status={'warning'} marginLeft={5} marginRight={5} marginTop={5}>
           <VStack space={2} flexShrink={1} w="100%">
             <HStack
               flexShrink={1}
@@ -107,7 +102,7 @@ export const DeleteAccount = () => (
           </VStack>
         </Alert>
       </Center>
-      <Flex direction="row" marginTop={10} marginLeft={30} marginRight={30}>
+      <Flex direction="row" marginTop={30} marginLeft={30} marginRight={30}>
         <Button
           background={theme.colors.primaryColor}
           width={150}
