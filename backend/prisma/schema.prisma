@@ -63,6 +63,7 @@ model Category {
   Subcategory Subcategory[]
   Location    Location[]
   User        User[]
+  Post        Post[]
 }
 
 model Subcategory {
@@ -77,6 +78,8 @@ model Subcategory {
 
   category      Category? @relation(fields: [categoriesIds], references: [id])
   categoriesIds String[]  @db.ObjectId
+
+  Post        Post[]
 }
 
 model Like {
@@ -113,15 +116,22 @@ model Post {
   id      String   @id @default(auto()) @map("_id") @db.ObjectId
   title   String
   content String
+  isActive Boolean @default(true)
+
   images  String[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  deletedAt DateTime?
 
   ownerId String @db.ObjectId
+  categoryId String? @db.ObjectId
+  subcategoryId String? @db.ObjectId
 
   owner User @relation(fields: [ownerId], references: [id])
-
+  category Category? @relation(fields: [categoryId], references: [id])
+  subcategory Subcategory? @relation(fields: [subcategoryId], references: [id])
+  
   likes    Like[]
   comments Comment[]
 }
