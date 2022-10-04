@@ -38,7 +38,13 @@ export const Post: FunctionComponent<PostProps> = ({
   return (
     <Flex backgroundColor="white" borderRadius={6} paddingX={6} paddingY={5}>
       <Flex direction="row">
-        <Avatar borderRadius={6} backgroundColor="green.600">
+        <Avatar
+          borderRadius={6}
+          backgroundColor="green.600"
+          source={{
+            uri: String(post.owner.picture),
+          }}
+        >
           {userInitials}
         </Avatar>
         <Flex marginLeft={5}>
