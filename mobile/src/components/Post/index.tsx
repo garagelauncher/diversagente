@@ -40,7 +40,7 @@ export const Post: FunctionComponent<PostProps> = ({
       <Flex direction="row">
         <Avatar
           borderRadius={6}
-          backgroundColor="green.600"
+          backgroundColor={post.owner.picture ? 'transparent' : 'primary.500'}
           source={{
             uri: String(post.owner.picture),
           }}
