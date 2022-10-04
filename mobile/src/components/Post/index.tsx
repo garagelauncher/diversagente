@@ -1,4 +1,4 @@
-import { Fontisto } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import { Avatar, Flex, Heading, HStack, Icon, Text } from 'native-base';
 import { FunctionComponent } from 'react';
 
@@ -12,7 +12,7 @@ export type PostProps = {
 
 export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
   const userInitials = getUsernameInitials(post.owner.username);
-  const contentPreview = post.content.slice(0, 140);
+  const contentPreview = post.content.slice(0, 255);
 
   return (
     <Flex backgroundColor="white" borderRadius={6} paddingX={6} paddingY={5}>
@@ -40,13 +40,13 @@ export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
 
       <HStack direction="row" space={5} marginTop={3}>
         <Flex direction="row" alignItems="center">
-          <Icon as={Fontisto} name="like" size={7} />
+          <Icon as={Feather} name="heart" size={7} />
           <Text marginLeft={2} fontSize={18}>
             {post._count.likes}
           </Text>
         </Flex>
         <Flex direction="row" alignItems="center">
-          <Icon as={Fontisto} name="commenting" size={7} />
+          <Icon as={Feather} name="message-circle" size={7} />
           <Text marginLeft={2} fontSize={18}>
             {post._count.comments}
           </Text>

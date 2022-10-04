@@ -5,6 +5,8 @@ OS := $(shell uname)
 GOURCE_TITLE = 'Setembro'
 GOURCE_START_DATE = '2022-09-01 00:00:00 +24'
 GOURCE_END_DATE = '2022-10-01 00:00:00 +24'
+REMOTE_USERNAME = ''
+REMOTE_EMAIL = ''
 
 # generate venv
 venv:
@@ -99,3 +101,28 @@ enable_npm_proxy:
 	npm config set https-proxy $(https_proxy)
 	@echo
 	@echo "Proxy do npm ativado com sucesso"
+
+initialize_remote:
+	@echo
+	@echo "Inicializando remote work..."
+	@echo
+	@echo "$(shell date)"
+	@echo
+	@echo Proxy HTTP "$(http_proxy)"
+	@echo
+	@echo Proxy HTTPS "$(https_proxy)"
+	@echo
+	make enable_npm_proxy
+	@echo
+	@echo "Instalando módulos do backend..."
+	@echo
+	npm install
+	@echo "Customizando usuário do github"
+	@echo
+	git config user.name $(REMOTE_USERNAME)
+	@echo "Customizando usuário do github"
+	@echo
+	git config user.email $(REMOTE_EMAIL)
+	@echo Usando username: "$(git config --get user.name)"
+	@echo
+	@echo Usando email: "$(git config --get user.email)"

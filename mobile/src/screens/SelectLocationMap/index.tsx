@@ -7,7 +7,6 @@ import MapView, { MapEvent, Marker, Region } from 'react-native-maps';
 
 import { baseCoordinates } from '@src/configs';
 import { StackLocationNavigatorParamList } from '@src/routes/stacks/locationStack.routes';
-import { theme } from '@src/styles/theme';
 
 type SelectLocationMapScreenNavigationProps = NavigationProp<
   StackLocationNavigatorParamList,
@@ -141,7 +140,7 @@ const styles = StyleSheet.create({
   },
 
   nextButton: {
-    backgroundColor: theme.colors.orangePrimary,
+    backgroundColor: 'orange',
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
@@ -167,7 +166,7 @@ const styles = StyleSheet.create({
   },
 
   createBottom: {
-    backgroundColor: theme.colors.orangePrimary,
+    backgroundColor: 'orange',
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',

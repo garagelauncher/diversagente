@@ -1,6 +1,8 @@
 import { diversagenteBaseApi } from '../baseUrl';
 
-import { PostForm } from '@src/contracts/Post';
+import { PaginateOptions } from '@src/contracts/PaginateOptions';
+import { PostForm, Post } from '@src/contracts/Post';
+import { parsePagination } from '@src/utils/parsePagination';
 
 export const createPost = async (post: PostForm) => {
   try {
@@ -15,6 +17,27 @@ export const createPost = async (post: PostForm) => {
     if (error.isAxiosError) {
       console.warn(error.response);
     }
+    throw error;
+  }
+};
+
+export const findAllPosts = async (options: PaginateOptions = {}) => {
+  try {
+    const response = await diversagenteBaseApi.get<Post[]>(`/posts`, {
+      params: {
+        ...parsePagination(options),
+      },
+    });
+
+    const posts = response.data;
+    return posts;
+  } catch (error: any) {
+    console.error('error when fetching posts');
+
+    if (error.isAxiosError) {
+      console.error(error.response);
+    }
+
     throw error;
   }
 };
