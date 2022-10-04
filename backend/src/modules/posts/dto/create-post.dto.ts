@@ -9,4 +9,10 @@ export class CreatePostDto {
 
   @ApiProperty()
   ownerId: string;
+
+  @ApiProperty()
+  categoryId?: string;
+
+  @ApiProperty()
+  subcategoryId?: string;
 }
