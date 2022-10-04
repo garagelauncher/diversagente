@@ -4,6 +4,7 @@ import { FunctionComponent } from 'react';
 
 import type { Post as PostData } from '@src/contracts/Post';
 import { getUsernameInitials } from '@src/utils/getUsernameInitials';
+import { formatDateSocialMedia } from '@src/utils/time';
 
 export type PostProps = {
   post: PostData;
@@ -14,6 +15,8 @@ export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
   const userInitials = getUsernameInitials(post.owner.username);
   const contentPreview = post.content.slice(0, 255);
 
+  const formattedCreatedAtDate = formatDateSocialMedia(post.createdAt);
+
   return (
     <Flex backgroundColor="white" borderRadius={6} paddingX={6} paddingY={5}>
       <Flex direction="row">
@@ -22,7 +25,7 @@ export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
         </Avatar>
         <Flex marginLeft={5}>
           <Text fontWeight={'bold'}>{post.owner.name}</Text>
-          <Text color="gray.500">{post.createdAt}</Text>
+          <Text color="gray.500">{formattedCreatedAtDate}</Text>
         </Flex>
       </Flex>
 
@@ -40,7 +43,14 @@ export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
 
       <HStack direction="row" space={5} marginTop={3}>
         <Flex direction="row" alignItems="center">
-          <Icon as={Feather} name="heart" size={7} />
+          <Icon
+            as={Feather}
+            name="heart"
+            size={7}
+            fill="red.500"
+            color="blue"
+            borderRadius={6}
+          />
           <Text marginLeft={2} fontSize={18}>
             {post._count.likes}
           </Text>
