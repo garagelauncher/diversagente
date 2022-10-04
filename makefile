@@ -7,6 +7,7 @@ GOURCE_START_DATE = '2022-09-01 00:00:00 +24'
 GOURCE_END_DATE = '2022-10-01 00:00:00 +24'
 REMOTE_USERNAME = ''
 REMOTE_EMAIL = ''
+NODE_VERSION = 12
 
 # generate venv
 venv:
@@ -102,6 +103,34 @@ enable_npm_proxy:
 	@echo
 	@echo "Proxy do npm ativado com sucesso"
 
+prepare_nvm:
+	@echo
+	@echo "Preparand ambiente Node.js"
+	@echo
+	@echo "$(shell date)"
+	@echo
+	@echo Instalando NVM - Node Version Manager
+	@echo
+	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+	@echo
+	exec bash
+
+.PHONY: prepare_node
+prepare_node:
+	@echo NVM instalado na versão: 
+	@echo
+	$(nvm -v)
+	@echo Instalando node na versão: $(NODE_VERSION)
+	@echo
+	. ${HOME}/.nvm/nvm.sh && nvm install $(NODE_VERSION)
+	@echo Ativando Node.js na vesão: $(NODE_VERSION)
+	@echo
+	. ${HOME}/.nvm/nvm.sh && nvm use $(NODE_VERSION)
+	@echo
+	@echo Node ativado na versão:
+	@echo
+	node -v
+
 initialize_remote:
 	@echo
 	@echo "Inicializando remote work..."
@@ -114,7 +143,7 @@ initialize_remote:
 	@echo
 	make enable_npm_proxy
 	@echo
-	@echo "Instalando módulos do backend..."
+	@echo "Instalando módulos..."
 	@echo
 	npm install
 	@echo "Customizando usuário do github"
@@ -123,6 +152,7 @@ initialize_remote:
 	@echo "Customizando usuário do github"
 	@echo
 	git config user.email $(REMOTE_EMAIL)
-	@echo Usando username: "$(git config --get user.name)"
-	@echo
-	@echo Usando email: "$(git config --get user.email)"
+	@echo Usando username:
+	git config --get user.name
+	@echo Usando email:
+	git config --get user.email
