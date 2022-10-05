@@ -18,7 +18,7 @@ export class CommentsController {
   @Post()
   create(
     @Param('postId') postId: string,
-    @Body() createCommentDto: CreateCommentDto,
+    @Body() createCommentDto: Omit<CreateCommentDto, 'postId'>,
   ) {
     return this.commentsService.create({ ...createCommentDto, postId });
   }
@@ -39,7 +39,7 @@ export class CommentsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.commentsService.remove(id);
+  remove(@Param('postId') postId: string, @Param('id') id: string) {
+    return this.commentsService.remove({ id, postId });
   }
 }
