@@ -1,6 +1,7 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/shared/database/prisma.service';
 import { CreateLikeDto } from './dto/create-like.dto';
+import { DeleteLikeDto } from './dto/delete-like.dto';
 import { UpdateLikeDto } from './dto/update-like.dto';
 
 @Injectable()
@@ -36,7 +37,8 @@ export class LikesService {
     });
   }
 
-  remove(id: string) {
+  remove({ postId, id }: DeleteLikeDto) {
+    Logger.warn(`Removed like ${id} from post ${postId}`);
     return this.prisma.like.delete({ where: { id } });
   }
 }
