@@ -13,7 +13,8 @@ import { CategoriesList } from './CategoriesList';
 import { CreatePostForm } from './CreatePostForm';
 import { Header } from './Header';
 
-import { Post } from '@src/components/Post';
+import { Post, UserHasInteracted } from '@src/components/Post';
+import { userIdHelper } from '@src/configs';
 import { useCategories } from '@src/hooks/queries/useCategories';
 import { usePosts } from '@src/hooks/queries/usePosts';
 import { useAuth } from '@src/hooks/useAuth';
@@ -22,10 +23,20 @@ export const Home = () => {
   const toast = useToast();
   const { user } = useAuth();
 
-  const { data: posts } = usePosts({
+  const { data: posts } = usePosts<UserHasInteracted>({
     range: [0, 10],
     sort: ['createdAt', 'DESC'],
     filter: {},
+    include: {
+      likes: {
+        select: { id: true },
+        where: { ownerId: user?.id ?? userIdHelper },
+      },
+      comments: {
+        select: { id: true },
+        where: { ownerId: user?.id ?? userIdHelper },
+      },
+    },
   });
 
   const {
@@ -34,7 +45,7 @@ export const Home = () => {
     isSuccess: isSuccessCategories,
     isError: isErrorCategories,
   } = useCategories();
-  console.debug('top isErrorCategories', isErrorCategories);
+
   const isLoadedCategories =
     isSuccessCategories && !isLoadingCategories && !isErrorCategories;
 
