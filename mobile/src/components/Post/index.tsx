@@ -11,21 +11,29 @@ import {
 } from 'native-base';
 import { FunctionComponent } from 'react';
 
+import { IncludeInto } from '@src/@types/generics/includeInto';
 import type { Post as PostData } from '@src/contracts/Post';
 import { getUsernameInitials } from '@src/utils/getUsernameInitials';
 import { formatDateSocialMedia } from '@src/utils/time';
 
-export type PostProps = {
-  post: PostData;
-  isPreview?: boolean;
-  hasLiked?: boolean;
+export type UserHasLiked = {
+  likes: { id: string }[];
 };
 
-export const Post: FunctionComponent<PostProps> = ({
-  post,
-  isPreview,
-  hasLiked = false,
-}) => {
+export type UserHasCommented = {
+  comments: { id: string }[];
+};
+
+export type UserHasInteracted = UserHasLiked & UserHasCommented;
+
+export type PostProps = {
+  post: IncludeInto<PostData, UserHasInteracted>;
+  isPreview?: boolean;
+};
+
+export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
+  const hasLiked = post.likes.length > 0;
+
   const userInitials = getUsernameInitials(post.owner.username);
   const contentPreview = post.content.slice(0, 255);
 

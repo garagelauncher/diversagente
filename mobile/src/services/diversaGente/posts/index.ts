@@ -1,5 +1,6 @@
 import { diversagenteBaseApi } from '../baseUrl';
 
+import { IncludeInto } from '@src/@types/generics/includeInto';
 import { PaginateOptions } from '@src/contracts/PaginateOptions';
 import { PostForm, Post } from '@src/contracts/Post';
 import { parsePagination } from '@src/utils/parsePagination';
@@ -21,9 +22,13 @@ export const createPost = async (post: PostForm) => {
   }
 };
 
-export const findAllPosts = async (options: PaginateOptions = {}) => {
+export const findAllPosts = async <GenericIncluded extends object = object>(
+  options: PaginateOptions = {},
+) => {
   try {
-    const response = await diversagenteBaseApi.get<Post[]>(`/posts`, {
+    const response = await diversagenteBaseApi.get<
+      IncludeInto<Post, GenericIncluded>[]
+    >(`/posts`, {
       params: {
         ...parsePagination(options),
       },
