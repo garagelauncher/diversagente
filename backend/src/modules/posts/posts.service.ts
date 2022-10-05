@@ -24,9 +24,11 @@ export class PostsService {
   }
 
   async findAll(options: PaginateOptions) {
-    const { skip, take, where, orderBy } =
-      parsePaginationToPrisma<Prisma.PostWhereInput>(options);
-
+    const { skip, take, where, orderBy, include } = parsePaginationToPrisma<
+      Prisma.PostWhereInput,
+      Prisma.PostInclude
+    >(options);
+    console.log(include);
     return await this.prisma.post.findMany({
       skip,
       take,
@@ -35,18 +37,26 @@ export class PostsService {
       include: {
         _count: countLikesAndCommentsQuery,
         owner: true,
+        ...include,
       },
     });
   }
 
-  async findOne(id: string) {
+  async findOne(id: string, options: PaginateOptions) {
+    const { where, include } = parsePaginationToPrisma<
+      Prisma.PostWhereInput,
+      Prisma.PostInclude
+    >(options);
+
     const post = await this.prisma.post.findUnique({
       where: {
         id,
+        ...where,
       },
       include: {
         _count: countLikesAndCommentsQuery,
         owner: true,
+        ...include,
       },
     });
     return post;
