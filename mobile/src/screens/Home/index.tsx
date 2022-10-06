@@ -14,7 +14,7 @@ import { CreatePostForm } from './CreatePostForm';
 import { Header } from './Header';
 
 import { Post, UserHasInteracted } from '@src/components/Post';
-import { userIdHelper } from '@src/configs';
+import { PER_PAGE_ITEMS, userIdHelper } from '@src/configs';
 import { useCategories } from '@src/hooks/queries/useCategories';
 import { usePosts } from '@src/hooks/queries/usePosts';
 import { useAuth } from '@src/hooks/useAuth';
@@ -23,8 +23,8 @@ export const Home = () => {
   const toast = useToast();
   const { user } = useAuth();
 
-  const { data: posts } = usePosts<UserHasInteracted>({
-    range: [0, 10],
+  const { data, hasNextPage, fetchNextPage } = usePosts<UserHasInteracted>({
+    range: [0, PER_PAGE_ITEMS],
     sort: ['createdAt', 'DESC'],
     filter: {},
     include: {
@@ -50,6 +50,12 @@ export const Home = () => {
     isSuccessCategories && !isLoadingCategories && !isErrorCategories;
 
   const [isReadingModeActive, setIsReadingModeActive] = useState(false);
+
+  const loadMore = () => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  };
 
   const toggleReadingMode = useCallback(() => {
     setIsReadingModeActive(
@@ -115,15 +121,15 @@ export const Home = () => {
 
         <FlatList
           width={'100%'}
-          data={posts}
+          data={data?.pages.map((page) => page.results).flat()}
           renderItem={({ item }) => (
             <Box marginBottom={4}>
               <Post post={item} isPreview />
             </Box>
           )}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id + Math.random()}
           contentContainerStyle={{ paddingBottom: 350 }}
-          onEndReached={() => console.log('end reached')}
+          onEndReached={loadMore}
         />
       </Flex>
     </Flex>
