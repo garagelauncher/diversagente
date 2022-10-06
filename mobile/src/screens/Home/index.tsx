@@ -6,6 +6,7 @@ import {
   Box,
   IconButton,
   useToast,
+  Spinner,
 } from 'native-base';
 import { useCallback, useState } from 'react';
 
@@ -23,21 +24,22 @@ export const Home = () => {
   const toast = useToast();
   const { user } = useAuth();
 
-  const { data, hasNextPage, fetchNextPage } = usePosts<UserHasInteracted>({
-    range: [0, PER_PAGE_ITEMS],
-    sort: ['createdAt', 'DESC'],
-    filter: {},
-    include: {
-      likes: {
-        select: { id: true },
-        where: { ownerId: user?.id ?? userIdHelper },
+  const { data, hasNextPage, fetchNextPage, isLoading, isFetchingNextPage } =
+    usePosts<UserHasInteracted>({
+      range: [0, PER_PAGE_ITEMS],
+      sort: ['createdAt', 'DESC'],
+      filter: {},
+      include: {
+        likes: {
+          select: { id: true },
+          where: { ownerId: user?.id ?? userIdHelper },
+        },
+        comments: {
+          select: { id: true },
+          where: { ownerId: user?.id ?? userIdHelper },
+        },
       },
-      comments: {
-        select: { id: true },
-        where: { ownerId: user?.id ?? userIdHelper },
-      },
-    },
-  });
+    });
 
   const {
     data: categories = [],
@@ -130,6 +132,10 @@ export const Home = () => {
           keyExtractor={(item) => item.id + Math.random()}
           contentContainerStyle={{ paddingBottom: 350 }}
           onEndReached={loadMore}
+          onEndReachedThreshold={0.3}
+          ListFooterComponent={
+            isFetchingNextPage ? <Spinner color="orange.500" size="lg" /> : null
+          }
         />
       </Flex>
     </Flex>
