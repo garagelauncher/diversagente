@@ -35,7 +35,7 @@ export const findAllPosts = async <GenericIncluded extends object = object>(
     });
 
     const posts = response.data;
-    return posts;
+    return { results: posts };
   } catch (error: any) {
     console.error('error when fetching posts');
 

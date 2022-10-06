@@ -3,4 +3,5 @@ export type PaginateOptions = {
   sort?: [string, 'ASC' | 'DESC'];
   filter?: Record<string, any>;
   include?: Record<string, any>;
+  cursor?: Record<string, any>;
 };
