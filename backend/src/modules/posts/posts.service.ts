@@ -25,9 +25,11 @@ export class PostsService {
 
   async findAll(options: PaginateOptions) {
     const { skip, take, where, orderBy, include, cursor } =
-      parsePaginationToPrisma<Prisma.PostWhereInput, Prisma.PostInclude>(
-        options,
-      );
+      parsePaginationToPrisma<
+        Prisma.PostWhereInput,
+        Prisma.PostInclude,
+        Prisma.PostWhereUniqueInput
+      >(options);
 
     return await this.prisma.post.findMany({
       skip,
