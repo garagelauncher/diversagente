@@ -44,9 +44,10 @@ describe('LikesService', () => {
   });
 
   it('should be able to delete a like from a post', async () => {
-    const deletedLike = await likeService.remove(
-      'pipipipipi-00000-popopopo-000000',
-    );
+    const deletedLike = await likeService.remove({
+      postId: 'pipipipipi-00000-popopopo-000000',
+      id: 'pipipipipi-00000-popopopo-000000',
+    });
     expect(deletedLike).toEqual(likeMock);
   });
 });
