@@ -10,9 +10,14 @@ import {
   Pressable,
 } from 'native-base';
 import { FunctionComponent } from 'react';
+import { useMutation } from 'react-query';
 
 import { IncludeInto } from '@src/@types/generics/includeInto';
+import { Like } from '@src/contracts/Like';
 import type { Post as PostData } from '@src/contracts/Post';
+import { useAuth } from '@src/hooks/useAuth';
+import { diversaGenteServices } from '@src/services/diversaGente';
+import { queryClient } from '@src/services/queryClient';
 import { getUsernameInitials } from '@src/utils/getUsernameInitials';
 import { formatDateSocialMedia } from '@src/utils/time';
 
@@ -32,6 +37,23 @@ export type PostProps = {
 };
 
 export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
+  const { user } = useAuth();
+
+  const onSuccessToggleLike = async (data: Like) => {
+    const post = await diversaGenteServices.findPostById(data.postId);
+
+    queryClient.invalidateQueries(['diversagente@posts']);
+    queryClient.setQueryData(['diversagente@posts', post.id], post);
+  };
+
+  const mutationCreateLike = useMutation(diversaGenteServices.createLike, {
+    onSuccess: onSuccessToggleLike,
+  });
+  const mutationDeleteLike = useMutation(diversaGenteServices.deleteLike, {
+    onSuccess: onSuccessToggleLike,
+  });
+
+  const isLiking = mutationCreateLike.isLoading || mutationDeleteLike.isLoading;
   const hasLiked = post.likes.length > 0;
 
   const userInitials = getUsernameInitials(post.owner.username);
@@ -39,8 +61,27 @@ export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
 
   const formattedCreatedAtDate = formatDateSocialMedia(post.createdAt);
 
-  const handleTogglePostLike = () => {
-    console.log('Like toggled');
+  const handleTogglePostLike = async () => {
+    try {
+      console.debug(`toggled by ${user?.id}`);
+
+      if (!hasLiked) {
+        console.debug(`Liked by ${user?.id}`);
+        await mutationCreateLike.mutateAsync({
+          postId: post.id,
+          ownerId: String(user?.id),
+        });
+      } else {
+        console.debug(`Unliked by ${user?.id}`);
+        await mutationDeleteLike.mutateAsync({
+          postId: post.id,
+          likeId: post.likes[0]?.id,
+        });
+      }
+    } catch (error) {
+      console.error('error when toggling post like');
+      console.error(error);
+    }
   };
 
   return (
@@ -80,6 +121,7 @@ export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
               onPress={handleTogglePostLike}
               _pressed={{ backgroundColor: 'gray.100' }}
               borderRadius={6}
+              disabled={isLiking}
             >
               <FavouriteIcon size={7} color="red.500" />
             </Pressable>
@@ -88,6 +130,7 @@ export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
               onPress={handleTogglePostLike}
               _pressed={{ backgroundColor: 'gray.100' }}
               borderRadius={6}
+              disabled={isLiking}
             >
               <Icon
                 as={Feather}
