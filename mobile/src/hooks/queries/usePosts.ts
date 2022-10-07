@@ -8,14 +8,13 @@ export const usePosts = <GenericIncluded extends object = object>(
   options: PaginateOptions = {},
 ) =>
   useInfiniteQuery(
-    ['diversagente@posts', options.cursor, options.range],
-    ({ pageParam = {} }) => {
-      return diversaGenteServices.findAllPosts<GenericIncluded>({
+    ['diversagente@posts', options.cursor, options.range, options.filter],
+    ({ pageParam = {} }) =>
+      diversaGenteServices.findAllPosts<GenericIncluded>({
         ...options,
         cursor: pageParam.cursor,
         range: pageParam.range ?? options.range,
-      });
-    },
+      }),
     {
       getNextPageParam: (lastPage) => {
         const lastPageLength = lastPage.results.length;
