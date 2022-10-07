@@ -7,6 +7,9 @@ import {
   IconButton,
   useToast,
   Spinner,
+  Skeleton,
+  HStack,
+  VStack,
 } from 'native-base';
 import { useCallback, useState } from 'react';
 
@@ -121,22 +124,32 @@ export const Home = () => {
           />
         </Flex>
 
-        <FlatList
-          width={'100%'}
-          data={data?.pages.map((page) => page.results).flat()}
-          renderItem={({ item }) => (
-            <Box marginBottom={4}>
-              <Post post={item} isPreview />
-            </Box>
-          )}
-          keyExtractor={(item) => item.id + Math.random()}
-          contentContainerStyle={{ paddingBottom: 350 }}
-          onEndReached={loadMore}
-          onEndReachedThreshold={0.3}
-          ListFooterComponent={
-            isFetchingNextPage ? <Spinner color="orange.500" size="lg" /> : null
-          }
-        />
+        {isLoading ? (
+          <VStack space={4}>
+            <Skeleton width="100%" height={200} />
+            <Skeleton width="100%" height={200} />
+            <Skeleton width="100%" height={200} />
+          </VStack>
+        ) : (
+          <FlatList
+            width={'100%'}
+            data={data?.pages.map((page) => page.results).flat()}
+            renderItem={({ item }) => (
+              <Box marginBottom={4}>
+                <Post post={item} isPreview />
+              </Box>
+            )}
+            keyExtractor={(item) => item.id + Math.random()}
+            contentContainerStyle={{ paddingBottom: 350 }}
+            onEndReached={loadMore}
+            onEndReachedThreshold={0.3}
+            ListFooterComponent={
+              isFetchingNextPage ? (
+                <Spinner color="orange.500" size="lg" />
+              ) : null
+            }
+          />
+        )}
       </Flex>
     </Flex>
   );
