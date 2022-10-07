@@ -26,6 +26,7 @@ export const findAllPosts = async <GenericIncluded extends object = object>(
   options: PaginateOptions = {},
 ) => {
   try {
+    console.info('finding all posts', options);
     const response = await diversagenteBaseApi.get<
       IncludeInto<Post, GenericIncluded>[]
     >(`/posts`, {
@@ -35,7 +36,7 @@ export const findAllPosts = async <GenericIncluded extends object = object>(
     });
 
     const posts = response.data;
-    return posts;
+    return { results: posts };
   } catch (error: any) {
     console.error('error when fetching posts');
 

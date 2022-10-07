@@ -6,11 +6,13 @@ import { Category } from '@src/contracts/Category';
 type CategoriesListProps = {
   categories: Category[];
   isLoaded?: boolean;
+  onSelectCategory: (categoryId: string | null) => void;
 };
 
 export const CategoriesList: FunctionComponent<CategoriesListProps> = ({
   categories,
   isLoaded = false,
+  onSelectCategory,
 }) => {
   const skeletonsCategories = new Array(5).fill(0);
 
@@ -29,7 +31,12 @@ export const CategoriesList: FunctionComponent<CategoriesListProps> = ({
         rounded="sm"
         isLoaded={isLoaded}
       >
-        <Button variant="outline" height={10} marginLeft={5}>
+        <Button
+          variant="outline"
+          height={10}
+          marginLeft={5}
+          onPress={() => onSelectCategory(null)}
+        >
           Todos
         </Button>
       </Skeleton>
@@ -55,6 +62,7 @@ export const CategoriesList: FunctionComponent<CategoriesListProps> = ({
             marginLeft={5}
             height={10}
             key={category.name}
+            onPress={() => onSelectCategory(category.id)}
           >
             {category.title}
           </Button>
