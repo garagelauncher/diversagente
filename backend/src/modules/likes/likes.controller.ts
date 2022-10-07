@@ -18,7 +18,7 @@ export class LikesController {
   @Post()
   create(
     @Param('postId') postId: string,
-    @Body() createLikeDto: CreateLikeDto,
+    @Body() createLikeDto: Pick<CreateLikeDto, 'ownerId'>,
   ) {
     return this.likesService.create({ ...createLikeDto, postId });
   }
@@ -39,7 +39,7 @@ export class LikesController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.likesService.remove(id);
+  remove(@Param('postId') postId: string, @Param('id') id: string) {
+    return this.likesService.remove({ postId, id });
   }
 }

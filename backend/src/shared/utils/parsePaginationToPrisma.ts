@@ -4,6 +4,8 @@ export type PaginateOptions = {
   range?: string;
   sort?: string;
   filter?: string;
+  include?: string;
+  cursor?: string;
 };
 
 const parseSortToOrderBy = (sort: string[]) => {
@@ -64,24 +66,38 @@ export const parseFilterToWhere = (
   return where;
 };
 
-export const parsePaginationToPrisma = <GenericFilter extends object = object>(
+export const parsePaginationToPrisma = <
+  GenericFilter extends object = object,
+  GenericInclude extends object = object,
+  GenericCursor extends object = object,
+>(
   paginateOptions: PaginateOptions,
 ) => {
   Logger.debug(`paginateOptions is ${JSON.stringify(paginateOptions)}`);
 
-  const [range, sort, filter] = [
+  const [range, sort, filter, include, cursor] = [
     JSON.parse(paginateOptions.range ?? '[]') as [number, number] | [],
     JSON.parse(paginateOptions.sort ?? '[]') as [string, string],
     JSON.parse(paginateOptions.filter ?? '{}') as GenericFilter,
+    JSON.parse(paginateOptions.include ?? '{}') as GenericInclude,
+    (paginateOptions.cursor
+      ? JSON.parse(paginateOptions.cursor)
+      : undefined) as GenericCursor,
   ];
 
   const { skip, take, originalTake } = parseRange(range);
 
-  return {
+  const pagination = {
     skip,
     take,
     originalTake,
     where: parseFilterToWhere(filter),
+    include,
+    cursor,
     orderBy: parseSortToOrderBy(sort),
   };
+
+  Logger.warn(`pagination params is ${JSON.stringify(pagination)}`);
+
+  return pagination;
 };

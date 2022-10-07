@@ -1,6 +1,9 @@
 import { diversagenteBaseApi } from '../baseUrl';
 
-import { PostForm } from '@src/contracts/Post';
+import { IncludeInto } from '@src/@types/generics/includeInto';
+import { PaginateOptions } from '@src/contracts/PaginateOptions';
+import { PostForm, Post } from '@src/contracts/Post';
+import { parsePagination } from '@src/utils/parsePagination';
 
 export const createPost = async (post: PostForm) => {
   try {
@@ -15,6 +18,32 @@ export const createPost = async (post: PostForm) => {
     if (error.isAxiosError) {
       console.warn(error.response);
     }
+    throw error;
+  }
+};
+
+export const findAllPosts = async <GenericIncluded extends object = object>(
+  options: PaginateOptions = {},
+) => {
+  try {
+    console.info('finding all posts', options);
+    const response = await diversagenteBaseApi.get<
+      IncludeInto<Post, GenericIncluded>[]
+    >(`/posts`, {
+      params: {
+        ...parsePagination(options),
+      },
+    });
+
+    const posts = response.data;
+    return { results: posts };
+  } catch (error: any) {
+    console.error('error when fetching posts');
+
+    if (error.isAxiosError) {
+      console.error(error.response);
+    }
+
     throw error;
   }
 };

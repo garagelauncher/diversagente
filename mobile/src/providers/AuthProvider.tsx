@@ -10,6 +10,7 @@ import {
   GoogleUserData,
   UserData,
 } from '@src/contexts/AuthContext';
+import { diversaGenteServices } from '@src/services/diversaGente';
 
 type AuthProvidersProps = {
   children: ReactNode;
@@ -53,8 +54,12 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
         const response = await axios.get<GoogleUserData>(
           `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${params.access_token}`,
         );
+
         console.log('sucesss');
         console.log(JSON.stringify(response.data));
+
+        await diversaGenteServices.setAuthToken(params.access_token);
+
         const googleUserData = response.data;
 
         // const responseGet = await axios.get<UserData>(
