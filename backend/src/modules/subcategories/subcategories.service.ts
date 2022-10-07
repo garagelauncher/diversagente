@@ -1,5 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/shared/database/prisma.service';
+import {
+  PaginateOptions,
+  parsePaginationToPrisma,
+} from 'src/shared/utils/parsePaginationToPrisma';
 import { CreateSubcategoryDto } from './dto/create-subcategory.dto';
 import { UpdateSubcategoryDto } from './dto/update-subcategory.dto';
 
@@ -35,8 +40,15 @@ export class SubcategoriesService {
     return await this.prisma.subcategory.create({ data: createSubcategoryDto });
   }
 
-  findAll() {
-    return this.prisma.subcategory.findMany({});
+  async findAll(options: PaginateOptions) {
+    const { skip, take, where, orderBy } =
+      parsePaginationToPrisma<Prisma.SubcategoryWhereInput>(options);
+    return await this.prisma.subcategory.findMany({
+      skip,
+      take,
+      where,
+      orderBy,
+    });
   }
 
   findOne(id: string) {
