@@ -1,4 +1,5 @@
 import { Feather } from '@expo/vector-icons';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import {
   FlatList,
   Flex,
@@ -8,8 +9,8 @@ import {
   useToast,
   Spinner,
   Skeleton,
-  HStack,
   VStack,
+  Text,
 } from 'native-base';
 import { useCallback, useState } from 'react';
 
@@ -22,16 +23,36 @@ import { PER_PAGE_ITEMS, userIdHelper } from '@src/configs';
 import { useCategories } from '@src/hooks/queries/useCategories';
 import { usePosts } from '@src/hooks/queries/usePosts';
 import { useAuth } from '@src/hooks/useAuth';
+import { StackHomeNavigatorParamList } from '@src/routes/stacks/homeStack.routes';
+import { queryClient } from '@src/services/queryClient';
+
+export type HomeScreenNavigationProps = NavigationProp<
+  StackHomeNavigatorParamList,
+  'Home'
+>;
 
 export const Home = () => {
   const toast = useToast();
   const { user } = useAuth();
+  const navigation = useNavigation<HomeScreenNavigationProps>();
+
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
+    null,
+  );
+
+  console.log('selectedCategoryId', selectedCategoryId);
+
+  const postFilters = {
+    categoryId: selectedCategoryId,
+  };
 
   const { data, hasNextPage, fetchNextPage, isLoading, isFetchingNextPage } =
     usePosts<UserHasInteracted>({
       range: [0, PER_PAGE_ITEMS],
       sort: ['createdAt', 'DESC'],
-      filter: {},
+      filter: {
+        ...(postFilters.categoryId ? postFilters : {}),
+      },
       include: {
         likes: {
           select: { id: true },
@@ -51,15 +72,25 @@ export const Home = () => {
     isError: isErrorCategories,
   } = useCategories();
 
+  const [isReadingModeActive, setIsReadingModeActive] = useState(false);
+
   const isLoadedCategories =
     isSuccessCategories && !isLoadingCategories && !isErrorCategories;
 
-  const [isReadingModeActive, setIsReadingModeActive] = useState(false);
+  const handleSelectCategoryId = (categoryId: string | null) => {
+    console.log('categoryId', categoryId);
+    queryClient.invalidateQueries('diversagente@posts');
+    setSelectedCategoryId(categoryId);
+  };
 
-  const loadMore = () => {
+  const handleLoadMorePosts = () => {
     if (hasNextPage) {
       fetchNextPage();
     }
+  };
+
+  const handleNavigateToFormCreatePost = () => {
+    navigation.navigate('FormCreatePost');
   };
 
   const toggleReadingMode = useCallback(() => {
@@ -100,6 +131,7 @@ export const Home = () => {
             <CategoriesList
               categories={categories}
               isLoaded={isLoadedCategories}
+              onSelectCategory={handleSelectCategoryId}
             />
           </>
         )}
@@ -141,12 +173,28 @@ export const Home = () => {
             )}
             keyExtractor={(item) => item.id + Math.random()}
             contentContainerStyle={{ paddingBottom: 350 }}
-            onEndReached={loadMore}
-            onEndReachedThreshold={0.3}
+            onEndReached={handleLoadMorePosts}
+            onEndReachedThreshold={0.85}
             ListFooterComponent={
               isFetchingNextPage ? (
                 <Spinner color="orange.500" size="lg" />
-              ) : null
+              ) : (
+                <Flex width="100%" alignItems="center" justifyContent="center">
+                  <Text color="gray.500">
+                    Não há mais postagens na categoria{' '}
+                    {categories.find(
+                      (category) => category.id === selectedCategoryId,
+                    )?.title ?? 'todas'}
+                    .
+                  </Text>
+                  <Text
+                    color="blue.500"
+                    onPress={handleNavigateToFormCreatePost}
+                  >
+                    Você pode clicar aqui para criar a sua
+                  </Text>
+                </Flex>
+              )
             }
           />
         )}
