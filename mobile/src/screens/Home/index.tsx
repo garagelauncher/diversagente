@@ -131,6 +131,7 @@ export const Home = () => {
             <CategoriesList
               categories={categories}
               isLoaded={isLoadedCategories}
+              selectedCategoryId={selectedCategoryId}
               onSelectCategory={handleSelectCategoryId}
             />
           </>
