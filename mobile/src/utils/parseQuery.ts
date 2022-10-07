@@ -1,7 +1,7 @@
-import { PaginateOptions } from '@src/contracts/PaginateOptions';
+import { QueryOptions } from '@src/contracts/QueryOptions';
 
-export const parsePagination = (options: PaginateOptions = {}) => {
-  const parsedOptions: Record<keyof PaginateOptions, string | undefined> = {
+export const parseQueryOptions = (options: QueryOptions = {}) => {
+  const parsedOptions: Record<keyof QueryOptions, string | undefined> = {
     filter: options ? JSON.stringify(options.filter) : undefined,
     include: options ? JSON.stringify(options.include) : undefined,
     sort: options ? JSON.stringify(options.sort) : undefined,
