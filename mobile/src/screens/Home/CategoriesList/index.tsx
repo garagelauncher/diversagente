@@ -6,12 +6,14 @@ import { Category } from '@src/contracts/Category';
 type CategoriesListProps = {
   categories: Category[];
   isLoaded?: boolean;
+  selectedCategoryId: string | null;
   onSelectCategory: (categoryId: string | null) => void;
 };
 
 export const CategoriesList: FunctionComponent<CategoriesListProps> = ({
   categories,
   isLoaded = false,
+  selectedCategoryId,
   onSelectCategory,
 }) => {
   const skeletonsCategories = new Array(5).fill(0);
@@ -32,10 +34,12 @@ export const CategoriesList: FunctionComponent<CategoriesListProps> = ({
         isLoaded={isLoaded}
       >
         <Button
-          variant="outline"
+          variant={selectedCategoryId === null ? 'solid' : 'outline'}
           height={10}
           marginLeft={5}
           onPress={() => onSelectCategory(null)}
+          bg={selectedCategoryId === null ? 'blue.500' : 'white'}
+          color={selectedCategoryId === null ? 'white' : 'blue.500'}
         >
           Todos
         </Button>
@@ -58,7 +62,7 @@ export const CategoriesList: FunctionComponent<CategoriesListProps> = ({
           <Button
             colorScheme={'gray'}
             fontWeight={600}
-            variant="outline"
+            variant={selectedCategoryId === category.id ? 'solid' : 'outline'}
             marginLeft={5}
             height={10}
             key={category.name}
