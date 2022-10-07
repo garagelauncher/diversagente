@@ -12,3 +12,7 @@ export const baseCoordinates = {
   LATITUDE_DELTA: 0.0922,
   LONGITUDE_DELTA: 0.0421,
 };
+
+export const userIdHelper = 'aaaaaaaaaaaaaaaaaaaaaaaa';
+
+export const PER_PAGE_ITEMS = 3;

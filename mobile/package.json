@@ -26,6 +26,7 @@
     "@react-navigation/native": "^6.0.10",
     "@react-navigation/stack": "^6.2.1",
     "axios": "^0.27.2",
+    "dayjs": "^1.11.5",
     "expo": "~45.0.0",
     "expo-auth-session": "~3.6.1",
     "expo-clipboard": "~3.0.1",
@@ -52,6 +53,7 @@
     "react-native-svg": "12.3.0",
     "react-native-web": "0.17.7",
     "react-native-webview": "11.18.1",
+    "react-query": "^3.39.2",
     "webpack-dev-server": "~3.11.0",
     "yup": "^0.32.11",
     "expo-image-picker": "~13.1.1"

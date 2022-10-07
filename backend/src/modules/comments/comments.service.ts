@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from 'src/shared/database/prisma.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
+import { DeleteCommentDto } from './dto/delete-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 
 @Injectable()
@@ -33,7 +34,8 @@ export class CommentsService {
     });
   }
 
-  remove(id: string) {
+  remove({ id, postId }: DeleteCommentDto) {
+    Logger.warn(`Removed like ${id} from post ${postId}`);
     return this.prisma.comment.delete({ where: { id } });
   }
 }

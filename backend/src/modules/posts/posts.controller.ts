@@ -30,6 +30,13 @@ export class PostsController {
     required: false,
   })
   @ApiQuery({
+    name: 'include',
+    type: String,
+    description: 'An optional include',
+    example: `{"likes":{"select":{"id":true},"where":{"ownerId":"aaaaaaaaaaaaaaaaaaaaaaaa"}}}`,
+    required: false,
+  })
+  @ApiQuery({
     name: 'sort',
     type: String,
     description: 'An optional sort',
@@ -43,22 +50,40 @@ export class PostsController {
     example: `[1, 1]`,
     required: false,
   })
+  @ApiQuery({
+    name: 'cursor',
+    type: String,
+    description: 'An optional cursor',
+    example: `{"id": "some-id-of-unique-data"}`,
+    required: false,
+  })
   @Get()
-  findAll(
+  async findAll(
     @Query('filter') filter?: string,
     @Query('sort') sort?: string,
     @Query('range') range?: string,
+    @Query('include') include?: string,
+    @Query('cursor') cursor?: string,
   ) {
-    return this.postsService.findAll({
+    return await this.postsService.findAll({
       filter,
       sort,
       range,
+      include,
+      cursor,
     });
   }
 
+  @ApiQuery({
+    name: 'include',
+    type: String,
+    description: 'An optional include',
+    example: `{"likes":{"select":{"id":true},"where":{"ownerId":"aaaaaaaaaaaaaaaaaaaaaaaa"}}}`,
+    required: false,
+  })
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.postsService.findOne(id);
+  findOne(@Param('id') id: string, @Query('include') include?: string) {
+    return this.postsService.findOne(id, { include });
   }
 
   @Patch(':id')

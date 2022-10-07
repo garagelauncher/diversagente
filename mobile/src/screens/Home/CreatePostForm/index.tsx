@@ -1,13 +1,8 @@
 import { AntDesign } from '@expo/vector-icons';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { Button, Flex, Icon, Input } from 'native-base';
 
-import { StackHomeNavigatorParamList } from '@src/routes/stacks/homeStack.routes';
-
-type HomeScreenNavigationProps = NavigationProp<
-  StackHomeNavigatorParamList,
-  'Home'
->;
+import { HomeScreenNavigationProps } from '..';
 
 export const CreatePostForm = () => {
   const navigation = useNavigation<HomeScreenNavigationProps>();
