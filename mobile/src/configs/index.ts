@@ -14,3 +14,5 @@ export const baseCoordinates = {
 };
 
 export const userIdHelper = 'aaaaaaaaaaaaaaaaaaaaaaaa';
+
+export const PER_PAGE_ITEMS = 3;
