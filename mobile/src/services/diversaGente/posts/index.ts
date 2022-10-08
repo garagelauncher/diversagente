@@ -1,9 +1,9 @@
 import { diversagenteBaseApi } from '../baseUrl';
 
 import { IncludeInto } from '@src/@types/generics/includeInto';
-import { PaginateOptions } from '@src/contracts/PaginateOptions';
 import { PostForm, Post } from '@src/contracts/Post';
-import { parsePagination } from '@src/utils/parsePagination';
+import { QueryOptions } from '@src/contracts/QueryOptions';
+import { parseQueryOptions } from '@src/utils/parseQuery';
 
 export const createPost = async (post: PostForm) => {
   try {
@@ -23,7 +23,7 @@ export const createPost = async (post: PostForm) => {
 };
 
 export const findAllPosts = async <GenericIncluded extends object = object>(
-  options: PaginateOptions = {},
+  options: QueryOptions = {},
 ) => {
   try {
     console.info('finding all posts', options);
@@ -31,7 +31,7 @@ export const findAllPosts = async <GenericIncluded extends object = object>(
       IncludeInto<Post, GenericIncluded>[]
     >(`/posts`, {
       params: {
-        ...parsePagination(options),
+        ...parseQueryOptions(options),
       },
     });
 
@@ -39,6 +39,32 @@ export const findAllPosts = async <GenericIncluded extends object = object>(
     return { results: posts };
   } catch (error: any) {
     console.error('error when fetching posts');
+
+    if (error.isAxiosError) {
+      console.error(error.response);
+    }
+
+    throw error;
+  }
+};
+
+export const findPostById = async <GenericIncluded extends object = object>(
+  id: string,
+  options: QueryOptions = {},
+) => {
+  try {
+    const response = await diversagenteBaseApi.get<
+      IncludeInto<Post, GenericIncluded>
+    >(`/posts/${id}`, {
+      params: {
+        ...parseQueryOptions(options),
+      },
+    });
+
+    const post = response.data;
+    return post;
+  } catch (error: any) {
+    console.error('error when fetchi post', id);
 
     if (error.isAxiosError) {
       console.error(error.response);
