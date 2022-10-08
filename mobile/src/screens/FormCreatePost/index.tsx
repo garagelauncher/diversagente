@@ -43,15 +43,6 @@ type FormCreatePostNavigationProps = NavigationProp<
   'FormCreatePost'
 >;
 
-type CreatePostFormData = {
-  title: string;
-  content: string;
-  category?: string;
-  subcategory?: string;
-  image?: string;
-  imageDescription?: string;
-};
-
 const schema = yup.object({
   title: yup
     .string()
@@ -63,8 +54,8 @@ const schema = yup.object({
     .min(140, 'O conteúdo deve conter no mínimo 140 caracteres')
     .max(1800, 'O conteúdo deve conter no máximo 1800 caracteres')
     .required('Conteúdo é obrigatório.'),
-  category: yup.string().required(),
-  subcategory: yup.string().optional(),
+  categoryId: yup.string().required(),
+  subcategoryId: yup.string().optional(),
   //image: yup.mixed().optional(),
   // imageDescription: yup
   // .string()
@@ -143,11 +134,11 @@ export const FormCreatePost = () => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<CreatePostFormData>({
+  } = useForm<PostForm>({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: CreatePostFormData) => {
+  const onSubmit = (data: PostForm) => {
     console.log('submiting with ', data);
     createPost(data);
   };
@@ -160,9 +151,7 @@ export const FormCreatePost = () => {
     navigation.goBack();
   };
 
-  async function createPost(
-    data: CreatePostFormData,
-  ): Promise<PostForm | undefined> {
+  async function createPost(data: PostForm): Promise<PostForm | undefined> {
     setIsLoading(true);
     try {
       const createdPost = await diversaGenteServices.createPost({
@@ -243,13 +232,13 @@ export const FormCreatePost = () => {
 
             <Controller
               control={control}
-              name="category"
+              name="categoryId"
               rules={{ required: true }}
               render={({ field: { onChange } }) => (
                 <FormControl
                   w="100%"
                   isRequired
-                  isInvalid={errors.category ? true : false}
+                  isInvalid={errors.categoryId ? true : false}
                 >
                   <FormControl.Label>Selecione a categoria</FormControl.Label>
                   <Select
@@ -278,7 +267,7 @@ export const FormCreatePost = () => {
                       );
                     })}
                   </Select>
-                  {errors.category && (
+                  {errors.categoryId && (
                     <FormControl.ErrorMessage
                       leftIcon={<WarningOutlineIcon size="xs" />}
                     >
@@ -291,7 +280,7 @@ export const FormCreatePost = () => {
 
             <Controller
               control={control}
-              name="subcategory"
+              name="subcategoryId"
               rules={{ required: true }}
               render={({ field: { onChange } }) => (
                 <FormControl
