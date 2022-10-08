@@ -38,8 +38,7 @@ export const CategoriesList: FunctionComponent<CategoriesListProps> = ({
           height={10}
           marginLeft={5}
           onPress={() => onSelectCategory(null)}
-          bg={selectedCategoryId === null ? 'blue.500' : 'white'}
-          color={selectedCategoryId === null ? 'white' : 'blue.500'}
+          colorScheme={selectedCategoryId === null ? 'blue' : 'gray'}
         >
           Todos
         </Button>
@@ -60,7 +59,7 @@ export const CategoriesList: FunctionComponent<CategoriesListProps> = ({
       {isLoaded &&
         categories.map((category) => (
           <Button
-            colorScheme={'gray'}
+            colorScheme={selectedCategoryId === category.id ? 'blue' : 'gray'}
             fontWeight={600}
             variant={selectedCategoryId === category.id ? 'solid' : 'outline'}
             marginLeft={5}
