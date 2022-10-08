@@ -16,6 +16,8 @@ import {
   FormControl,
   Icon,
   WarningOutlineIcon,
+  CheckIcon,
+  Select,
 } from 'native-base';
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -28,11 +30,13 @@ import {
 import * as yup from 'yup';
 
 import { ControlledInput } from '@src/components/ControlledInput';
+import { Category } from '@src/contracts/Category';
 import { PostForm } from '@src/contracts/Post';
+import { Subcategory } from '@src/contracts/Subcategory';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
-import { logger } from '@src/utils/logger';
+import { filterSubcategory } from '@src/services/diversaGente/subcategories';
 
 type FormCreatePostNavigationProps = NavigationProp<
   StackForumNavigatorParamList,
@@ -59,7 +63,9 @@ const schema = yup.object({
     .min(140, 'O conteúdo deve conter no mínimo 140 caracteres')
     .max(1800, 'O conteúdo deve conter no máximo 1800 caracteres')
     .required('Conteúdo é obrigatório.'),
-  image: yup.mixed().optional(),
+  category: yup.string().required(),
+  subcategory: yup.string().optional(),
+  //image: yup.mixed().optional(),
   // imageDescription: yup
   // .string()
   // .trim()
@@ -68,14 +74,53 @@ const schema = yup.object({
   // .max(200, 'Máximo de 200 caracteres.')
   // .transform((value) => (value ? value : null))
   // .nullable(),
-  // category: yup.string().optional(),
-  // subcategory: yup.string().optional(),
 });
 
 export const FormCreatePost = () => {
   const [isClosed, setIsClosed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useAuth();
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
+  const [categoryId, setCategoryId] = useState<string>('');
+
+  const fetchAllCategories = async () => {
+    try {
+      const categoriesFromApi = await diversaGenteServices.findAllCategories();
+      setCategories(categoriesFromApi);
+    } catch (error) {
+      console.info('Error while fetching all categories', error);
+    }
+  };
+
+  const fetchRelatedSubcategoriesToCategory = async () => {
+    const filterParams: filterSubcategory = {
+      categoriesIds: {
+        hasSome: [categoryId],
+      },
+    };
+    if (categoryId) {
+      try {
+        const relatedSubcategoriesToCategory =
+          await diversaGenteServices.findRelatedSubcategoriesToCategory(
+            categoryId,
+            filterParams,
+          );
+
+        setSubcategories(relatedSubcategoriesToCategory);
+      } catch (error) {
+        console.info(
+          'Error while fetching the subcategories related to the selected category',
+          error,
+        );
+      }
+    }
+  };
+
+  const updateCategoryIdSelected = (categoryId: string) => {
+    setSubcategories([]);
+    setCategoryId(categoryId);
+  };
 
   const navigation = useNavigation<FormCreatePostNavigationProps>();
 
@@ -90,7 +135,7 @@ export const FormCreatePost = () => {
     console.log(result);
 
     if (!result.cancelled) {
-      console.log('no result');
+      console.log(result.uri);
     }
   };
 
@@ -196,11 +241,11 @@ export const FormCreatePost = () => {
               </Alert>
             )}
 
-            {/**<Controller
+            <Controller
               control={control}
               name="category"
               rules={{ required: true }}
-              render={({ field: { onChange, value } }) => (
+              render={({ field: { onChange } }) => (
                 <FormControl
                   w="100%"
                   isRequired
@@ -208,7 +253,7 @@ export const FormCreatePost = () => {
                 >
                   <FormControl.Label>Selecione a categoria</FormControl.Label>
                   <Select
-                    borderColor={value?.length ? 'green.500' : 'gray.400'}
+                    borderColor={'blue.800'}
                     minWidth="200"
                     accessibilityLabel="Selecione uma categoria"
                     placeholder="Selecione uma categoria"
@@ -218,15 +263,20 @@ export const FormCreatePost = () => {
                     }}
                     mt="1"
                     onValueChange={onChange}
+                    onOpen={fetchAllCategories}
                   >
-                    <Select.Item label="UX Research" value="ux" />
-                    <Select.Item label="Web Development" value="web" />
-                    <Select.Item
-                      label="Cross Platform Development"
-                      value="cross"
-                    />
-                    <Select.Item label="UI Designing" value="ui" />
-                    <Select.Item label="Backend Development" value="backend" />
+                    {categories.map((category) => {
+                      return (
+                        <Select.Item
+                          key={category.id}
+                          label={category.title}
+                          value={category.id}
+                          onPressIn={() =>
+                            updateCategoryIdSelected(category.id)
+                          }
+                        />
+                      );
+                    })}
                   </Select>
                   {errors.category && (
                     <FormControl.ErrorMessage
@@ -243,18 +293,16 @@ export const FormCreatePost = () => {
               control={control}
               name="subcategory"
               rules={{ required: true }}
-              render={({ field: { onChange, value } }) => (
+              render={({ field: { onChange } }) => (
                 <FormControl
                   w="100%"
-                  isRequired
-                  isDisabled={true}
-                  isInvalid={errors.subcategory ? true : false}
+                  isDisabled={categories.length > 0 ? false : true}
                 >
                   <FormControl.Label>
                     Selecione a subcategoria
                   </FormControl.Label>
                   <Select
-                    borderColor={value?.length ? 'green.500' : 'gray.400'}
+                    borderColor={'blue.800'}
                     minWidth="200"
                     accessibilityLabel="Selecione uma categoria"
                     placeholder="Selecione uma categoria"
@@ -264,26 +312,31 @@ export const FormCreatePost = () => {
                     }}
                     mt="1"
                     onValueChange={onChange}
+                    onOpen={fetchRelatedSubcategoriesToCategory}
                   >
-                    <Select.Item label="UX Research" value="ux" />
-                    <Select.Item label="Web Development" value="web" />
-                    <Select.Item
-                      label="Cross Platform Development"
-                      value="cross"
-                    />
-                    <Select.Item label="UI Designing" value="ui" />
-                    <Select.Item label="Backend Development" value="backend" />
+                    {subcategories.map((subcategories) => {
+                      return (
+                        <Select.Item
+                          key={subcategories.id}
+                          label={subcategories.title}
+                          value={subcategories.id}
+                        />
+                      );
+                    })}
                   </Select>
-                  {errors.subcategory && (
+                  {subcategories.length < 1 && (
                     <FormControl.ErrorMessage
                       leftIcon={<WarningOutlineIcon size="xs" />}
                     >
-                      <Text>Subctegoria é obrigatória.</Text>
+                      <Text>
+                        Não existem subcategorias. Você pode prosseguir apenas
+                        com a categoria selecionada
+                      </Text>
                     </FormControl.ErrorMessage>
                   )}
                 </FormControl>
               )}
-                  ></Controller>*/}
+            ></Controller>
 
             <ControlledInput
               control={control}
@@ -303,7 +356,7 @@ export const FormCreatePost = () => {
               placeholder="Caracteres: máximo de 1800 e mínimo de 140"
             ></ControlledInput>
 
-            {/*<ControlledInput
+            <ControlledInput
               control={control}
               name="imageDescription"
               label={'Imagem'}
@@ -311,7 +364,7 @@ export const FormCreatePost = () => {
               isTextArea={false}
               hasImage={true}
               placeholder="Descrição textual, máximo de 200 caracteres."
-                ></ControlledInput> */}
+            ></ControlledInput>
 
             <Controller
               control={control}
@@ -331,7 +384,7 @@ export const FormCreatePost = () => {
                   >
                     <Text>Formatos aceitos: png e jpg.</Text>
                     <Button
-                      width={'40'}
+                      width={'32'}
                       onPress={pickImage}
                       leftIcon={
                         <Icon
@@ -348,7 +401,7 @@ export const FormCreatePost = () => {
                     <FormControl.ErrorMessage
                       leftIcon={<WarningOutlineIcon size="xs" />}
                     >
-                      <Text>-.</Text>
+                      <Text>Erro no upload da imagem!</Text>
                     </FormControl.ErrorMessage>
                   )}
                 </FormControl>
