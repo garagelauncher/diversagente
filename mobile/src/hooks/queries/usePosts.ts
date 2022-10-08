@@ -1,11 +1,11 @@
 import { useInfiniteQuery } from 'react-query';
 
 import { PER_PAGE_ITEMS } from '@src/configs';
-import { PaginateOptions } from '@src/contracts/PaginateOptions';
+import { QueryOptions } from '@src/contracts/QueryOptions';
 import { diversaGenteServices } from '@src/services/diversaGente';
 
 export const usePosts = <GenericIncluded extends object = object>(
-  options: PaginateOptions = {},
+  options: QueryOptions = {},
 ) =>
   useInfiniteQuery(
     ['diversagente@posts', options.cursor, options.range, options.filter],

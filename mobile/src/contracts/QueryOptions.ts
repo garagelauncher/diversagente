@@ -1,4 +1,4 @@
-export type PaginateOptions = {
+export type QueryOptions = {
   range?: [number, number];
   sort?: [string, 'ASC' | 'DESC'];
   filter?: Record<string, any>;
