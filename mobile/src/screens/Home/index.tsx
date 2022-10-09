@@ -182,7 +182,7 @@ export const Home = () => {
                 <Post post={item} isPreview />
               </Box>
             )}
-            keyExtractor={(item) => item.id + Math.random()}
+            keyExtractor={(item) => item.id}
             contentContainerStyle={{ paddingBottom: 350 }}
             onEndReached={handleLoadMorePosts}
             onEndReachedThreshold={0.85}
