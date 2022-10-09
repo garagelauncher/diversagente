@@ -1,13 +1,14 @@
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { Button, Flex, Icon, Input } from 'native-base';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { HomeScreenNavigationProps } from '..';
 
 export const CreatePostForm = () => {
   const navigation = useNavigation<HomeScreenNavigationProps>();
 
-  function handleOnPress() {
+  function handleNavigateToFormCreatePost() {
     navigation.navigate('FormCreatePost');
   }
 
@@ -36,22 +37,24 @@ export const CreatePostForm = () => {
         }
         onFocus={handleOnPress}
       />
-      <Button
-        size={'sm'}
-        variant={'solid'}
-        width={35}
-        height={35}
-        marginLeft={2}
-        backgroundColor={'white'}
-        onPress={handleOnPress}
-      >
-        <Icon
-          as={AntDesign}
-          name="plussquareo"
-          size={8}
-          color={'warmGray.700'}
-        />
-      </Button>
+      <TouchableOpacity>
+        <Button
+          size={'sm'}
+          variant={'solid'}
+          backgroundColor={'gray.100'}
+          width={35}
+          height={35}
+          marginLeft={2}
+          onPress={handleNavigateToFormCreatePost}
+        >
+          <Icon
+            as={AntDesign}
+            name="plussquareo"
+            size={8}
+            color={'warmGray.700'}
+          />
+        </Button>
+      </TouchableOpacity>
     </Flex>
   );
 };
