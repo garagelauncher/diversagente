@@ -12,5 +12,8 @@ export class CreateUserDto {
   name: string;
 
   @ApiProperty()
+  picture?: string;
+
+  @ApiProperty()
   preferences?: UserPreference;
 }
