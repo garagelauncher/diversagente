@@ -2,7 +2,6 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
-import { ImageInfo } from 'expo-image-picker';
 import {
   VStack,
   Button,
@@ -30,6 +29,7 @@ import {
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
 } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as yup from 'yup';
 
 import { ControlledInput } from '@src/components/ControlledInput';
@@ -73,11 +73,13 @@ export const FormCreatePost = () => {
   const [isClosed, setIsClosed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorAtPostCreation, setErrorAtPostCreation] = useState(false);
-  const { user } = useAuth();
   const [categories, setCategories] = useState<Category[]>([]);
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
   const [categoryId, setCategoryId] = useState<string>('');
   const [selectedImage, setSelectedImage] = useState<any>(null);
+  const { user } = useAuth();
+
+  const navigation = useNavigation<FormCreatePostNavigationProps>();
 
   const fetchAllCategories = async () => {
     try {
@@ -94,20 +96,18 @@ export const FormCreatePost = () => {
         hasSome: [categoryId],
       },
     };
-    if (categoryId) {
-      try {
-        const relatedSubcategoriesToCategory =
-          await diversaGenteServices.findRelatedSubcategoriesToCategory(
-            categoryId,
-            filterParams,
-          );
-        setSubcategories(relatedSubcategoriesToCategory);
-      } catch (error) {
-        console.info(
-          'Error while fetching the subcategories related to the selected category',
-          error,
+    try {
+      const relatedSubcategoriesToCategory =
+        await diversaGenteServices.findRelatedSubcategoriesToCategory(
+          categoryId,
+          filterParams,
         );
-      }
+      setSubcategories(relatedSubcategoriesToCategory);
+    } catch (error) {
+      console.info(
+        'Error while fetching the subcategories related to the selected category',
+        error,
+      );
     }
   };
 
@@ -115,8 +115,6 @@ export const FormCreatePost = () => {
     setSubcategories([]);
     setCategoryId(categoryId);
   };
-
-  const navigation = useNavigation<FormCreatePostNavigationProps>();
 
   const pickImage = async () => {
     const pickerResult = await ImagePicker.launchImageLibraryAsync({
@@ -126,7 +124,7 @@ export const FormCreatePost = () => {
       quality: 1,
     });
 
-    console.log(pickerResult);
+    console.log('image data', pickerResult);
 
     if (!pickerResult.cancelled) {
       setSelectedImage({ localUri: pickerResult.uri });
@@ -141,8 +139,8 @@ export const FormCreatePost = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: PostForm) => {
-    console.log('submiting with ', data);
+  const onSubmitPostCreation = (data: PostForm) => {
+    console.log('submiting forms with ', data);
     createPost(data);
   };
 
@@ -155,7 +153,7 @@ export const FormCreatePost = () => {
   };
 
   async function createPost(data: PostForm): Promise<PostForm | undefined> {
-    setErrorAtPostCreation(true);
+    setErrorAtPostCreation(false);
     setIsLoading(true);
     try {
       setErrorAtPostCreation(false);
@@ -180,7 +178,9 @@ export const FormCreatePost = () => {
           <VStack space={4} marginTop="16" padding="8">
             <HStack alignContent={'center'} justifyContent="space-between">
               <Heading>Nova postagem</Heading>
-              <CloseIcon onPress={handleNavigateGoBack} marginTop="2" />
+              <TouchableOpacity>
+                <CloseIcon onPress={handleNavigateGoBack} marginTop="2" />
+              </TouchableOpacity>
             </HStack>
             <Divider
               my="2"
@@ -207,17 +207,19 @@ export const FormCreatePost = () => {
                         Antes de criar postagens
                       </Text>
                     </HStack>
-                    <IconButton
-                      variant="unstyled"
-                      _focus={{
-                        borderWidth: 0,
-                      }}
-                      onPress={handleOnClose}
-                      icon={<CloseIcon size="3" />}
-                      _icon={{
-                        color: 'coolGray.600',
-                      }}
-                    />
+                    <TouchableOpacity>
+                      <IconButton
+                        variant="unstyled"
+                        _focus={{
+                          borderWidth: 0,
+                        }}
+                        onPress={handleOnClose}
+                        icon={<CloseIcon size="3" />}
+                        _icon={{
+                          color: 'coolGray.600',
+                        }}
+                      />
+                    </TouchableOpacity>
                   </HStack>
                   <Box
                     pl="6"
@@ -440,7 +442,7 @@ export const FormCreatePost = () => {
               </Button>
               <Button
                 width={'32'}
-                onPress={handleSubmit(onSubmit)}
+                onPress={handleSubmit(onSubmitPostCreation)}
                 colorScheme="blue"
                 type="submit"
                 isLoading={isLoading}
