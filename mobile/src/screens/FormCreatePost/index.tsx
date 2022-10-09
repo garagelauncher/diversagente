@@ -47,7 +47,7 @@ const schema = yup.object({
   title: yup
     .string()
     .min(6, 'O título deve conter no mínimo 6 caracteres.')
-    .max(40, 'O título deve conter no máximo 40 caracteres.')
+    .max(200, 'O título deve conter no máximo 200 caracteres.')
     .required('Título é obrigatório.'),
   content: yup
     .string()
@@ -97,7 +97,6 @@ export const FormCreatePost = () => {
             categoryId,
             filterParams,
           );
-
         setSubcategories(relatedSubcategoriesToCategory);
       } catch (error) {
         console.info(
@@ -313,7 +312,7 @@ export const FormCreatePost = () => {
                       );
                     })}
                   </Select>
-                  {subcategories.length < 1 && (
+                  {subcategories.length < 0 && (
                     <FormControl.ErrorMessage
                       leftIcon={<WarningOutlineIcon size="xs" />}
                     >
