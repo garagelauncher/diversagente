@@ -79,7 +79,9 @@ export const parsePaginationToPrisma = <
     JSON.parse(paginateOptions.range ?? '[]') as [number, number] | [],
     JSON.parse(paginateOptions.sort ?? '[]') as [string, string],
     JSON.parse(paginateOptions.filter ?? '{}') as GenericFilter,
-    JSON.parse(paginateOptions.include ?? '{}') as GenericInclude,
+    (paginateOptions.include
+      ? JSON.parse(paginateOptions.include)
+      : undefined) as GenericInclude,
     (paginateOptions.cursor
       ? JSON.parse(paginateOptions.cursor)
       : undefined) as GenericCursor,
