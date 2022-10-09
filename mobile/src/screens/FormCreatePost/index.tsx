@@ -14,12 +14,9 @@ import {
   Text,
   Divider,
   FormControl,
-  Icon,
   WarningOutlineIcon,
   CheckIcon,
   Select,
-  View,
-  Image,
 } from 'native-base';
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -40,6 +37,7 @@ import { useAuth } from '@src/hooks/useAuth';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
 import { filterSubcategory } from '@src/services/diversaGente/subcategories';
+import { queryClient } from '@src/services/queryClient';
 
 type FormCreatePostNavigationProps = NavigationProp<
   StackForumNavigatorParamList,
@@ -76,15 +74,15 @@ export const FormCreatePost = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
   const [categoryId, setCategoryId] = useState<string>('');
-  const [selectedImage, setSelectedImage] = useState<any>(null);
   const { user } = useAuth();
+  //const [selectedImage, setSelectedImage] = useState<any>(null);
 
   const navigation = useNavigation<FormCreatePostNavigationProps>();
 
   const fetchAllCategories = async () => {
     try {
       const categoriesFromApi = await diversaGenteServices.findAllCategories();
-      setCategories(categoriesFromApi);
+      setCategories(categoriesFromApi.results);
     } catch (error) {
       console.info('Error while fetching all categories', error);
     }
@@ -116,6 +114,7 @@ export const FormCreatePost = () => {
     setCategoryId(categoryId);
   };
 
+  /**
   const pickImage = async () => {
     const pickerResult = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -129,7 +128,7 @@ export const FormCreatePost = () => {
     if (!pickerResult.cancelled) {
       setSelectedImage({ localUri: pickerResult.uri });
     }
-  };
+  }; */
 
   const {
     control,
@@ -161,6 +160,7 @@ export const FormCreatePost = () => {
         ...data,
         ownerId: String(user?.id),
       });
+      queryClient.invalidateQueries('diversagente@posts');
       navigation.navigate('Forum');
       return createdPost;
     } catch (error) {
@@ -352,6 +352,7 @@ export const FormCreatePost = () => {
               placeholder="Caracteres: máximo de 1800 e mínimo de 140"
             ></ControlledInput>
 
+            {/*
             <ControlledInput
               control={control}
               name="imageDescription"
@@ -416,6 +417,7 @@ export const FormCreatePost = () => {
                 </FormControl>
               )}
             ></Controller>
+            */}
 
             {errorAtPostCreation && (
               <Alert w="100%" status="error">
