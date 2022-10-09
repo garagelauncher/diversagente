@@ -66,11 +66,14 @@ export const Home = () => {
     });
 
   const {
-    data: categories = [],
+    data: categoriesData,
     isLoading: isLoadingCategories,
     isSuccess: isSuccessCategories,
     isError: isErrorCategories,
-  } = useCategories();
+  } = useCategories({
+    range: [0, 6],
+    sort: ['createdAt', 'ASC'],
+  });
 
   const [isReadingModeActive, setIsReadingModeActive] = useState(false);
 
@@ -129,8 +132,11 @@ export const Home = () => {
             <CreatePostForm />
 
             <CategoriesList
-              categories={categories}
+              categories={
+                categoriesData?.pages.map((page) => page.results).flat() ?? []
+              }
               isLoaded={isLoadedCategories}
+              selectedCategoryId={selectedCategoryId}
               onSelectCategory={handleSelectCategoryId}
             />
           </>
@@ -181,11 +187,7 @@ export const Home = () => {
               ) : (
                 <Flex width="100%" alignItems="center" justifyContent="center">
                   <Text color="gray.500">
-                    Não há mais postagens na categoria{' '}
-                    {categories.find(
-                      (category) => category.id === selectedCategoryId,
-                    )?.title ?? 'todas'}
-                    .
+                    Não há mais postagens nessa categoria.
                   </Text>
                   <Text
                     color="blue.500"
