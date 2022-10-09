@@ -35,7 +35,7 @@ export const CreatePostForm = () => {
             color={'warmGray.700'}
           />
         }
-        onFocus={handleOnPress}
+        onFocus={handleNavigateToFormCreatePost}
       />
       <TouchableOpacity>
         <Button
