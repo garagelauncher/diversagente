@@ -83,6 +83,7 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
           email: googleUserData.email,
           name: googleUserData.name,
           username: googleUserData.email,
+          picture: googleUserData.picture ?? null,
         });
 
         console.debug(responseCreateUser);
