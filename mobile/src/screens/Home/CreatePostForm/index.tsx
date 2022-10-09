@@ -10,6 +10,7 @@ export const CreatePostForm = () => {
   function handleOnPress() {
     navigation.navigate('FormCreatePost');
   }
+
   return (
     <Flex
       marginTop={6}
@@ -33,6 +34,7 @@ export const CreatePostForm = () => {
             color={'warmGray.700'}
           />
         }
+        onFocus={handleOnPress}
       />
       <Button
         size={'sm'}
