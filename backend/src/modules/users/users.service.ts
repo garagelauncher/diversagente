@@ -20,6 +20,7 @@ export class UsersService {
           email: createUserDto.email,
           username: createUserDto.username,
           name: createUserDto.name,
+          picture: createUserDto.picture,
           preferences: createUserDto.preferences ?? {},
         },
       });
