@@ -8,6 +8,7 @@ type CategoriesListProps = {
   isLoaded?: boolean;
   selectedCategoryId: string | null;
   onSelectCategory: (categoryId: string | null) => void;
+  onPressSeeMore: () => void;
 };
 
 export const CategoriesList: FunctionComponent<CategoriesListProps> = ({
@@ -15,6 +16,7 @@ export const CategoriesList: FunctionComponent<CategoriesListProps> = ({
   isLoaded = false,
   selectedCategoryId,
   onSelectCategory,
+  onPressSeeMore,
 }) => {
   const skeletonsCategories = new Array(5).fill(0);
 
@@ -71,7 +73,13 @@ export const CategoriesList: FunctionComponent<CategoriesListProps> = ({
           </Button>
         ))}
 
-      <Button variant="outline" height={10} marginLeft={5} marginRight={15}>
+      <Button
+        variant="outline"
+        height={10}
+        marginLeft={5}
+        marginRight={15}
+        onPress={onPressSeeMore}
+      >
         Ver mais
       </Button>
     </ScrollView>
