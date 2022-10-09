@@ -5,14 +5,15 @@ import {
   VStack,
   InfoIcon,
   HStack,
-  ScrollView,
   Alert,
   Stack,
   IconButton,
   Link,
   FlatList,
+  Skeleton,
 } from 'native-base';
 import React from 'react';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { ButtonCategory } from '@src/components/ButtonCategory/index';
 import { Header } from '@src/components/HeaderCategories/index';
@@ -38,6 +39,8 @@ export const CategoriesList = () => {
       fetchNextPage();
     }
   };
+
+  const skeletonsCategories = new Array(4).fill(0);
 
   return (
     <>
@@ -123,28 +126,51 @@ export const CategoriesList = () => {
           </Flex>
         </HStack>
 
+        {(isLoading || isFetchingNextPage) &&
+          skeletonsCategories.map((_, index) => (
+            <Skeleton
+              key={index}
+              height={73}
+              width={'90%'}
+              borderRadius={8}
+              alignItems={'center'}
+              marginBottom={4}
+            />
+          ))}
+
         <FlatList
           width={'100%'}
           data={data?.pages.map((page) => page.results).flat()}
           renderItem={({ item }) => (
-            <Box marginBottom={4}>
-              <Flex
-                h={73}
-                w={'100%'}
-                bg={'warmGray.200'}
-                rounded="md"
-                justifyContent="center"
-              >
-                <Text fontSize="xl" justifyContent="center" py={5} px={5} bold>
-                  {item.title}
-                </Text>
-              </Flex>
-            </Box>
+            <TouchableOpacity>
+              <Box marginBottom={4}>
+                <Flex
+                  h={73}
+                  w={'100%'}
+                  bg={'blue.50'}
+                  borderColor={'darkBlue.600'}
+                  borderWidth={1.5}
+                  opacity={0.8}
+                  rounded="md"
+                  justifyContent="center"
+                >
+                  <Text
+                    fontSize="xl"
+                    justifyContent="center"
+                    py={5}
+                    px={5}
+                    bold
+                  >
+                    {item.title}
+                  </Text>
+                </Flex>
+              </Box>
+            </TouchableOpacity>
           )}
           keyExtractor={(item) => item.id}
           contentContainerStyle={{ padding: 20 }}
           onEndReached={handleLoadMoreCategories}
-          onEndReachedThreshold={0.85}
+          onEndReachedThreshold={0.9}
         />
         {/*<Categories></Categories>*/}
       </Box>
