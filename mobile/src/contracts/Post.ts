@@ -21,8 +21,8 @@ export interface PostForm {
   title: string;
   content: string;
   ownerId: string;
-  category?: string;
-  subcategory?: string;
+  categoryId: string;
+  subcategoryId: string;
   image?: string;
   imageDescription?: string;
 }
