@@ -96,6 +96,10 @@ export const Home = () => {
     navigation.navigate('FormCreatePost');
   };
 
+  const handleNavigatoToCategorySelecionScreen = () => {
+    navigation.navigate('SelectCategory');
+  };
+
   const toggleReadingMode = useCallback(() => {
     setIsReadingModeActive(
       (previousIsReadingModeActive) => !previousIsReadingModeActive,
@@ -132,6 +136,7 @@ export const Home = () => {
             <CreatePostForm />
 
             <CategoriesList
+              onPressSeeMore={handleNavigatoToCategorySelecionScreen}
               categories={
                 categoriesData?.pages.map((page) => page.results).flat() ?? []
               }
