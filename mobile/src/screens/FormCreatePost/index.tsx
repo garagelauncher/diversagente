@@ -72,6 +72,7 @@ const schema = yup.object({
 export const FormCreatePost = () => {
   const [isClosed, setIsClosed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorAtPostCreation, setErrorAtPostCreation] = useState(false);
   const { user } = useAuth();
   const [categories, setCategories] = useState<Category[]>([]);
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
@@ -154,8 +155,10 @@ export const FormCreatePost = () => {
   };
 
   async function createPost(data: PostForm): Promise<PostForm | undefined> {
+    setErrorAtPostCreation(true);
     setIsLoading(true);
     try {
+      setErrorAtPostCreation(false);
       const createdPost = await diversaGenteServices.createPost({
         ...data,
         ownerId: String(user?.id),
@@ -163,8 +166,8 @@ export const FormCreatePost = () => {
       navigation.navigate('Forum');
       return createdPost;
     } catch (error) {
-      console.error('Failed to create post', error);
-      console.error(error);
+      setErrorAtPostCreation(true);
+      setIsLoading(false);
     } finally {
       setIsLoading(false);
     }
@@ -411,6 +414,19 @@ export const FormCreatePost = () => {
                 </FormControl>
               )}
             ></Controller>
+
+            {errorAtPostCreation && (
+              <Alert w="100%" status="error">
+                <HStack flexShrink={1} space={2} justifyContent="space-between">
+                  <HStack space={2} flexShrink={1}>
+                    <Alert.Icon mt="1" />
+                    <Text fontSize="md" color="coolGray.800">
+                      Erro ao criar postagem. Por favor, tente novamente.
+                    </Text>
+                  </HStack>
+                </HStack>
+              </Alert>
+            )}
 
             <HStack width="100%" marginTop="5" justifyContent="space-between">
               <Button
