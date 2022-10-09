@@ -33,7 +33,6 @@ export class CategoriesController {
     name: 'include',
     type: String,
     description: 'An optional include',
-    example: `{"likes":{"select":{"id":true},"where":{"ownerId":"aaaaaaaaaaaaaaaaaaaaaaaa"}}}`,
     required: false,
   })
   @ApiQuery({

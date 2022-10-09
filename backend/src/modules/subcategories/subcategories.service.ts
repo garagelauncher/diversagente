@@ -41,13 +41,16 @@ export class SubcategoriesService {
   }
 
   async findAll(options: PaginateOptions) {
-    const { skip, take, where, orderBy } =
+    const { skip, take, where, orderBy, include, cursor } =
       parsePaginationToPrisma<Prisma.SubcategoryWhereInput>(options);
+
     return await this.prisma.subcategory.findMany({
       skip,
       take,
       where,
       orderBy,
+      cursor,
+      include,
     });
   }
 
