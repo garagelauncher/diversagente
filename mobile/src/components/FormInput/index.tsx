@@ -1,15 +1,5 @@
-import {
-  FormControl,
-  Input,
-  VStack,
-  Text,
-  ScrollView,
-  TextArea,
-  Box,
-  Stack,
-  KeyboardAvoidingView,
-} from 'native-base';
-import React, { useState } from 'react';
+import { FormControl, Input, VStack, Text, TextArea, Stack } from 'native-base';
+import React from 'react';
 import { FieldError } from 'react-hook-form';
 import { SafeAreaView, TextInputProps } from 'react-native';
 
@@ -31,7 +21,7 @@ export function FormInput({
   error,
   ...rest
 }: FormInputProps) {
-  console.log(error);
+  console.log('error in input', error);
 
   return (
     <SafeAreaView>
@@ -55,7 +45,7 @@ export function FormInput({
         {isTextArea && (
           <Stack space={4}>
             <TextArea
-              h={260}
+              h={280}
               borderColor={[error ? 'red.500' : 'blue.800']}
               size="md"
               placeholder={placeholder}
