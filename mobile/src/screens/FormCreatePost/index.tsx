@@ -2,6 +2,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
+import { ImageInfo } from 'expo-image-picker';
 import {
   VStack,
   Button,
@@ -18,6 +19,8 @@ import {
   WarningOutlineIcon,
   CheckIcon,
   Select,
+  View,
+  Image,
 } from 'native-base';
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -59,9 +62,8 @@ const schema = yup.object({
   //image: yup.mixed().optional(),
   // imageDescription: yup
   // .string()
-  // .trim()
   // .optional()
-  // .min(8, 'Mínimo de 140 caracteres')
+  // .min(80, 'Mínimo de 80 caracteres')
   // .max(200, 'Máximo de 200 caracteres.')
   // .transform((value) => (value ? value : null))
   // .nullable(),
@@ -74,6 +76,7 @@ export const FormCreatePost = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
   const [categoryId, setCategoryId] = useState<string>('');
+  const [selectedImage, setSelectedImage] = useState<any>(null);
 
   const fetchAllCategories = async () => {
     try {
@@ -115,17 +118,17 @@ export const FormCreatePost = () => {
   const navigation = useNavigation<FormCreatePostNavigationProps>();
 
   const pickImage = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
+    const pickerResult = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [6, 4],
       quality: 1,
     });
 
-    console.log(result);
+    console.log(pickerResult);
 
-    if (!result.cancelled) {
-      console.log(result.uri);
+    if (!pickerResult.cancelled) {
+      setSelectedImage({ localUri: pickerResult.uri });
     }
   };
 
@@ -160,7 +163,7 @@ export const FormCreatePost = () => {
       navigation.navigate('Forum');
       return createdPost;
     } catch (error) {
-      console.error('failed to create');
+      console.error('Failed to create post', error);
       console.error(error);
     } finally {
       setIsLoading(false);
@@ -364,6 +367,19 @@ export const FormCreatePost = () => {
                   isRequired
                   isInvalid={value ? false : true}
                 >
+                  {selectedImage && (
+                    <View
+                      width={'100%'}
+                      height={'72'}
+                      backgroundColor={'red.900'}
+                    >
+                      <Image
+                        source={{ uri: selectedImage.localUri }}
+                        alt={'Imagem selecionada'}
+                        size={'100%'}
+                      />
+                    </View>
+                  )}
                   <HStack
                     alignContent={'center'}
                     alignItems={'center'}
