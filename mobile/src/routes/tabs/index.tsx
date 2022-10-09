@@ -33,6 +33,7 @@ export function TabRoutes() {
         },
         headerShown: false,
         tabBarShowLabel: false,
+        tabBarHideOnKeyboard: true,
       }}
       initialRouteName="ForumStack"
     >
