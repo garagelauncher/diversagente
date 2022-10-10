@@ -18,6 +18,10 @@ describe('LikesService', () => {
 
     prisma.like.create = jest.fn().mockResolvedValue(likeMock);
     prisma.like.delete = jest.fn().mockResolvedValue(likeMock);
+    prisma.like.update = jest.fn().mockResolvedValue({
+      ...likeMock,
+      ownerId: "qqq",
+    })
   });
 
   it('should be defined', () => {
@@ -69,7 +73,7 @@ describe('LikesService', () => {
     };
 
     const likeUpdated = await likeService.update(
-      likeMock.id,
+      likeMock.ownerId,
       likeToUpdate,
     );
 
