@@ -1,5 +1,4 @@
 import { Feather } from '@expo/vector-icons';
-import { useLinkTo } from '@react-navigation/native';
 import {
   Avatar,
   Flex,
@@ -11,7 +10,7 @@ import {
   Pressable,
 } from 'native-base';
 import { FunctionComponent } from 'react';
-import { Linking, Share } from 'react-native';
+import { Share } from 'react-native';
 import { useMutation } from 'react-query';
 
 import { IncludeInto } from '@src/@types/generics/includeInto';
@@ -39,7 +38,6 @@ export type PostProps = {
 };
 
 export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
-  const linkTo = useLinkTo();
   const { user } = useAuth();
 
   const onSuccessToggleLike = async (data: Like) => {
@@ -89,11 +87,6 @@ export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
 
   const handleSharePost = async () => {
     console.debug('share post');
-    const url = `diversagente://profile`;
-    console.debug('url', url);
-    // linkTo(url);
-
-    // await Linking.openURL(url);
 
     try {
       const result = await Share.share({

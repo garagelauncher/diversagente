@@ -20,7 +20,8 @@ import { queryClient } from '@src/services/queryClient';
 const prefix = Linking.createURL('/');
 
 export default function App() {
-  console.log('App prefix', prefix);
+  console.log(prefix);
+
   const linking: LinkingOptions<
     RootBottomTabParamList & StackForumNavigatorParamList
   > = {
@@ -28,6 +29,8 @@ export default function App() {
       prefix,
       'https://www.diversagente.com.br',
       'https://www.diversagente.com',
+      'https://dev-diversagente.herokuapp.com',
+      'https://diversagente.herokuapp.com',
       'diversagente://app',
     ],
     config: {
@@ -55,6 +58,18 @@ export default function App() {
       focusManager.setFocused(status === 'active');
     }
   }
+
+  const handleOpenURL = (event: Linking.EventType) => {
+    console.log('handleOpenURL', event);
+  };
+
+  useEffect(() => {
+    Linking.addEventListener('url', handleOpenURL);
+
+    return () => {
+      Linking.removeEventListener('url', handleOpenURL);
+    };
+  }, []);
 
   useEffect(() => {
     const subscription = AppState.addEventListener('change', onAppStateChange);
