@@ -22,6 +22,8 @@ import { queryClient } from '@src/services/queryClient';
 import { getUsernameInitials } from '@src/utils/getUsernameInitials';
 import { formatDateSocialMedia } from '@src/utils/time';
 
+// pull refresh https://enappd.com/blog/refreshcontrol-pull-to-refresh-in-react-native-apps/130/
+
 export type UserHasLiked = {
   likes: { id: string }[];
 };
