@@ -18,6 +18,7 @@ import { CategoriesList } from './CategoriesList';
 import { CreatePostForm } from './CreatePostForm';
 import { Header } from './Header';
 
+import { LoadingFallback } from '@src/components/LoadingFallback';
 import { Post, UserHasInteracted } from '@src/components/Post';
 import { PER_PAGE_ITEMS, userIdHelper } from '@src/configs';
 import { useCategories } from '@src/hooks/queries/useCategories';
@@ -162,13 +163,16 @@ export const Home = () => {
           />
         </Flex>
 
-        {isLoading ? (
-          <VStack space={4}>
-            <Skeleton width="100%" height={200} />
-            <Skeleton width="100%" height={200} />
-            <Skeleton width="100%" height={200} />
-          </VStack>
-        ) : (
+        <LoadingFallback
+          isLoading={isLoading}
+          fallback={
+            <VStack space={4}>
+              <Skeleton width="100%" height={200} />
+              <Skeleton width="100%" height={200} />
+              <Skeleton width="100%" height={200} />
+            </VStack>
+          }
+        >
           <FlatList
             width={'100%'}
             data={data?.pages.map((page) => page.results).flat()}
@@ -182,9 +186,10 @@ export const Home = () => {
             onEndReached={handleLoadMorePosts}
             onEndReachedThreshold={0.85}
             ListFooterComponent={
-              isFetchingNextPage ? (
-                <Spinner color="orange.500" size="lg" />
-              ) : (
+              <LoadingFallback
+                fallback={<Spinner color="orange.500" size="lg" />}
+                isLoading={isFetchingNextPage}
+              >
                 <Flex width="100%" alignItems="center" justifyContent="center">
                   <Text color="gray.500">
                     Não há mais postagens nessa categoria.
@@ -196,10 +201,10 @@ export const Home = () => {
                     Você pode clicar aqui para criar a sua
                   </Text>
                 </Flex>
-              )
+              </LoadingFallback>
             }
           />
-        )}
+        </LoadingFallback>
       </Flex>
     </Flex>
   );
