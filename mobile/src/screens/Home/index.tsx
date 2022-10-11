@@ -12,7 +12,7 @@ import {
   VStack,
   Text,
 } from 'native-base';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { CategoriesList } from './CategoriesList';
 import { CreatePostForm } from './CreatePostForm';
@@ -47,24 +47,31 @@ export const Home = () => {
     categoryId: selectedCategoryId,
   };
 
-  const { data, hasNextPage, fetchNextPage, isLoading, isFetchingNextPage } =
-    usePosts<UserHasInteracted>({
-      range: [0, PER_PAGE_ITEMS],
-      sort: ['createdAt', 'DESC'],
-      filter: {
-        ...(postFilters.categoryId ? postFilters : {}),
+  const {
+    data,
+    hasNextPage,
+    fetchNextPage,
+    isLoading,
+    isFetchingNextPage,
+    refetch,
+    isRefetching,
+  } = usePosts<UserHasInteracted>({
+    range: [0, PER_PAGE_ITEMS],
+    sort: ['createdAt', 'DESC'],
+    filter: {
+      ...(postFilters.categoryId ? postFilters : {}),
+    },
+    include: {
+      likes: {
+        select: { id: true },
+        where: { ownerId: user?.id ?? userIdHelper },
       },
-      include: {
-        likes: {
-          select: { id: true },
-          where: { ownerId: user?.id ?? userIdHelper },
-        },
-        comments: {
-          select: { id: true },
-          where: { ownerId: user?.id ?? userIdHelper },
-        },
+      comments: {
+        select: { id: true },
+        where: { ownerId: user?.id ?? userIdHelper },
       },
-    });
+    },
+  });
 
   const {
     data: categoriesData,
@@ -91,6 +98,10 @@ export const Home = () => {
     if (hasNextPage) {
       fetchNextPage();
     }
+  };
+
+  const handlePullPostListToRefresh = () => {
+    refetch();
   };
 
   const handleNavigateToFormCreatePost = () => {
@@ -185,6 +196,8 @@ export const Home = () => {
             contentContainerStyle={{ paddingBottom: 350 }}
             onEndReached={handleLoadMorePosts}
             onEndReachedThreshold={0.85}
+            refreshing={isRefetching && !isFetchingNextPage}
+            onRefresh={handlePullPostListToRefresh}
             ListFooterComponent={
               <LoadingFallback
                 fallback={<Spinner color="orange.500" size="lg" />}
