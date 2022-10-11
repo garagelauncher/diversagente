@@ -1,5 +1,6 @@
 import { Feather } from '@expo/vector-icons';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import * as Linking from 'expo-linking';
 import {
   FlatList,
   Flex,
@@ -12,7 +13,7 @@ import {
   VStack,
   Text,
 } from 'native-base';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { CategoriesList } from './CategoriesList';
 import { CreatePostForm } from './CreatePostForm';
@@ -31,7 +32,33 @@ export type HomeScreenNavigationProps = NavigationProp<
   'Home'
 >;
 
+const useMount = (func: CallableFunction) => useEffect(() => func(), [func]);
+
+const useInitialURL = () => {
+  const [url, setUrl] = useState<string | null>(null);
+  const [processing, setProcessing] = useState(true);
+
+  useMount(() => {
+    const getUrlAsync = async () => {
+      // Get the deep link used to open the app
+      const initialUrl = await Linking.getInitialURL();
+
+      // The setTimeout is just for testing purpose
+      setTimeout(() => {
+        setUrl(initialUrl);
+        setProcessing(false);
+      }, 1000);
+    };
+
+    getUrlAsync();
+  });
+
+  return { url, processing };
+};
+
 export const Home = () => {
+  // const { url: initialUrl, processing } = useInitialURL();
+
   const toast = useToast();
   const { user } = useAuth();
   const navigation = useNavigation<HomeScreenNavigationProps>();
@@ -149,6 +176,11 @@ export const Home = () => {
           alignItems="center"
           justifyContent="space-between"
         >
+          {/* <Text>
+            {processing
+              ? `Processing the initial url from a deep link`
+              : `The deep link is: ${initialUrl || 'None'}`}
+          </Text> */}
           <Heading>Últimas postagens</Heading>
           <IconButton
             colorScheme={isReadingModeActive ? 'orange' : 'coolGray'}
