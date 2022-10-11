@@ -2,19 +2,52 @@ import 'intl';
 import 'intl/locale-data/jsonp/pt-BR';
 import 'react-native-gesture-handler';
 import { Poppins_700Bold } from '@expo-google-fonts/poppins';
-import { NavigationContainer } from '@react-navigation/native';
+import { LinkingOptions, NavigationContainer } from '@react-navigation/native';
 import * as Font from 'expo-font';
+import * as Linking from 'expo-linking';
 import * as SplashScreen from 'expo-splash-screen';
-import { NativeBaseProvider, View } from 'native-base';
+import { NativeBaseProvider, Text, View } from 'native-base';
 import React, { useCallback, useEffect, useState } from 'react';
 import { AppState, AppStateStatus, Platform } from 'react-native';
 import { QueryClientProvider, focusManager } from 'react-query';
 
 import { AuthProvider } from '@src/providers/AuthProvider';
 import { Routes } from '@src/routes';
+import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
+import { RootBottomTabParamList } from '@src/routes/tabs';
 import { queryClient } from '@src/services/queryClient';
 
+const prefix = Linking.createURL('/');
+
 export default function App() {
+  console.log('App prefix', prefix);
+  const linking: LinkingOptions<
+    RootBottomTabParamList & StackForumNavigatorParamList
+  > = {
+    prefixes: [
+      prefix,
+      'https://www.diversagente.com.br',
+      'https://www.diversagente.com',
+      'diversagente://app',
+    ],
+    config: {
+      screens: {
+        ForumStack: {
+          screens: {
+            Home: 'home',
+            FormCreatePost: 'create-post',
+            PostDetails: 'posts/:postId',
+          },
+        },
+        ProfileStack: {
+          screens: {
+            Profile: 'profile',
+          },
+        },
+      },
+    },
+  };
+
   const [appIsReady, setAppIsReady] = useState(false);
 
   function onAppStateChange(status: AppStateStatus) {
@@ -60,7 +93,10 @@ export default function App() {
     <NativeBaseProvider>
       <QueryClientProvider client={queryClient}>
         <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-          <NavigationContainer>
+          <NavigationContainer
+            linking={linking}
+            fallback={<Text>Loading...</Text>}
+          >
             <AuthProvider>
               <Routes />
             </AuthProvider>
