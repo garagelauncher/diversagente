@@ -11,6 +11,7 @@ const colors = {
   success: { clr: '#e8f5e9', bgc: '#2e7d32' }, // green
   warning: { clr: '#fff3e0', bgc: '#f4511e' }, // orange
   info: { clr: '#ede7f6', bgc: '#651fff' }, // purple
+  debug: { clr: '#e3f2fd', bgc: '#0e756a' }, // green blue
 };
 
 export function log(message: string, level: keyof typeof colors) {
@@ -30,4 +31,5 @@ export const logger = {
   success: (message: string) => log(message, 'success'),
   warning: (message: string) => log(message, 'warning'),
   info: (message: string) => log(message, 'info'),
+  debug: (message: string) => log(message, 'debug'),
 };

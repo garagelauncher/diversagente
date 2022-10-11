@@ -1,4 +1,5 @@
 import { Feather } from '@expo/vector-icons';
+import { useLinkTo } from '@react-navigation/native';
 import {
   Avatar,
   Flex,
@@ -10,6 +11,7 @@ import {
   Pressable,
 } from 'native-base';
 import { FunctionComponent } from 'react';
+import { Linking, Share } from 'react-native';
 import { useMutation } from 'react-query';
 
 import { IncludeInto } from '@src/@types/generics/includeInto';
@@ -37,6 +39,7 @@ export type PostProps = {
 };
 
 export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
+  const linkTo = useLinkTo();
   const { user } = useAuth();
 
   const onSuccessToggleLike = async (data: Like) => {
@@ -84,6 +87,32 @@ export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
     }
   };
 
+  const handleSharePost = async () => {
+    console.debug('share post');
+    const url = `diversagente://profile`;
+    console.debug('url', url);
+    // linkTo(url);
+
+    // await Linking.openURL(url);
+
+    try {
+      const result = await Share.share({
+        message: `https://www.diversagente.com/posts/${post.id}`,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          alert('shared with activity type of ' + result.activityType);
+        } else {
+          alert('shared');
+        }
+      } else if (result.action === Share.dismissedAction) {
+        alert('dismissed');
+      }
+    } catch (error: any) {
+      alert(error.message);
+    }
+  };
+
   return (
     <Flex backgroundColor="white" borderRadius={6} paddingX={6} paddingY={5}>
       <Flex direction="row">
@@ -114,44 +143,52 @@ export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
         </Text>
       </Flex>
 
-      <HStack direction="row" space={5} marginTop={3}>
-        <Flex direction="row" alignItems="center">
-          {hasLiked ? (
-            <Pressable
-              onPress={handleTogglePostLike}
-              _pressed={{ backgroundColor: 'gray.100' }}
-              borderRadius={6}
-              disabled={isLiking}
-            >
-              <FavouriteIcon size={7} color="red.500" />
-            </Pressable>
-          ) : (
-            <Pressable
-              onPress={handleTogglePostLike}
-              _pressed={{ backgroundColor: 'gray.100' }}
-              borderRadius={6}
-              disabled={isLiking}
-            >
-              <Icon
-                as={Feather}
-                name="heart"
-                size={7}
-                color="muted.400"
+      <Flex
+        width="100%"
+        marginTop={3}
+        direction="row"
+        justifyContent="space-between"
+      >
+        <HStack space={5}>
+          <Flex direction="row" alignItems="center">
+            {hasLiked ? (
+              <Pressable
+                onPress={handleTogglePostLike}
+                _pressed={{ backgroundColor: 'gray.100' }}
                 borderRadius={6}
-              />
-            </Pressable>
-          )}
-          <Text marginLeft={2} fontSize={18}>
-            {post._count.likes}
-          </Text>
-        </Flex>
-        <Flex direction="row" alignItems="center">
-          <Icon as={Feather} name="message-circle" size={7} />
-          <Text marginLeft={2} fontSize={18}>
-            {post._count.comments}
-          </Text>
-        </Flex>
-      </HStack>
+                disabled={isLiking}
+              >
+                <FavouriteIcon size={7} color="red.500" />
+              </Pressable>
+            ) : (
+              <Pressable
+                onPress={handleTogglePostLike}
+                _pressed={{ backgroundColor: 'gray.100' }}
+                borderRadius={6}
+                disabled={isLiking}
+              >
+                <Icon
+                  as={Feather}
+                  name="heart"
+                  size={7}
+                  color="muted.400"
+                  borderRadius={6}
+                />
+              </Pressable>
+            )}
+            <Text marginLeft={2} fontSize={18}>
+              {post._count.likes}
+            </Text>
+          </Flex>
+          <Flex direction="row" alignItems="center">
+            <Icon as={Feather} name="message-circle" size={7} />
+            <Text marginLeft={2} fontSize={18}>
+              {post._count.comments}
+            </Text>
+          </Flex>
+        </HStack>
+        <Icon as={Feather} name="share-2" size={7} onPress={handleSharePost} />
+      </Flex>
     </Flex>
   );
 };
