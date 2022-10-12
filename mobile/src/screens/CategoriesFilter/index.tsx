@@ -9,16 +9,22 @@ import { Header } from '@src/screens/Home/Header';
 import { theme } from '@src/styles/theme';
 
 enum CategoriesFilterEnum {
-  POPULAR = 'POPULAR',
-  RECOMMENDED = 'RECOMENDADO',
+  POPULAR = 'POPULARES',
+  RECOMMENDED = 'RECOMENDADAS',
 }
 
 export const CategoriesFilter = () => {
   const [selectedCategoryFilterOption, setSelectedCategoryFilterOption] =
     useState<string>(CategoriesFilterEnum.POPULAR);
   const filterCategoryOptions = [
-    { id: 1, name: CategoriesFilterEnum.POPULAR },
-    { id: 2, name: CategoriesFilterEnum.RECOMMENDED },
+    {
+      id: 1,
+      singularName: CategoriesFilterEnum.POPULAR,
+    },
+    {
+      id: 2,
+      singularName: CategoriesFilterEnum.RECOMMENDED,
+    },
   ];
 
   const { user } = useAuth();
@@ -57,37 +63,39 @@ export const CategoriesFilter = () => {
               key={index}
               id={currentCategoryOption.id}
               variant={[
-                currentCategoryOption.name === selectedCategoryFilterOption
+                currentCategoryOption.singularName ===
+                selectedCategoryFilterOption
                   ? 'solid'
                   : 'outline',
               ]}
               height={12}
               width={40}
               colorScheme={[
-                currentCategoryOption.name === selectedCategoryFilterOption
+                currentCategoryOption.singularName ===
+                selectedCategoryFilterOption
                   ? 'blue'
                   : 'gray',
               ]}
               onPress={() =>
-                changeCategoryFilterOption(currentCategoryOption.name)
+                changeCategoryFilterOption(currentCategoryOption.singularName)
               }
               size={'lg'}
             >
-              {currentCategoryOption.name}
+              {currentCategoryOption.singularName}
             </Button>
           ))}
         </Flex>
         <HStack width="90%" height={50} backgroundColor={theme.colors.light50}>
           <Flex direction="row">
             <Text fontSize="2xl" bold>
-              Categorias populares
+              Categorias {selectedCategoryFilterOption.toLowerCase()}
             </Text>
             <VStack py="2" mx={4} boxSize="30" alignItems="center">
               <InfoIcon color={theme.colors.darkBlue700} />
             </VStack>
           </Flex>
         </HStack>
-        {selectedCategoryFilterOption === filterCategoryOptions[0].name ? (
+        {selectedCategoryFilterOption === CategoriesFilterEnum.POPULAR ? (
           <PopularCategories />
         ) : (
           <RecommendedCategories />
