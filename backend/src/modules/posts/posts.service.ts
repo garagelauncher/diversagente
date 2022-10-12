@@ -73,6 +73,12 @@ export class PostsService {
   }
 
   remove(id: string) {
-    return this.prisma.post.delete({ where: { id } });
+    return this.prisma.post.update({
+      where: { id },
+      data: {
+        deletedAt: new Date().toISOString(),
+        isActive: false,
+      },
+    });
   }
 }
