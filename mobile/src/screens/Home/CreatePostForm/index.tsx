@@ -11,6 +11,7 @@ export const CreatePostForm = () => {
   function handleNavigateToFormCreatePost() {
     navigation.navigate('FormCreatePost');
   }
+
   return (
     <Flex
       marginTop={6}
@@ -34,6 +35,7 @@ export const CreatePostForm = () => {
             color={'warmGray.700'}
           />
         }
+        onFocus={handleNavigateToFormCreatePost}
       />
       <TouchableOpacity>
         <Button
