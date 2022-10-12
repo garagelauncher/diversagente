@@ -16,6 +16,7 @@ import {
   WarningOutlineIcon,
   CheckIcon,
   Select,
+  Collapse,
 } from 'native-base';
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -191,7 +192,7 @@ export const FormCreatePost = () => {
               }}
             />
 
-            {!isClosed && (
+            <Collapse isOpen={!isClosed} marginTop={2}>
               <Alert maxW="400" status="warning" colorScheme="orange">
                 <VStack space={2} flexShrink={1} w="100%">
                   <HStack
@@ -234,7 +235,7 @@ export const FormCreatePost = () => {
                   </Box>
                 </VStack>
               </Alert>
-            )}
+            </Collapse>
 
             <Controller
               control={control}
