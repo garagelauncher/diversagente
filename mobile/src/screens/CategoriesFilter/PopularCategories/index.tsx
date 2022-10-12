@@ -11,6 +11,7 @@ import {
   Spinner,
 } from 'native-base';
 import React from 'react';
+import { Linking } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { useCategories } from '@src/hooks/queries/useCategories';
@@ -27,6 +28,12 @@ export const PopularCategories = () => {
       //    Post: { every: { createdAt: { gte: '2022-10-09T22:21:15.503Z' } } },
       //   },
     });
+
+  const emailContentToSuggestNewCategory = {
+    subject: 'Sugestão de nova categoria no diversaGente',
+    initialDescription:
+      'Olá, equipe do diversaGente! Gostaria de sugerir a seguinte categoria: ',
+  };
 
   const handleLoadMorePopularCategories = () => {
     console.log('load more popular categories');
@@ -116,6 +123,11 @@ export const PopularCategories = () => {
                       fontWeight: 'bold',
                       fontSize: 'sm',
                     }}
+                    onPress={() =>
+                      Linking.openURL(
+                        `mailto:garagelauncher@gmail.com?subject=${emailContentToSuggestNewCategory.subject}&body=${emailContentToSuggestNewCategory.initialDescription}`,
+                      )
+                    }
                   >
                     Nos envie um e-mail com a sua sugestão!
                   </Link>
