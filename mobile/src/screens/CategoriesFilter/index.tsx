@@ -1,4 +1,13 @@
-import { Box, Flex, Text, VStack, InfoIcon, HStack, Button } from 'native-base';
+import {
+  Box,
+  Flex,
+  Text,
+  VStack,
+  InfoIcon,
+  HStack,
+  Button,
+  Popover,
+} from 'native-base';
 import React, { useState } from 'react';
 
 import { PopularCategories } from './PopularCategories';
@@ -19,11 +28,15 @@ export const CategoriesFilter = () => {
   const filterCategoryOptions = [
     {
       id: 1,
-      singularName: CategoriesFilterEnum.POPULAR,
+      name: CategoriesFilterEnum.POPULAR,
+      description:
+        'Categorias com maior quantidade de postagens na última semana.',
     },
     {
       id: 2,
-      singularName: CategoriesFilterEnum.RECOMMENDED,
+      name: CategoriesFilterEnum.RECOMMENDED,
+      description:
+        'Categorias que você cadastrou como favoritas no seu perfil.',
     },
   ];
 
@@ -63,25 +76,23 @@ export const CategoriesFilter = () => {
               key={index}
               id={currentCategoryOption.id}
               variant={[
-                currentCategoryOption.singularName ===
-                selectedCategoryFilterOption
+                currentCategoryOption.name === selectedCategoryFilterOption
                   ? 'solid'
                   : 'outline',
               ]}
               height={12}
               width={40}
               colorScheme={[
-                currentCategoryOption.singularName ===
-                selectedCategoryFilterOption
+                currentCategoryOption.name === selectedCategoryFilterOption
                   ? 'blue'
                   : 'gray',
               ]}
               onPress={() =>
-                changeCategoryFilterOption(currentCategoryOption.singularName)
+                changeCategoryFilterOption(currentCategoryOption.name)
               }
               size={'lg'}
             >
-              {currentCategoryOption.singularName}
+              {currentCategoryOption.name}
             </Button>
           ))}
         </Flex>
@@ -90,8 +101,36 @@ export const CategoriesFilter = () => {
             <Text fontSize="2xl" bold>
               Categorias {selectedCategoryFilterOption.toLowerCase()}
             </Text>
-            <VStack py="2" mx={4} boxSize="30" alignItems="center">
-              <InfoIcon color={theme.colors.darkBlue700} />
+            <VStack py="2" boxSize="30" alignItems="center">
+              <Popover
+                trigger={(triggerProps) => {
+                  return (
+                    <Button {...triggerProps} bgColor={'transparent'} mx={-1}>
+                      <InfoIcon color={theme.colors.darkBlue700} />
+                    </Button>
+                  );
+                }}
+              >
+                <Popover.Content
+                  accessibilityLabel={`Detalhes sobre as categorias ${selectedCategoryFilterOption}`}
+                  w={56}
+                >
+                  <Popover.Arrow />
+                  <Popover.Body paddingY={6}>
+                    {filterCategoryOptions.map((categoryOption) => {
+                      if (
+                        categoryOption.name === selectedCategoryFilterOption
+                      ) {
+                        return (
+                          <Text key={categoryOption.id} fontSize="sm">
+                            {categoryOption.description}
+                          </Text>
+                        );
+                      }
+                    })}
+                  </Popover.Body>
+                </Popover.Content>
+              </Popover>
             </VStack>
           </Flex>
         </HStack>
