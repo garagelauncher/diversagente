@@ -20,13 +20,12 @@ import { calculatePreviousDateAccordingToRange } from '@src/utils/calculatePrevi
 export const PopularCategories = () => {
   const lastWeekDate = calculatePreviousDateAccordingToRange(7).toISOString();
   console.log(lastWeekDate, 'lastWeekDate');
-
   const { data, hasNextPage, fetchNextPage, isLoading, isFetchingNextPage } =
     useCategories({
       sort: ['Post', { _count: 'desc' }],
-      //  filter: {
-      //    Post: { every: { createdAt: { gte: '2022-10-09T22:21:15.503Z' } } },
-      //   },
+      filter: {
+        Post: { every: { createdAt: { gte: () => lastWeekDate } } },
+      },
     });
 
   const emailContentToSuggestNewCategory = {
