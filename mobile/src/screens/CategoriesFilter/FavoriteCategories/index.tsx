@@ -1,32 +1,42 @@
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import {
   Box,
   Flex,
   Text,
-  VStack,
-  HStack,
-  Alert,
-  Link,
   FlatList,
   Skeleton,
   Spinner,
+  Button,
 } from 'native-base';
 import React from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { useCategories } from '@src/hooks/queries/useCategories';
+import { RootBottomTabParamList } from '@src/routes/tabs';
 
-export const RecommendedCategories = () => {
+type FavoriteCategoriesNavigationProps = NavigationProp<
+  RootBottomTabParamList,
+  'ProfileStack'
+>;
+
+export const FavoriteCategories = () => {
   const { data, hasNextPage, fetchNextPage, isLoading, isFetchingNextPage } =
     useCategories();
   //TODO: {"id":{"in":["628a98093ce262268e3bfeef"]}} => O ID ENVIADO É O DA CATEGORIA, NÃO DEVERIA SER DO USUÁRIO?
 
   const skeletonsCategories = new Array(4).fill(0);
 
+  const navigation = useNavigation<FavoriteCategoriesNavigationProps>();
+
   const handleLoadMorePopularCategories = () => {
-    console.log('load more recommended categories');
+    console.log('load more favorite categories');
     if (hasNextPage) {
       fetchNextPage();
     }
+  };
+
+  const handleNavigationToUserProfile = () => {
+    navigation.navigate('ProfileStack');
   };
 
   return (
@@ -73,48 +83,15 @@ export const RecommendedCategories = () => {
           isFetchingNextPage ? (
             <Spinner color="orange.500" size="sm" />
           ) : (
-            <Alert
-              key="alertInfo"
-              status="info"
-              colorScheme="info"
-              paddingX={2}
-            >
-              <VStack space={2} w="90%">
-                <HStack
-                  flexShrink={1}
-                  space={2}
-                  alignItems="center"
-                  justifyContent="space-between"
-                >
-                  <HStack flexShrink={1} space={2} alignItems="center">
-                    <Alert.Icon />
-                    <Text
-                      fontSize="md"
-                      fontWeight="medium"
-                      color="coolGray.800"
-                    >
-                      Sentindo falta de alguma categoria?
-                    </Text>
-                  </HStack>
-                </HStack>
-                <Box
-                  pl="6"
-                  _text={{
-                    color: 'coolGray.600',
-                  }}
-                >
-                  <Link
-                    _text={{
-                      color: 'info.700',
-                      fontWeight: 'bold',
-                      fontSize: 'sm',
-                    }}
-                  >
-                    Nos envie um e-mail com a sua sugestão!
-                  </Link>
-                </Box>
-              </VStack>
-            </Alert>
+            <TouchableOpacity activeOpacity={0.8}>
+              <Button
+                bgColor={'blue.500'}
+                height={12}
+                onPress={handleNavigationToUserProfile}
+              >
+                Adicionar outras categorias aos meus favoritos
+              </Button>
+            </TouchableOpacity>
           )
         }
       />
