@@ -10,8 +10,8 @@ import {
 } from 'native-base';
 import React, { useState } from 'react';
 
+import { FavoriteCategories } from './FavoriteCategories';
 import { PopularCategories } from './PopularCategories';
-import { RecommendedCategories } from './RecommendedCategories';
 
 import { useAuth } from '@src/hooks/useAuth';
 import { Header } from '@src/screens/Home/Header';
@@ -19,7 +19,7 @@ import { theme } from '@src/styles/theme';
 
 enum CategoriesFilterEnum {
   POPULAR = 'POPULARES',
-  RECOMMENDED = 'RECOMENDADAS',
+  FAVORITE = 'FAVORITAS',
 }
 
 export const CategoriesFilter = () => {
@@ -34,7 +34,7 @@ export const CategoriesFilter = () => {
     },
     {
       id: 2,
-      name: CategoriesFilterEnum.RECOMMENDED,
+      name: CategoriesFilterEnum.FAVORITE,
       description:
         'Categorias que você cadastrou como favoritas no seu perfil.',
     },
@@ -62,8 +62,8 @@ export const CategoriesFilter = () => {
         backgroundColor={theme.colors.light50}
         alignItems="center"
         justifyContent="center"
-        borderTopLeftRadius={14}
-        borderTopRightRadius={14}
+        borderTopLeftRadius={16}
+        borderTopRightRadius={16}
       >
         <Flex
           paddingY={8}
@@ -137,7 +137,7 @@ export const CategoriesFilter = () => {
         {selectedCategoryFilterOption === CategoriesFilterEnum.POPULAR ? (
           <PopularCategories />
         ) : (
-          <RecommendedCategories />
+          <FavoriteCategories />
         )}
       </Box>
     </>
