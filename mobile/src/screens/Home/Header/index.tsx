@@ -30,7 +30,7 @@ export const Header: FunctionComponent<HeaderProps> = ({
     >
       <Flex>
         <Heading color="white">Olá, {username}</Heading>
-        <Text color="gray.400" marginTop={3}>
+        <Text color="gray.200" marginTop={3}>
           {subtitle}
         </Text>
       </Flex>
