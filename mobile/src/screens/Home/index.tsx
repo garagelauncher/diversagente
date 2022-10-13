@@ -211,7 +211,7 @@ export const Home = () => {
                     color="blue.500"
                     onPress={handleNavigateToFormCreatePost}
                   >
-                    Você pode clicar aqui para criar a sua
+                    Você pode clicar aqui para criar um novo post!
                   </Text>
                 </Flex>
               </LoadingFallback>
