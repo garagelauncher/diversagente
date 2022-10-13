@@ -22,7 +22,6 @@ type FavoriteCategoriesNavigationProps = NavigationProp<
 export const FavoriteCategories = () => {
   const { data, hasNextPage, fetchNextPage, isLoading, isFetchingNextPage } =
     useCategories();
-  //TODO: {"id":{"in":["628a98093ce262268e3bfeef"]}} => O ID ENVIADO É O DA CATEGORIA, NÃO DEVERIA SER DO USUÁRIO?
 
   const skeletonsCategories = new Array(4).fill(0);
 
