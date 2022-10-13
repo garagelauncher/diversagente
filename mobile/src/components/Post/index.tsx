@@ -1,4 +1,5 @@
 import { Feather } from '@expo/vector-icons';
+import { useLinkTo } from '@react-navigation/native';
 import {
   Avatar,
   Flex,
@@ -11,6 +12,7 @@ import {
 } from 'native-base';
 import { FunctionComponent } from 'react';
 import { Share } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useMutation } from 'react-query';
 
 import { IncludeInto } from '@src/@types/generics/includeInto';
@@ -21,8 +23,6 @@ import { diversaGenteServices } from '@src/services/diversaGente';
 import { queryClient } from '@src/services/queryClient';
 import { getUsernameInitials } from '@src/utils/getUsernameInitials';
 import { formatDateSocialMedia } from '@src/utils/time';
-
-// pull refresh https://enappd.com/blog/refreshcontrol-pull-to-refresh-in-react-native-apps/130/
 
 export type UserHasLiked = {
   likes: { id: string }[];
@@ -41,6 +41,7 @@ export type PostProps = {
 
 export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
   const { user } = useAuth();
+  const linkTo = useLinkTo();
 
   const onSuccessToggleLike = async (data: Like) => {
     const post = await diversaGenteServices.findPostById(data.postId);
@@ -87,6 +88,10 @@ export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
     }
   };
 
+  const handleNavigateToPostDetails = () => {
+    linkTo(`/posts/${post.id}`);
+  };
+
   const handleSharePost = async () => {
     console.debug('share post');
 
@@ -109,7 +114,13 @@ export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
   };
 
   return (
-    <Flex backgroundColor="white" borderRadius={6} paddingX={6} paddingY={5}>
+    <Flex
+      backgroundColor="white"
+      borderRadius={6}
+      paddingX={6}
+      paddingY={5}
+      width="100%"
+    >
       <Flex direction="row">
         <Avatar
           borderRadius={6}
@@ -127,15 +138,19 @@ export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
       </Flex>
 
       <Flex marginTop={3}>
-        <Heading>{post.title}</Heading>
-        <Text color="gray.500" marginTop={7}>
-          {isPreview ? contentPreview : post.content}
-          {isPreview && (
-            <Text color="blue.500" marginTop={7} underline>
-              ...Ver mais
-            </Text>
-          )}
-        </Text>
+        <TouchableOpacity onPress={handleNavigateToPostDetails}>
+          <Heading>{post.title}</Heading>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleNavigateToPostDetails}>
+          <Text color="gray.500" marginTop={4} fontSize={'md'}>
+            {isPreview ? contentPreview : post.content}
+            {isPreview && (
+              <Text color="blue.500" marginTop={7} underline fontSize={'md'}>
+                ...Ver mais
+              </Text>
+            )}
+          </Text>
+        </TouchableOpacity>
       </Flex>
 
       <Flex
