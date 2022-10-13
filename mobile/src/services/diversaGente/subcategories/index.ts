@@ -2,7 +2,7 @@ import { diversagenteBaseApi } from '../baseUrl';
 
 import { Subcategory } from '@src/contracts/Subcategory';
 
-export type filterSubcategory = {
+export type FilterSubcategory = {
   categoriesIds: {
     hasSome: [categoryId: string];
   };
@@ -24,7 +24,7 @@ export const findAllSubcategories = async () => {
 
 export const findRelatedSubcategoriesToCategory = async (
   categoryId: string,
-  filterParams: filterSubcategory,
+  filterParams: FilterSubcategory,
 ) => {
   console.log('categoryId in service', categoryId);
   console.log('filter in service', filterParams);
