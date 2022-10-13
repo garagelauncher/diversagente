@@ -1,7 +1,6 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import * as ImagePicker from 'expo-image-picker';
 import {
   VStack,
   Button,
@@ -17,6 +16,7 @@ import {
   WarningOutlineIcon,
   CheckIcon,
   Select,
+  Collapse,
 } from 'native-base';
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -36,7 +36,7 @@ import { Subcategory } from '@src/contracts/Subcategory';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
-import { filterSubcategory } from '@src/services/diversaGente/subcategories';
+import { FilterSubcategory } from '@src/services/diversaGente/subcategories';
 import { queryClient } from '@src/services/queryClient';
 
 type FormCreatePostNavigationProps = NavigationProp<
@@ -89,7 +89,7 @@ export const FormCreatePost = () => {
   };
 
   const fetchRelatedSubcategoriesToCategory = async () => {
-    const filterParams: filterSubcategory = {
+    const filterParams: FilterSubcategory = {
       categoriesIds: {
         hasSome: [categoryId],
       },
@@ -192,7 +192,7 @@ export const FormCreatePost = () => {
               }}
             />
 
-            {!isClosed && (
+            <Collapse isOpen={!isClosed} marginTop={2}>
               <Alert maxW="400" status="warning" colorScheme="orange">
                 <VStack space={2} flexShrink={1} w="100%">
                   <HStack
@@ -235,7 +235,7 @@ export const FormCreatePost = () => {
                   </Box>
                 </VStack>
               </Alert>
-            )}
+            </Collapse>
 
             <Controller
               control={control}

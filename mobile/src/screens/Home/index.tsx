@@ -108,6 +108,10 @@ export const Home = () => {
     navigation.navigate('FormCreatePost');
   };
 
+  const handleNavigatoToCategorySelecionScreen = () => {
+    navigation.navigate('SelectCategory');
+  };
+
   const toggleReadingMode = useCallback(() => {
     setIsReadingModeActive(
       (previousIsReadingModeActive) => !previousIsReadingModeActive,
@@ -144,6 +148,7 @@ export const Home = () => {
             <CreatePostForm />
 
             <CategoriesList
+              onPressSeeMore={handleNavigatoToCategorySelecionScreen}
               categories={
                 categoriesData?.pages.map((page) => page.results).flat() ?? []
               }
@@ -192,7 +197,7 @@ export const Home = () => {
                 <Post post={item} isPreview />
               </Box>
             )}
-            keyExtractor={(item) => item.id + Math.random()}
+            keyExtractor={(item) => item.id}
             contentContainerStyle={{ paddingBottom: 350 }}
             onEndReached={handleLoadMorePosts}
             onEndReachedThreshold={0.85}
