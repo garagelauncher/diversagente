@@ -10,7 +10,7 @@ import {
   Skeleton,
   Spinner,
 } from 'native-base';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Linking } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -18,8 +18,11 @@ import { useCategories } from '@src/hooks/queries/useCategories';
 import { calculatePreviousDateAccordingToRange } from '@src/utils/calculatePreviousDateAccordingToRange';
 
 export const PopularCategories = () => {
-  const lastWeekDate = calculatePreviousDateAccordingToRange(7).toISOString();
-  console.log(lastWeekDate, 'lastWeekDate');
+  const lastWeekDate = useMemo(() => {
+    calculatePreviousDateAccordingToRange(7).toISOString();
+    console.log(calculatePreviousDateAccordingToRange(7).toISOString());
+  }, []);
+
   const { data, hasNextPage, fetchNextPage, isLoading, isFetchingNextPage } =
     useCategories({
       sort: ['Post', { _count: 'desc' }],
