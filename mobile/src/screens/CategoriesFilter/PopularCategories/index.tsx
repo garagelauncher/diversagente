@@ -27,7 +27,7 @@ export const PopularCategories = () => {
     useCategories({
       sort: ['Post', { _count: 'desc' }],
       filter: {
-        Post: { every: { createdAt: { gte: () => lastWeekDate } } },
+        Post: { every: { createdAt: { gte: lastWeekDate } } },
       },
     });
 
@@ -62,7 +62,7 @@ export const PopularCategories = () => {
         width={'100%'}
         data={data?.pages.map((page) => page.results).flat()}
         renderItem={({ item }) => (
-          <TouchableOpacity>
+          <TouchableOpacity key={item.id}>
             <Box marginBottom={4}>
               <Flex
                 h={73}
