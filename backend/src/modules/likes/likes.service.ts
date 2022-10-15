@@ -1,5 +1,10 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/shared/database/prisma.service';
+import {
+  PaginateOptions,
+  parsePaginationToPrisma,
+} from 'src/shared/utils/parsePaginationToPrisma';
 import { CreateLikeDto } from './dto/create-like.dto';
 import { DeleteLikeDto } from './dto/delete-like.dto';
 import { UpdateLikeDto } from './dto/update-like.dto';
@@ -12,8 +17,18 @@ export class LikesService {
     return this.prisma.like.create({ data: createLikeDto });
   }
 
-  findAll() {
-    return this.prisma.like.findMany({});
+  async findAll(options: PaginateOptions) {
+    const { skip, take, where, orderBy, include, cursor } =
+      parsePaginationToPrisma<Prisma.LikeWhereInput>(options);
+
+    return await this.prisma.like.findMany({
+      skip,
+      take,
+      where,
+      orderBy,
+      include,
+      cursor,
+    });
   }
 
   async findOne(id: string) {
