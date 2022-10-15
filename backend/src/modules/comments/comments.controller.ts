@@ -29,7 +29,7 @@ export class CommentsController {
     name: 'filter',
     type: String,
     description: 'An optional filter',
-    example: `{ where: { postId: '628922e7f555044cdccbbab3' }}`,
+    example: `{ "postId": "628922e7f555044cdccbbab3" }`,
     required: false,
   })
   @ApiQuery({
