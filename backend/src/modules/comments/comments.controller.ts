@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
@@ -24,8 +25,20 @@ export class CommentsController {
   }
 
   @Get()
-  findAll() {
-    return this.commentsService.findAll();
+  async findAll(
+    @Query('filter') filter?: string,
+    @Query('sort') sort?: string,
+    @Query('range') range?: string,
+    @Query('include') include?: string,
+    @Query('cursor') cursor?: string,
+  ) {
+    return await this.commentsService.findAll({
+      filter,
+      sort,
+      range,
+      include,
+      cursor,
+    });
   }
 
   @Get(':id')
