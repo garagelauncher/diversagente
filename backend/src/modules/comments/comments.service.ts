@@ -1,5 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/shared/database/prisma.service';
+import {
+  PaginateOptions,
+  parsePaginationToPrisma,
+} from 'src/shared/utils/parsePaginationToPrisma';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { DeleteCommentDto } from './dto/delete-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
@@ -12,8 +17,18 @@ export class CommentsService {
     return this.prisma.comment.create({ data: createCommentDto });
   }
 
-  findAll() {
-    return this.prisma.comment.findMany({});
+  async findAll(options: PaginateOptions) {
+    const { skip, take, where, orderBy, include, cursor } =
+      parsePaginationToPrisma<Prisma.CommentWhereInput>(options);
+
+    return await this.prisma.comment.findMany({
+      skip,
+      take,
+      where,
+      orderBy,
+      include,
+      cursor,
+    });
   }
 
   async findOne(id: string) {
