@@ -1,10 +1,10 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { CategoriesFilter } from '@src/screens/CategoriesFilter';
-import { SubcategoriesList } from '@src/screens/CategoriesFilter/SubcategoriesList';
 import { FormCreatePost } from '@src/screens/FormCreatePost';
 import { Home } from '@src/screens/Home';
 import { PostDetails } from '@src/screens/PostDetails';
+import { SubcategoryFilter } from '@src/screens/SubcategoriesFilter';
 
 export type StackForumNavigatorParamList = {
   Forum: undefined;
@@ -29,7 +29,7 @@ export const StackForumPrivateRoutes = () => {
       <Screen name="PostDetails" component={PostDetails} />
       <Screen name="FormCreatePost" component={FormCreatePost} />
       <Screen name="SelectCategory" component={CategoriesFilter} />
-      <Screen name="SelectSubcategory" component={SubcategoriesList} />
+      <Screen name="SelectSubcategory" component={SubcategoryFilter} />
     </Navigator>
   );
 };
