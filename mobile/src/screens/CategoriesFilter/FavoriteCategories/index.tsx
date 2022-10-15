@@ -1,4 +1,10 @@
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import {
+  NavigationProp,
+  RouteProp,
+  useLinkTo,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {
   Box,
   Flex,
@@ -8,15 +14,16 @@ import {
   Spinner,
   Button,
 } from 'native-base';
-import React from 'react';
+import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { useCategories } from '@src/hooks/queries/useCategories';
+import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
 import { RootBottomTabParamList } from '@src/routes/tabs';
 
 type FavoriteCategoriesNavigationProps = NavigationProp<
-  RootBottomTabParamList,
-  'ProfileStack'
+  StackForumNavigatorParamList,
+  'SelectSubcategory'
 >;
 
 export const FavoriteCategories = () => {
@@ -26,6 +33,12 @@ export const FavoriteCategories = () => {
   const skeletonsCategories = new Array(4).fill(0);
 
   const navigation = useNavigation<FavoriteCategoriesNavigationProps>();
+  const linkTo = useLinkTo();
+
+  const handleNavigateToSubcategoriesFilter = async (categoryId: string) => {
+    console.log(categoryId, 'favorite');
+    navigation.navigate('SelectSubcategory', { categoryId: categoryId });
+  };
 
   const handleLoadMorePopularCategories = () => {
     console.log('load more favorite categories');
@@ -35,7 +48,7 @@ export const FavoriteCategories = () => {
   };
 
   const handleNavigationToUserProfile = () => {
-    navigation.navigate('ProfileStack');
+    linkTo('/profile');
   };
 
   return (
@@ -55,7 +68,10 @@ export const FavoriteCategories = () => {
         width={'100%'}
         data={data?.pages.map((page) => page.results).flat()}
         renderItem={({ item }) => (
-          <TouchableOpacity>
+          <TouchableOpacity
+            key={item.id}
+            onPress={() => handleNavigateToSubcategoriesFilter(item.id)}
+          >
             <Box marginBottom={4}>
               <Flex
                 h={73}
