@@ -1,6 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { CategoriesFilter } from '@src/screens/CategoriesFilter';
+import { Comments } from '@src/screens/Comments';
 import { FormCreatePost } from '@src/screens/FormCreatePost';
 import { Home } from '@src/screens/Home';
 import { PostDetails } from '@src/screens/PostDetails';
@@ -12,6 +13,7 @@ export type StackForumNavigatorParamList = {
   SelectCategory: undefined;
   SelectSubcategory: { categoryId: string; categoryTitle: string };
   PostDetails: { postId: string };
+  Comments: { postId: string };
 };
 
 const { Navigator, Screen } =
@@ -27,6 +29,7 @@ export const StackForumPrivateRoutes = () => {
     >
       <Screen name="Forum" component={Home} />
       <Screen name="PostDetails" component={PostDetails} />
+      <Screen name="Comments" component={Comments} />
       <Screen name="FormCreatePost" component={FormCreatePost} />
       <Screen name="SelectCategory" component={CategoriesFilter} />
       <Screen name="SelectSubcategory" component={SubcategoryFilter} />
