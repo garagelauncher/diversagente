@@ -6,7 +6,4 @@ export class CreateCommentDto {
 
   @ApiProperty()
   ownerId: string;
-
-  @ApiProperty()
-  postId: string;
 }
