@@ -13,8 +13,8 @@ import React, { useState } from 'react';
 import { FavoriteCategories } from './FavoriteCategories';
 import { PopularCategories } from './PopularCategories';
 
+import { Header } from '@src/components/Header';
 import { useAuth } from '@src/hooks/useAuth';
-import { Header } from '@src/screens/Home/Header';
 import { theme } from '@src/styles/theme';
 
 enum CategoriesFilterEnum {
