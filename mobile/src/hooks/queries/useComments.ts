@@ -1,14 +1,28 @@
 import { useInfiniteQuery } from 'react-query';
 
-import { PER_PAGE_ITEMS } from '@src/configs';
 import { QueryOptions } from '@src/contracts/QueryOptions';
 import { diversaGenteServices } from '@src/services/diversaGente';
 
-export const useCategories = (options: QueryOptions = {}) =>
+type UseCommentsParams = {
+  postId: string;
+  perPage: number;
+} & QueryOptions;
+
+export const useComments = <GenericIncluded extends object = object>({
+  postId,
+  perPage,
+  ...options
+}: UseCommentsParams) =>
   useInfiniteQuery(
-    ['diversagente@comments', options.cursor, options.range, options.filter],
+    [
+      'diversagente@comments',
+      postId,
+      options.cursor,
+      options.range,
+      options.filter,
+    ],
     ({ pageParam = {} }) =>
-      diversaGenteServices.findAllComments({
+      diversaGenteServices.findAllComments<GenericIncluded>(postId, {
         ...options,
         cursor: pageParam.cursor,
         range: pageParam.range ?? options.range,
@@ -26,7 +40,7 @@ export const useCategories = (options: QueryOptions = {}) =>
             cursor: {
               id: cursor,
             },
-            range: [1, PER_PAGE_ITEMS],
+            range: [1, perPage],
           };
 
           return newPageParam;
