@@ -4,7 +4,7 @@ import { FunctionComponent } from 'react';
 import { getUsernameInitials } from '@src/utils/getUsernameInitials';
 
 type HeaderProps = {
-  username: string;
+  username?: string;
   avatar?: string | null;
   subtitle: string;
 };
@@ -14,7 +14,7 @@ export const Header: FunctionComponent<HeaderProps> = ({
   subtitle,
   avatar,
 }) => {
-  const userInitials = getUsernameInitials(username);
+  const userInitials = username ? getUsernameInitials(username) : null;
 
   const avatarUri = String(avatar);
 
@@ -29,20 +29,23 @@ export const Header: FunctionComponent<HeaderProps> = ({
       justifyContent="space-between"
     >
       <Flex>
-        <Heading color="white">Olá, {username}</Heading>
+        {username && <Heading color="white">Olá, {username}</Heading>}
+
         <Text color="gray.200" marginTop={3}>
           {subtitle}
         </Text>
       </Flex>
-      <Avatar
-        backgroundColor={'orange.500'}
-        alignSelf="center"
-        source={{
-          uri: avatarUri,
-        }}
-      >
-        {userInitials}
-      </Avatar>
+      {avatar && (
+        <Avatar
+          backgroundColor={'orange.500'}
+          alignSelf="center"
+          source={{
+            uri: avatarUri,
+          }}
+        >
+          {userInitials}
+        </Avatar>
+      )}
     </Flex>
   );
 };
