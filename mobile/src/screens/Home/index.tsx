@@ -1,6 +1,5 @@
 import { Feather } from '@expo/vector-icons';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import * as Linking from 'expo-linking';
 import {
   FlatList,
   Flex,
@@ -13,12 +12,13 @@ import {
   VStack,
   Text,
 } from 'native-base';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { CategoriesList } from './CategoriesList';
 import { CreatePostForm } from './CreatePostForm';
 
 import { Header } from '@src/components/Header';
+import { LoadingFallback } from '@src/components/LoadingFallback';
 import { Post, UserHasInteracted } from '@src/components/Post';
 import { PER_PAGE_ITEMS, userIdHelper } from '@src/configs';
 import { useCategories } from '@src/hooks/queries/useCategories';
@@ -32,33 +32,7 @@ export type HomeScreenNavigationProps = NavigationProp<
   'Home'
 >;
 
-const useMount = (func: CallableFunction) => useEffect(() => func(), [func]);
-
-const useInitialURL = () => {
-  const [url, setUrl] = useState<string | null>(null);
-  const [processing, setProcessing] = useState(true);
-
-  useMount(() => {
-    const getUrlAsync = async () => {
-      // Get the deep link used to open the app
-      const initialUrl = await Linking.getInitialURL();
-
-      // The setTimeout is just for testing purpose
-      setTimeout(() => {
-        setUrl(initialUrl);
-        setProcessing(false);
-      }, 1000);
-    };
-
-    getUrlAsync();
-  });
-
-  return { url, processing };
-};
-
 export const Home = () => {
-  // const { url: initialUrl, processing } = useInitialURL();
-
   const toast = useToast();
   const { user } = useAuth();
   const navigation = useNavigation<HomeScreenNavigationProps>();
@@ -73,24 +47,31 @@ export const Home = () => {
     categoryId: selectedCategoryId,
   };
 
-  const { data, hasNextPage, fetchNextPage, isLoading, isFetchingNextPage } =
-    usePosts<UserHasInteracted>({
-      range: [0, PER_PAGE_ITEMS],
-      sort: ['createdAt', 'DESC'],
-      filter: {
-        ...(postFilters.categoryId ? postFilters : {}),
+  const {
+    data,
+    hasNextPage,
+    fetchNextPage,
+    isLoading,
+    isFetchingNextPage,
+    refetch,
+    isRefetching,
+  } = usePosts<UserHasInteracted>({
+    range: [0, PER_PAGE_ITEMS],
+    sort: ['createdAt', 'DESC'],
+    filter: {
+      ...(postFilters.categoryId ? postFilters : {}),
+    },
+    include: {
+      likes: {
+        select: { id: true },
+        where: { ownerId: user?.id ?? userIdHelper },
       },
-      include: {
-        likes: {
-          select: { id: true },
-          where: { ownerId: user?.id ?? userIdHelper },
-        },
-        comments: {
-          select: { id: true },
-          where: { ownerId: user?.id ?? userIdHelper },
-        },
+      comments: {
+        select: { id: true },
+        where: { ownerId: user?.id ?? userIdHelper },
       },
-    });
+    },
+  });
 
   const {
     data: categoriesData,
@@ -117,6 +98,10 @@ export const Home = () => {
     if (hasNextPage) {
       fetchNextPage();
     }
+  };
+
+  const handlePullPostListToRefresh = () => {
+    refetch();
   };
 
   const handleNavigateToFormCreatePost = () => {
@@ -181,11 +166,6 @@ export const Home = () => {
           alignItems="center"
           justifyContent="space-between"
         >
-          {/* <Text>
-            {processing
-              ? `Processing the initial url from a deep link`
-              : `The deep link is: ${initialUrl || 'None'}`}
-          </Text> */}
           <Heading>Últimas postagens</Heading>
           <IconButton
             colorScheme={isReadingModeActive ? 'orange' : 'coolGray'}
@@ -199,13 +179,16 @@ export const Home = () => {
           />
         </Flex>
 
-        {isLoading ? (
-          <VStack space={4}>
-            <Skeleton width="100%" height={200} />
-            <Skeleton width="100%" height={200} />
-            <Skeleton width="100%" height={200} />
-          </VStack>
-        ) : (
+        <LoadingFallback
+          isLoading={isLoading}
+          fallback={
+            <VStack space={4}>
+              <Skeleton width="100%" height={200} />
+              <Skeleton width="100%" height={200} />
+              <Skeleton width="100%" height={200} />
+            </VStack>
+          }
+        >
           <FlatList
             width={'100%'}
             data={data?.pages.map((page) => page.results).flat()}
@@ -218,10 +201,13 @@ export const Home = () => {
             contentContainerStyle={{ paddingBottom: 350 }}
             onEndReached={handleLoadMorePosts}
             onEndReachedThreshold={0.85}
+            refreshing={isRefetching && !isFetchingNextPage}
+            onRefresh={handlePullPostListToRefresh}
             ListFooterComponent={
-              isFetchingNextPage ? (
-                <Spinner color="orange.500" size="lg" />
-              ) : (
+              <LoadingFallback
+                fallback={<Spinner color="orange.500" size="lg" />}
+                isLoading={isFetchingNextPage}
+              >
                 <Flex width="100%" alignItems="center" justifyContent="center">
                   <Text color="gray.500">
                     Não há mais postagens nessa categoria.
@@ -230,13 +216,13 @@ export const Home = () => {
                     color="blue.500"
                     onPress={handleNavigateToFormCreatePost}
                   >
-                    Você pode clicar aqui para criar a sua
+                    Você pode clicar aqui para criar um novo post!
                   </Text>
                 </Flex>
-              )
+              </LoadingFallback>
             }
           />
-        )}
+        </LoadingFallback>
       </Flex>
     </Flex>
   );
