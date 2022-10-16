@@ -6,23 +6,24 @@ import {
   useRoute,
 } from '@react-navigation/native';
 import {
-  Avatar,
   Button,
-  Flex,
   Heading,
   Icon,
   IconButton,
   Input,
   ScrollView,
   Skeleton,
-  Text,
   VStack,
 } from 'native-base';
 
+import { ConditionallyRender } from '@src/components/ConditionallyRender';
 import { LoadingFallback } from '@src/components/LoadingFallback';
 import { Post, UserHasInteracted } from '@src/components/Post';
+import { UserComment } from '@src/components/UserComment';
 import { userIdHelper } from '@src/configs';
+import { CommentOwner } from '@src/contracts/Comment';
 import { usePostDetails } from '@src/hooks/queries/details/usePostDetails';
+import { useComments } from '@src/hooks/queries/useComments';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
 
@@ -51,8 +52,30 @@ export const PostDetails = () => {
     },
   });
 
+  const { data: commentData, isLoading: isCommentLoading } = useComments<{
+    owner: CommentOwner;
+  }>({
+    postId,
+    perPage: 1,
+    range: [0, 0],
+    sort: ['createdAt', 'DESC'],
+    filter: {
+      postId,
+    },
+    include: {
+      owner: true,
+    },
+  });
+  const lastComment = commentData?.pages[0]?.results[0] || null;
+
+  const isLoadedNoComment = !isCommentLoading && !lastComment;
+
   const handleNavigateGoBack = () => {
     navigation.goBack();
+  };
+
+  const handleNavigateToCommentList = () => {
+    navigation.navigate('Comments', { postId });
   };
 
   const handleAddComment = () => {
@@ -82,37 +105,7 @@ export const PostDetails = () => {
         {data && <Post post={data} />}
       </LoadingFallback>
 
-      <VStack width="100%" padding={6} space={4}>
-        <Heading>Comentários</Heading>
-        <Flex
-          backgroundColor="white"
-          borderRadius={6}
-          paddingX={6}
-          paddingY={5}
-          width="100%"
-        >
-          <Flex direction="row">
-            <Avatar borderRadius={6} backgroundColor={'primary.500'}>
-              JD
-            </Avatar>
-            <Flex marginLeft={5}>
-              <Text fontWeight={'bold'}>John Doe</Text>
-              <Text color="gray.500">4h atrás</Text>
-            </Flex>
-          </Flex>
-
-          <Text color="gray.500" marginTop={4} fontSize={'md'}>
-            Muito bom o conteúdo, parabéns!
-          </Text>
-
-          <Flex direction="row" alignItems="center" marginTop={4}>
-            <Icon as={Feather} name="message-circle" size={7} />
-            <Text marginLeft={2} fontSize={18}>
-              2
-            </Text>
-          </Flex>
-        </Flex>
-
+      <VStack width="100%" padding={6} space={6}>
         <Input
           type="text"
           backgroundColor="gray.100"
@@ -130,6 +123,41 @@ export const PostDetails = () => {
             </Button>
           }
           placeholder="Adicione aqui seu comentário"
+        />
+
+        <ConditionallyRender
+          condition={isLoadedNoComment}
+          trueComponent={<></>}
+          falseComponent={<Heading>Último comentário</Heading>}
+        />
+
+        <ConditionallyRender
+          condition={isLoadedNoComment}
+          trueComponent={<></>}
+          falseComponent={
+            <LoadingFallback
+              fallback={<Skeleton width="100%" height={150} />}
+              isLoading={isCommentLoading || !lastComment}
+            >
+              <>{lastComment && <UserComment comment={lastComment} />}</>
+            </LoadingFallback>
+          }
+        />
+
+        <ConditionallyRender
+          condition={isLoadedNoComment}
+          trueComponent={<></>}
+          falseComponent={
+            <Button
+              colorScheme={'blue'}
+              size={'lg'}
+              fontSize={'lg'}
+              variant={'outline'}
+              onPress={handleNavigateToCommentList}
+            >
+              Ver mais comentários
+            </Button>
+          }
         />
       </VStack>
     </ScrollView>
