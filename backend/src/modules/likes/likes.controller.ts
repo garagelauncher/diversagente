@@ -20,7 +20,7 @@ export class LikesController {
   @Post()
   create(
     @Param('postId') postId: string,
-    @Body() createLikeDto: Pick<CreateLikeDto, 'ownerId'>,
+    @Body() createLikeDto: CreateLikeDto,
   ) {
     return this.likesService.create({ ...createLikeDto, postId });
   }
