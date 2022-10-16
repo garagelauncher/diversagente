@@ -32,8 +32,14 @@ export const FavoriteCategories = () => {
   const navigation = useNavigation<FavoriteCategoriesNavigationProps>();
   const linkTo = useLinkTo();
 
-  const handleNavigateToSubcategoriesFilter = async (categoryId: string) => {
-    navigation.navigate('SelectSubcategory', { categoryId: categoryId });
+  const handleNavigateToSubcategoriesFilter = async (
+    categoryId: string,
+    categoryTitle: string,
+  ) => {
+    navigation.navigate('SelectSubcategory', {
+      categoryId,
+      categoryTitle,
+    });
   };
 
   const handleLoadMorePopularCategories = () => {
@@ -67,7 +73,9 @@ export const FavoriteCategories = () => {
           <TouchableOpacity
             key={item.id}
             activeOpacity={0.6}
-            onPress={() => handleNavigateToSubcategoriesFilter(item.id)}
+            onPress={() =>
+              handleNavigateToSubcategoriesFilter(item.id, item.title)
+            }
           >
             <Box marginBottom={4}>
               <Flex
