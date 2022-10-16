@@ -59,7 +59,7 @@ export const CategoriesFilter = () => {
         width="100%"
         flex={1}
         marginTop={-3}
-        backgroundColor={theme.colors.light50}
+        backgroundColor={'gray.50'}
         alignItems="center"
         justifyContent="center"
         borderTopLeftRadius={16}
