@@ -92,6 +92,10 @@ export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
     linkTo(`/posts/${post.id}`);
   };
 
+  const handleNavigateToPostComments = () => {
+    linkTo(`/posts/${post.id}/comments`);
+  };
+
   const handleSharePost = async () => {
     console.debug('share post');
 
@@ -191,8 +195,17 @@ export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
             </Text>
           </Flex>
           <Flex direction="row" alignItems="center">
-            <Icon as={Feather} name="message-circle" size={7} />
-            <Text marginLeft={2} fontSize={18}>
+            <Icon
+              as={Feather}
+              name="message-circle"
+              size={7}
+              onPress={handleNavigateToPostComments}
+            />
+            <Text
+              marginLeft={2}
+              fontSize={18}
+              onPress={handleNavigateToPostComments}
+            >
               {post._count.comments}
             </Text>
           </Flex>
