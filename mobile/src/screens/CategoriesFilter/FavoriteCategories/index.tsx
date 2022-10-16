@@ -1,4 +1,8 @@
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import {
+  NavigationProp,
+  useLinkTo,
+  useNavigation,
+} from '@react-navigation/native';
 import {
   Box,
   Flex,
@@ -12,20 +16,31 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { useCategories } from '@src/hooks/queries/useCategories';
-import { RootBottomTabParamList } from '@src/routes/tabs';
+import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
 
 type FavoriteCategoriesNavigationProps = NavigationProp<
-  RootBottomTabParamList,
-  'ProfileStack'
+  StackForumNavigatorParamList,
+  'SelectSubcategory'
 >;
 
 export const FavoriteCategories = () => {
   const { data, hasNextPage, fetchNextPage, isLoading, isFetchingNextPage } =
     useCategories();
 
-  const skeletonsCategories = new Array(4).fill(0);
+  const skeletonsCategories = new Array(5).fill(0);
 
   const navigation = useNavigation<FavoriteCategoriesNavigationProps>();
+  const linkTo = useLinkTo();
+
+  const handleNavigateToSubcategoriesFilter = async (
+    categoryId: string,
+    categoryTitle: string,
+  ) => {
+    navigation.navigate('SelectSubcategory', {
+      categoryId,
+      categoryTitle,
+    });
+  };
 
   const handleLoadMorePopularCategories = () => {
     console.log('load more favorite categories');
@@ -35,7 +50,7 @@ export const FavoriteCategories = () => {
   };
 
   const handleNavigationToUserProfile = () => {
-    navigation.navigate('ProfileStack');
+    linkTo('/profile');
   };
 
   return (
@@ -55,7 +70,13 @@ export const FavoriteCategories = () => {
         width={'100%'}
         data={data?.pages.map((page) => page.results).flat()}
         renderItem={({ item }) => (
-          <TouchableOpacity>
+          <TouchableOpacity
+            key={item.id}
+            activeOpacity={0.6}
+            onPress={() =>
+              handleNavigateToSubcategoriesFilter(item.id, item.title)
+            }
+          >
             <Box marginBottom={4}>
               <Flex
                 h={73}
