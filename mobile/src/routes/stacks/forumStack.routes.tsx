@@ -10,7 +10,7 @@ export type StackForumNavigatorParamList = {
   Forum: undefined;
   FormCreatePost: undefined;
   SelectCategory: undefined;
-  SelectSubcategory: { categoryId: string };
+  SelectSubcategory: { categoryId: string; categoryTitle: string };
   PostDetails: { postId: string };
 };
 
