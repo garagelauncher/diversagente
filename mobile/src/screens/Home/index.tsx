@@ -16,8 +16,8 @@ import { useCallback, useState } from 'react';
 
 import { CategoriesList } from './CategoriesList';
 import { CreatePostForm } from './CreatePostForm';
-import { Header } from './Header';
 
+import { Header } from '@src/components/Header';
 import { LoadingFallback } from '@src/components/LoadingFallback';
 import { Post, UserHasInteracted } from '@src/components/Post';
 import { PER_PAGE_ITEMS, userIdHelper } from '@src/configs';

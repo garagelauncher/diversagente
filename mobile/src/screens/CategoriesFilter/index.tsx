@@ -13,8 +13,8 @@ import React, { useState } from 'react';
 import { FavoriteCategories } from './FavoriteCategories';
 import { PopularCategories } from './PopularCategories';
 
+import { Header } from '@src/components/Header';
 import { useAuth } from '@src/hooks/useAuth';
-import { Header } from '@src/screens/Home/Header';
 import { theme } from '@src/styles/theme';
 
 enum CategoriesFilterEnum {
@@ -59,7 +59,7 @@ export const CategoriesFilter = () => {
         width="100%"
         flex={1}
         marginTop={-3}
-        backgroundColor={theme.colors.light50}
+        backgroundColor={'gray.50'}
         alignItems="center"
         justifyContent="center"
         borderTopLeftRadius={16}
