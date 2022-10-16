@@ -1,9 +1,7 @@
 import {
   NavigationProp,
-  RouteProp,
   useLinkTo,
   useNavigation,
-  useRoute,
 } from '@react-navigation/native';
 import {
   Box,
@@ -14,12 +12,11 @@ import {
   Spinner,
   Button,
 } from 'native-base';
-import React, { useState } from 'react';
+import React from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { useCategories } from '@src/hooks/queries/useCategories';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
-import { RootBottomTabParamList } from '@src/routes/tabs';
 
 type FavoriteCategoriesNavigationProps = NavigationProp<
   StackForumNavigatorParamList,
@@ -30,13 +27,12 @@ export const FavoriteCategories = () => {
   const { data, hasNextPage, fetchNextPage, isLoading, isFetchingNextPage } =
     useCategories();
 
-  const skeletonsCategories = new Array(4).fill(0);
+  const skeletonsCategories = new Array(5).fill(0);
 
   const navigation = useNavigation<FavoriteCategoriesNavigationProps>();
   const linkTo = useLinkTo();
 
   const handleNavigateToSubcategoriesFilter = async (categoryId: string) => {
-    console.log(categoryId, 'favorite');
     navigation.navigate('SelectSubcategory', { categoryId: categoryId });
   };
 
@@ -70,6 +66,7 @@ export const FavoriteCategories = () => {
         renderItem={({ item }) => (
           <TouchableOpacity
             key={item.id}
+            activeOpacity={0.6}
             onPress={() => handleNavigateToSubcategoriesFilter(item.id)}
           >
             <Box marginBottom={4}>

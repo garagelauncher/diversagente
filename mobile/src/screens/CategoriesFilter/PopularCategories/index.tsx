@@ -41,7 +41,6 @@ export const PopularCategories = () => {
   const navigation = useNavigation<PopularCategoriesNavigationProps>();
 
   const handleNavigateToSubcategoriesFilter = async (categoryId: string) => {
-    console.log(categoryId, 'popular');
     navigation.navigate('SelectSubcategory', { categoryId: categoryId });
   };
 
@@ -78,6 +77,7 @@ export const PopularCategories = () => {
         renderItem={({ item }) => (
           <TouchableOpacity
             key={item.id}
+            activeOpacity={0.6}
             onPress={() => handleNavigateToSubcategoriesFilter(item.id)}
           >
             <Box marginBottom={4}>
