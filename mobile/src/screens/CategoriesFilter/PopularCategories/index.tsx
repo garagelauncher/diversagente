@@ -1,3 +1,4 @@
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import {
   Box,
   Flex,
@@ -15,7 +16,13 @@ import { Linking } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { useCategories } from '@src/hooks/queries/useCategories';
+import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
 import { calculatePreviousDateAccordingToRange } from '@src/utils/calculatePreviousDateAccordingToRange';
+
+type PopularCategoriesNavigationProps = NavigationProp<
+  StackForumNavigatorParamList,
+  'SelectSubcategory'
+>;
 
 export const PopularCategories = () => {
   const lastWeekDate = useMemo(() => {
@@ -30,6 +37,15 @@ export const PopularCategories = () => {
         Post: { every: { createdAt: { gte: lastWeekDate } } },
       },
     });
+
+  const navigation = useNavigation<PopularCategoriesNavigationProps>();
+
+  const handleNavigateToSubcategoriesFilter = async (
+    categoryId: string,
+    categoryTitle: string,
+  ) => {
+    navigation.navigate('SelectSubcategory', { categoryId, categoryTitle });
+  };
 
   const emailContentToSuggestNewCategory = {
     subject: 'Sugestão de nova categoria no diversaGente',
@@ -62,7 +78,13 @@ export const PopularCategories = () => {
         width={'100%'}
         data={data?.pages.map((page) => page.results).flat()}
         renderItem={({ item }) => (
-          <TouchableOpacity key={item.id}>
+          <TouchableOpacity
+            key={item.id}
+            activeOpacity={0.6}
+            onPress={() =>
+              handleNavigateToSubcategoriesFilter(item.id, item.title)
+            }
+          >
             <Box marginBottom={4}>
               <Flex
                 h={73}
