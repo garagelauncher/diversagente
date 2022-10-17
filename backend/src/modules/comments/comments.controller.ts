@@ -6,7 +6,9 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
+import { ApiQuery } from '@nestjs/swagger';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
@@ -23,9 +25,54 @@ export class CommentsController {
     return this.commentsService.create({ ...createCommentDto, postId });
   }
 
+  @ApiQuery({
+    name: 'filter',
+    type: String,
+    description: 'An optional filter',
+    example: `{ where: { postId: '628922e7f555044cdccbbab3' }}`,
+    required: false,
+  })
+  @ApiQuery({
+    name: 'sort',
+    type: String,
+    description: 'An optional sort',
+    example: `["createdAt", "DESC"]`,
+    required: false,
+  })
+  @ApiQuery({
+    name: 'range',
+    type: String,
+    description: 'A optional range',
+    example: `[0, 1]`,
+    required: false,
+  })
+  @ApiQuery({
+    name: 'include',
+    type: String,
+    description: 'An optional include',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'cursor',
+    type: String,
+    description: 'An optional cursor, like {"id": "some-id-of-unique-data"}',
+    required: false,
+  })
   @Get()
-  findAll() {
-    return this.commentsService.findAll();
+  async findAll(
+    @Query('filter') filter?: string,
+    @Query('sort') sort?: string,
+    @Query('range') range?: string,
+    @Query('include') include?: string,
+    @Query('cursor') cursor?: string,
+  ) {
+    return await this.commentsService.findAll({
+      filter,
+      sort,
+      range,
+      include,
+      cursor,
+    });
   }
 
   @Get(':id')
