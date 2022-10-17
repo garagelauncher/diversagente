@@ -1,4 +1,4 @@
-export interface Comment {
+export type Comment = {
   id: string;
   createdAt: string;
   ownerId: string;
@@ -6,9 +6,9 @@ export interface Comment {
   replyId: null | string;
   text: string;
   updatedAt: string;
-}
+};
 
-export interface CommentOwner {
+export type CommentOwner = {
   id: string;
   biograph: null | string;
   birthdate: null | string;
@@ -20,9 +20,17 @@ export interface CommentOwner {
   preferences: CommentOwnerPreferences;
   updatedAt: string;
   username: string;
-}
+};
 
-export interface CommentOwnerPreferences {
+export type CommentOwnerPreferences = {
   canReceiveMessage: boolean;
   language: string;
-}
+};
+
+export type CreateCommentDTO = {
+  text: string;
+  ownerId: string;
+  postId: string;
+};
+
+export type CreateCommentForm = Pick<CreateCommentDTO, 'text'>;
