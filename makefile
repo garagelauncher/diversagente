@@ -131,6 +131,18 @@ prepare_node:
 	@echo
 	node -v
 
+initialize_git:
+	@echo "Customizando usuário do github"
+	@echo
+	git config user.name $(REMOTE_USERNAME)
+	@echo "Customizando usuário do github"
+	@echo
+	git config user.email $(REMOTE_EMAIL)
+	@echo Usando username:
+	git config --get user.name
+	@echo Usando email:
+	git config --get user.email
+
 initialize_remote:
 	@echo
 	@echo "Inicializando remote work..."
@@ -146,13 +158,5 @@ initialize_remote:
 	@echo "Instalando módulos..."
 	@echo
 	npm install
-	@echo "Customizando usuário do github"
 	@echo
-	git config user.name $(REMOTE_USERNAME)
-	@echo "Customizando usuário do github"
-	@echo
-	git config user.email $(REMOTE_EMAIL)
-	@echo Usando username:
-	git config --get user.name
-	@echo Usando email:
-	git config --get user.email
+	make initialize_git
