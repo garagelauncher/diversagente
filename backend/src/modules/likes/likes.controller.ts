@@ -50,6 +50,7 @@ export class LikesController {
     name: 'include',
     type: String,
     description: 'An optional include',
+    example: '{ "owner": true }',
     required: false,
   })
   @ApiQuery({
