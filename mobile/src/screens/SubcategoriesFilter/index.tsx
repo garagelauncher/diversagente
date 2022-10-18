@@ -27,7 +27,8 @@ import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.rout
 
 type SubcategoriesNavigationProps = NavigationProp<
   StackForumNavigatorParamList,
-  'SelectSubcategory'
+  'SelectSubcategory',
+  'Subcategory'
 >;
 
 export const SubcategoryFilter = () => {
@@ -54,6 +55,10 @@ export const SubcategoryFilter = () => {
     if (hasNextPage) {
       fetchNextPage();
     }
+  };
+
+  const handleNavigateToSubcategort = (subcategoryId: string) => {
+    navigation.navigate('Subcategory', { subcategoryId });
   };
 
   return (
@@ -132,7 +137,11 @@ export const SubcategoryFilter = () => {
             width={'100%'}
             data={data?.pages.map((page) => page.results).flat()}
             renderItem={({ item }) => (
-              <TouchableOpacity key={item.id} activeOpacity={0.6}>
+              <TouchableOpacity
+                key={item.id}
+                activeOpacity={0.6}
+                onPress={() => handleNavigateToSubcategort(item.id)}
+              >
                 <Box marginBottom={4}>
                   <Flex
                     h={73}
