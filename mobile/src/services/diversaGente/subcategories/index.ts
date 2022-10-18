@@ -25,6 +25,20 @@ export const findAllSubcategories = async (options: QueryOptions = {}) => {
   }
 };
 
+export const getSubcategoryById = async (subcategoryId: string) => {
+  try {
+    const response = await diversagenteBaseApi.get<Subcategory>(
+      `/subcategories/${subcategoryId}`,
+    );
+    const subcategory = response.data;
+    console.info('subcategory!', response.data);
+    return { results: subcategory };
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 export const findRelatedSubcategoriesToCategory = async (
   categoryId: string,
   filterParams: FilterSubcategory,
