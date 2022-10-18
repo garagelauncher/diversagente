@@ -4,6 +4,7 @@ import { CategoriesFilter } from '@src/screens/CategoriesFilter';
 import { Comments } from '@src/screens/Comments';
 import { FormCreatePost } from '@src/screens/FormCreatePost';
 import { Home } from '@src/screens/Home';
+import { Likes } from '@src/screens/Likes';
 import { PostDetails } from '@src/screens/PostDetails';
 import { SubcategoryFilter } from '@src/screens/SubcategoriesFilter';
 
