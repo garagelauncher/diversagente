@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-unresolved
-import { theme } from '@src/styles/theme';
 import { Box, Flex, Avatar, Text, AspectRatio } from 'native-base';
+
+import { theme } from '@src/styles/theme';
 
 type HeaderProps = {
   title: string;
