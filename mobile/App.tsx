@@ -41,6 +41,7 @@ export default function App() {
             FormCreatePost: 'create-post',
             PostDetails: 'posts/:postId',
             Comments: 'posts/:postId/comments',
+            Likes: 'posts/:postId/likes',
           },
         },
         ProfileStack: {

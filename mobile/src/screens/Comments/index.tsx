@@ -74,7 +74,7 @@ export const Comments = () => {
   };
 
   return (
-    <Flex px={4} flex={1} pt={statusBarHeight}>
+    <Flex px={4} flex={1} pt={24}>
       <IconButton
         colorScheme="gray"
         variant={'solid'}
@@ -105,7 +105,9 @@ export const Comments = () => {
             isLoading={isFetchingNextPage}
           >
             <Flex width="100%" alignItems="center" justifyContent="center">
-              <Text color="gray.500">Não há mais comentários nesse post.</Text>
+              <Text color="gray.500">
+                Esses foram os comentários desse post.
+              </Text>
             </Flex>
           </LoadingFallback>
         }

@@ -96,6 +96,10 @@ export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
     linkTo(`/posts/${post.id}/comments`);
   };
 
+  const handleNavigateToPostLikes = () => {
+    linkTo(`/posts/${post.id}/likes`);
+  };
+
   const handleSharePost = async () => {
     console.debug('share post');
 
@@ -190,9 +194,15 @@ export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
                 />
               </Pressable>
             )}
-            <Text marginLeft={2} fontSize={18}>
-              {post._count.likes}
-            </Text>
+            <Pressable
+              onPress={handleNavigateToPostLikes}
+              _pressed={{ backgroundColor: 'gray.100' }}
+              borderRadius={6}
+            >
+              <Text marginLeft={2} fontSize={18}>
+                {post._count.likes}
+              </Text>
+            </Pressable>
           </Flex>
           <Flex direction="row" alignItems="center">
             <Icon
