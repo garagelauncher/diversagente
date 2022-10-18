@@ -5,4 +5,6 @@ export interface Subcategory {
   createdAt: string;
   updatedAt: string;
   categoriesIds: string[];
+  description: string;
+  icon: string;
 }
