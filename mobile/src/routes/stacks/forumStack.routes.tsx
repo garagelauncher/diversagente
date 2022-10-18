@@ -6,12 +6,14 @@ import { FormCreatePost } from '@src/screens/FormCreatePost';
 import { Home } from '@src/screens/Home';
 import { PostDetails } from '@src/screens/PostDetails';
 import { SubcategoryFilter } from '@src/screens/SubcategoriesFilter';
+import { Subcategory } from '@src/screens/Subcategory';
 
 export type StackForumNavigatorParamList = {
   Forum: undefined;
   FormCreatePost: undefined;
   SelectCategory: undefined;
   SelectSubcategory: { categoryId: string; categoryTitle: string };
+  Subcategory: { subcategoryId: string };
   PostDetails: { postId: string };
   Comments: { postId: string };
 };
@@ -33,6 +35,7 @@ export const StackForumPrivateRoutes = () => {
       <Screen name="FormCreatePost" component={FormCreatePost} />
       <Screen name="SelectCategory" component={CategoriesFilter} />
       <Screen name="SelectSubcategory" component={SubcategoryFilter} />
+      <Screen name="Subcategory" component={Subcategory} />
     </Navigator>
   );
 };
