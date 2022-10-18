@@ -23,9 +23,9 @@ export const StackProfilePrivateRoutes = () => (
   >
     {/* <Screen name="Profile" component={Profile} /> */}
     {/* <Screen name="Profile" component={EditProfile} /> */}
-    {/* <Screen name="Profile" component={EditPersonalInformation} /> */}
+    <Screen name="Profile" component={EditPersonalInformation} />
     {/* <Screen name="Profile" component={Notifications} /> */}
     {/* <Screen name="Profile" component={AllowLocation} /> */}
-    <Screen name="Profile" component={DeleteAccount} />
+    {/* <Screen name="Profile" component={DeleteAccount} /> */}
   </Navigator>
 );
