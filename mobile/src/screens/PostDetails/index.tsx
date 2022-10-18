@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import {
   NavigationProp,
@@ -26,6 +27,7 @@ import { usePostDetails } from '@src/hooks/queries/details/usePostDetails';
 import { useComments } from '@src/hooks/queries/useComments';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
+import { ModalNewComment } from '@src/components/ModalNewComment';
 
 export type PostDetailsScreenNavigationProps = NavigationProp<
   StackForumNavigatorParamList,
@@ -38,6 +40,8 @@ export const PostDetails = () => {
   const route =
     useRoute<RouteProp<StackForumNavigatorParamList, 'PostDetails'>>();
   const { postId } = route.params;
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const { data, isLoading } = usePostDetails<UserHasInteracted>(postId, {
     include: {
@@ -78,9 +82,13 @@ export const PostDetails = () => {
     navigation.navigate('Comments', { postId });
   };
 
-  const handleAddComment = () => {
-    alert('Comentário adicionado');
-  };
+  const handleOpenAddCommentModal = () => {
+    setIsModalVisible(true);
+  }
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+  }
 
   return (
     <ScrollView
@@ -116,7 +124,7 @@ export const PostDetails = () => {
               size="xs"
               variant="solid"
               colorScheme="blue"
-              onPress={handleAddComment}
+              onPress={handleOpenAddCommentModal}
               marginRight={4}
             >
               Enviar
@@ -160,6 +168,12 @@ export const PostDetails = () => {
           }
         />
       </VStack>
+      <ModalNewComment 
+        isOpen={isModalVisible} 
+        onClose={handleCloseModal} 
+        author={data.post.owner.name}
+        postId={postId}
+      />
     </ScrollView>
   );
 };

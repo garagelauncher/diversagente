@@ -13,9 +13,10 @@ import { diversaGenteServices } from '@src/services/diversaGente';
 import { queryClient } from '@src/services/queryClient';
 
 export type ModalNewCommentProps = {
+  author: string;
+  postId: string;
   isOpen: boolean;
   onClose: () => void;
-  onComment: (comment: string) => void;
 };
 
 const MIN_SIZE = 8;
@@ -32,14 +33,15 @@ const schema = yup.object({
 export const ModalNewComment: FunctionComponent<ModalNewCommentProps> = ({
   isOpen,
   onClose,
-  onComment,
+  author,
+  postId
 }) => {
   const { user } = useAuth();
   const mutationCreateComment = useMutation(
     diversaGenteServices.createComment,
     {
       onSuccess: (data) => {
-        queryClient.invalidateQueries('comments');
+        queryClient.invalidateQueries('diversagente@comments', data.postId);
       },
     },
   );
@@ -58,7 +60,7 @@ export const ModalNewComment: FunctionComponent<ModalNewCommentProps> = ({
     await mutationCreateComment.mutateAsync({
       text: data.text,
       ownerId,
-      postId: '1',
+      postId,
     });
   };
 
@@ -73,9 +75,9 @@ export const ModalNewComment: FunctionComponent<ModalNewCommentProps> = ({
     >
       <Modal.Content>
         <Modal.CloseButton />
-        <Modal.Header>Criar comentário</Modal.Header>
+        <Modal.Header>Responder {author}</Modal.Header>
         <Modal.Body>
-          Agregemos valor ao conteúdo de nossos colegas, deixando comentários
+          Agreguemos valor ao conteúdo de nossos colegas, deixando comentários
           <ControlledInput
             control={control}
             name="text"
