@@ -19,11 +19,13 @@ import {
 } from 'native-base';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
+import { useQuery } from 'react-query';
 
 import { Header } from '@src/components/Header';
 import { useSubcategories } from '@src/hooks/queries/useSubcategories';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
+import { diversaGenteServices } from '@src/services/diversaGente';
 
 type SubcategoriesNavigationProps = NavigationProp<
   StackForumNavigatorParamList,
@@ -36,18 +38,24 @@ export const Subcategory = () => {
   const { subcategoryId } = route.params;
   const { user } = useAuth();
 
-  const skeletonsSubcategories = new Array(5).fill(0);
+  const { data, isFetching, isError, isIdle } = useQuery('subcategory', () =>
+    diversaGenteServices.getSubcategoryById(subcategoryId),
+  );
+
+  console.log(data?.results);
+
+  const skeletonsPosts = new Array(2).fill(0);
 
   const navigation = useNavigation<SubcategoriesNavigationProps>();
 
   return (
     <>
-      <Box bgColor={'darkBlue.700'} height={300} mb={10}>
+      <Box bgColor={'darkBlue.700'} height={390} mb={10}>
         <Box marginBottom={4}>
           <Header
             avatar={user?.picture}
-            screenName={`${subcategoryId}`}
-            subtitle={`Aqui estarão todas as subcategorias que se relacionam com a categoria ${subcategoryId}.\nSe não encontrar o que procura, crie uma nova subcategoria! 😃`}
+            screenName={`${data?.results.title}`}
+            subtitle={`${data?.results.description}`}
           ></Header>
         </Box>
       </Box>
