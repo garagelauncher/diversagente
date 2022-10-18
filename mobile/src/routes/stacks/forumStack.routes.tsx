@@ -14,6 +14,7 @@ export type StackForumNavigatorParamList = {
   SelectSubcategory: { categoryId: string; categoryTitle: string };
   PostDetails: { postId: string };
   Comments: { postId: string };
+  Likes: { postId: string };
 };
 
 const { Navigator, Screen } =
@@ -30,6 +31,7 @@ export const StackForumPrivateRoutes = () => {
       <Screen name="Forum" component={Home} />
       <Screen name="PostDetails" component={PostDetails} />
       <Screen name="Comments" component={Comments} />
+      <Screen name="Likes" component={Likes} />
       <Screen name="FormCreatePost" component={FormCreatePost} />
       <Screen name="SelectCategory" component={CategoriesFilter} />
       <Screen name="SelectSubcategory" component={SubcategoryFilter} />
