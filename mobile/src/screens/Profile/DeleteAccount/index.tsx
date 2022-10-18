@@ -10,7 +10,9 @@ import {
   Flex,
   IconButton,
   AlertDialog,
+  CheckCircleIcon,
 } from 'native-base';
+import colors from 'native-base/lib/typescript/theme/base/colors';
 import React from 'react';
 
 import { AlertDialogAlert } from '@src/components/AlertDialogAlert';
@@ -19,9 +21,11 @@ import { theme } from '@src/styles/theme';
 export const DeleteAccount = () => {
   const [isDisableOpen, setDisableIsOpen] = React.useState(false);
   const [isDeleteOpen, setDeleteIsOpen] = React.useState(false);
+  const [isSucessDisableOpen, setSucessDisableIsOpen] = React.useState(false);
 
   const onCloseDisable = () => setDisableIsOpen(false);
   const onCloseDelete = () => setDeleteIsOpen(false);
+  const onCloseSucessDisable = () => setSucessDisableIsOpen(false);
 
   const cancelRef = React.useRef(null);
   const cancelRefDelete = React.useRef(null);
@@ -165,7 +169,13 @@ export const DeleteAccount = () => {
                   >
                     Cancelar
                   </Button>
-                  <Button colorScheme="danger" onPress={onCloseDisable}>
+                  <Button
+                    colorScheme="danger"
+                    onPress={onCloseDisable}
+                    onPressIn={() =>
+                      setSucessDisableIsOpen(!isSucessDisableOpen)
+                    }
+                  >
                     Desativar
                   </Button>
                 </Button.Group>
@@ -201,6 +211,37 @@ export const DeleteAccount = () => {
                   </Button>
                 </Button.Group>
               </AlertDialog.Footer>
+            </AlertDialog.Content>
+          </AlertDialog>
+
+          <AlertDialog
+            /*AlerDialog Desativar de Sucesso */
+            leastDestructiveRef={cancelRefDelete}
+            isOpen={isSucessDisableOpen}
+            onClose={onCloseSucessDisable}
+          >
+            <AlertDialog.Content>
+              <CheckCircleIcon
+                color={theme.colors.success600}
+                marginTop={4}
+                alignItems="center"
+                paddingRight={270}
+              />
+              <AlertDialog.Header>
+                Conta desativada com sucesso
+                <Button
+                  variant="solid"
+                  colorScheme="emerald"
+                  width={250}
+                  marginTop={8}
+                  onPress={onCloseSucessDisable}
+                  ref={cancelRef}
+                >
+                  <Text bold color={theme.colors.primaryColor}>
+                    {'ok, entendi'}
+                  </Text>
+                </Button>
+              </AlertDialog.Header>
             </AlertDialog.Content>
           </AlertDialog>
         </Flex>
