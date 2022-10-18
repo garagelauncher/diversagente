@@ -22,10 +22,12 @@ export const DeleteAccount = () => {
   const [isDisableOpen, setDisableIsOpen] = React.useState(false);
   const [isDeleteOpen, setDeleteIsOpen] = React.useState(false);
   const [isSucessDisableOpen, setSucessDisableIsOpen] = React.useState(false);
+  const [isSucessDeleteOpen, setSucessDeleteIsOpen] = React.useState(false);
 
   const onCloseDisable = () => setDisableIsOpen(false);
   const onCloseDelete = () => setDeleteIsOpen(false);
   const onCloseSucessDisable = () => setSucessDisableIsOpen(false);
+  const onCloseSucessDelete = () => setSucessDeleteIsOpen(false);
 
   const cancelRef = React.useRef(null);
   const cancelRefDelete = React.useRef(null);
@@ -156,8 +158,8 @@ export const DeleteAccount = () => {
               <AlertDialog.CloseButton />
               <AlertDialog.Header>Desativar temporáriamente</AlertDialog.Header>
               <AlertDialog.Body>
-                Seu perfil, fotos, comentários e curtidas\nficarão ocultos até
-                que você reative a\nconta fazendo login novamente.
+                Seu perfil, fotos, comentários e curtidas ficarão ocultos até
+                que você reative a conta fazendo login novamente.
               </AlertDialog.Body>
               <AlertDialog.Footer>
                 <Button.Group space={2}>
@@ -206,7 +208,11 @@ export const DeleteAccount = () => {
                   >
                     Cancelar
                   </Button>
-                  <Button colorScheme="danger" onPress={onCloseDelete}>
+                  <Button
+                    colorScheme="danger"
+                    onPress={onCloseDelete}
+                    onPressIn={() => setSucessDeleteIsOpen(!isSucessDeleteOpen)}
+                  >
                     Excluir
                   </Button>
                 </Button.Group>
@@ -228,13 +234,46 @@ export const DeleteAccount = () => {
                 paddingRight={270}
               />
               <AlertDialog.Header>
-                Conta desativada com sucesso
+                {'   Conta desativada com sucesso'}
                 <Button
                   variant="solid"
                   colorScheme="emerald"
                   width={250}
                   marginTop={8}
                   onPress={onCloseSucessDisable}
+                  ref={cancelRef}
+                >
+                  <Text bold color={theme.colors.primaryColor}>
+                    {'ok, entendi'}
+                  </Text>
+                </Button>
+              </AlertDialog.Header>
+            </AlertDialog.Content>
+          </AlertDialog>
+
+          <AlertDialog
+            /*AlerDialog Excluir de Sucesso */
+            leastDestructiveRef={cancelRefDelete}
+            isOpen={isSucessDeleteOpen}
+            onClose={onCloseSucessDelete}
+          >
+            <AlertDialog.Content>
+              <CheckCircleIcon
+                color={theme.colors.success600}
+                marginTop={4}
+                alignItems="center"
+                paddingRight={270}
+              />
+              <AlertDialog.Header>
+                <Text bold alignItems={'center'}>
+                  {'          Conta excluida com sucesso'}
+                </Text>
+                <Button
+                  variant="solid"
+                  colorScheme="emerald"
+                  width={250}
+                  marginTop={8}
+                  onPress={onCloseSucessDelete}
                   ref={cancelRef}
                 >
                   <Text bold color={theme.colors.primaryColor}>
