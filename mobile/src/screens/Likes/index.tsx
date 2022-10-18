@@ -18,11 +18,11 @@ import React from 'react';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
 import { LoadingFallback } from '@src/components/LoadingFallback';
-import { PER_PAGE_ITEMS } from '@src/configs';
-import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
-import { useLikes } from '@src/hooks/queries/useLikes';
 import { UserLike } from '@src/components/UserLike';
+import { PER_PAGE_ITEMS } from '@src/configs';
 import { LikeOwner } from '@src/contracts/Like';
+import { useLikes } from '@src/hooks/queries/useLikes';
+import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
 
 export type LikesScreenNavigationProps = NavigationProp<
   StackForumNavigatorParamList,
@@ -73,7 +73,7 @@ export const Likes = () => {
   };
 
   return (
-    <Flex px={4} flex={1} pt={statusBarHeight}>
+    <Flex px={4} flex={1} pt={24}>
       <IconButton
         colorScheme="gray"
         variant={'solid'}
@@ -104,7 +104,7 @@ export const Likes = () => {
             isLoading={isFetchingNextPage}
           >
             <Flex width="100%" alignItems="center" justifyContent="center">
-              <Text color="gray.500">Não há mais likes nesse post.</Text>
+              <Text color="gray.500">Esses foram os likes desse post.</Text>
             </Flex>
           </LoadingFallback>
         }
