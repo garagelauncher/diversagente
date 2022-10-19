@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import {
   NavigationProp,
@@ -16,9 +15,11 @@ import {
   Skeleton,
   VStack,
 } from 'native-base';
+import { useState } from 'react';
 
 import { ConditionallyRender } from '@src/components/ConditionallyRender';
 import { LoadingFallback } from '@src/components/LoadingFallback';
+import { ModalNewComment } from '@src/components/ModalNewComment';
 import { Post, UserHasInteracted } from '@src/components/Post';
 import { UserComment } from '@src/components/UserComment';
 import { userIdHelper } from '@src/configs';
@@ -27,7 +28,6 @@ import { usePostDetails } from '@src/hooks/queries/details/usePostDetails';
 import { useComments } from '@src/hooks/queries/useComments';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
-import { ModalNewComment } from '@src/components/ModalNewComment';
 
 export type PostDetailsScreenNavigationProps = NavigationProp<
   StackForumNavigatorParamList,
@@ -84,11 +84,11 @@ export const PostDetails = () => {
 
   const handleOpenAddCommentModal = () => {
     setIsModalVisible(true);
-  }
+  };
 
   const handleCloseModal = () => {
     setIsModalVisible(false);
-  }
+  };
 
   return (
     <ScrollView
@@ -119,6 +119,7 @@ export const PostDetails = () => {
           backgroundColor="gray.100"
           variant="rounded"
           width="100%"
+          onFocus={handleOpenAddCommentModal}
           InputRightElement={
             <Button
               size="xs"
@@ -168,10 +169,10 @@ export const PostDetails = () => {
           }
         />
       </VStack>
-      <ModalNewComment 
-        isOpen={isModalVisible} 
-        onClose={handleCloseModal} 
-        author={data.post.owner.name}
+      <ModalNewComment
+        isOpen={isModalVisible}
+        onClose={handleCloseModal}
+        author={String(data?.owner.name)}
         postId={postId}
       />
     </ScrollView>
