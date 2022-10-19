@@ -1,27 +1,28 @@
 import 'intl';
+import 'intl/locale-data/jsonp/en';
 import 'intl/locale-data/jsonp/pt-BR';
 import 'react-native-gesture-handler';
 import { Poppins_700Bold } from '@expo-google-fonts/poppins';
 import { LinkingOptions, NavigationContainer } from '@react-navigation/native';
 import * as Font from 'expo-font';
 import * as Linking from 'expo-linking';
+import { Subscription } from 'expo-modules-core';
+import * as Notifications from 'expo-notifications';
 import * as SplashScreen from 'expo-splash-screen';
 import { NativeBaseProvider, Text, View } from 'native-base';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AppState, AppStateStatus, Platform } from 'react-native';
 import { QueryClientProvider, focusManager } from 'react-query';
+
+import { getPushNotificationToken } from './src/services/notifications';
 
 import { AuthProvider } from '@src/providers/AuthProvider';
 import { Routes } from '@src/routes';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
 import { RootBottomTabParamList } from '@src/routes/tabs';
 import { queryClient } from '@src/services/queryClient';
-import { Subscription } from 'expo-modules-core';
-import * as Notifications from 'expo-notifications';
-import { getPushNotificationToken } from './src/services/notifications';
 
 import './src/services/notifications/config';
-
 
 const prefix = Linking.createURL('/');
 
@@ -75,7 +76,7 @@ export default function App() {
 
   useEffect(() => {
     getPushNotificationToken().then((token) => {
-      console.log("result of push token");
+      console.log('result of push token');
       console.log(token);
     });
   });
