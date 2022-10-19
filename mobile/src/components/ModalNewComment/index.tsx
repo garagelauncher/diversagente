@@ -1,7 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, Modal } from 'native-base';
-import { FunctionComponent } from 'react';
+import { Button, Modal, SimpleGrid } from 'native-base';
+import { FunctionComponent, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import {
+  EmitterSubscription,
+  Keyboard,
+  KeyboardEventListener,
+} from 'react-native';
 import { useMutation } from 'react-query';
 import * as yup from 'yup';
 
@@ -30,18 +35,20 @@ const schema = yup.object({
     .required('Conteúdo é obrigatório.'),
 });
 
+// type KeyboardEventListener = (event: KeyboardEvent) => void;
+
 export const ModalNewComment: FunctionComponent<ModalNewCommentProps> = ({
   isOpen,
   onClose,
   author,
-  postId
+  postId,
 }) => {
   const { user } = useAuth();
   const mutationCreateComment = useMutation(
     diversaGenteServices.createComment,
     {
       onSuccess: (data) => {
-        queryClient.invalidateQueries('diversagente@comments', data.postId);
+        queryClient.invalidateQueries(['diversagente@comments', data.postId]);
       },
     },
   );
@@ -52,6 +59,30 @@ export const ModalNewComment: FunctionComponent<ModalNewCommentProps> = ({
   } = useForm<CreateCommentForm>({
     resolver: yupResolver(schema),
   });
+  const [keyboardOffset, setKeyboardOffset] = useState(0);
+  const onKeyboardShow: KeyboardEventListener = (event) => {
+    setKeyboardOffset(event.endCoordinates.height);
+  };
+
+  const onKeyboardHide: KeyboardEventListener = () => setKeyboardOffset(0);
+  const keyboardDidShowListener = useRef<EmitterSubscription>();
+  const keyboardDidHideListener = useRef<EmitterSubscription>();
+
+  useEffect(() => {
+    keyboardDidShowListener.current = Keyboard.addListener(
+      'keyboardWillShow',
+      onKeyboardShow,
+    );
+    keyboardDidHideListener.current = Keyboard.addListener(
+      'keyboardWillHide',
+      onKeyboardHide,
+    );
+
+    return () => {
+      keyboardDidShowListener?.current?.remove();
+      keyboardDidHideListener?.current?.remove();
+    };
+  }, []);
 
   const onSubmitCommentCreation = async (data: CreateCommentForm) => {
     console.log('submiting forms with ', data);
@@ -68,30 +99,30 @@ export const ModalNewComment: FunctionComponent<ModalNewCommentProps> = ({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      avoidKeyboard
       justifyContent="flex-end"
-      bottom="4"
-      size="lg"
+      size="full"
+      position="absolute"
+      bottom={keyboardOffset}
     >
       <Modal.Content>
+        <Modal.Header>Responder a {author}</Modal.Header>
         <Modal.CloseButton />
-        <Modal.Header>Responder {author}</Modal.Header>
         <Modal.Body>
-          Agreguemos valor ao conteúdo de nossos colegas, deixando comentários
-          <ControlledInput
-            control={control}
-            name="text"
-            label={'Comentário'}
-            error={errors.text}
-            isTextArea={true}
-            placeholder="Caracteres: máximo de 1800 e mínimo de 8"
-          />
+          <SimpleGrid columns={1} space={2}>
+            <ControlledInput
+              control={control}
+              name="text"
+              label={'Comentário'}
+              error={errors.text}
+              isTextArea={true}
+              placeholder="Caracteres: máximo de 1800 e mínimo de 8"
+              onBlur={onClose}
+            />
+            <Button flex="1" onPress={handleSubmit(onSubmitCommentCreation)}>
+              Responder
+            </Button>
+          </SimpleGrid>
         </Modal.Body>
-        <Modal.Footer>
-          <Button flex="1" onPress={handleSubmit(onSubmitCommentCreation)}>
-            Responder
-          </Button>
-        </Modal.Footer>
       </Modal.Content>
     </Modal>
   );
