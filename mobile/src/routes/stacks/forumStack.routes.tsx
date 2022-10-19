@@ -4,6 +4,7 @@ import { CategoriesFilter } from '@src/screens/CategoriesFilter';
 import { Comments } from '@src/screens/Comments';
 import { FormCreatePost } from '@src/screens/FormCreatePost';
 import { Home } from '@src/screens/Home';
+import { Likes } from '@src/screens/Likes';
 import { PostDetails } from '@src/screens/PostDetails';
 import { SubcategoryFilter } from '@src/screens/SubcategoriesFilter';
 import { Subcategory } from '@src/screens/Subcategory';
@@ -16,6 +17,7 @@ export type StackForumNavigatorParamList = {
   Subcategory: { subcategoryId: string };
   PostDetails: { postId: string };
   Comments: { postId: string };
+  Likes: { postId: string };
 };
 
 const { Navigator, Screen } =
@@ -32,6 +34,7 @@ export const StackForumPrivateRoutes = () => {
       <Screen name="Forum" component={Home} />
       <Screen name="PostDetails" component={PostDetails} />
       <Screen name="Comments" component={Comments} />
+      <Screen name="Likes" component={Likes} />
       <Screen name="FormCreatePost" component={FormCreatePost} />
       <Screen name="SelectCategory" component={CategoriesFilter} />
       <Screen name="SelectSubcategory" component={SubcategoryFilter} />

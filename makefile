@@ -88,6 +88,18 @@ gource:
 	@echo
 	@echo "Gource executado com sucesso"
 
+gource_lifetime:
+	@echo
+	@echo "Baixe o gource em https://gource.io..."
+	@echo
+	@echo "Executando..."
+	@echo
+	@echo "$(shell date)"
+	@echo
+	gource  --font-scale 1.3  --highlight-dirs  --file-idle-time 0  --filename-time 4  --filename-colour 555555  --dir-colour 555555  --key  --max-user-speed 100  --highlight-users  --bloom-multiplier 2.0  --bloom-intensity 0.1  --multi-sampling  --camera-mode overview  --auto-skip-seconds 0.1  --seconds-per-day 2 --title $(GOURCE_TITLE) --user-image-dir ./.github/avatars
+	@echo
+	@echo "Gource executado com sucesso"
+
 enable_npm_proxy:
 	@echo
 	@echo "Ativando proxy do npm..."
@@ -117,7 +129,7 @@ prepare_nvm:
 
 .PHONY: prepare_node
 prepare_node:
-	@echo NVM instalado na versão: 
+	@echo NVM instalado na versão:
 	@echo
 	$(nvm -v)
 	@echo Instalando node na versão: $(NODE_VERSION)
@@ -130,6 +142,18 @@ prepare_node:
 	@echo Node ativado na versão:
 	@echo
 	node -v
+
+initialize_git:
+	@echo "Customizando usuário do github"
+	@echo
+	git config user.name $(REMOTE_USERNAME)
+	@echo "Customizando usuário do github"
+	@echo
+	git config user.email $(REMOTE_EMAIL)
+	@echo Usando username:
+	git config --get user.name
+	@echo Usando email:
+	git config --get user.email
 
 initialize_remote:
 	@echo
@@ -146,13 +170,5 @@ initialize_remote:
 	@echo "Instalando módulos..."
 	@echo
 	npm install
-	@echo "Customizando usuário do github"
 	@echo
-	git config user.name $(REMOTE_USERNAME)
-	@echo "Customizando usuário do github"
-	@echo
-	git config user.email $(REMOTE_EMAIL)
-	@echo Usando username:
-	git config --get user.name
-	@echo Usando email:
-	git config --get user.email
+	make initialize_git

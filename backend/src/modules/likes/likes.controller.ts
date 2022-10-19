@@ -20,7 +20,7 @@ export class LikesController {
   @Post()
   create(
     @Param('postId') postId: string,
-    @Body() createLikeDto: Pick<CreateLikeDto, 'ownerId'>,
+    @Body() createLikeDto: CreateLikeDto,
   ) {
     return this.likesService.create({ ...createLikeDto, postId });
   }
@@ -29,7 +29,7 @@ export class LikesController {
     name: 'filter',
     type: String,
     description: 'An optional filter',
-    example: `{ where: { postId: '628922e7f555044cdccbbab3' }}`,
+    example: `{ "postId": "628922e7f555044cdccbbab3" }`,
     required: false,
   })
   @ApiQuery({
@@ -50,6 +50,7 @@ export class LikesController {
     name: 'include',
     type: String,
     description: 'An optional include',
+    example: '{ "owner": true }',
     required: false,
   })
   @ApiQuery({

@@ -5,15 +5,15 @@ import {
   PaginateOptions,
   parsePaginationToPrisma,
 } from 'src/shared/utils/parsePaginationToPrisma';
-import { CreateLikeDto } from './dto/create-like.dto';
 import { DeleteLikeDto } from './dto/delete-like.dto';
 import { UpdateLikeDto } from './dto/update-like.dto';
+import { Like } from './entities/like.entity';
 
 @Injectable()
 export class LikesService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(createLikeDto: CreateLikeDto) {
+  create(createLikeDto: Like) {
     return this.prisma.like.create({ data: createLikeDto });
   }
 
