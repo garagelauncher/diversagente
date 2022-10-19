@@ -22,6 +22,7 @@ import { TouchableOpacity } from 'react-native';
 import { useQuery } from 'react-query';
 
 import { Header } from '@src/components/Header';
+import { useSubcategoryDetails } from '@src/hooks/queries/details/useSubcategoryDetails';
 import { useSubcategories } from '@src/hooks/queries/useSubcategories';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
@@ -38,11 +39,9 @@ export const Subcategory = () => {
   const { subcategoryId } = route.params;
   const { user } = useAuth();
 
-  const { data, isFetching, isError, isIdle } = useQuery('subcategory', () =>
-    diversaGenteServices.getSubcategoryById(subcategoryId),
-  );
+  const { data, isLoading, isError } = useSubcategoryDetails(subcategoryId);
 
-  console.log(data?.results);
+  console.log(data);
 
   const skeletonsPosts = new Array(2).fill(0);
 
@@ -54,8 +53,8 @@ export const Subcategory = () => {
         <Box marginBottom={4}>
           <Header
             avatar={user?.picture}
-            screenName={`${data?.results.title}`}
-            subtitle={`${data?.results.description}`}
+            screenName={`${data?.title}`}
+            subtitle={`${data?.description}`}
           ></Header>
         </Box>
       </Box>

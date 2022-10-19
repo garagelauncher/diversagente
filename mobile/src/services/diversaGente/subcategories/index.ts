@@ -1,5 +1,6 @@
 import { diversagenteBaseApi } from '../baseUrl';
 
+import { IncludeInto } from '@src/@types/generics/includeInto';
 import { QueryOptions } from '@src/contracts/QueryOptions';
 import { Subcategory } from '@src/contracts/Subcategory';
 import { parseQueryOptions } from '@src/utils/parseQuery';
@@ -25,16 +26,31 @@ export const findAllSubcategories = async (options: QueryOptions = {}) => {
   }
 };
 
-export const getSubcategoryById = async (subcategoryId: string) => {
+export const findSubcategoryById = async <
+  GenericIncluded extends object = object,
+>(
+  subcategoryId: string,
+  options: QueryOptions = {},
+) => {
   try {
-    const response = await diversagenteBaseApi.get<Subcategory>(
-      `/subcategories/${subcategoryId}`,
-    );
+    const response = await diversagenteBaseApi.get<
+      IncludeInto<Subcategory, GenericIncluded>
+    >(`/subcategories/${subcategoryId}`, {
+      params: {
+        ...parseQueryOptions(options),
+      },
+    });
+
     const subcategory = response.data;
-    console.info('subcategory!', response.data);
-    return { results: subcategory };
-  } catch (error) {
-    console.error(error);
+    console.info('SUBCATEGORY!', response.data);
+    return subcategory;
+  } catch (error: any) {
+    console.error('error when fetching subcategory info', subcategoryId);
+
+    if (error.isAxiosError) {
+      console.error(error.response);
+    }
+
     throw error;
   }
 };
