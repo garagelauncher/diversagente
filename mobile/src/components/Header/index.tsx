@@ -103,7 +103,7 @@ export const Header: FunctionComponent<HeaderProps> = ({
         </>
       )}
       <Flex
-        paddingTop={[screenName ? 4 : 12]}
+        paddingTop={[screenName ? 0 : 8]}
         paddingX={4}
         paddingBottom={4}
         backgroundColor="darkBlue.700"
@@ -111,7 +111,7 @@ export const Header: FunctionComponent<HeaderProps> = ({
         justifyContent="space-between"
         width={'100%'}
       >
-        <Flex paddingX={4} flexDir={'column'} w={'100%'}>
+        <Flex paddingX={4} paddingY={6} flexDir={'column'} w={'100%'}>
           <Flex>
             {username && <Heading color="white">Olá, {username}</Heading>}
             {screenName && (
