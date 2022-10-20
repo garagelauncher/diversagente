@@ -15,7 +15,6 @@ import {
   Text,
 } from 'native-base';
 import React from 'react';
-import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
 import { LoadingFallback } from '@src/components/LoadingFallback';
 import { UserLike } from '@src/components/UserLike';
@@ -36,7 +35,6 @@ export const Likes = () => {
 
   const {
     data,
-    isLoading,
     isFetchingNextPage,
     isRefetching,
     hasNextPage,
@@ -55,8 +53,6 @@ export const Likes = () => {
       owner: true,
     },
   });
-
-  const statusBarHeight = getStatusBarHeight();
 
   const handleNavigateGoBack = () => {
     navigation.goBack();

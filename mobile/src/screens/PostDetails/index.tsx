@@ -15,9 +15,11 @@ import {
   Skeleton,
   VStack,
 } from 'native-base';
+import { useState } from 'react';
 
 import { ConditionallyRender } from '@src/components/ConditionallyRender';
 import { LoadingFallback } from '@src/components/LoadingFallback';
+import { ModalNewComment } from '@src/components/ModalNewComment';
 import { Post, UserHasInteracted } from '@src/components/Post';
 import { UserComment } from '@src/components/UserComment';
 import { userIdHelper } from '@src/configs';
@@ -38,6 +40,8 @@ export const PostDetails = () => {
   const route =
     useRoute<RouteProp<StackForumNavigatorParamList, 'PostDetails'>>();
   const { postId } = route.params;
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const { data, isLoading } = usePostDetails<UserHasInteracted>(postId, {
     include: {
@@ -78,8 +82,12 @@ export const PostDetails = () => {
     navigation.navigate('Comments', { postId });
   };
 
-  const handleAddComment = () => {
-    alert('Comentário adicionado');
+  const handleOpenAddCommentModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
   };
 
   return (
@@ -111,17 +119,7 @@ export const PostDetails = () => {
           backgroundColor="gray.100"
           variant="rounded"
           width="100%"
-          InputRightElement={
-            <Button
-              size="xs"
-              variant="solid"
-              colorScheme="blue"
-              onPress={handleAddComment}
-              marginRight={4}
-            >
-              Enviar
-            </Button>
-          }
+          onFocus={handleOpenAddCommentModal}
           placeholder="Adicione aqui seu comentário"
         />
 
@@ -160,6 +158,13 @@ export const PostDetails = () => {
           }
         />
       </VStack>
+      <ModalNewComment
+        headerTitle="Adicionar comentário"
+        isOpen={isModalVisible}
+        onClose={handleCloseModal}
+        author={String(data?.owner.name)}
+        postId={postId}
+      />
     </ScrollView>
   );
 };

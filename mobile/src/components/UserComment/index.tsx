@@ -27,7 +27,7 @@ export const UserComment: FunctionComponent<UserCommentProps> = ({
       <Flex direction="row">
         <Avatar
           borderRadius={6}
-          backgroundColor={'primary.500'}
+          backgroundColor={owner.picture ? 'transparent' : 'primary.500'}
           source={{
             uri: String(owner.picture),
           }}
