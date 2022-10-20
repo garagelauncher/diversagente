@@ -67,8 +67,14 @@ export const ModalNewComment: FunctionComponent<ModalNewCommentProps> = ({
   const mutationCreateComment = useMutation(
     diversaGenteServices.createComment,
     {
-      onSuccess: (data) => {
+      onSuccess: async (data) => {
+        const post = await diversaGenteServices.findPostById(data.postId);
+
+        queryClient.invalidateQueries(['diversagente@posts']);
+        queryClient.invalidateQueries(['diversagente@post', data.postId]);
         queryClient.invalidateQueries(['diversagente@comments', data.postId]);
+        queryClient.setQueryData(['diversagente@posts', post.id], post);
+
         toast.show({
           title: 'Deu tudo certo!',
           description: 'Seu comentário foi criado com sucesso!',
