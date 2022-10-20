@@ -52,7 +52,7 @@ const schema = yup.object({
     .required('Título é obrigatório.'),
   content: yup
     .string()
-    .min(140, 'O conteúdo deve conter no mínimo 140 caracteres')
+    .min(50, 'O conteúdo deve conter no mínimo 50 caracteres')
     .max(1800, 'O conteúdo deve conter no máximo 1800 caracteres')
     .required('Conteúdo é obrigatório.'),
   categoryId: yup.string().required(),
@@ -349,7 +349,7 @@ export const FormCreatePost = () => {
               label={'Conteúdo'}
               error={errors.content}
               isTextArea={true}
-              placeholder="Caracteres: máximo de 1800 e mínimo de 140"
+              placeholder="Caracteres: máximo de 1800 e mínimo de 50"
             ></ControlledInput>
 
             {/*
