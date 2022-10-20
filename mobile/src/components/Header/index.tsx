@@ -19,11 +19,13 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { getUsernameInitials } from '@src/utils/getUsernameInitials';
 
+
 type HeaderProps = {
   username?: string;
   screenName?: string;
   avatar?: string | null;
   subtitle: string;
+  customizedHeader?: ReactNode;
 };
 
 type HeaderNavigationProps = NavigationProp<any>;
@@ -33,6 +35,7 @@ export const Header: FunctionComponent<HeaderProps> = ({
   screenName,
   subtitle,
   avatar,
+  customizedHeader
 }) => {
   const userInitials = username ? getUsernameInitials(username) : null;
   const avatarUri = String(avatar);
@@ -49,9 +52,11 @@ export const Header: FunctionComponent<HeaderProps> = ({
     linkTo('/profile');
   };
 
+
+
   return (
     <>
-      {screenName && (
+      {(screenName && !customizedHeader) && (
         <>
           <IconButton
             onPress={handleNavigateBack}
@@ -130,6 +135,10 @@ export const Header: FunctionComponent<HeaderProps> = ({
           </Flex>
         )}
       </Flex>
+
+      {
+        customizedHeader && {customizedHeader}
+      }
     </>
   );
 };
