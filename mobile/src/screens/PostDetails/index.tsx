@@ -120,17 +120,6 @@ export const PostDetails = () => {
           variant="rounded"
           width="100%"
           onFocus={handleOpenAddCommentModal}
-          InputRightElement={
-            <Button
-              size="xs"
-              variant="solid"
-              colorScheme="blue"
-              onPress={handleOpenAddCommentModal}
-              marginRight={4}
-            >
-              Enviar
-            </Button>
-          }
           placeholder="Adicione aqui seu comentário"
         />
 
@@ -170,6 +159,7 @@ export const PostDetails = () => {
         />
       </VStack>
       <ModalNewComment
+        headerTitle="Adicionar comentário"
         isOpen={isModalVisible}
         onClose={handleCloseModal}
         author={String(data?.owner.name)}

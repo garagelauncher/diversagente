@@ -28,6 +28,7 @@ import { diversaGenteServices } from '@src/services/diversaGente';
 import { queryClient } from '@src/services/queryClient';
 
 export type ModalNewCommentProps = {
+  headerTitle: string;
   author: string;
   postId: string;
   isOpen: boolean;
@@ -45,13 +46,12 @@ const schema = yup.object({
     .required('Conteúdo é obrigatório.'),
 });
 
-// type KeyboardEventListener = (event: KeyboardEvent) => void;
-
 export const ModalNewComment: FunctionComponent<ModalNewCommentProps> = ({
   isOpen,
   onClose,
   author,
   postId,
+  headerTitle,
 }) => {
   const toast = useToast();
   const { user } = useAuth();
@@ -126,7 +126,7 @@ export const ModalNewComment: FunctionComponent<ModalNewCommentProps> = ({
       bottom={keyboardOffset}
     >
       <Modal.Content>
-        <Modal.Header>Deixe seu comentário</Modal.Header>
+        <Modal.Header>{headerTitle}</Modal.Header>
         <Modal.CloseButton />
         <Modal.Body>
           <Flex
@@ -141,7 +141,7 @@ export const ModalNewComment: FunctionComponent<ModalNewCommentProps> = ({
                 <TextArea
                   borderColor={[errors.text ? 'red.500' : 'blue.800']}
                   size="lg"
-                  placeholder={`Responder a ${author}..`}
+                  placeholder={`Responder a ${author}...`}
                   value={value}
                   onChangeText={onChange}
                   flex="1"
