@@ -1,14 +1,14 @@
 import { useInfiniteQuery } from 'react-query';
 
+import { PER_PAGE_ITEMS } from '@src/configs';
 import { QueryOptions } from '@src/contracts/QueryOptions';
 import { diversaGenteServices } from '@src/services/diversaGente';
-import { PER_PAGE_ITEMS } from '@src/configs';
 
 type UseLikesParams = {
   postId: string;
 } & QueryOptions;
 
-export const useLikes= <GenericIncluded extends object = object>({
+export const useLikes = <GenericIncluded extends object = object>({
   postId,
   ...options
 }: UseLikesParams) =>

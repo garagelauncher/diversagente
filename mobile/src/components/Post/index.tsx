@@ -47,6 +47,8 @@ export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
     const post = await diversaGenteServices.findPostById(data.postId);
 
     queryClient.invalidateQueries(['diversagente@posts']);
+    queryClient.invalidateQueries(['diversagente@post']);
+    queryClient.invalidateQueries(['diversagente@likes', post.id]);
     queryClient.setQueryData(['diversagente@posts', post.id], post);
   };
 
