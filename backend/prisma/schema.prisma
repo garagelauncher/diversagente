@@ -41,12 +41,13 @@ model User {
 
   category Category? @relation(fields: [lovelyCategoriesIds], references: [id])
 
-  Location Location[]
-  Review   Review[]
-  Post     Post[]
-  Like     Like[]
-  Comment  Comment[]
-  Devices  Devices[]
+  Location     Location[]
+  Review       Review[]
+  Post         Post[]
+  Like         Like[]
+  Comment      Comment[]
+  Device       Device[]
+  Notification Notification[]
 
   @@map("users")
 }
