@@ -1,7 +1,19 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, Modal, SimpleGrid } from 'native-base';
+import {
+  Button,
+  Flex,
+  HStack,
+  Input,
+  Modal,
+  Pressable,
+  SimpleGrid,
+  Text,
+  TextArea,
+  useToast,
+  WarningOutlineIcon,
+} from 'native-base';
 import { FunctionComponent, useEffect, useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import {
   EmitterSubscription,
   Keyboard,
@@ -9,8 +21,6 @@ import {
 } from 'react-native';
 import { useMutation } from 'react-query';
 import * as yup from 'yup';
-
-import { ControlledInput } from '../ControlledInput';
 
 import { CreateCommentForm } from '@src/contracts/Comment';
 import { useAuth } from '@src/hooks/useAuth';
@@ -43,22 +53,33 @@ export const ModalNewComment: FunctionComponent<ModalNewCommentProps> = ({
   author,
   postId,
 }) => {
+  const toast = useToast();
   const { user } = useAuth();
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<CreateCommentForm>({
+    resolver: yupResolver(schema),
+  });
   const mutationCreateComment = useMutation(
     diversaGenteServices.createComment,
     {
       onSuccess: (data) => {
         queryClient.invalidateQueries(['diversagente@comments', data.postId]);
+        toast.show({
+          title: 'Deu tudo certo!',
+          description: 'Seu comentário foi criado com sucesso!',
+          background: 'green.500',
+        });
+        reset();
+        onClose();
       },
     },
   );
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<CreateCommentForm>({
-    resolver: yupResolver(schema),
-  });
+
   const [keyboardOffset, setKeyboardOffset] = useState(0);
   const onKeyboardShow: KeyboardEventListener = (event) => {
     setKeyboardOffset(event.endCoordinates.height);
@@ -105,23 +126,63 @@ export const ModalNewComment: FunctionComponent<ModalNewCommentProps> = ({
       bottom={keyboardOffset}
     >
       <Modal.Content>
-        <Modal.Header>Responder a {author}</Modal.Header>
+        <Modal.Header>Deixe seu comentário</Modal.Header>
         <Modal.CloseButton />
         <Modal.Body>
-          <SimpleGrid columns={1} space={2}>
-            <ControlledInput
+          <Flex
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Controller
               control={control}
               name="text"
-              label={'Comentário'}
-              error={errors.text}
-              isTextArea={true}
-              placeholder="Caracteres: máximo de 1800 e mínimo de 8"
-              onBlur={onClose}
+              render={({ field: { onChange, value } }) => (
+                <TextArea
+                  borderColor={[errors.text ? 'red.500' : 'blue.800']}
+                  size="lg"
+                  placeholder={`Responder a ${author}..`}
+                  value={value}
+                  onChangeText={onChange}
+                  flex="1"
+                  autoCompleteType="off"
+                  height={'100%'}
+                  width={'100%'}
+                  InputRightElement={
+                    <Button
+                      size="md"
+                      height="100%"
+                      borderColor="transparent"
+                      variant="outline"
+                      onPress={handleSubmit(onSubmitCommentCreation)}
+                      colorScheme={
+                        typeof value !== 'string' ||
+                        value.length === 0 ||
+                        value.length < MIN_SIZE
+                          ? 'black'
+                          : 'green'
+                      }
+                    >
+                      Enviar
+                    </Button>
+                  }
+                />
+              )}
             />
-            <Button flex="1" onPress={handleSubmit(onSubmitCommentCreation)}>
-              Responder
-            </Button>
-          </SimpleGrid>
+          </Flex>
+          {errors.text && (
+            <HStack marginTop={2} alignItems="center">
+              <WarningOutlineIcon size="xs" color="red.600" paddingRight={4} />
+              <Text
+                alignItems={'center'}
+                fontSize={'12'}
+                color="red.600"
+                marginRight={2}
+              >
+                {errors.text.message}
+              </Text>
+            </HStack>
+          )}
         </Modal.Body>
       </Modal.Content>
     </Modal>
