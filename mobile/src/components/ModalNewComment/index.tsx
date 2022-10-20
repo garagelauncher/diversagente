@@ -3,10 +3,8 @@ import {
   Button,
   Flex,
   HStack,
-  Input,
   Modal,
-  Pressable,
-  SimpleGrid,
+  Spinner,
   Text,
   TextArea,
   useToast,
@@ -21,6 +19,8 @@ import {
 } from 'react-native';
 import { useMutation } from 'react-query';
 import * as yup from 'yup';
+
+import { LoadingFallback } from '../LoadingFallback';
 
 import { CreateCommentForm } from '@src/contracts/Comment';
 import { useAuth } from '@src/hooks/useAuth';
@@ -135,47 +135,59 @@ export const ModalNewComment: FunctionComponent<ModalNewCommentProps> = ({
         <Modal.Header>{headerTitle}</Modal.Header>
         <Modal.CloseButton />
         <Modal.Body>
-          <Flex
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
+          <LoadingFallback
+            isLoading={mutationCreateComment.isLoading}
+            fallback={
+              <Spinner
+                size="lg"
+                accessibilityLabel="Loading comments"
+                color="orange.500"
+              />
+            }
           >
-            <Controller
-              control={control}
-              name="text"
-              render={({ field: { onChange, value } }) => (
-                <TextArea
-                  borderColor={[errors.text ? 'red.500' : 'blue.800']}
-                  size="lg"
-                  placeholder={`Responder a ${author}...`}
-                  value={value}
-                  onChangeText={onChange}
-                  flex="1"
-                  autoCompleteType="off"
-                  height={'100%'}
-                  width={'100%'}
-                  InputRightElement={
-                    <Button
-                      size="md"
-                      height="100%"
-                      borderColor="transparent"
-                      variant="outline"
-                      onPress={handleSubmit(onSubmitCommentCreation)}
-                      colorScheme={
-                        typeof value !== 'string' ||
-                        value.length === 0 ||
-                        value.length < MIN_SIZE
-                          ? 'black'
-                          : 'green'
-                      }
-                    >
-                      Enviar
-                    </Button>
-                  }
-                />
-              )}
-            />
-          </Flex>
+            <Flex
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Controller
+                control={control}
+                name="text"
+                render={({ field: { onChange, value } }) => (
+                  <TextArea
+                    borderColor={[errors.text ? 'red.500' : 'blue.800']}
+                    size="lg"
+                    placeholder={`Responder a ${author}...`}
+                    value={value}
+                    onChangeText={onChange}
+                    flex="1"
+                    autoCompleteType="off"
+                    height={'100%'}
+                    width={'100%'}
+                    InputRightElement={
+                      <Button
+                        size="md"
+                        height="100%"
+                        borderColor="transparent"
+                        variant="outline"
+                        onPress={handleSubmit(onSubmitCommentCreation)}
+                        colorScheme={
+                          typeof value !== 'string' ||
+                          value.length === 0 ||
+                          value.length < MIN_SIZE
+                            ? 'black'
+                            : 'green'
+                        }
+                      >
+                        Enviar
+                      </Button>
+                    }
+                  />
+                )}
+              />
+            </Flex>
+          </LoadingFallback>
+
           {errors.text && (
             <HStack marginTop={2} alignItems="center">
               <WarningOutlineIcon size="xs" color="red.600" paddingRight={4} />
