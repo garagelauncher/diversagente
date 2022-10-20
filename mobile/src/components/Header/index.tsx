@@ -6,26 +6,31 @@ import {
 } from '@react-navigation/native';
 import {
   Avatar,
+  Badge,
   Box,
+  Center,
+  Divider,
   Flex,
   Heading,
   Icon,
   IconButton,
+  List,
   Pressable,
+  SimpleGrid,
   Text,
 } from 'native-base';
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { StringSchema } from 'yup';
 
 import { getUsernameInitials } from '@src/utils/getUsernameInitials';
-
 
 type HeaderProps = {
   username?: string;
   screenName?: string;
   avatar?: string | null;
   subtitle: string;
-  customizedHeader?: ReactNode;
+  badgeName?: string;
 };
 
 type HeaderNavigationProps = NavigationProp<any>;
@@ -35,7 +40,7 @@ export const Header: FunctionComponent<HeaderProps> = ({
   screenName,
   subtitle,
   avatar,
-  customizedHeader
+  badgeName,
 }) => {
   const userInitials = username ? getUsernameInitials(username) : null;
   const avatarUri = String(avatar);
@@ -52,11 +57,9 @@ export const Header: FunctionComponent<HeaderProps> = ({
     linkTo('/profile');
   };
 
-
-
   return (
     <>
-      {(screenName && !customizedHeader) && (
+      {screenName && (
         <>
           <IconButton
             onPress={handleNavigateBack}
@@ -102,25 +105,49 @@ export const Header: FunctionComponent<HeaderProps> = ({
       <Flex
         paddingTop={[screenName ? 4 : 12]}
         paddingX={4}
-        paddingBottom={9}
+        paddingBottom={4}
         backgroundColor="darkBlue.700"
-        width="100%"
-        direction="row"
+        flexDirection={'row'}
         justifyContent="space-between"
+        width={'100%'}
       >
-        <Flex padding={4}>
-          {username && <Heading color="white">Olá, {username}</Heading>}
-          {screenName && (
-            <Heading color="white" fontSize={'32'} letterSpacing={0.85}>
-              {screenName}
-            </Heading>
-          )}
-          <Text color="gray.200" marginTop={3} fontSize={16}>
-            {subtitle}
-          </Text>
+        <Flex paddingX={4} flexDir={'column'} w={'100%'}>
+          <Flex>
+            {username && <Heading color="white">Olá, {username}</Heading>}
+            {screenName && (
+              <Heading
+                paddingRight={4}
+                color="white"
+                fontSize={'32'}
+                letterSpacing={0.85}
+              >
+                {screenName}{' '}
+                {badgeName && (
+                  <Flex justifyContent={'center'}>
+                    <Badge height={8} borderRadius={8}>
+                      <Text
+                        alignItems={'center'}
+                        fontSize={16}
+                        color={'darkBlue.600'}
+                        fontWeight="bold"
+                      >
+                        {badgeName}
+                      </Text>
+                    </Badge>
+                  </Flex>
+                )}
+              </Heading>
+            )}
+          </Flex>
+          <Flex w={'100%'}>
+            <Text color="gray.200" marginTop={3} fontSize={16}>
+              {subtitle}
+            </Text>
+          </Flex>
         </Flex>
+
         {!screenName && (
-          <Flex marginLeft={-12}>
+          <Flex marginLeft={-12} h={16}>
             <TouchableOpacity onPress={handleNavigationToUserProfile}>
               <Avatar
                 backgroundColor={'orange.500'}
@@ -135,10 +162,6 @@ export const Header: FunctionComponent<HeaderProps> = ({
           </Flex>
         )}
       </Flex>
-
-      {
-        customizedHeader && {customizedHeader}
-      }
     </>
   );
 };
