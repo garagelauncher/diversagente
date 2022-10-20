@@ -57,6 +57,12 @@ export const SubcategoryFilter = () => {
     }
   };
 
+  const handleNavigationToSubcategoryCreation = () => {
+    navigation.navigate('FormCreateSubcategory', {
+      categoryId,
+    });
+  };
+
   const handleNavigateToSubcategory = (subcategoryId: string) => {
     navigation.navigate('Subcategory', {
       subcategoryId,
@@ -113,7 +119,10 @@ export const SubcategoryFilter = () => {
                     </TouchableOpacity>
                   }
                 />
-                <TouchableOpacity activeOpacity={0.5}>
+                <TouchableOpacity
+                  activeOpacity={0.5}
+                  onPress={handleNavigationToSubcategoryCreation}
+                >
                   <Icon
                     as={AntDesign}
                     name="plussquareo"
