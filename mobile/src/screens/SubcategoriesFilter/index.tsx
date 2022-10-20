@@ -57,8 +57,12 @@ export const SubcategoryFilter = () => {
     }
   };
 
-  const handleNavigateToSubcategort = (subcategoryId: string) => {
-    navigation.navigate('Subcategory', { subcategoryId });
+  const handleNavigateToSubcategory = (subcategoryId: string) => {
+    navigation.navigate('Subcategory', {
+      subcategoryId,
+      categoryTitle,
+      categoryId,
+    });
   };
 
   return (
@@ -140,7 +144,7 @@ export const SubcategoryFilter = () => {
               <TouchableOpacity
                 key={item.id}
                 activeOpacity={0.6}
-                onPress={() => handleNavigateToSubcategort(item.id)}
+                onPress={() => handleNavigateToSubcategory(item.id)}
               >
                 <Box marginBottom={4}>
                   <Flex

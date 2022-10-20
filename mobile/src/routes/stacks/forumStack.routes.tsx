@@ -11,10 +11,14 @@ import { Subcategory } from '@src/screens/Subcategory';
 
 export type StackForumNavigatorParamList = {
   Forum: undefined;
-  FormCreatePost: undefined;
+  FormCreatePost: { categoryId?: string | null; subcategoryId?: string | null };
   SelectCategory: undefined;
   SelectSubcategory: { categoryId: string; categoryTitle: string };
-  Subcategory: { subcategoryId: string };
+  Subcategory: {
+    subcategoryId: string;
+    categoryId: string;
+    categoryTitle: string;
+  };
   PostDetails: { postId: string };
   Comments: { postId: string };
   Likes: { postId: string };
