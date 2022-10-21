@@ -8,3 +8,12 @@ export interface Subcategory {
   description: string;
   icon: string;
 }
+
+export interface SubcategoryForm {
+  name: string,
+  title: string,
+  description: string,
+  categoriesIds: [
+    string
+  ]
+}

@@ -37,12 +37,14 @@ import * as yup from 'yup';
 import { ControlledInput } from '@src/components/ControlledInput';
 import { Category } from '@src/contracts/Category';
 import { PostForm } from '@src/contracts/Post';
-import { Subcategory } from '@src/contracts/Subcategory';
+import { Subcategory, SubcategoryForm } from '@src/contracts/Subcategory';
 import { useCategories } from '@src/hooks/queries/useCategories';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
 import { queryClient } from '@src/services/queryClient';
+import { useCategoryDetails } from '@src/hooks/queries/details/useCategoryDetails';
+import { useSubcategoryCreation } from '@src/hooks/queries/creation/useSubcategoryCreation';
 
 type FormCreateSubcategoryNavigationProps = NavigationProp<
   StackForumNavigatorParamList,
@@ -71,7 +73,6 @@ export const FormCreateSubcategory = () => {
     >();
   const { subcategoryId, categoryId } = route.params;
   const { user } = useAuth();
-  //const [selectedImage, setSelectedImage] = useState<any>(null);
 
   const navigation = useNavigation<FormCreateSubcategoryNavigationProps>();
 
@@ -79,38 +80,20 @@ export const FormCreateSubcategory = () => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<PostForm>({
+  } = useForm<SubcategoryForm>({
     resolver: yupResolver(schema),
   });
 
   const onSubmitPostCreation = (data: PostForm) => {
     console.log('submiting forms with ', data);
-    createPost(data);
+    createSubcategory(data);
   };
 
   const handleNavigateGoBack = () => {
     navigation.goBack();
   };
 
-  async function createPost(data: PostForm): Promise<PostForm | undefined> {
-    setErrorAtPostCreation(false);
-    setIsLoading(true);
-    try {
-      setErrorAtPostCreation(false);
-      const createdPost = await diversaGenteServices.createPost({
-        ...data,
-        ownerId: String(user?.id),
-      });
-      queryClient.invalidateQueries('diversagente@posts');
-      navigation.navigate('Forum');
-      return createdPost;
-    } catch (error) {
-      setErrorAtPostCreation(true);
-      setIsLoading(false);
-    } finally {
-      setIsLoading(false);
-    }
-  }
+  const { data } = useCategoryDetails(categoryId);
 
   return (
     <KeyboardAvoidingView behavior={'height'}>
@@ -133,7 +116,7 @@ export const FormCreateSubcategory = () => {
               }}
             />
 
-            <Box>{categoryId}</Box>
+            <Box>{data}</Box>
             <Box>{subcategoryId}</Box>
 
             <ControlledInput
