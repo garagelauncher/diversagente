@@ -1,4 +1,3 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
   NavigationProp,
@@ -11,22 +10,15 @@ import {
   Button,
   Heading,
   HStack,
-  Alert,
   Box,
   CloseIcon,
-  IconButton,
   Text,
   Divider,
-  FormControl,
-  WarningOutlineIcon,
-  CheckIcon,
-  Select,
-  Collapse,
   Flex,
-  Badge,
+  useToast,
 } from 'native-base';
-import React, { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import {
   Keyboard,
   ScrollView,
@@ -34,39 +26,22 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useMutation } from 'react-query';
 import * as yup from 'yup';
 
 import { ControlledInput } from '@src/components/ControlledInput';
-import { Category } from '@src/contracts/Category';
-import { PostForm } from '@src/contracts/Post';
-import { Subcategory, SubcategoryForm } from '@src/contracts/Subcategory';
+import { SubcategoryForm } from '@src/contracts/Subcategory';
 import { useCategoryDetails } from '@src/hooks/queries/details/useCategoryDetails';
-import { useCategories } from '@src/hooks/queries/useCategories';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
-import { createSubcategory } from '@src/services/diversaGente/subcategories';
 import { queryClient } from '@src/services/queryClient';
 
 type FormCreateSubcategoryNavigationProps = NavigationProp<
   StackForumNavigatorParamList,
-  'FormCreateSubcategory'
+  'FormCreateSubcategory',
+  'Subcategory'
 >;
-
-const schema = yup.object({
-  title: yup
-    .string()
-    .min(6, 'O nome deve conter no mínimo 6 caracteres.')
-    .max(200, 'O nome deve conter no máximo 200 caracteres.')
-    .required('Nome é obrigatório.'),
-  description: yup
-    .string()
-    .min(50, 'A descrição deve conter no mínimo 50 caracteres')
-    .max(140, 'A descrição deve conter no máximo 140 caracteres')
-    .required('Descrição é obrigatória.'),
-  categoryId: yup.string().required(),
-  subcategoryId: yup.string().optional(),
-});
 
 export const FormCreateSubcategory = () => {
   const route =
@@ -74,28 +49,78 @@ export const FormCreateSubcategory = () => {
       RouteProp<StackForumNavigatorParamList, 'FormCreateSubcategory'>
     >();
   const { subcategoryId, categoryId } = route.params;
-  const { user } = useAuth();
 
   const navigation = useNavigation<FormCreateSubcategoryNavigationProps>();
+
+  const schema = yup.object({
+    title: yup
+      .string()
+      .min(6, 'O nome deve conter no mínimo 6 caracteres.')
+      .max(200, 'O nome deve conter no máximo 200 caracteres.')
+      .required('Nome é obrigatório.'),
+    description: yup
+      .string()
+      .min(50, 'A descrição deve conter no mínimo 50 caracteres')
+      .max(240, 'A descrição deve conter no máximo 140 caracteres')
+      .required('Descrição é obrigatória.'),
+  });
 
   const {
     control,
     handleSubmit,
+    reset,
+    register,
     formState: { errors },
   } = useForm<SubcategoryForm>({
     resolver: yupResolver(schema),
   });
 
-  const onSubmitSubcategoryCreation = (data: SubcategoryForm) => {
+  const toast = useToast();
+
+  const onSubmitSubcategoryCreation = async (data: SubcategoryForm) => {
+    data.name = data.title.toLowerCase();
+    data.categoriesIds = [categoryId];
     console.log('submiting forms with ', data);
-    createSubcategory(data);
+    await mutationCreateSubcategory.mutateAsync({
+      ...data,
+    });
   };
 
   const handleNavigateGoBack = () => {
     navigation.goBack();
   };
 
-  const { data } = useCategoryDetails(categoryId);
+  const categoryData = useCategoryDetails(categoryId);
+
+  const mutationCreateSubcategory = useMutation(
+    diversaGenteServices.createSubcategory,
+    {
+      onSuccess: async (data) => {
+        const subcategory = await diversaGenteServices.findSubcategoryById(
+          data.id,
+        );
+
+        queryClient.invalidateQueries(['diversagente@subcategories']);
+        queryClient.setQueryData(
+          ['diversagente@subcategories', subcategory.id],
+          subcategory,
+        );
+
+        toast.show({
+          title: 'Deu tudo certo!',
+          description: 'A nova subcategoria foi criada com sucesso!',
+          background: 'green.500',
+        });
+        reset();
+
+        navigation.navigate('Subcategory', {
+          categoryTitle: categoryData.data?.title,
+          categoryId: categoryData.data?.id,
+          subcategoryId: data.id,
+        });
+      },
+    },
+  );
 
   return (
     <KeyboardAvoidingView behavior={'height'}>
@@ -141,7 +166,7 @@ export const FormCreateSubcategory = () => {
                 </Text>
               </Flex>
               <Text fontSize={24} fontWeight={'bold'} letterSpacing={0.6}>
-                {data?.title}
+                {categoryData.data?.title}
               </Text>
             </Flex>
 
@@ -149,20 +174,20 @@ export const FormCreateSubcategory = () => {
 
             <ControlledInput
               control={control}
-              name="title"
               label={'Nome'}
               error={errors.title}
               isTextArea={false}
               placeholder="Caracteres: máximo de 40 e mínimo de 6"
+              {...register('title')}
             ></ControlledInput>
 
             <ControlledInput
               control={control}
-              name="description"
               label={'Descrição'}
               error={errors.description}
               isTextArea={true}
-              placeholder="Caracteres: máximo de 140 e mínimo de 50"
+              placeholder="Caracteres: máximo de 240 e mínimo de 50"
+              {...register('description')}
             ></ControlledInput>
 
             <HStack width="100%" marginTop="5" justifyContent="space-between">
