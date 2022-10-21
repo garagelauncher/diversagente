@@ -204,8 +204,9 @@ model Notification {
   message String
   data    String?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  lastUsedAt DateTime?
 
   ownerId String @db.ObjectId
 
