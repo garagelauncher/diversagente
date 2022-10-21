@@ -18,9 +18,7 @@ export class DevicesService {
     });
 
     if (isDeviceAlreadyRegistered) {
-      return await this.update(isDeviceAlreadyRegistered.id, {
-        ...createDeviceDto,
-      });
+      return await this.update(isDeviceAlreadyRegistered.id, createDeviceDto);
     }
 
     return await this.prisma.device.create({ data: createDeviceDto });
