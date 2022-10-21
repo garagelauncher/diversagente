@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { CategoriesFilter } from '@src/screens/CategoriesFilter';
 import { Comments } from '@src/screens/Comments';
 import { FormCreatePost } from '@src/screens/FormCreatePost';
+import { FormCreateSubcategory } from '@src/screens/FormCreateSubcategory';
 import { Home } from '@src/screens/Home';
 import { Likes } from '@src/screens/Likes';
 import { PostDetails } from '@src/screens/PostDetails';
@@ -15,13 +16,14 @@ export type StackForumNavigatorParamList = {
   SelectCategory: undefined;
   SelectSubcategory: { categoryId: string; categoryTitle: string };
   Subcategory: {
-    subcategoryId: string;
-    categoryId: string;
-    categoryTitle: string;
+    subcategoryId: string | undefined;
+    categoryId: string | undefined;
+    categoryTitle: string | undefined;
   };
   PostDetails: { postId: string };
   Comments: { postId: string };
   Likes: { postId: string };
+  FormCreateSubcategory: { categoryId: string; subcategoryId?: string };
 };
 
 const { Navigator, Screen } =
@@ -43,6 +45,7 @@ export const StackForumPrivateRoutes = () => {
       <Screen name="SelectCategory" component={CategoriesFilter} />
       <Screen name="SelectSubcategory" component={SubcategoryFilter} />
       <Screen name="Subcategory" component={Subcategory} />
+      <Screen name="FormCreateSubcategory" component={FormCreateSubcategory} />
     </Navigator>
   );
 };
