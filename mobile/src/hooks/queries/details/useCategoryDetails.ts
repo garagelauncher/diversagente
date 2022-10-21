@@ -8,8 +8,5 @@ export const useCategoryDetails = <GenericIncluded extends object = object>(
   options: QueryOptions = {},
 ) =>
   useQuery(['diversagente@categorydetails', categoryId], () =>
-    diversaGenteServices.findCategoryById<GenericIncluded>(
-      categoryId,
-      options,
-    ),
+    diversaGenteServices.findCategoryById<GenericIncluded>(categoryId, options),
   );

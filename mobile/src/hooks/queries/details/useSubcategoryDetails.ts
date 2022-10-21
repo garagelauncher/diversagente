@@ -7,7 +7,7 @@ export const useSubcategoryDetails = <GenericIncluded extends object = object>(
   subcategoryId: string,
   options: QueryOptions = {},
 ) =>
-  useQuery(['diversagente@subcategory', subcategoryId], () =>
+  useQuery(['diversagente@subcategorydetails', subcategoryId], () =>
     diversaGenteServices.findSubcategoryById<GenericIncluded>(
       subcategoryId,
       options,
