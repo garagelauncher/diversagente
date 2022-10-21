@@ -1,8 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import * as AuthSession from 'expo-auth-session';
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
+import { useMutation } from 'react-query';
 
 import { Oauth2 } from '@src/configs';
 import {
@@ -11,6 +12,7 @@ import {
   UserData,
 } from '@src/contexts/AuthContext';
 import { diversaGenteServices } from '@src/services/diversaGente';
+import { getPushNotificationToken } from '@src/services/notifications';
 
 type AuthProvidersProps = {
   children: ReactNode;
@@ -24,9 +26,33 @@ type AuthResponse = {
 };
 
 export const AuthProvider = ({ children }: AuthProvidersProps) => {
+  const mutationCreateDevice = useMutation(diversaGenteServices.createDevice, {
+    onSuccess: () => {
+      console.log('Device created');
+    },
+  });
+
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState<UserData | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const storeUserDevice = useCallback(
+    async (ownerId: string) => {
+      const lastStoredToken = await AsyncStorage.getItem(
+        'diversagente@deviceToken',
+      );
+      const actualToken = await getPushNotificationToken();
+      const token = actualToken ?? lastStoredToken;
+      console.log('show device token', token);
+
+      if (token) {
+        await AsyncStorage.setItem('diversagente@deviceToken', token);
+        await mutationCreateDevice.mutateAsync({ ownerId, token });
+        console.log('Device stored');
+      }
+    },
+    [mutationCreateDevice],
+  );
 
   async function signInWithGoogle() {
     setIsLoading(true);
@@ -142,6 +168,12 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
 
     getUser();
   }, []);
+
+  useEffect(() => {
+    if (isLoggedIn && user?.id) {
+      storeUserDevice(user.id);
+    }
+  }, [isLoggedIn, storeUserDevice, user?.id]);
 
   return (
     <AuthContext.Provider

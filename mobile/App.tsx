@@ -75,7 +75,7 @@ export default function App() {
   };
 
   useEffect(() => {
-    getPushNotificationToken().then((token) => {
+    getPushNotificationToken().then(async (token) => {
       console.log('result of push token');
       console.log(token);
     });
