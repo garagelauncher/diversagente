@@ -12,17 +12,24 @@ import { LikesService } from './likes.service';
 import { CreateLikeDto } from './dto/create-like.dto';
 import { UpdateLikeDto } from './dto/update-like.dto';
 import { ApiQuery } from '@nestjs/swagger';
+import { fireFunctionAndForget } from 'src/shared/utils/fireFunctionAndForget';
 
 @Controller('posts/:postId/likes')
 export class LikesController {
   constructor(private readonly likesService: LikesService) {}
 
   @Post()
-  create(
+  async create(
     @Param('postId') postId: string,
     @Body() createLikeDto: CreateLikeDto,
   ) {
-    return this.likesService.create({ ...createLikeDto, postId });
+    const createdLike = await this.likesService.create({
+      ...createLikeDto,
+      postId,
+    });
+
+    this.likesService.fireAndForgetLikeNotification(createdLike);
+    return createdLike;
   }
 
   @ApiQuery({

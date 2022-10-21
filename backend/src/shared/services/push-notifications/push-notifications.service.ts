@@ -7,7 +7,7 @@ export class PushNotificationsService {
 
   async sendPushNotifications(
     pushTokenList: string[],
-    { body, sound = 'default', data = {} }: Omit<ExpoPushMessage, 'to'>,
+    { body, sound = 'default', data = {}, title }: Omit<ExpoPushMessage, 'to'>,
   ) {
     const messages: ExpoPushMessage[] = [];
     for (const pushToken of pushTokenList) {
@@ -21,6 +21,7 @@ export class PushNotificationsService {
         sound,
         body,
         data,
+        title,
       });
     }
 
