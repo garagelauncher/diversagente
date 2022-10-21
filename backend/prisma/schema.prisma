@@ -186,8 +186,8 @@ model Location {
 model Device {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
-  token String
-  type  String
+  token    String
+  platform String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

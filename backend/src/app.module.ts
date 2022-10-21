@@ -14,6 +14,7 @@ import { PostsModule } from './modules/posts/posts.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { ReviewsModule } from './modules/reviews/reviews.module';
 import { PushNotificationsService } from './shared/services/push-notifications/push-notifications.service';
+import { DevicesModule } from './modules/devices/devices.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { PushNotificationsService } from './shared/services/push-notifications/p
     PostsModule,
     CommentsModule,
     ReviewsModule,
+    DevicesModule,
   ],
   controllers: [AppController],
   providers: [AppService, CloudinaryProvider, PushNotificationsService],
