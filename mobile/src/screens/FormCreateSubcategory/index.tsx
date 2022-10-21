@@ -22,6 +22,8 @@ import {
   CheckIcon,
   Select,
   Collapse,
+  Flex,
+  Badge,
 } from 'native-base';
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -38,13 +40,13 @@ import { ControlledInput } from '@src/components/ControlledInput';
 import { Category } from '@src/contracts/Category';
 import { PostForm } from '@src/contracts/Post';
 import { Subcategory, SubcategoryForm } from '@src/contracts/Subcategory';
+import { useCategoryDetails } from '@src/hooks/queries/details/useCategoryDetails';
 import { useCategories } from '@src/hooks/queries/useCategories';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
+import { createSubcategory } from '@src/services/diversaGente/subcategories';
 import { queryClient } from '@src/services/queryClient';
-import { useCategoryDetails } from '@src/hooks/queries/details/useCategoryDetails';
-import { useSubcategoryCreation } from '@src/hooks/queries/creation/useSubcategoryCreation';
 
 type FormCreateSubcategoryNavigationProps = NavigationProp<
   StackForumNavigatorParamList,
@@ -84,7 +86,7 @@ export const FormCreateSubcategory = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmitPostCreation = (data: PostForm) => {
+  const onSubmitSubcategoryCreation = (data: SubcategoryForm) => {
     console.log('submiting forms with ', data);
     createSubcategory(data);
   };
@@ -116,7 +118,33 @@ export const FormCreateSubcategory = () => {
               }}
             />
 
-            <Box>{data}</Box>
+            <Flex
+              flexDir={'row'}
+              justifyContent={'space-between'}
+              alignItems={'center'}
+            >
+              <Flex
+                bgColor={'blue.600'}
+                flex={1}
+                p={2}
+                borderRadius={16}
+                maxW={'32'}
+                alignItems={'center'}
+              >
+                <Text
+                  fontSize={18}
+                  color={'white'}
+                  letterSpacing={0.6}
+                  fontWeight={'bold'}
+                >
+                  Categoria
+                </Text>
+              </Flex>
+              <Text fontSize={24} fontWeight={'bold'} letterSpacing={0.6}>
+                {data?.title}
+              </Text>
+            </Flex>
+
             <Box>{subcategoryId}</Box>
 
             <ControlledInput
@@ -149,7 +177,7 @@ export const FormCreateSubcategory = () => {
               </Button>
               <Button
                 width={'32'}
-                onPress={handleSubmit(onSubmitPostCreation)}
+                onPress={handleSubmit(onSubmitSubcategoryCreation)}
                 colorScheme="blue"
                 type="submit"
               >
