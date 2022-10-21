@@ -3,12 +3,21 @@ import { LikesService } from './../../../src/modules/likes/likes.service';
 import { PrismaService } from './../../../src/shared/database/prisma.service';
 import { likeMock } from 'test/__mocks__/like';
 import { createPrismaProviderMock } from './../../__mocks__/prisma';
+import { PushNotificationsService } from 'src/shared/services/push-notifications/push-notifications.service';
 
 describe('LikesService', () => {
   let likeService: LikesService;
   let prisma: PrismaService;
 
   beforeEach(async () => {
+    const mockPushNotificationServiceService = {
+      provide: PushNotificationsService,
+      useValue: {
+        sendPushNotifications: jest.fn(),
+      },
+    };
+
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [LikesService, createPrismaProviderMock()],
     }).compile();
