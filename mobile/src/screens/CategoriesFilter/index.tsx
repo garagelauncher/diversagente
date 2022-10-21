@@ -7,6 +7,7 @@ import {
   HStack,
   Button,
   Popover,
+  Skeleton,
 } from 'native-base';
 import React, { useState } from 'react';
 
@@ -96,44 +97,42 @@ export const CategoriesFilter = () => {
             </Button>
           ))}
         </Flex>
-        <HStack width="90%" height={50} backgroundColor={theme.colors.light50}>
-          <Flex direction="row">
-            <Text fontSize="2xl" bold>
-              Categorias {selectedCategoryFilterOption.toLowerCase()}
-            </Text>
-            <VStack py="2" boxSize="30" alignItems="center">
-              <Popover
-                trigger={(triggerProps) => {
-                  return (
-                    <Button {...triggerProps} bgColor={'transparent'} mx={-1}>
-                      <InfoIcon color={theme.colors.darkBlue700} />
-                    </Button>
-                  );
-                }}
+
+        <Flex direction="row">
+          <Text fontSize="2xl" bold>
+            Categorias {selectedCategoryFilterOption.toLowerCase()}
+          </Text>
+          <VStack py="2" boxSize="30" alignItems="center">
+            <Popover
+              trigger={(triggerProps) => {
+                return (
+                  <Button {...triggerProps} bgColor={'transparent'} mx={-1}>
+                    <InfoIcon color={theme.colors.darkBlue700} />
+                  </Button>
+                );
+              }}
+            >
+              <Popover.Content
+                accessibilityLabel={`Detalhes sobre as categorias ${selectedCategoryFilterOption}`}
+                w={56}
               >
-                <Popover.Content
-                  accessibilityLabel={`Detalhes sobre as categorias ${selectedCategoryFilterOption}`}
-                  w={56}
-                >
-                  <Popover.Arrow />
-                  <Popover.Body paddingY={6}>
-                    {filterCategoryOptions.map((categoryOption) => {
-                      if (
-                        categoryOption.name === selectedCategoryFilterOption
-                      ) {
-                        return (
-                          <Text key={categoryOption.id} fontSize="sm">
-                            {categoryOption.description}
-                          </Text>
-                        );
-                      }
-                    })}
-                  </Popover.Body>
-                </Popover.Content>
-              </Popover>
-            </VStack>
-          </Flex>
-        </HStack>
+                <Popover.Arrow />
+                <Popover.Body paddingY={6}>
+                  {filterCategoryOptions.map((categoryOption) => {
+                    if (categoryOption.name === selectedCategoryFilterOption) {
+                      return (
+                        <Text key={categoryOption.id} fontSize="sm">
+                          {categoryOption.description}
+                        </Text>
+                      );
+                    }
+                  })}
+                </Popover.Body>
+              </Popover.Content>
+            </Popover>
+          </VStack>
+        </Flex>
+
         {selectedCategoryFilterOption === CategoriesFilterEnum.POPULAR ? (
           <PopularCategories />
         ) : (
