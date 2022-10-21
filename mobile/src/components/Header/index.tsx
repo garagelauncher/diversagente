@@ -147,7 +147,7 @@ export const Header: FunctionComponent<HeaderProps> = ({
         </Flex>
 
         {!screenName && (
-          <Flex marginLeft={-12} h={16}>
+          <Flex marginLeft={-16} mt={3}>
             <TouchableOpacity onPress={handleNavigationToUserProfile}>
               <Avatar
                 backgroundColor={'orange.500'}

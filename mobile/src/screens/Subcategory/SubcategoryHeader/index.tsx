@@ -13,7 +13,7 @@ export const SubcategoryHeader = () => {
   const { subcategoryId, categoryTitle } = route.params;
   const { user } = useAuth();
 
-  const { data, isLoading, isError } = useSubcategoryDetails(subcategoryId);
+  const { data } = useSubcategoryDetails(subcategoryId as string);
 
   return (
     <Flex
@@ -31,6 +31,7 @@ export const SubcategoryHeader = () => {
               subtitle={data?.description ?? ''}
               badgeName={categoryTitle}
             ></Header>
+            {/**
             <Flex justifyContent={'flex-end'} paddingX={4} w={'100%'}>
               <Box
                 w={'100%'}
@@ -112,6 +113,7 @@ export const SubcategoryHeader = () => {
                 </SimpleGrid>
               </Box>
             </Flex>
+            */}
           </>
         )}
       </Box>

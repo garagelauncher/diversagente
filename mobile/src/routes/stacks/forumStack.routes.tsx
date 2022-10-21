@@ -16,9 +16,9 @@ export type StackForumNavigatorParamList = {
   SelectCategory: undefined;
   SelectSubcategory: { categoryId: string; categoryTitle: string };
   Subcategory: {
-    subcategoryId: string;
-    categoryId: string;
-    categoryTitle: string;
+    subcategoryId: string | undefined;
+    categoryId: string | undefined;
+    categoryTitle: string | undefined;
   };
   PostDetails: { postId: string };
   Comments: { postId: string };
