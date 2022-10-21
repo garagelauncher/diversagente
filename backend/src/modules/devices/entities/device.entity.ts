@@ -8,5 +8,5 @@ export class Device {
   token: string;
 
   @ApiProperty()
-  type: string;
+  platform?: string;
 }

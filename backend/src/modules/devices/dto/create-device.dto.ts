@@ -5,5 +5,5 @@ export class CreateDeviceDto {
   token: string;
 
   @ApiProperty()
-  type: string;
+  platform?: string;
 }
