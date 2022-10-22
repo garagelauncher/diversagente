@@ -49,8 +49,14 @@ export class CommentsService {
     });
   }
 
-  remove({ id, postId }: DeleteCommentDto) {
+  async remove({ id, postId }: DeleteCommentDto) {
     Logger.warn(`Removed like ${id} from post ${postId}`);
-    return this.prisma.comment.delete({ where: { id } });
+    return await this.prisma.comment.update({
+      where: { id },
+      data: {
+        deactivatedAt: new Date().toISOString(),
+        isActive: false,
+      },
+    });
   }
 }
