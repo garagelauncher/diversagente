@@ -72,11 +72,11 @@ export class PostsService {
     });
   }
 
-  remove(id: string) {
-    return this.prisma.post.update({
+  async remove(id: string) {
+    return await this.prisma.post.update({
       where: { id },
       data: {
-        deletedAt: new Date().toISOString(),
+        deactivatedAt: new Date().toISOString(),
         isActive: false,
       },
     });
