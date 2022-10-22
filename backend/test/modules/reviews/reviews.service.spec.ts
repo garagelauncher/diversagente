@@ -39,6 +39,7 @@ describe('ReviewsService', () => {
   });
 
   it('should be able to delete a review with success', async () => {
+    prisma.review.update = jest.fn().mockResolvedValue(reviewMock);
     const deletedReview = await reviewService.remove(
       'pipipipipi-00000-popopopo-001111',
     );
