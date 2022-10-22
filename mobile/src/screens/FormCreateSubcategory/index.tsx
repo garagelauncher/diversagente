@@ -78,7 +78,7 @@ export const FormCreateSubcategory = () => {
 
   const onSubmitSubcategoryCreation = async (data: SubcategoryForm) => {
     data.name = data.title.toLowerCase();
-    data.categoriesIds = [categoryId];
+    data.categoriesIds = [categoryId as string];
     console.log('submiting forms with ', data);
     await mutationCreateSubcategory.mutateAsync({
       ...data,

@@ -15,18 +15,18 @@ export type StackForumNavigatorParamList = {
   FormCreatePost: { categoryId?: string | null; subcategoryId?: string | null };
   SelectCategory: undefined;
   SelectSubcategory: {
-    categoryId: string | undefined;
-    categoryTitle: string | undefined;
+    categoryId?: string;
+    categoryTitle?: string;
   };
   Subcategory: {
-    subcategoryId: string | undefined;
-    categoryId: string | undefined;
-    categoryTitle: string | undefined;
+    subcategoryId?: string;
+    categoryId?: string;
+    categoryTitle?: string;
   };
   PostDetails: { postId: string };
   Comments: { postId: string };
   Likes: { postId: string };
-  FormCreateSubcategory: { categoryId: string; subcategoryId?: string };
+  FormCreateSubcategory: { categoryId?: string; subcategoryId?: string };
 };
 
 const { Navigator, Screen } =

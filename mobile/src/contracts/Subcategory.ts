@@ -10,10 +10,8 @@ export interface Subcategory {
 }
 
 export interface SubcategoryForm {
-  name: string,
-  title: string,
-  description: string,
-  categoriesIds: [
-    string
-  ]
+  name: string;
+  title: string;
+  description: string;
+  categoriesIds: [string];
 }
