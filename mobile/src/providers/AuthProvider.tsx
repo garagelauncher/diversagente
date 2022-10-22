@@ -173,7 +173,8 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
     if (isLoggedIn && user?.id) {
       storeUserDevice(user.id);
     }
-  }, [isLoggedIn, storeUserDevice, user?.id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoggedIn]);
 
   return (
     <AuthContext.Provider
