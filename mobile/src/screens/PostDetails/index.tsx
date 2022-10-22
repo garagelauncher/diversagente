@@ -114,14 +114,19 @@ export const PostDetails = () => {
       </LoadingFallback>
 
       <VStack width="100%" padding={6} space={6}>
-        <Input
-          type="text"
-          backgroundColor="gray.100"
-          variant="rounded"
-          width="100%"
-          onFocus={handleOpenAddCommentModal}
-          placeholder="Adicione aqui seu comentário"
-        />
+        <LoadingFallback
+          fallback={<Skeleton width="100%" height={50} />}
+          isLoading={isLoading || !data}
+        >
+          <Input
+            type="text"
+            backgroundColor="gray.100"
+            variant="rounded"
+            width="100%"
+            onFocus={handleOpenAddCommentModal}
+            placeholder="Adicione aqui seu comentário"
+          />
+        </LoadingFallback>
 
         <ConditionallyRender
           condition={isLoadedNoComment}
