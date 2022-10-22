@@ -1,6 +1,7 @@
 import { AntDesign, Feather } from '@expo/vector-icons';
 import {
   NavigationProp,
+  StackActions,
   useLinkTo,
   useNavigation,
 } from '@react-navigation/native';
@@ -31,6 +32,8 @@ type HeaderProps = {
   avatar?: string | null;
   subtitle: string;
   badgeName?: string;
+  navigationToScreenName?: any;
+  navigationParams?: any;
 };
 
 type HeaderNavigationProps = NavigationProp<any>;
@@ -41,6 +44,8 @@ export const Header: FunctionComponent<HeaderProps> = ({
   subtitle,
   avatar,
   badgeName,
+  navigationToScreenName,
+  navigationParams,
 }) => {
   const userInitials = username ? getUsernameInitials(username) : null;
   const avatarUri = String(avatar);
@@ -50,6 +55,10 @@ export const Header: FunctionComponent<HeaderProps> = ({
   const navigation = useNavigation<HeaderNavigationProps>();
 
   const handleNavigateBack = () => {
+    if (navigationToScreenName) {
+      return navigation.navigate(navigationToScreenName, navigationParams);
+    }
+
     navigation.goBack();
   };
 
