@@ -32,7 +32,6 @@ import * as yup from 'yup';
 import { ControlledInput } from '@src/components/ControlledInput';
 import { SubcategoryForm } from '@src/contracts/Subcategory';
 import { useCategoryDetails } from '@src/hooks/queries/details/useCategoryDetails';
-import { useAuth } from '@src/hooks/useAuth';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
 import { queryClient } from '@src/services/queryClient';
