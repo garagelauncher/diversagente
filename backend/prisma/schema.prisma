@@ -24,20 +24,22 @@ type Preference {
 }
 
 model User {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  email    String @unique
-  username String @unique
-
-  name String
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  email    String  @unique
+  username String  @unique
+  name     String
+  isActive Boolean @default(value: true)
 
   birthdate           DateTime?
   biograph            String?
   picture             String?
+  deactivationReason  String?
   preferences         Preference?
   lovelyCategoriesIds String[]    @db.ObjectId
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deactivatedAt DateTime?
 
   category Category? @relation(fields: [lovelyCategoriesIds], references: [id])
 
@@ -97,11 +99,13 @@ model Like {
 }
 
 model Comment {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  text String
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  text     String
+  isActive Boolean @default(true)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deactivatedAt DateTime?
 
   ownerId String  @db.ObjectId
   postId  String  @db.ObjectId
@@ -122,9 +126,9 @@ model Post {
 
   images String[]
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deactivatedAt DateTime?
 
   ownerId       String  @db.ObjectId
   categoryId    String? @db.ObjectId
@@ -139,12 +143,14 @@ model Post {
 }
 
 model Review {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  text  String
-  stars Int
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  text     String
+  stars    Int
+  isActive Boolean @default(true)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deactivatedAt DateTime?
 
   ownerId    String @db.ObjectId
   locationId String @db.ObjectId
