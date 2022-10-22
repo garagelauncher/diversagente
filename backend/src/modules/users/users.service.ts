@@ -20,6 +20,7 @@ export class UsersService {
           email: createUserDto.email,
           username: createUserDto.username,
           name: createUserDto.name,
+          picture: createUserDto.picture,
           preferences: createUserDto.preferences ?? {},
         },
       });
@@ -57,10 +58,45 @@ export class UsersService {
     });
   }
 
-  async remove(id: string) {
-    return await this.prisma.user.delete({
+  async remove(id: string, reason = 'No reason provided') {
+    const deactivatedAt = new Date().toISOString();
+
+    await this.prisma.review.updateMany({
       where: {
-        id,
+        ownerId: id,
+      },
+      data: {
+        deactivatedAt,
+        isActive: false,
+      },
+    });
+
+    await this.prisma.comment.updateMany({
+      where: {
+        ownerId: id,
+      },
+      data: {
+        deactivatedAt,
+        isActive: false,
+      },
+    });
+
+    await this.prisma.post.updateMany({
+      where: {
+        ownerId: id,
+      },
+      data: {
+        deactivatedAt,
+        isActive: false,
+      },
+    });
+
+    return await this.prisma.user.update({
+      where: { id },
+      data: {
+        deactivatedAt,
+        isActive: false,
+        deactivationReason: reason,
       },
     });
   }

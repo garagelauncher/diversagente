@@ -1,15 +1,29 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
+import { CategoriesFilter } from '@src/screens/CategoriesFilter';
+import { Comments } from '@src/screens/Comments';
 import { FormCreatePost } from '@src/screens/FormCreatePost';
-import { CategoriesList } from '@src/screens/Forums/CategoriesList';
-import { SubcategoriesList } from '@src/screens/Forums/SubcategoriesList';
+import { FormCreateSubcategory } from '@src/screens/FormCreateSubcategory';
 import { Home } from '@src/screens/Home';
+import { Likes } from '@src/screens/Likes';
+import { PostDetails } from '@src/screens/PostDetails';
+import { SubcategoryFilter } from '@src/screens/SubcategoriesFilter';
+import { Subcategory } from '@src/screens/Subcategory';
 
 export type StackForumNavigatorParamList = {
   Forum: undefined;
-  FormCreatePost: undefined;
+  FormCreatePost: { categoryId?: string | null; subcategoryId?: string | null };
   SelectCategory: undefined;
-  SelectSubcategory: { categoryId: string };
+  SelectSubcategory: { categoryId: string; categoryTitle: string };
+  Subcategory: {
+    subcategoryId: string | undefined;
+    categoryId: string | undefined;
+    categoryTitle: string | undefined;
+  };
+  PostDetails: { postId: string };
+  Comments: { postId: string };
+  Likes: { postId: string };
+  FormCreateSubcategory: { categoryId: string; subcategoryId?: string };
 };
 
 const { Navigator, Screen } =
@@ -24,9 +38,14 @@ export const StackForumPrivateRoutes = () => {
       initialRouteName="Forum"
     >
       <Screen name="Forum" component={Home} />
+      <Screen name="PostDetails" component={PostDetails} />
+      <Screen name="Comments" component={Comments} />
+      <Screen name="Likes" component={Likes} />
       <Screen name="FormCreatePost" component={FormCreatePost} />
-      <Screen name="SelectCategory" component={CategoriesList} />
-      <Screen name="SelectSubcategory" component={SubcategoriesList} />
+      <Screen name="SelectCategory" component={CategoriesFilter} />
+      <Screen name="SelectSubcategory" component={SubcategoryFilter} />
+      <Screen name="Subcategory" component={Subcategory} />
+      <Screen name="FormCreateSubcategory" component={FormCreateSubcategory} />
     </Navigator>
   );
 };

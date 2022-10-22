@@ -43,13 +43,33 @@ export class SubcategoriesController {
     example: `[1, 1]`,
     required: false,
   })
+  @ApiQuery({
+    name: 'include',
+    type: String,
+    description: 'An optional include',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'cursor',
+    type: String,
+    description: 'An optional cursor, like {"id": "some-id-of-unique-data"}',
+    required: false,
+  })
   @Get()
   async findAll(
     @Query('filter') filter?: string,
     @Query('sort') sort?: string,
     @Query('range') range?: string,
+    @Query('include') include?: string,
+    @Query('cursor') cursor?: string,
   ) {
-    return await this.subcategoriesService.findAll({ filter, sort, range });
+    return await this.subcategoriesService.findAll({
+      filter,
+      sort,
+      range,
+      include,
+      cursor,
+    });
   }
 
   @Get(':id')

@@ -1,3 +1,4 @@
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import {
@@ -11,80 +12,134 @@ import {
   IconButton,
   Text,
   Divider,
+  FormControl,
+  WarningOutlineIcon,
+  CheckIcon,
+  Select,
+  Collapse,
 } from 'native-base';
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import {
   Keyboard,
   ScrollView,
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
 } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as yup from 'yup';
 
 import { ControlledInput } from '@src/components/ControlledInput';
+import { Category } from '@src/contracts/Category';
 import { PostForm } from '@src/contracts/Post';
+import { Subcategory } from '@src/contracts/Subcategory';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
-import { logger } from '@src/utils/logger';
+import { FilterSubcategory } from '@src/services/diversaGente/subcategories';
+import { queryClient } from '@src/services/queryClient';
 
 type FormCreatePostNavigationProps = NavigationProp<
   StackForumNavigatorParamList,
   'FormCreatePost'
 >;
 
-type CreatePostFormData = {
-  title: string;
-  content: string;
-  category?: string;
-  subcategory?: string;
-  image?: string;
-  imageDescription?: string;
-};
-
 const schema = yup.object({
   title: yup
     .string()
     .min(6, 'O título deve conter no mínimo 6 caracteres.')
-    .max(40, 'O título deve conter no máximo 40 caracteres.')
+    .max(200, 'O título deve conter no máximo 200 caracteres.')
     .required('Título é obrigatório.'),
   content: yup
     .string()
-    .min(140, 'O conteúdo deve conter no mínimo 140 caracteres')
+    .min(50, 'O conteúdo deve conter no mínimo 50 caracteres')
     .max(1800, 'O conteúdo deve conter no máximo 1800 caracteres')
     .required('Conteúdo é obrigatório.'),
-  // image: yup.string().optional(),
+  categoryId: yup.string().required(),
+  subcategoryId: yup.string().optional(),
+  //image: yup.mixed().optional(),
   // imageDescription: yup
   // .string()
-  // .trim()
   // .optional()
-  // .min(8, 'Mínimo de 140 caracteres')
+  // .min(80, 'Mínimo de 80 caracteres')
   // .max(200, 'Máximo de 200 caracteres.')
   // .transform((value) => (value ? value : null))
   // .nullable(),
-  // category: yup.string().optional(),
-  // subcategory: yup.string().optional(),
 });
 
 export const FormCreatePost = () => {
   const [isClosed, setIsClosed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorAtPostCreation, setErrorAtPostCreation] = useState(false);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
+  const [categoryId, setCategoryId] = useState<string>('');
   const { user } = useAuth();
+  //const [selectedImage, setSelectedImage] = useState<any>(null);
 
   const navigation = useNavigation<FormCreatePostNavigationProps>();
 
-  logger.success('FormCreatePost');
+  const fetchAllCategories = async () => {
+    try {
+      const categoriesFromApi = await diversaGenteServices.findAllCategories();
+      setCategories(categoriesFromApi.results);
+    } catch (error) {
+      console.info('Error while fetching all categories', error);
+    }
+  };
+
+  const fetchRelatedSubcategoriesToCategory = async () => {
+    const filterParams: FilterSubcategory = {
+      categoriesIds: {
+        hasSome: [categoryId],
+      },
+    };
+    try {
+      const relatedSubcategoriesToCategory =
+        await diversaGenteServices.findRelatedSubcategoriesToCategory(
+          categoryId,
+          filterParams,
+        );
+      setSubcategories(relatedSubcategoriesToCategory);
+    } catch (error) {
+      console.info(
+        'Error while fetching the subcategories related to the selected category',
+        error,
+      );
+    }
+  };
+
+  const updateCategoryIdSelected = (categoryId: string) => {
+    setSubcategories([]);
+    setCategoryId(categoryId);
+  };
+
+  /**
+  const pickImage = async () => {
+    const pickerResult = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [6, 4],
+      quality: 1,
+    });
+
+    console.log('image data', pickerResult);
+
+    if (!pickerResult.cancelled) {
+      setSelectedImage({ localUri: pickerResult.uri });
+    }
+  }; */
+
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<CreatePostFormData>({
+  } = useForm<PostForm>({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: CreatePostFormData) => {
-    console.log('submiting with ', data);
+  const onSubmitPostCreation = (data: PostForm) => {
+    console.log('submiting forms with ', data);
     createPost(data);
   };
 
@@ -96,20 +151,21 @@ export const FormCreatePost = () => {
     navigation.goBack();
   };
 
-  async function createPost(
-    data: CreatePostFormData,
-  ): Promise<PostForm | undefined> {
+  async function createPost(data: PostForm): Promise<PostForm | undefined> {
+    setErrorAtPostCreation(false);
     setIsLoading(true);
     try {
+      setErrorAtPostCreation(false);
       const createdPost = await diversaGenteServices.createPost({
         ...data,
         ownerId: String(user?.id),
       });
+      queryClient.invalidateQueries('diversagente@posts');
       navigation.navigate('Forum');
       return createdPost;
     } catch (error) {
-      console.error('failed to create');
-      console.error(error);
+      setErrorAtPostCreation(true);
+      setIsLoading(false);
     } finally {
       setIsLoading(false);
     }
@@ -122,7 +178,9 @@ export const FormCreatePost = () => {
           <VStack space={4} marginTop="16" padding="8">
             <HStack alignContent={'center'} justifyContent="space-between">
               <Heading>Nova postagem</Heading>
-              <CloseIcon onPress={handleNavigateGoBack} marginTop="2" />
+              <TouchableOpacity>
+                <CloseIcon onPress={handleNavigateGoBack} marginTop="2" />
+              </TouchableOpacity>
             </HStack>
             <Divider
               my="2"
@@ -134,7 +192,7 @@ export const FormCreatePost = () => {
               }}
             />
 
-            {!isClosed && (
+            <Collapse isOpen={!isClosed} marginTop={2}>
               <Alert maxW="400" status="warning" colorScheme="orange">
                 <VStack space={2} flexShrink={1} w="100%">
                   <HStack
@@ -149,17 +207,19 @@ export const FormCreatePost = () => {
                         Antes de criar postagens
                       </Text>
                     </HStack>
-                    <IconButton
-                      variant="unstyled"
-                      _focus={{
-                        borderWidth: 0,
-                      }}
-                      onPress={handleOnClose}
-                      icon={<CloseIcon size="3" />}
-                      _icon={{
-                        color: 'coolGray.600',
-                      }}
-                    />
+                    <TouchableOpacity>
+                      <IconButton
+                        variant="unstyled"
+                        _focus={{
+                          borderWidth: 0,
+                        }}
+                        onPress={handleOnClose}
+                        icon={<CloseIcon size="3" />}
+                        _icon={{
+                          color: 'coolGray.600',
+                        }}
+                      />
+                    </TouchableOpacity>
                   </HStack>
                   <Box
                     pl="6"
@@ -175,22 +235,21 @@ export const FormCreatePost = () => {
                   </Box>
                 </VStack>
               </Alert>
-            )}
+            </Collapse>
 
-            <Box>
-              {/**<Controller
+            <Controller
               control={control}
-              name="category"
+              name="categoryId"
               rules={{ required: true }}
-              render={({ field: { onChange, value } }) => (
+              render={({ field: { onChange } }) => (
                 <FormControl
                   w="100%"
                   isRequired
-                  isInvalid={errors.category ? true : false}
+                  isInvalid={errors.categoryId ? true : false}
                 >
                   <FormControl.Label>Selecione a categoria</FormControl.Label>
                   <Select
-                    borderColor={value?.length ? 'green.500' : 'gray.400'}
+                    borderColor={'blue.800'}
                     minWidth="200"
                     accessibilityLabel="Selecione uma categoria"
                     placeholder="Selecione uma categoria"
@@ -200,17 +259,22 @@ export const FormCreatePost = () => {
                     }}
                     mt="1"
                     onValueChange={onChange}
+                    onOpen={fetchAllCategories}
                   >
-                    <Select.Item label="UX Research" value="ux" />
-                    <Select.Item label="Web Development" value="web" />
-                    <Select.Item
-                      label="Cross Platform Development"
-                      value="cross"
-                    />
-                    <Select.Item label="UI Designing" value="ui" />
-                    <Select.Item label="Backend Development" value="backend" />
+                    {categories.map((category) => {
+                      return (
+                        <Select.Item
+                          key={category.id}
+                          label={category.title}
+                          value={category.id}
+                          onPressIn={() =>
+                            updateCategoryIdSelected(category.id)
+                          }
+                        />
+                      );
+                    })}
                   </Select>
-                  {errors.category && (
+                  {errors.categoryId && (
                     <FormControl.ErrorMessage
                       leftIcon={<WarningOutlineIcon size="xs" />}
                     >
@@ -223,20 +287,18 @@ export const FormCreatePost = () => {
 
             <Controller
               control={control}
-              name="subcategory"
+              name="subcategoryId"
               rules={{ required: true }}
-              render={({ field: { onChange, value } }) => (
+              render={({ field: { onChange } }) => (
                 <FormControl
                   w="100%"
-                  isRequired
-                  isDisabled={true}
-                  isInvalid={errors.subcategory ? true : false}
+                  isDisabled={categories.length > 0 ? false : true}
                 >
                   <FormControl.Label>
                     Selecione a subcategoria
                   </FormControl.Label>
                   <Select
-                    borderColor={value?.length ? 'green.500' : 'gray.400'}
+                    borderColor={'blue.800'}
                     minWidth="200"
                     accessibilityLabel="Selecione uma categoria"
                     placeholder="Selecione uma categoria"
@@ -246,46 +308,52 @@ export const FormCreatePost = () => {
                     }}
                     mt="1"
                     onValueChange={onChange}
+                    onOpen={fetchRelatedSubcategoriesToCategory}
                   >
-                    <Select.Item label="UX Research" value="ux" />
-                    <Select.Item label="Web Development" value="web" />
-                    <Select.Item
-                      label="Cross Platform Development"
-                      value="cross"
-                    />
-                    <Select.Item label="UI Designing" value="ui" />
-                    <Select.Item label="Backend Development" value="backend" />
+                    {subcategories.map((subcategories) => {
+                      return (
+                        <Select.Item
+                          key={subcategories.id}
+                          label={subcategories.title}
+                          value={subcategories.id}
+                        />
+                      );
+                    })}
                   </Select>
-                  {errors.subcategory && (
+                  {subcategories.length < 0 && (
                     <FormControl.ErrorMessage
                       leftIcon={<WarningOutlineIcon size="xs" />}
                     >
-                      <Text>Subctegoria é obrigatória.</Text>
+                      <Text>
+                        Não existem subcategorias. Você pode prosseguir apenas
+                        com a categoria selecionada
+                      </Text>
                     </FormControl.ErrorMessage>
                   )}
                 </FormControl>
               )}
-                  ></Controller>*/}
+            ></Controller>
 
-              <ControlledInput
-                control={control}
-                name="title"
-                label={'Título'}
-                error={errors.title}
-                isTextArea={false}
-                placeholder="Caracteres: máximo de 40 e mínimo de 6"
-              ></ControlledInput>
+            <ControlledInput
+              control={control}
+              name="title"
+              label={'Título'}
+              error={errors.title}
+              isTextArea={false}
+              placeholder="Caracteres: máximo de 40 e mínimo de 6"
+            ></ControlledInput>
 
-              <ControlledInput
-                control={control}
-                name="content"
-                label={'Conteúdo'}
-                error={errors.content}
-                isTextArea={true}
-                placeholder="Caracteres: máximo de 1800 e mínimo de 140"
-              ></ControlledInput>
+            <ControlledInput
+              control={control}
+              name="content"
+              label={'Conteúdo'}
+              error={errors.content}
+              isTextArea={true}
+              placeholder="Caracteres: máximo de 1800 e mínimo de 50"
+            ></ControlledInput>
 
-              {/*<ControlledInput
+            {/*
+            <ControlledInput
               control={control}
               name="imageDescription"
               label={'Imagem'}
@@ -293,9 +361,8 @@ export const FormCreatePost = () => {
               isTextArea={false}
               hasImage={true}
               placeholder="Descrição textual, máximo de 200 caracteres."
-                ></ControlledInput> */}
+            ></ControlledInput>
 
-              {/*
             <Controller
               control={control}
               name={'image'}
@@ -306,6 +373,19 @@ export const FormCreatePost = () => {
                   isRequired
                   isInvalid={value ? false : true}
                 >
+                  {selectedImage && (
+                    <View
+                      width={'100%'}
+                      height={'72'}
+                      backgroundColor={'red.900'}
+                    >
+                      <Image
+                        source={{ uri: selectedImage.localUri }}
+                        alt={'Imagem selecionada'}
+                        size={'100%'}
+                      />
+                    </View>
+                  )}
                   <HStack
                     alignContent={'center'}
                     alignItems={'center'}
@@ -314,7 +394,8 @@ export const FormCreatePost = () => {
                   >
                     <Text>Formatos aceitos: png e jpg.</Text>
                     <Button
-                      width="24"
+                      width={'32'}
+                      onPress={pickImage}
                       leftIcon={
                         <Icon
                           as={Ionicons}
@@ -330,13 +411,26 @@ export const FormCreatePost = () => {
                     <FormControl.ErrorMessage
                       leftIcon={<WarningOutlineIcon size="xs" />}
                     >
-                      <Text>-.</Text>
+                      <Text>Erro no upload da imagem!</Text>
                     </FormControl.ErrorMessage>
                   )}
                 </FormControl>
               )}
-            ></Controller>*/}
-            </Box>
+            ></Controller>
+            */}
+
+            {errorAtPostCreation && (
+              <Alert w="100%" status="error">
+                <HStack flexShrink={1} space={2} justifyContent="space-between">
+                  <HStack space={2} flexShrink={1}>
+                    <Alert.Icon mt="1" />
+                    <Text fontSize="md" color="coolGray.800">
+                      Erro ao criar postagem. Por favor, tente novamente.
+                    </Text>
+                  </HStack>
+                </HStack>
+              </Alert>
+            )}
 
             <HStack width="100%" marginTop="5" justifyContent="space-between">
               <Button
@@ -350,7 +444,7 @@ export const FormCreatePost = () => {
               </Button>
               <Button
                 width={'32'}
-                onPress={handleSubmit(onSubmit)}
+                onPress={handleSubmit(onSubmitPostCreation)}
                 colorScheme="blue"
                 type="submit"
                 isLoading={isLoading}

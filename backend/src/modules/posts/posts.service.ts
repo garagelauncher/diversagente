@@ -72,7 +72,13 @@ export class PostsService {
     });
   }
 
-  remove(id: string) {
-    return this.prisma.post.delete({ where: { id } });
+  async remove(id: string) {
+    return await this.prisma.post.update({
+      where: { id },
+      data: {
+        deactivatedAt: new Date().toISOString(),
+        isActive: false,
+      },
+    });
   }
 }

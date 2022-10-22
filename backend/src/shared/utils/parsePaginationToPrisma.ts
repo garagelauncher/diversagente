@@ -8,6 +8,14 @@ export type PaginateOptions = {
   cursor?: string;
 };
 
+const parseSorteableValue = (value: string | object) => {
+  if (typeof value === 'object') {
+    return value;
+  }
+
+  return String(value).toLowerCase() as 'asc' | 'desc';
+};
+
 const parseSortToOrderBy = (sort: string[]) => {
   const isValidSort = Array.isArray(sort) && sort.length === 2;
 
@@ -18,7 +26,7 @@ const parseSortToOrderBy = (sort: string[]) => {
   const [sorteableProperty, sorteableValue] = sort;
 
   const sortParsed = {
-    [sorteableProperty]: String(sorteableValue).toLowerCase() as 'asc' | 'desc',
+    [sorteableProperty]: parseSorteableValue(sorteableValue),
   };
 
   return sortParsed;
@@ -79,7 +87,9 @@ export const parsePaginationToPrisma = <
     JSON.parse(paginateOptions.range ?? '[]') as [number, number] | [],
     JSON.parse(paginateOptions.sort ?? '[]') as [string, string],
     JSON.parse(paginateOptions.filter ?? '{}') as GenericFilter,
-    JSON.parse(paginateOptions.include ?? '{}') as GenericInclude,
+    (paginateOptions.include
+      ? JSON.parse(paginateOptions.include)
+      : undefined) as GenericInclude,
     (paginateOptions.cursor
       ? JSON.parse(paginateOptions.cursor)
       : undefined) as GenericCursor,

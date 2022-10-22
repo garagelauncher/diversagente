@@ -6,13 +6,17 @@ import { Category } from '@src/contracts/Category';
 type CategoriesListProps = {
   categories: Category[];
   isLoaded?: boolean;
+  selectedCategoryId: string | null;
   onSelectCategory: (categoryId: string | null) => void;
+  onPressSeeMore: () => void;
 };
 
 export const CategoriesList: FunctionComponent<CategoriesListProps> = ({
   categories,
   isLoaded = false,
+  selectedCategoryId,
   onSelectCategory,
+  onPressSeeMore,
 }) => {
   const skeletonsCategories = new Array(5).fill(0);
 
@@ -32,10 +36,11 @@ export const CategoriesList: FunctionComponent<CategoriesListProps> = ({
         isLoaded={isLoaded}
       >
         <Button
-          variant="outline"
+          variant={selectedCategoryId === null ? 'solid' : 'outline'}
           height={10}
           marginLeft={5}
           onPress={() => onSelectCategory(null)}
+          colorScheme={selectedCategoryId === null ? 'blue' : 'gray'}
         >
           Todos
         </Button>
@@ -56,9 +61,9 @@ export const CategoriesList: FunctionComponent<CategoriesListProps> = ({
       {isLoaded &&
         categories.map((category) => (
           <Button
-            colorScheme={'gray'}
+            colorScheme={selectedCategoryId === category.id ? 'blue' : 'gray'}
             fontWeight={600}
-            variant="outline"
+            variant={selectedCategoryId === category.id ? 'solid' : 'outline'}
             marginLeft={5}
             height={10}
             key={category.name}
@@ -68,7 +73,13 @@ export const CategoriesList: FunctionComponent<CategoriesListProps> = ({
           </Button>
         ))}
 
-      <Button variant="outline" height={10} marginLeft={5} marginRight={15}>
+      <Button
+        variant="outline"
+        height={10}
+        marginLeft={5}
+        marginRight={15}
+        onPress={onPressSeeMore}
+      >
         Ver mais
       </Button>
     </ScrollView>

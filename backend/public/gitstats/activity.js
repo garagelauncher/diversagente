@@ -1,4 +1,4 @@
-const recent_activity = {"config": {"noData": "No recent activity.", "padData": true, "showXAxis": true, "xDomain": [31, 0]}, "data": [{"key": "Commits", "color": "#9400D3", "values": [{"x": 31, "y": 0}, {"x": 30, "y": 0}, {"x": 29, "y": 0}, {"x": 28, "y": 8}, {"x": 27, "y": 5}, {"x": 26, "y": 0}, {"x": 25, "y": 14}, {"x": 24, "y": 27}, {"x": 23, "y": 4}, {"x": 22, "y": 1}, {"x": 21, "y": 54}, {"x": 20, "y": 91}, {"x": 19, "y": 52}, {"x": 18, "y": 69}, {"x": 17, "y": 0}, {"x": 16, "y": 7}, {"x": 15, "y": 28}, {"x": 14, "y": 0}, {"x": 13, "y": 0}, {"x": 12, "y": 0}, {"x": 11, "y": 0}, {"x": 10, "y": 0}, {"x": 9, "y": 3}, {"x": 8, "y": 0}, {"x": 7, "y": 0}, {"x": 6, "y": 15}, {"x": 5, "y": 65}, {"x": 4, "y": 74}, {"x": 3, "y": 9}, {"x": 2, "y": 0}, {"x": 1, "y": 32}, {"x": 0, "y": 80}]}]}
+const recent_activity = {"config": {"noData": "No recent activity.", "padData": true, "showXAxis": true, "xDomain": [31, 0]}, "data": [{"key": "Commits", "color": "#9400D3", "values": [{"x": 31, "y": 0}, {"x": 30, "y": 8}, {"x": 29, "y": 5}, {"x": 28, "y": 0}, {"x": 27, "y": 14}, {"x": 26, "y": 27}, {"x": 25, "y": 4}, {"x": 24, "y": 1}, {"x": 23, "y": 54}, {"x": 22, "y": 91}, {"x": 21, "y": 52}, {"x": 20, "y": 69}, {"x": 19, "y": 0}, {"x": 18, "y": 7}, {"x": 17, "y": 28}, {"x": 16, "y": 0}, {"x": 15, "y": 0}, {"x": 14, "y": 0}, {"x": 13, "y": 0}, {"x": 12, "y": 0}, {"x": 11, "y": 3}, {"x": 10, "y": 0}, {"x": 9, "y": 0}, {"x": 8, "y": 15}, {"x": 7, "y": 65}, {"x": 6, "y": 74}, {"x": 5, "y": 9}, {"x": 4, "y": 0}, {"x": 3, "y": 32}, {"x": 2, "y": 115}, {"x": 1, "y": 67}, {"x": 0, "y": 14}]}]}
 
 // Setup the chart
 nv.addGraph(function() {
@@ -9,7 +9,7 @@ nv.addGraph(function() {
 	return chart;
 });
 
-const commits_by_year = {"xAxis": {"rotateLabels": -90, "ticks": 1}, "yAxis": {"axisLabel": "Commits"}, "data": [{"key": "Commits", "color": "#9400D3", "values": [{"x": 2022, "y": 638}]}]}
+const commits_by_year = {"xAxis": {"rotateLabels": -90, "ticks": 1}, "yAxis": {"axisLabel": "Commits"}, "data": [{"key": "Commits", "color": "#9400D3", "values": [{"x": 2022, "y": 754}]}]}
 // Setup the chart
 nv.addGraph(function() {
 	var chart = nv.models.historicalBarChart().options({"padData": true, "showXAxis": true});
@@ -19,7 +19,7 @@ nv.addGraph(function() {
 	return chart;
 });
 
-const commits_by_month = {"yAxis": {"axisLabel": "Commits in 2022"}, "xAxis": {"rotateLabels": -90, "ticks": 12}, "data": [{"key": "Commits", "color": "#9400D3", "values": [{"x": 0, "y": 0}, {"x": 1, "y": 0}, {"x": 2, "y": 13}, {"x": 3, "y": 45}, {"x": 4, "y": 267}, {"x": 5, "y": 35}, {"x": 6, "y": 3}, {"x": 7, "y": 22}, {"x": 8, "y": 150}, {"x": 9, "y": 103}, {"x": 10, "y": 0}, {"x": 11, "y": 0}]}]}
+const commits_by_month = {"yAxis": {"axisLabel": "Commits in 2022"}, "xAxis": {"rotateLabels": -90, "ticks": 12}, "data": [{"key": "Commits", "color": "#9400D3", "values": [{"x": 0, "y": 0}, {"x": 1, "y": 0}, {"x": 2, "y": 13}, {"x": 3, "y": 45}, {"x": 4, "y": 267}, {"x": 5, "y": 35}, {"x": 6, "y": 3}, {"x": 7, "y": 22}, {"x": 8, "y": 150}, {"x": 9, "y": 219}, {"x": 10, "y": 0}, {"x": 11, "y": 0}]}]}
 // Setup the chart
 nv.addGraph(function() {
 	var chart = nv.models.historicalBarChart().options({"padData": true, "showXAxis": true});
@@ -49,7 +49,7 @@ nv.addGraph(function() {
       .datum([{
         key: "Cumulative Return",
         color: "#9400D3",
-        values: [{"label": "= 0s", "value": 625}, {"label": "< 1hour", "value": 7}, {"label": "< 1day", "value": 6}, {"label": "< 2days", "value": 0}, {"label": "< 1week", "value": 0}, {"label": "< 2weeks", "value": 0}, {"label": "< 1month", "value": 0}, {"label": "< 6 months", "value": 0}, {"label": "< 3 years", "value": 0}]
+        values: [{"label": "= 0s", "value": 737}, {"label": "< 1hour", "value": 8}, {"label": "< 1day", "value": 9}, {"label": "< 2days", "value": 0}, {"label": "< 1week", "value": 0}, {"label": "< 2weeks", "value": 0}, {"label": "< 1month", "value": 0}, {"label": "< 6 months", "value": 0}, {"label": "< 3 years", "value": 0}]
        }
   ]).call(chart);
 
