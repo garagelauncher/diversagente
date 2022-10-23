@@ -1,28 +1,20 @@
-import { AntDesign, Feather } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import {
   NavigationProp,
-  StackActions,
   useLinkTo,
   useNavigation,
 } from '@react-navigation/native';
 import {
   Avatar,
   Badge,
-  Box,
-  Center,
-  Divider,
   Flex,
   Heading,
   Icon,
   IconButton,
-  List,
-  Pressable,
-  SimpleGrid,
   Text,
 } from 'native-base';
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { FunctionComponent } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { StringSchema } from 'yup';
 
 import { getUsernameInitials } from '@src/utils/getUsernameInitials';
 
@@ -32,7 +24,7 @@ type HeaderProps = {
   avatar?: string | null;
   subtitle: string;
   badgeName?: string;
-  navigationToScreenName?: any;
+  navigationToScreenName?: string;
   navigationParams?: any;
 };
 
