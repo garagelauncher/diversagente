@@ -73,3 +73,20 @@ export const findPostById = async <GenericIncluded extends object = object>(
     throw error;
   }
 };
+
+export const deletePostById = async (postId: string) => {
+  try {
+    const response = await diversagenteBaseApi.delete<Post>(`/posts/${postId}`);
+
+    return response.data;
+  } catch (error: any) {
+    console.error('error when delete comment');
+    console.error(postId);
+
+    if (error.isAxiosError) {
+      console.error(error.response);
+    }
+
+    throw error;
+  }
+};
