@@ -228,7 +228,7 @@ model Notification {
 model Complaint {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
-  message String
+  message String?
   data    String?
   reason  String
 
