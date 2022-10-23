@@ -11,5 +11,5 @@ export class CreateSubcategoryDto {
   description?: string;
 
   @ApiProperty()
-  categoriesIds?: string[];
+  categoryId?: string[];
 }

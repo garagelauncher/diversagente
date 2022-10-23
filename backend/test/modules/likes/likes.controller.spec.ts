@@ -65,6 +65,7 @@ describe('LikesController', () => {
     it('should be able to delete a like', async () => {
       const deletedLike = await likesController.remove(
         'pipipipipi-00000-popopopo-000000',
+        ''
       );
       expect(deletedLike).toEqual(likeMock);
     });

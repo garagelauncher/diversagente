@@ -66,6 +66,7 @@ describe('CommentsController', () => {
     it('should be able to delete a comment', async () => {
       const deletedComment = await commentsController.remove(
         'aaaaa',
+        ''
       );
       expect(deletedComment).toEqual(commentMock);
     });
