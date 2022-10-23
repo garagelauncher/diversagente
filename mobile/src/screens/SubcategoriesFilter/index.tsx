@@ -180,6 +180,7 @@ export const SubcategoryFilter = () => {
                           borderColor={'darkBlue.600'}
                           _text={{ color: 'darkBlue.600' }}
                           height={12}
+                          onPress={handleNavigationToSubcategoryCreation}
                         >
                           Criar nova subcategoria
                         </Button>
