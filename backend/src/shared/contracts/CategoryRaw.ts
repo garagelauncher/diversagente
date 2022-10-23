@@ -2,10 +2,6 @@ interface ID {
   $oid: string;
 }
 
-interface ownerId {
-  $oid: string;
-}
-
 interface CategoryName {
   type: string;
 }
@@ -16,8 +12,6 @@ interface CategoryRawDate {
 interface description {
   type?: string;
 }
-
-interface subcategories {}
 
 export interface CategoryRaw {
   _id: ID;

@@ -1,5 +1,3 @@
-import { LikeRaw } from 'src/shared/contracts/LikeRaw';
-
 export const likeMock = {
   id: 'pipipipipi-00000-popopopo-000000',
   ownerId: '',

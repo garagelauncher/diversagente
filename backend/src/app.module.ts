@@ -13,6 +13,8 @@ import { LikesModule } from './modules/likes/likes.module';
 import { PostsModule } from './modules/posts/posts.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { ReviewsModule } from './modules/reviews/reviews.module';
+import { PushNotificationsService } from './shared/services/push-notifications/push-notifications.service';
+import { DevicesModule } from './modules/devices/devices.module';
 
 @Module({
   imports: [
@@ -29,8 +31,9 @@ import { ReviewsModule } from './modules/reviews/reviews.module';
     PostsModule,
     CommentsModule,
     ReviewsModule,
+    DevicesModule,
   ],
   controllers: [AppController],
-  providers: [AppService, CloudinaryProvider],
+  providers: [AppService, CloudinaryProvider, PushNotificationsService],
 })
 export class AppModule {}

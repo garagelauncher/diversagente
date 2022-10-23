@@ -3,6 +3,7 @@ import { LikesService } from './../../../src/modules/likes/likes.service';
 import { PrismaService } from './../../../src/shared/database/prisma.service';
 import { likeMock } from 'test/__mocks__/like';
 import { createPrismaProviderMock } from './../../__mocks__/prisma';
+import { pushNotificationServiceMock } from 'test/__mocks__/push-notifications-service.mock';
 
 describe('LikesService', () => {
   let likeService: LikesService;
@@ -10,7 +11,11 @@ describe('LikesService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [LikesService, createPrismaProviderMock()],
+      providers: [
+        LikesService,
+        createPrismaProviderMock(),
+        pushNotificationServiceMock,
+      ],
     }).compile();
 
     likeService = module.get<LikesService>(LikesService);
@@ -61,9 +66,10 @@ describe('LikesService', () => {
   });
 
   it('should be able to delete a like from a post', async () => {
-    const deletedLike = await likeService.remove(
-      'pipipipipi-00000-popopopo-000000',
-    );
+    const deletedLike = await likeService.remove({
+      postId: 'pipipipipi-00000-popopopo-000000',
+      id: 'pipipipipi-00000-popopopo-000000',
+    });
     expect(deletedLike).toEqual(likeMock);
   });
 

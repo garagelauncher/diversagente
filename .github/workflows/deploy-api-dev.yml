@@ -22,6 +22,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
+          cache: "npm"
 
       - name: Install dependencies
         run: npm install
@@ -32,7 +33,15 @@ jobs:
       - name: Run tests
         run: npm test
 
-      - name: Sucesso no deploy - Discord
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME_DEV }}
+          heroku_email: ${{ secrets.HEROKU_APP_EMAIL }}
+          appdir: backend
+
+      - name: Success deploy - Discord
         if: success()
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
@@ -42,7 +51,7 @@ jobs:
         with:
           args: "@everyone ${{ github.actor }} Fez um deploy com SUCESSO do {{ EVENT_PAYLOAD.repository.full_name }} em DESENVOLVIMENTO."
 
-      - name: Falha no deploy - Discord
+      - name: Failed deploy - Discord
         if: failure()
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
@@ -51,11 +60,3 @@ jobs:
         uses: Ilshidur/action-discord@master
         with:
           args: "@everyone ${{ github.actor }} Tentou fazer um deploy com FALHA do {{ EVENT_PAYLOAD.repository.full_name }} em DESENVOLVIMENTO."
-
-      - name: Deploy to Heroku
-        uses: akhileshns/heroku-deploy@v3.12.12
-        with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ secrets.HEROKU_APP_NAME_DEV }}
-          heroku_email: ${{ secrets.HEROKU_APP_EMAIL }}
-          appdir: backend

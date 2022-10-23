@@ -43,6 +43,7 @@
     "buffer-to-stream": "^1.0.0",
     "cloudinary": "^1.29.1",
     "dayjs": "^1.11.2",
+    "expo-server-sdk": "^3.7.0",
     "helmet": "^5.1.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",

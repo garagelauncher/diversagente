@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/shared/database/prisma.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
@@ -45,7 +45,11 @@ export class ReviewsService {
         owner: true,
       },
     });
-    console.debug(review);
+
+    if (!review) {
+      throw new NotFoundException(`Review ${id} was not found`);
+    }
+
     return review;
   }
 
@@ -59,9 +63,11 @@ export class ReviewsService {
   }
 
   async remove(id: string) {
-    return await this.prisma.review.delete({
-      where: {
-        id,
+    return await this.prisma.review.update({
+      where: { id },
+      data: {
+        deactivatedAt: new Date().toISOString(),
+        isActive: false,
       },
     });
   }

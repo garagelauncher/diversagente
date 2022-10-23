@@ -24,6 +24,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
+          cache: "npm"
 
       - name: Executando testes...
         uses: ArtiomTr/jest-coverage-report-action@v2
@@ -31,7 +32,7 @@ jobs:
           working-directory: backend
           github-token: ${{ github.token }}
 
-      - name: Sucesso - Discord
+      - name: Success - Discord
         uses: Ilshidur/action-discord@master
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}

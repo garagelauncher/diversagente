@@ -42,6 +42,7 @@ describe('PostsService', () => {
     it('should be able to find one post', async () => {
       const foundPost = await postsService.findOne(
         'hjudasfhasdu-18473-mnksadfjs-1924903',
+        {},
       );
       expect(foundPost).toEqual(postMock);
     });
@@ -64,7 +65,7 @@ describe('PostsService', () => {
     });
 
     it('should be able to findAll posts', async () => {
-      const posts = await postsService.findAll();
+      const posts = await postsService.findAll({});
       expect(posts).toEqual([postMock]);
     });
   });

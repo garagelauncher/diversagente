@@ -24,39 +24,42 @@ type Preference {
 }
 
 model User {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  email    String @unique
-  username String @unique
-
-  name String
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  email    String  @unique
+  username String  @unique
+  name     String
+  isActive Boolean @default(value: true)
 
   birthdate           DateTime?
   biograph            String?
   picture             String?
+  deactivationReason  String?
   preferences         Preference?
   lovelyCategoriesIds String[]    @db.ObjectId
 
-
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deactivatedAt DateTime?
 
   category Category? @relation(fields: [lovelyCategoriesIds], references: [id])
 
-  Location Location[]
-  Review   Review[]
-  Post     Post[]
-  Like     Like[]
-  Comment  Comment[]
+  Location     Location[]
+  Review       Review[]
+  Post         Post[]
+  Like         Like[]
+  Comment      Comment[]
+  Device       Device[]
+  Notification Notification[]
 
   @@map("users")
 }
 
 model Category {
-  id    String  @id @default(auto()) @map("_id") @db.ObjectId
-  name  String? @unique
-  title String?
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String? @unique
+  title       String?
+  icon        String?
+  description String?
 
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
@@ -64,18 +67,23 @@ model Category {
   Subcategory Subcategory[]
   Location    Location[]
   User        User[]
+  Post        Post[]
 }
 
 model Subcategory {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  name  String @unique
-  title String
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String  @unique
+  title       String
+  icon        String?
+  description String?
 
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
 
   category      Category? @relation(fields: [categoriesIds], references: [id])
   categoriesIds String[]  @db.ObjectId
+
+  Post Post[]
 }
 
 model Like {
@@ -91,11 +99,13 @@ model Like {
 }
 
 model Comment {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  text String
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  text     String
+  isActive Boolean @default(true)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deactivatedAt DateTime?
 
   ownerId String  @db.ObjectId
   postId  String  @db.ObjectId
@@ -109,30 +119,38 @@ model Comment {
 }
 
 model Post {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  title   String
-  content String
-  images  String[]
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  title    String
+  content  String
+  isActive Boolean @default(true)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  images String[]
 
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deactivatedAt DateTime?
 
-  ownerId String @db.ObjectId
+  ownerId       String  @db.ObjectId
+  categoryId    String? @db.ObjectId
+  subcategoryId String? @db.ObjectId
 
-  owner User @relation(fields: [ownerId], references: [id])
+  owner       User         @relation(fields: [ownerId], references: [id])
+  category    Category?    @relation(fields: [categoryId], references: [id])
+  subcategory Subcategory? @relation(fields: [subcategoryId], references: [id])
 
-  Like    Like[]
-  Comment Comment[]
+  likes    Like[]
+  comments Comment[]
 }
 
 model Review {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  text  String
-  stars Int
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  text     String
+  stars    Int
+  isActive Boolean @default(true)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deactivatedAt DateTime?
 
   ownerId    String @db.ObjectId
   locationId String @db.ObjectId
@@ -155,7 +173,6 @@ model Location {
   address     String?
   description String?
 
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -170,4 +187,33 @@ model Location {
   Review Review[]
 
   @@map("locations")
+}
+
+model Device {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  token    String
+  platform String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ownerId String @db.ObjectId
+
+  owner User @relation(fields: [ownerId], references: [id])
+}
+
+model Notification {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  title   String
+  message String
+  data    String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ownerId String @db.ObjectId
+
+  owner User @relation(fields: [ownerId], references: [id])
 }

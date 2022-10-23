@@ -1,8 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import * as AuthSession from 'expo-auth-session';
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
+import { useMutation } from 'react-query';
 
 import { Oauth2 } from '@src/configs';
 import {
@@ -10,6 +11,8 @@ import {
   GoogleUserData,
   UserData,
 } from '@src/contexts/AuthContext';
+import { diversaGenteServices } from '@src/services/diversaGente';
+import { getPushNotificationToken } from '@src/services/notifications';
 
 type AuthProvidersProps = {
   children: ReactNode;
@@ -23,9 +26,33 @@ type AuthResponse = {
 };
 
 export const AuthProvider = ({ children }: AuthProvidersProps) => {
+  const mutationCreateDevice = useMutation(diversaGenteServices.createDevice, {
+    onSuccess: () => {
+      console.log('Device created');
+    },
+  });
+
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState<UserData | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const storeUserDevice = useCallback(
+    async (ownerId: string) => {
+      const lastStoredToken = await AsyncStorage.getItem(
+        'diversagente@deviceToken',
+      );
+      const actualToken = await getPushNotificationToken();
+      const token = actualToken ?? lastStoredToken;
+      console.log('show device token', token);
+
+      if (token) {
+        await AsyncStorage.setItem('diversagente@deviceToken', token);
+        await mutationCreateDevice.mutateAsync({ ownerId, token });
+        console.log('Device stored');
+      }
+    },
+    [mutationCreateDevice],
+  );
 
   async function signInWithGoogle() {
     setIsLoading(true);
@@ -53,8 +80,12 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
         const response = await axios.get<GoogleUserData>(
           `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${params.access_token}`,
         );
+
         console.log('sucesss');
         console.log(JSON.stringify(response.data));
+
+        await diversaGenteServices.setAuthToken(params.access_token);
+
         const googleUserData = response.data;
 
         // const responseGet = await axios.get<UserData>(
@@ -78,6 +109,7 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
           email: googleUserData.email,
           name: googleUserData.name,
           username: googleUserData.email,
+          picture: googleUserData.picture ?? null,
         });
 
         console.debug(responseCreateUser);
@@ -136,6 +168,13 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
 
     getUser();
   }, []);
+
+  useEffect(() => {
+    if (isLoggedIn && user?.id) {
+      storeUserDevice(user.id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoggedIn]);
 
   return (
     <AuthContext.Provider

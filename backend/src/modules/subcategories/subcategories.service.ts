@@ -1,5 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/shared/database/prisma.service';
+import {
+  PaginateOptions,
+  parsePaginationToPrisma,
+} from 'src/shared/utils/parsePaginationToPrisma';
 import { CreateSubcategoryDto } from './dto/create-subcategory.dto';
 import { UpdateSubcategoryDto } from './dto/update-subcategory.dto';
 
@@ -7,12 +12,46 @@ import { UpdateSubcategoryDto } from './dto/update-subcategory.dto';
 export class SubcategoriesService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(createSubcategoryDto: CreateSubcategoryDto) {
-    return this.prisma.subcategory.create({ data: createSubcategoryDto });
+  private async getIconFromSubcategory(subcategoryDto: UpdateSubcategoryDto) {
+    const categoriesIds = subcategoryDto.categoriesIds;
+    const hasCategory =
+      Array.isArray(categoriesIds) && categoriesIds.length > 0;
+
+    if (hasCategory) {
+      const category = await this.prisma.category.findUnique({
+        where: { id: categoriesIds[0] },
+      });
+
+      if (!category) {
+        throw new NotFoundException(`Category ${categoriesIds[0]} not found`);
+      }
+
+      return category.icon;
+    }
+
+    return null;
   }
 
-  findAll() {
-    return this.prisma.subcategory.findMany({});
+  async create(createSubcategoryDto: CreateSubcategoryDto) {
+    Object.assign(createSubcategoryDto, {
+      icon: await this.getIconFromSubcategory(createSubcategoryDto),
+    });
+
+    return await this.prisma.subcategory.create({ data: createSubcategoryDto });
+  }
+
+  async findAll(options: PaginateOptions) {
+    const { skip, take, where, orderBy, include, cursor } =
+      parsePaginationToPrisma<Prisma.SubcategoryWhereInput>(options);
+
+    return await this.prisma.subcategory.findMany({
+      skip,
+      take,
+      where,
+      orderBy,
+      cursor,
+      include,
+    });
   }
 
   findOne(id: string) {
@@ -22,8 +61,12 @@ export class SubcategoriesService {
     });
   }
 
-  update(id: string, updateSubcategoryDto: UpdateSubcategoryDto) {
-    return this.prisma.subcategory.update({
+  async update(id: string, updateSubcategoryDto: UpdateSubcategoryDto) {
+    Object.assign(updateSubcategoryDto, {
+      icon: await this.getIconFromSubcategory(updateSubcategoryDto),
+    });
+
+    return await this.prisma.subcategory.update({
       where: { id },
       data: updateSubcategoryDto,
     });

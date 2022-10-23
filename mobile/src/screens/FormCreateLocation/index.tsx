@@ -1,4 +1,3 @@
-import { Feather } from '@expo/vector-icons';
 import {
   NavigationProp,
   RouteProp,
@@ -18,13 +17,13 @@ import {
   VStack,
 } from 'native-base';
 import { useCallback, useEffect, useState } from 'react';
-import { Alert, Dimensions, Linking, StyleSheet } from 'react-native';
-import { RectButton, TouchableOpacity } from 'react-native-gesture-handler';
-import MapView, { LatLng, MapEvent, Marker, Region } from 'react-native-maps';
+import { Alert, Dimensions, StyleSheet } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import MapView, { Marker, Region } from 'react-native-maps';
 
 import { baseCoordinates } from '@src/configs';
 import { useAuth } from '@src/hooks/useAuth';
-import { StackLocationNavigatorParamList } from '@src/routes/locationStack.routes';
+import { StackLocationNavigatorParamList } from '@src/routes/stacks/locationStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
 import { theme } from '@src/styles/theme';
 
@@ -230,9 +229,7 @@ export const FormCreateLocation = () => {
           <Button
             style={{
               ...styles.createBottom,
-              backgroundColor: shouldNotActiveForm
-                ? 'gray'
-                : theme.colors.navyPrimary,
+              backgroundColor: shouldNotActiveForm ? 'gray' : 'navy',
               marginTop: 20,
               marginBottom: 40,
             }}
@@ -260,7 +257,7 @@ const styles = StyleSheet.create({
   },
 
   nextButton: {
-    backgroundColor: theme.colors.orangePrimary,
+    backgroundColor: 'orange',
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
@@ -273,7 +270,7 @@ const styles = StyleSheet.create({
   },
 
   topButton: {
-    backgroundColor: theme.colors.pastelPrimary,
+    backgroundColor: theme.colors.infoBoxColor,
     justifyContent: 'center',
     alignItems: 'center',
     height: 56,
@@ -285,7 +282,7 @@ const styles = StyleSheet.create({
   },
 
   createBottom: {
-    backgroundColor: theme.colors.orangePrimary,
+    backgroundColor: 'orange',
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
