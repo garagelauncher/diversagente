@@ -18,7 +18,8 @@
     "local": {
       "env": {},
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",
+        "useNextNotificationsApi": true
       },
       "ios": {
         "simulator": true
