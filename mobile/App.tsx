@@ -49,6 +49,7 @@ export default function App() {
             PostDetails: 'posts/:postId',
             Comments: 'posts/:postId/comments',
             Likes: 'posts/:postId/likes',
+            SelectComplaint: 'complaints/:resource/:resourceId/',
           },
         },
         ProfileStack: {
