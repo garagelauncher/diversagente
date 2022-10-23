@@ -1,12 +1,33 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 import { AntDesign, SimpleLineIcons, FontAwesome } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
+import { isLoading } from 'expo-font';
 import * as ExpoLocation from 'expo-location';
-import { Avatar, Box, Button, Heading, Icon, Input, VStack } from 'native-base';
-import { useEffect, useState } from 'react';
-import { Alert } from 'react-native';
+import {
+  Avatar,
+  Box,
+  Button,
+  Heading,
+  Icon,
+  Input,
+  VStack,
+  Flex,
+  SimpleGrid,
+  Text,
+  Divider,
+  ScrollView,
+  Skeleton,
+  Spinner,
+} from 'native-base';
+import React, { useEffect, useState } from 'react';
+import { Alert, FlatList, TouchableOpacity } from 'react-native';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
+import { LoadingFallback } from '@src/components/LoadingFallback';
+import { Post, UserHasInteracted } from '@src/components/Post';
+import { PER_PAGE_ITEMS, userIdHelper } from '@src/configs';
+import { usePosts } from '@src/hooks/queries/usePosts';
 import { useAuth } from '@src/hooks/useAuth';
 
 export const Profile = () => {
@@ -21,6 +42,7 @@ export const Profile = () => {
   const [location, setLocation] = useState<ExpoLocation.LocationObject>(
     null as unknown as ExpoLocation.LocationObject,
   );
+  const statusBarHeight = getStatusBarHeight();
 
   useEffect(() => {
     setBio(user?.bio ?? '');
@@ -76,134 +98,201 @@ export const Profile = () => {
     setIsEditMode(!isEditMode);
   }
 
-  const statusBarHeight = getStatusBarHeight();
+  const handleLoadMorePosts = () => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  };
+
+  const handlePullPostListToRefresh = () => {
+    refetch();
+  };
+
+  const verifyDateSinceMember = () => {
+    const currentISODate = new Date().toISOString();
+    const creationISODate = new Date(user?.createdAt?.toLocaleString() ?? '');
+
+    const dayUnitInMilliseconds = 1000 * 60 * 60 * 24;
+    const monthUnitInMilliseconds = dayUnitInMilliseconds * 30;
+    const yearsUnitInMilliseconds = monthUnitInMilliseconds * 12;
+
+    const diffInMilliseconds =
+      new Date(currentISODate).getTime() - new Date(creationISODate).getTime();
+
+    const diffInDays = Math.round(diffInMilliseconds / dayUnitInMilliseconds);
+    const diffInMonths = Math.round(
+      diffInMilliseconds / monthUnitInMilliseconds,
+    );
+    const diffInYears = Math.round(
+      diffInMilliseconds / yearsUnitInMilliseconds,
+    );
+
+    console.log('currentISODate', currentISODate);
+    console.log('creationISODate', creationISODate);
+    console.log('diffInDays', diffInDays);
+    console.log('diffInMonths', diffInMonths);
+    console.log('monthUnitInMilliseconds', diffInMonths);
+    console.log('diffInYears', diffInYears);
+
+    return diffInDays;
+  };
+
+  const {
+    data,
+    hasNextPage,
+    fetchNextPage,
+    isLoading,
+    isFetchingNextPage,
+    refetch,
+    isRefetching,
+  } = usePosts<UserHasInteracted>({
+    sort: ['createdAt', 'DESC'],
+    range: [0, PER_PAGE_ITEMS],
+    filter: { ownerId: user?.id ?? userIdHelper },
+    include: {
+      likes: {
+        select: { id: true },
+        where: { ownerId: user?.id ?? userIdHelper },
+      },
+      comments: {
+        select: { id: true },
+        where: { ownerId: user?.id ?? userIdHelper },
+      },
+    },
+  });
 
   return (
-    <Box flex={1} justifyContent="center" alignItems="center">
-      <Box
-        width="100%"
-        height={getStatusBarHeight() + 100}
-        backgroundColor="blue.200"
-        marginTop={-statusBarHeight}
-      ></Box>
-      <Avatar
-        alignSelf="center"
-        size="xl"
-        source={{
-          uri: picture,
-        }}
-        marginTop={-50}
-      >
-        {user?.name}
-      </Avatar>
+    <>
+      <ScrollView>
+        <Flex>
+          <Flex alignItems="center" mt={statusBarHeight + 30}>
+            <Flex flexDir={'row'} justifyContent={'flex-end'} w={'90%'}>
+              <TouchableOpacity>
+                <Ionicons name="settings-outline" size={32} color="black" />
+              </TouchableOpacity>
+            </Flex>
+            <Flex flexDir={'row'}>
+              <Box px={2}>
+                <Avatar
+                  alignSelf="center"
+                  size="xl"
+                  source={{
+                    uri: picture,
+                  }}
+                />
+              </Box>
+              <Box px={4} mt={2} w={'70%'}>
+                <Heading>{user?.name}</Heading>
+                <Text>
+                  {user?.bio}Lorem Ipsum is simply dummy text of the printing
+                  and typesetting industry. Lorem Ipsum has been the industrys
+                  standard dummy text ever since the 1500s,
+                </Text>
+              </Box>
+            </Flex>
 
-      <VStack space={4} width="100%" alignItems="center">
-        <Heading>{user?.name}</Heading>
+            <Box
+              w={'85%'}
+              mt={10}
+              mb={10}
+              h={24}
+              borderRadius={10}
+              bgColor={'darkBlue.600'}
+              padding={4}
+            >
+              <SimpleGrid ml={3} columns={3} space={4} w={'90%'}>
+                <Flex flexDir={'column'} alignItems={'center'}>
+                  <Text
+                    opacity={1}
+                    color={'white'}
+                    fontWeight={'bold'}
+                    fontSize={18}
+                  >
+                    1548
+                  </Text>
+                  <Text
+                    color={'white'}
+                    fontWeight={'bold'}
+                    fontSize={14}
+                    mt={2}
+                  >
+                    postagens feitas
+                  </Text>
+                </Flex>
+                <Divider
+                  bg="white"
+                  thickness="2"
+                  mx="2"
+                  orientation="vertical"
+                />
+                <Flex flexDir={'column'} alignItems={'center'}>
+                  <Text
+                    color={'white'}
+                    fontWeight={'bold'}
+                    fontSize={18}
+                    opacity={1}
+                    zIndex={1}
+                  >
+                    {verifyDateSinceMember()}
+                  </Text>
+                  <Text
+                    mt={2}
+                    color={'white'}
+                    fontWeight={'bold'}
+                    fontSize={14}
+                  >
+                    dias como membro
+                  </Text>
+                </Flex>
+              </SimpleGrid>
+            </Box>
+          </Flex>
+        </Flex>
 
-        {!isEditMode && (
-          <Button
-            backgroundColor="blue.500"
-            w={{
-              base: '75%',
-              md: '25%',
-            }}
-            onPress={toogleEditMode}
+        <Flex mb={-80}>
+          <LoadingFallback
+            isLoading={isLoading}
+            fallback={
+              <VStack space={6}>
+                <Skeleton width="100%" height={200} />
+                <Skeleton width="100%" height={200} />
+                <Skeleton width="100%" height={200} />
+              </VStack>
+            }
           >
-            Editar perfil
-          </Button>
-        )}
-
-        <Input
-          w={{
-            base: '75%',
-            md: '25%',
-          }}
-          InputLeftElement={
-            <Icon
-              as={<AntDesign name="user" size={24} color="muted.400" />}
-              size={5}
-              ml="2"
-              color="muted.400"
+            <FlatList
+              data={data?.pages.map((page) => page.results).flat()}
+              renderItem={({ item }) => (
+                <Box marginBottom={4}>
+                  <Post post={item} isPreview />
+                </Box>
+              )}
+              keyExtractor={(item) => item.id}
+              contentContainerStyle={{ paddingBottom: 350 }}
+              onEndReached={handleLoadMorePosts}
+              onEndReachedThreshold={0.85}
+              refreshing={isRefetching && !isFetchingNextPage}
+              onRefresh={handlePullPostListToRefresh}
+              ListFooterComponent={
+                <LoadingFallback
+                  fallback={<Spinner color="orange.500" size="lg" />}
+                  isLoading={isFetchingNextPage}
+                >
+                  <Flex
+                    width="100%"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <Text color="gray.500">
+                      Não há mais postagens para esse usuário.
+                    </Text>
+                  </Flex>
+                </LoadingFallback>
+              }
             />
-          }
-          placeholder={'Name'}
-          isDisabled={!isEditMode}
-          value={name}
-          onChangeText={setName}
-        />
-        <Input
-          w={{
-            base: '75%',
-            md: '25%',
-          }}
-          InputLeftElement={
-            <Icon
-              as={<SimpleLineIcons name="pencil" size={24} color="muted.400" />}
-              size={5}
-              ml="2"
-              color="muted.400"
-            />
-          }
-          placeholder={'Bio'}
-          isDisabled={!isEditMode}
-          value={bio}
-          onChangeText={setBio}
-        />
-        <Input
-          w={{
-            base: '75%',
-            md: '25%',
-          }}
-          InputLeftElement={
-            <Icon
-              as={<FontAwesome name="at" size={24} color="muted.400" />}
-              size={5}
-              ml="2"
-              color="muted.400"
-            />
-          }
-          placeholder={'Username'}
-          isDisabled={!isEditMode}
-          value={username}
-          onChangeText={setUsername}
-        />
-
-        {isEditMode && (
-          <Button
-            backgroundColor="blue.500"
-            w={{
-              base: '75%',
-              md: '25%',
-            }}
-            onPress={handleUpdateUser}
-          >
-            Salvar dados
-          </Button>
-        )}
-      </VStack>
-      <Button
-        w={{
-          base: '75%',
-          md: '25%',
-        }}
-        marginTop={10}
-        onPress={handleLogout}
-        colorScheme="gray"
-      >
-        Sair
-      </Button>
-      {/* <Button
-        w={{
-          base: '75%',
-          md: '25%',
-        }}
-        marginTop={10}
-        onPress={askUserToUpdateLocation}
-        colorScheme={location ? 'green' : 'gray'}
-      >
-        Localizar
-      </Button>
-      {JSON.stringify(location)} */}
-    </Box>
+          </LoadingFallback>
+        </Flex>
+      </ScrollView>
+    </>
   );
 };
