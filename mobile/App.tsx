@@ -44,7 +44,7 @@ export default function App() {
       screens: {
         ForumStack: {
           screens: {
-            Home: 'home',
+            Forum: 'home',
             FormCreatePost: 'create-post',
             PostDetails: 'posts/:postId',
             Comments: 'posts/:postId/comments',

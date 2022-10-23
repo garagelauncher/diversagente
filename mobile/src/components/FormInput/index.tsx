@@ -21,8 +21,6 @@ export function FormInput({
   error,
   ...rest
 }: FormInputProps) {
-  console.log('error in input', error);
-
   return (
     <SafeAreaView>
       <VStack>

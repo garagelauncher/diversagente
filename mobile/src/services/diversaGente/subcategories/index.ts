@@ -55,12 +55,12 @@ export const findSubcategoryById = async <
   }
 };
 
-
-export const createSubcategory = async (
-  data: SubcategoryForm,
-) => {
+export const createSubcategory = async (data: SubcategoryForm) => {
   try {
-    const response = await diversagenteBaseApi.post<Subcategory>(`/subcategories`, data);
+    const response = await diversagenteBaseApi.post<Subcategory>(
+      `/subcategories`,
+      data,
+    );
 
     const subcategory = response.data;
     console.info('SUBCATEGORY CREATION!', response.data);

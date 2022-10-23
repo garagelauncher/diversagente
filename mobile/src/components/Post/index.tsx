@@ -155,7 +155,7 @@ export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
           </Flex>
         </Flex>
         <Flex bg="red">
-          <PostMoreActions isOwner={isOwner} />
+          <PostMoreActions isOwner={isOwner} postId={post.id} />
         </Flex>
       </Flex>
 
