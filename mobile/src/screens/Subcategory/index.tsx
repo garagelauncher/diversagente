@@ -101,8 +101,6 @@ export const Subcategory = () => {
 
   const [isReadingModeActive, setIsReadingModeActive] = useState(false);
 
-  const skeletonsPosts = new Array(2).fill(0);
-
   const navigation = useNavigation<SubcategoriesNavigationProps>();
 
   return (
@@ -114,7 +112,7 @@ export const Subcategory = () => {
       >
         {!isReadingModeActive && (
           <>
-            <SubcategoryHeader />
+            <SubcategoryHeader categoryId={categoryId} />
           </>
         )}
 
@@ -157,7 +155,6 @@ export const Subcategory = () => {
           isLoading={isLoading}
           fallback={
             <VStack space={4}>
-              <Skeleton width="100%" height={200} />
               <Skeleton width="100%" height={200} />
               <Skeleton width="100%" height={200} />
             </VStack>

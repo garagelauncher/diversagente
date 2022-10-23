@@ -15,6 +15,7 @@ import { CommentsModule } from './modules/comments/comments.module';
 import { ReviewsModule } from './modules/reviews/reviews.module';
 import { PushNotificationsService } from './shared/services/push-notifications/push-notifications.service';
 import { DevicesModule } from './modules/devices/devices.module';
+import { ComplaintsModule } from './modules/complaints/complaints.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { DevicesModule } from './modules/devices/devices.module';
     CommentsModule,
     ReviewsModule,
     DevicesModule,
+    ComplaintsModule,
   ],
   controllers: [AppController],
   providers: [AppService, CloudinaryProvider, PushNotificationsService],
