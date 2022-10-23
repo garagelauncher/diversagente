@@ -2,6 +2,10 @@ interface ID {
   $oid: string;
 }
 
+interface ownerId {
+  $oid: string;
+}
+
 interface CategoryName {
   type: string;
 }
