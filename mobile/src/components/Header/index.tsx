@@ -1,4 +1,4 @@
-import { AntDesign, Feather } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import {
   NavigationProp,
   useLinkTo,
@@ -7,21 +7,14 @@ import {
 import {
   Avatar,
   Badge,
-  Box,
-  Center,
-  Divider,
   Flex,
   Heading,
   Icon,
   IconButton,
-  List,
-  Pressable,
-  SimpleGrid,
   Text,
 } from 'native-base';
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { FunctionComponent } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { StringSchema } from 'yup';
 
 import { getUsernameInitials } from '@src/utils/getUsernameInitials';
 
@@ -31,6 +24,8 @@ type HeaderProps = {
   avatar?: string | null;
   subtitle: string;
   badgeName?: string;
+  navigationToScreenName?: string;
+  navigationParams?: any;
 };
 
 type HeaderNavigationProps = NavigationProp<any>;
@@ -41,6 +36,8 @@ export const Header: FunctionComponent<HeaderProps> = ({
   subtitle,
   avatar,
   badgeName,
+  navigationToScreenName,
+  navigationParams,
 }) => {
   const userInitials = username ? getUsernameInitials(username) : null;
   const avatarUri = String(avatar);
@@ -50,6 +47,10 @@ export const Header: FunctionComponent<HeaderProps> = ({
   const navigation = useNavigation<HeaderNavigationProps>();
 
   const handleNavigateBack = () => {
+    if (navigationToScreenName) {
+      return navigation.navigate(navigationToScreenName, navigationParams);
+    }
+
     navigation.goBack();
   };
 
