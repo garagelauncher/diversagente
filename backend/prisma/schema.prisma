@@ -172,7 +172,8 @@ model Location {
   id    String @id @default(auto()) @map("_id") @db.ObjectId
   title String
 
-  photos String[]
+  photos   String[]
+  isActive Boolean  @default(true)
 
   address     String?
   description String?
@@ -188,7 +189,8 @@ model Location {
   category Category? @relation(fields: [categoriesIds], references: [id])
   owner    User?     @relation(fields: [ownerId], references: [id])
 
-  Review Review[]
+  Review            Review[]
+  LocationComplaint LocationComplaint[]
 
   @@map("locations")
 }
@@ -197,6 +199,7 @@ model Device {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
   token    String
+  isActive Boolean @default(true)
   platform String?
 
   createdAt DateTime @default(now())
@@ -234,10 +237,11 @@ model Complaint {
 
   ownerId String @db.ObjectId
 
-  owner            User               @relation(fields: [ownerId], references: [id])
-  PostComplaint    PostComplaint[]
-  CommentComplaint CommentComplaint[]
-  ReviewComplaint  ReviewComplaint[]
+  owner             User                @relation(fields: [ownerId], references: [id])
+  PostComplaint     PostComplaint[]
+  CommentComplaint  CommentComplaint[]
+  ReviewComplaint   ReviewComplaint[]
+  LocationComplaint LocationComplaint[]
 }
 
 model PostComplaint {
@@ -268,4 +272,14 @@ model ReviewComplaint {
 
   complaint Complaint @relation(fields: [complaintId], references: [id])
   review    Review    @relation(fields: [reviewId], references: [id])
+}
+
+model LocationComplaint {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  complaintId String @db.ObjectId
+  locationId  String @db.ObjectId
+
+  complaint Complaint @relation(fields: [complaintId], references: [id])
+  location  Location  @relation(fields: [locationId], references: [id])
 }
