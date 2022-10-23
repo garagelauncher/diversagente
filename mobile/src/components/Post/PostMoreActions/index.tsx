@@ -17,6 +17,7 @@ import { PostActionMenuItem } from './PostActionMenuItem';
 
 import { ConditionallyRender } from '@src/components/ConditionallyRender';
 import { LoadingFallback } from '@src/components/LoadingFallback';
+import { ModalConfirmAction } from '@src/components/ModalConfirmAction';
 import { diversaGenteServices } from '@src/services/diversaGente';
 import { queryClient } from '@src/services/queryClient';
 
@@ -31,6 +32,10 @@ export const PostMoreActions: FunctionComponent<PostMoreActionsProps> = ({
 }) => {
   const clipboard = useClipboard();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [
+    isConfirmationComplaintModalVisible,
+    setIsConfirmationComplaintModalVisible,
+  ] = useState(false);
   const linkTo = useLinkTo();
   const toast = useToast();
   const deletePostMutation = useMutation(diversaGenteServices.deletePostById, {
@@ -55,7 +60,7 @@ export const PostMoreActions: FunctionComponent<PostMoreActionsProps> = ({
     },
   });
 
-  const handleLikeDontLike = () => {
+  const handleDontLike = () => {
     toast.show({
       description:
         'Obrigado. O diversagente usará isso para aprimorar sua timeline.',
@@ -80,6 +85,10 @@ export const PostMoreActions: FunctionComponent<PostMoreActionsProps> = ({
       await deletePostMutation.mutateAsync(postId);
     }
   }, [deletePostMutation, isOwner, postId]);
+
+  const handleOpenComplaint = () => {
+    linkTo(`/complaints/post/${postId}`);
+  };
 
   return (
     <Box w="100%" alignItems="center">
@@ -109,7 +118,7 @@ export const PostMoreActions: FunctionComponent<PostMoreActionsProps> = ({
             <PostActionMenuItem
               icon="frown"
               label="Não tenho interesse"
-              onPress={handleLikeDontLike}
+              onPress={handleDontLike}
             />
           }
           falseComponent={<></>}
@@ -148,13 +157,23 @@ export const PostMoreActions: FunctionComponent<PostMoreActionsProps> = ({
         <PostActionMenuItem
           icon="flag"
           label="Denunciar"
-          onPress={() => console.log('Denunciar')}
+          onPress={() => setIsConfirmationComplaintModalVisible(true)}
         />
       </Menu>
+
       <ModalWantRemovePost
         isOpen={isModalVisible}
         onClose={() => setIsModalVisible(false)}
         onConfirm={handleConfirmDeletePost}
+      />
+      <ModalConfirmAction
+        isOpen={isConfirmationComplaintModalVisible}
+        onClose={() => setIsConfirmationComplaintModalVisible(false)}
+        onConfirm={handleOpenComplaint}
+        title="Abrir denúncia"
+        description="Você tem certeza que deseja abrir uma denúncia para esta publicação?"
+        confirmText="Sim, tenho certeza"
+        confirmColor="red"
       />
     </Box>
   );
