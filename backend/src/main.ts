@@ -28,8 +28,6 @@ async function bootstrap() {
     .setTitle(packageJSON.name)
     .setDescription(packageJSON.description)
     .setVersion(packageJSON.version)
-<<<<<<< HEAD
-=======
     .addTag('Categories')
     .addTag('Subcategories')
     .addTag('Posts')
@@ -39,7 +37,6 @@ async function bootstrap() {
     .addTag('Likes')
     .addTag('Users')
     .addTag('User Devices')
->>>>>>> refactor/setupTests
     .build();
 
   const document = SwaggerModule.createDocument(app, documentationConfig);

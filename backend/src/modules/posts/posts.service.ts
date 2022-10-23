@@ -1,7 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/shared/database/prisma.service';
-import { CreatePostDto } from './dto/create-post.dto';
-import { UpdatePostDto } from './dto/update-post.dto';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/shared/database/prisma.service';
 import {
@@ -55,7 +52,7 @@ export class PostsService {
         ...include,
       },
     });
-  }
+  },
 
   async findOne(id: string, options: PaginateOptions) {
     const { where, include } = parsePaginationToPrisma<
@@ -75,14 +72,14 @@ export class PostsService {
       },
     });
     return post;
-  }
+  },
 
   update(id: string, updatePostDto: UpdatePostDto) {
     return this.prisma.post.update({
       where: { id },
       data: updatePostDto,
     });
-  }
+  },
 
   remove(id: string) {
     return this.prisma.post.delete({ where: { id } });
