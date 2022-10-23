@@ -1,4 +1,10 @@
-import { NavigationProp, useRoute, RouteProp } from '@react-navigation/native';
+import {
+  NavigationProp,
+  useRoute,
+  RouteProp,
+  useNavigationState,
+  useNavigation,
+} from '@react-navigation/native';
 import { Box, Divider, Flex, SimpleGrid, Text } from 'native-base';
 import React from 'react';
 
@@ -7,13 +13,27 @@ import { useSubcategoryDetails } from '@src/hooks/queries/details/useSubcategory
 import { useAuth } from '@src/hooks/useAuth';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
 
-export const SubcategoryHeader = () => {
+type SubcategoryHeaderNavigationProps = NavigationProp<
+  StackForumNavigatorParamList,
+  'SelectSubcategory'
+>;
+
+type HeaderSubcategoryProps = {
+  categoryId: string | undefined;
+};
+
+export const SubcategoryHeader = ({ categoryId }: HeaderSubcategoryProps) => {
   const route =
     useRoute<RouteProp<StackForumNavigatorParamList, 'Subcategory'>>();
   const { subcategoryId, categoryTitle } = route.params;
   const { user } = useAuth();
 
   const { data } = useSubcategoryDetails(subcategoryId as string);
+
+  const navigation = useNavigation<SubcategoryHeaderNavigationProps>();
+
+  const navigateBackScreenName = 'SelectSubcategory';
+  const navigateBackParams = { categoryId, categoryTitle };
 
   return (
     <Flex
@@ -30,6 +50,8 @@ export const SubcategoryHeader = () => {
               screenName={data?.title}
               subtitle={data?.description ?? ''}
               badgeName={categoryTitle}
+              navigationToScreenName={navigateBackScreenName}
+              navigationParams={navigateBackParams}
             ></Header>
             {/**
             <Flex justifyContent={'flex-end'} paddingX={4} w={'100%'}>
