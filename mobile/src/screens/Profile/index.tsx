@@ -44,6 +44,8 @@ export const Profile = () => {
   );
   const statusBarHeight = getStatusBarHeight();
 
+  const userFirstname = user?.name?.split(' ')[0];
+
   useEffect(() => {
     setBio(user?.bio ?? '');
     setName(user?.name);
@@ -171,7 +173,7 @@ export const Profile = () => {
                 <Ionicons name="settings-outline" size={32} color="black" />
               </TouchableOpacity>
             </Flex>
-            <Flex flexDir={'row'}>
+            <Flex flexDir={'row'} px={4}>
               <Box px={2}>
                 <Avatar
                   alignSelf="center"
@@ -181,7 +183,7 @@ export const Profile = () => {
                   }}
                 />
               </Box>
-              <Box px={4} mt={2} w={'70%'}>
+              <Box px={2} mt={2} w={'70%'}>
                 <Heading>{user?.name}</Heading>
                 <Text>
                   {user?.bio}Lorem Ipsum is simply dummy text of the printing
@@ -194,7 +196,7 @@ export const Profile = () => {
             <Box
               w={'85%'}
               mt={10}
-              mb={10}
+              mb={8}
               h={24}
               borderRadius={10}
               bgColor={'darkBlue.600'}
@@ -249,6 +251,9 @@ export const Profile = () => {
           </Flex>
         </Flex>
 
+        <Heading px={8} py={2}>
+          Postagens de {userFirstname}
+        </Heading>
         <Flex mb={-80}>
           <LoadingFallback
             isLoading={isLoading}
