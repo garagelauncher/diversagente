@@ -81,15 +81,19 @@ Além disso, existe tanto no back-end quanto no front-end a utilização do padr
 
 Nesta seção possui todos os diagramas criados do sistema, para facilitar o entendimento e desenvolvimento da aplicação. 
 
-O diagrama de casos de uso apresentado na \autoref{diagrama-caso-uso} representa uma possível utilização do nosso sistema por ator, sejá ele o usuário ou administrador.
+O diagrama de casos de uso  \autoref{diagrama-caso-uso} foi apresentado na primeira parte da execução do projeto, que foi verificado possíveis utilizações do usuário no sistema. A imagem se encontra no \autoref{diagrama-casos-uso-old}
+
+Como houveram mudanças de escopo para a utilizações do usuário junto a aplicação foi visto a necessidade de criar um novo diagrama de casos de uso conforme a \autoref{diagrama-caso-uso-novo}
+
+
 
 \pagebreak
 
 \begin{figure}[htb]
 	\centering
-	\caption{\label{fig_arq_virado}Diagrama de classes do sistema}
-	\includegraphics[width=0.90\textwidth]{anexos/casos_de_uso.jpeg}
-	\label{diagrama-caso-uso}
+	\caption{\label{fig_arq_virado}Diagrama de caso de uso}
+	\includegraphics[width=0.90\textwidth]{anexos/Casos de uso.jpeg}
+	\label{diagrama-caso-uso-novo}
 	\fonte{Equipe diversaGente (2022)}
 \end{figure}
 
@@ -319,11 +323,13 @@ A Google AdSense tem duas maneiras de capitalizar. A primeira delas é com base 
 A Google também garante que, devido ao alto nível de competitividade da empresa e de sua ferramenta de anúncios, aqueles que utilizarem a Google AdSense estarão ganhando o máximo que o mercado possibilita
 
 
-\section{Decisões de Entrega}
+\section{Decisões e adaptações do projeto}
 
 Durante a disciplina a equipe teve algumas entregas a serem feitas, para o projeto ser aprovado pelos Professores responsáveis e também acompanhar o desenvolvimento e dar sugestões caso necessário. 
 
-Foi exigido que para a aplicação escolhida precisaria ter ao menos um processo, além de todos os \ac{crud} necessários para o funcionamento correto da aplicação. 
+Foi exigido que para a aplicação escolhida precisaria ter ao menos um processo, além de todos os \ac{crud} necessários para o funcionamento correto da aplicação.
+
+Pelo fato da equipe ter sete pessoas, foi necessário adotar alguns protocolos, reuniões periódicas, sendo assim, os responsáveis técnicos tinham, no mínimo, uma vez por semana reuniões para alinhar os caminhos tomados e avanços no desenvolvimento da aplicação e delegar tarefas. As conversas de rotina geralmente aconteciam pelo aplicativo do WhatsApp e as reuniões às segundas-feiras no Discord, onde a equipe possui um servidor com várias seções como 'feedback', 'notas e recursos' e 'off-topic' para facilitar a comunicação e achar itens que já foram discutidos anteriormente.
 
 Foram planejadas quatro entregas, a primeira para mostrar as tecnologias usadas na aplicação e mostrar um desenho da arquitetura de como as camadas e ferramentas serão integradas. A segunda entrega para mostrar a \ac{poc}, mostrar o ambiente de produção funcionando e as integrações necessárias para testar a arquitetura proposta pela equipe Garage Launcher. Na terceira, a entrega do \ac{mvp}, é necessário entregar a aplicação funcionando em ambiente de produção com ao menos um processo implementado e finalmente na quarta entrega, a final, com todos os \ac{crud} e processos prontos para apresentação para a banca de Professores. O \autoref{descisoes-entrega} abaixo mostra as três principais fases de entrega e suas respectivas funcionalidades.
 
@@ -361,13 +367,21 @@ Foram planejadas quatro entregas, a primeira para mostrar as tecnologias usadas 
 \end{landscape}
 	\fonte{Equipe diversaGente (2022)}
 
-Para conseguir fazer a entrega nas datas estipuladas foi necessário adaptar o gerenciamento da equipe e criar protocolos de comunicações. 
+Para conseguir fazer a entrega nas datas estipuladas foi necessário adaptar o gerenciamento da equipe e criar protocolos de comunicação. 
 
 No primeiro momento, a entrega do \ac{mvp} foi bastante desafiadora, pois a apresentação abrangia necessidade de conhecimento técnico que nem todos da equipe possuíam e pelo curto espaço de tempo não seria possível aprender com certa rapidez. Depois da base do código da aplicação estar feita dois membros mais técnicos da equipe focaram na entrega do produto mínimo e os outros na parte documental e de apresentação mais teórica, sendo um equipe responsável em verificar erros e possíveis implementações na documentação.
 
-Pelo fato da equipe ter sete pessoas, foi necessário adotar alguns protocolos, reuniões periódicas, sendo assim, os responsáveis técnicos tinha no mínimo uma vez por semana reuniões para alinhar os caminhos tomados e avanços no desenvolvimento da aplicação e delegar tarefas. Essas conversas geralmente eram marcadas pelo aplicativo do WhatApp e ocorriam na segunda-feira e no Discord, onde a equipe possui um servidor com várias divisórias como feedback, notas e geral para facilitar a comunicação e achar itens que já foram discutidos anteriormente.  
+De início foi acertado que seria usado o Firebase para fazer a autenticação da aplicação, entretanto, durante o desenvolvimento do \ac{mvp}, a decisão foi de usar o OAuth2 que nada mais é que um protocolo de autorização que permite que uma aplicação se autentique em outra. Essa mudança foi realizada devido aos conhecimentos da equipe para aplicar o protocolo que estava mais próximo do produto ofertado para a entrega, além de ser uma aplicação mais simples, leve e rápida para implementar e autenticar usuários dentro do aplicativo através do login social do Google. 
 
-De início foi acertado que seria usado o Firebase para fazer a autenticação da aplicação, entretanto foi resolvido usar o OAuth2 que nada mais é que um protocolo de autorização que permite uma aplicação se autentique em outra. Essa mudança foi devido aos conhecimentos da equipe para aplicar o protocolo que estava mais próximo da entrega, além de ser uma aplicação mais simples, leve e rápida para implementar e autenticar usuários dentro do aplicativo. 
+Também durante o desenvolvimento do \ac{mvp} foi sugerido pelos professores que fosse possível guardar dados de contas excluídas durante um determinado período de tempo por questões de segurança e/ou problemas judiciais que pudessem envolver algum usuário da plataforma. A ideia foi discutida e implementada pela equipe através do método de 'soft delete', que funciona de forma que uma postagem excluída no aplicativo, seja apagada apenas do aplicativo e se mantenha salva do banco de dados, portanto, haverá histórico dessa postagem na base de dados.
+
+Durante o processo de criação do \ac{mvp}, outra decisão tomada foi a de não implementar a funcionalidade de Feed de Notícias devido ao curto tempo e o alto grau de complexidade associado para que fosse entregue um bom resultado.
+
+Tomando direção para a entrega final da aplicação houveram novas conversas com os professores em que foram sugeridas novas ideias, uma delas é o filtro de profanação, que tem como objetivo impedir que usuários mal intecionados possam escrever palavras, termos e frases que sejam relacionadas a algum tipo de má conduta. O filtro de profanação não pôde ser implementado devido a alta complexidade e a não experiência dos membros da equipe com esse tipo de funcionalidade. Outra ideia importante e necessária citada pelos professores foi a presença dos termos de uso do aplicativo, a equipe concordou com a suma importância deste documento e buscou encaixar sua elaboração no cronograma da equipe, mas não colocando à frente da finalização do desenvolvimento das funcionalidades que são o centro do negócio. 
+
+A funcionalidade de denúncia de posts foi mais uma importante sugestão dada pelos professores e que a equipe considerou se tratar de uma implantação importante e, por isso, foi incluída entre os recursos importantes da entrega final. A última maior ideia trazida pelos professores foi relacionada à criação de um local recomendado dentro na plataforma; a ideia sugerida foi que a caixa de texto única disponível para que o usuário conte sua experiência no local fosse substituída por duas caixas de texto, uma reservada aos pontos positivos do local observados pelo usuário, e a outra reservada aos pontos de atenção, após a equipe conversar sobre esta última ideia, foi decidido que, apesar de ser uma boa ideia, não era algo de extrema importância para ser considerado prioritário nos momentos finais da entrega do aplicativo e, por isso, não deveria ser implementado no momento.
+
+Decisões de escopo anteriormente informadas para entrega final do projeto como informa o \autoref{descisoes-entrega} precisaram ser modificadas devidos a alguns fatores. Com a verificação dos pontos centrais e do que seria necessário para agregar um valor para a entrega final e ter um conteúdo que a equipe acredita ser condizente com o propósito inicial do projeto, uma rede social para que pais e responsáveis de pessoas neurodiversas possam compartilhar e encontrar recomendações de lugares, dicas e profissionais com que se sintam confortáveis para frequentar ou adquirir algum tipo de serviço, e com isso, para a aplicação ter um valor agregado grande na apresentação, melhor distribuição de tarefas no decorrer do semestre e devido ao curto período disponível para o desenvolvimento, o chat e o feed de notícias foram retirados do escopo. Com o novo fluxo de login social se tornou, no momento, desncessário a implantação de cadastro através da aplicação e recuperação de senha, já que o usuário nesse primeiro momento consegue se logar apenas através do seu e-mail gmail. 
  
 %---------------------------------------------------------------
 \section{Métricas da aplicação}
