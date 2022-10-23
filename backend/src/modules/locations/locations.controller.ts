@@ -12,6 +12,12 @@ import { LocationsService } from './locations.service';
 import { CreateLocationDto } from './dto/create-location.dto';
 import { UpdateLocationDto } from './dto/update-location.dto';
 import dayjs from 'dayjs';
+<<<<<<< HEAD
+=======
+import { ApiTags } from '@nestjs/swagger';
+
+@ApiTags('Locations')
+>>>>>>> refactor/setupTests
 @Controller('locations')
 export class LocationsController {
   constructor(private readonly locationsService: LocationsService) {}

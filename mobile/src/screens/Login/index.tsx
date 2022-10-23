@@ -30,7 +30,7 @@ export const Login = () => {
     >
       <Heading>DiversaGente</Heading>
       <Button
-        leftIcon={<Icon as={AntDesign} name="google" />}
+        leftIcon={<Icon as={AntDesign} name="google" size={5} />}
         colorScheme="red"
         borderRadius={4}
         onPress={handleLogin}

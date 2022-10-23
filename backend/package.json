@@ -1,7 +1,13 @@
 {
+<<<<<<< HEAD
   "name": "diversagente-api",
   "version": "0.1.0",
   "description": "API do Projeto diversagente do grupo Garage Launcher que são alunos no Instituto Federal de São Paulo.",
+=======
+  "name": "diversaGente-API",
+  "version": "0.1.0",
+  "description": "Documentação Swagger do projeto diversaGente, elaborado pela equipe Garage Launcher, composta por alunos do Instituto Federal de São Paulo.",
+>>>>>>> refactor/setupTests
   "author": "",
   "private": true,
   "license": "UNLICENSED",
@@ -43,11 +49,15 @@
     "buffer-to-stream": "^1.0.0",
     "cloudinary": "^1.29.1",
     "dayjs": "^1.11.2",
+<<<<<<< HEAD
+=======
+    "expo-server-sdk": "^3.7.0",
+>>>>>>> refactor/setupTests
     "helmet": "^5.1.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "swagger-ui-express": "^4.3.0"
+    "swagger-ui-express": "^4.5.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

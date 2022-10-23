@@ -2,7 +2,10 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
+<<<<<<< HEAD
 import { CatsModule } from './modules/cats/cats.module';
+=======
+>>>>>>> refactor/setupTests
 import { UsersModule } from './modules/users/users.module';
 import { CloudinaryModule } from './shared/services/cloudinary/cloudinary.module';
 import { CloudinaryProvider } from './shared/services/cloudinary/cloudinary';
@@ -13,13 +16,21 @@ import { LikesModule } from './modules/likes/likes.module';
 import { PostsModule } from './modules/posts/posts.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { ReviewsModule } from './modules/reviews/reviews.module';
+<<<<<<< HEAD
+=======
+import { PushNotificationsService } from './shared/services/push-notifications/push-notifications.service';
+import { DevicesModule } from './modules/devices/devices.module';
+>>>>>>> refactor/setupTests
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+<<<<<<< HEAD
     CatsModule,
+=======
+>>>>>>> refactor/setupTests
     UsersModule,
     CloudinaryModule,
     CategoriesModule,
@@ -29,8 +40,15 @@ import { ReviewsModule } from './modules/reviews/reviews.module';
     PostsModule,
     CommentsModule,
     ReviewsModule,
+<<<<<<< HEAD
   ],
   controllers: [AppController],
   providers: [AppService, CloudinaryProvider],
+=======
+    DevicesModule,
+  ],
+  controllers: [AppController],
+  providers: [AppService, CloudinaryProvider, PushNotificationsService],
+>>>>>>> refactor/setupTests
 })
 export class AppModule {}

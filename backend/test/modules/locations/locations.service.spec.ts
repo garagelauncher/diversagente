@@ -41,6 +41,10 @@ describe('LocationsService', () => {
         coordinates: [0, 0],
       },
     });
+<<<<<<< HEAD
+=======
+
+>>>>>>> refactor/setupTests
   });
 
   it('should be defined', () => {

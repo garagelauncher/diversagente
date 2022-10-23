@@ -127,6 +127,8 @@ def jscFlavor = 'org.webkit:android-jsc:+'
  */
 def enableHermes = project.ext.react.get("enableHermes", false);
 
+def googleMapApiKey = System.getenv("GOOGLE_MAPS_API_KEY")
+
 /**
  * Architectures to build native code for.
  */
@@ -147,6 +149,8 @@ android {
         versionCode 1
         versionName "1.0"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+        manifestPlaceholders = [googleMapsApiKey:googleMapApiKey]
+
 
         if (isNewArchitectureEnabled()) {
             // We configure the NDK build only if you decide to opt-in for the New Architecture.

@@ -8,17 +8,27 @@ import {
   Delete,
   UseInterceptors,
   UploadedFile,
+<<<<<<< HEAD
   Request,
+=======
+>>>>>>> refactor/setupTests
   NotFoundException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+<<<<<<< HEAD
 import { Request as ExpressRequest } from 'express';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('users')
+=======
+import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { DeleteUserDto } from './dto/delete-user.dto';
+
+@ApiTags('Users')
+>>>>>>> refactor/setupTests
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -50,6 +60,7 @@ export class UsersController {
   }
 
   @Patch(':email/avatar')
+<<<<<<< HEAD
   @UseInterceptors(FileInterceptor('file'))
   uploadFile(
     @Request() request: ExpressRequest,
@@ -67,5 +78,34 @@ export class UsersController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);
+=======
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FileInterceptor('file'))
+  @ApiBody({
+    schema: {
+      type: 'object',
+      required: ['file'],
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+  uploadFile(
+    @Param('email') email: string,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    console.debug(email);
+    console.debug(file);
+
+    return this.usersService.uploadAvatar(email, file);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string, @Body() deleteUserDto?: DeleteUserDto) {
+    return this.usersService.remove(id, deleteUserDto?.reason);
+>>>>>>> refactor/setupTests
   }
 }

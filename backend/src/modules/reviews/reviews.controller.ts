@@ -13,6 +13,12 @@ import { ReviewsService } from './reviews.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
 import dayjs from 'dayjs';
+<<<<<<< HEAD
+=======
+import { ApiTags } from '@nestjs/swagger';
+
+@ApiTags('Reviews')
+>>>>>>> refactor/setupTests
 @Controller('locations/:locationId/reviews')
 export class ReviewsController {
   constructor(private readonly reviewsService: ReviewsService) {}

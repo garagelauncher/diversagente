@@ -1,0 +1,43 @@
+name: Generate new gitstats
+
+env:
+  PYTHON_VERSION: "3.8"
+
+on:
+  push:
+    branches:
+      - gitstats
+
+jobs:
+  gitstats:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python version
+        uses: actions/setup-python@v3.0.0
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
+
+      - name: Generate gitstats
+        run: make gitstats
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "docs: update gitstats"
+
+      - name: Success - Discord
+        uses: Ilshidur/action-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_USERNAME: Jarvis
+          DISCORD_AVATAR: https://static.wikia.nocookie.net/universocinematograficomarvel/images/b/b0/JuARaVeInSy.png/revision/latest?cb=20150919150102&path-prefix=pt
+        with:
+          args: "@everyone ${{ github.actor }} deu um push que fez gerar um novo gitstats!"

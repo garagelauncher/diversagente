@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 const recent_activity = {"config": {"noData": "No recent activity.", "padData": true, "showXAxis": true, "xDomain": [31, 0]}, "data": [{"key": "Commits", "color": "#9400D3", "values": [{"x": 31, "y": 0}, {"x": 30, "y": 0}, {"x": 29, "y": 0}, {"x": 28, "y": 0}, {"x": 27, "y": 0}, {"x": 26, "y": 0}, {"x": 25, "y": 0}, {"x": 24, "y": 0}, {"x": 23, "y": 0}, {"x": 22, "y": 0}, {"x": 21, "y": 0}, {"x": 20, "y": 0}, {"x": 19, "y": 0}, {"x": 18, "y": 0}, {"x": 17, "y": 0}, {"x": 16, "y": 0}, {"x": 15, "y": 0}, {"x": 14, "y": 0}, {"x": 13, "y": 8}, {"x": 12, "y": 5}, {"x": 11, "y": 0}, {"x": 10, "y": 14}, {"x": 9, "y": 27}, {"x": 8, "y": 4}, {"x": 7, "y": 1}, {"x": 6, "y": 54}, {"x": 5, "y": 91}, {"x": 4, "y": 52}, {"x": 3, "y": 69}, {"x": 2, "y": 0}, {"x": 1, "y": 7}, {"x": 0, "y": 21}]}]}
+=======
+const recent_activity = {"config": {"noData": "No recent activity.", "padData": true, "showXAxis": true, "xDomain": [31, 0]}, "data": [{"key": "Commits", "color": "#9400D3", "values": [{"x": 31, "y": 0}, {"x": 30, "y": 8}, {"x": 29, "y": 5}, {"x": 28, "y": 0}, {"x": 27, "y": 14}, {"x": 26, "y": 27}, {"x": 25, "y": 4}, {"x": 24, "y": 1}, {"x": 23, "y": 54}, {"x": 22, "y": 91}, {"x": 21, "y": 52}, {"x": 20, "y": 69}, {"x": 19, "y": 0}, {"x": 18, "y": 7}, {"x": 17, "y": 28}, {"x": 16, "y": 0}, {"x": 15, "y": 0}, {"x": 14, "y": 0}, {"x": 13, "y": 0}, {"x": 12, "y": 0}, {"x": 11, "y": 3}, {"x": 10, "y": 0}, {"x": 9, "y": 0}, {"x": 8, "y": 15}, {"x": 7, "y": 65}, {"x": 6, "y": 74}, {"x": 5, "y": 9}, {"x": 4, "y": 0}, {"x": 3, "y": 32}, {"x": 2, "y": 115}, {"x": 1, "y": 67}, {"x": 0, "y": 14}]}]}
+>>>>>>> refactor/setupTests
 
 // Setup the chart
 nv.addGraph(function() {
@@ -9,7 +13,11 @@ nv.addGraph(function() {
 	return chart;
 });
 
+<<<<<<< HEAD
 const commits_by_year = {"xAxis": {"rotateLabels": -90, "ticks": 1}, "yAxis": {"axisLabel": "Commits"}, "data": [{"key": "Commits", "color": "#9400D3", "values": [{"x": 2022, "y": 353}]}]}
+=======
+const commits_by_year = {"xAxis": {"rotateLabels": -90, "ticks": 1}, "yAxis": {"axisLabel": "Commits"}, "data": [{"key": "Commits", "color": "#9400D3", "values": [{"x": 2022, "y": 754}]}]}
+>>>>>>> refactor/setupTests
 // Setup the chart
 nv.addGraph(function() {
 	var chart = nv.models.historicalBarChart().options({"padData": true, "showXAxis": true});
@@ -19,7 +27,11 @@ nv.addGraph(function() {
 	return chart;
 });
 
+<<<<<<< HEAD
 const commits_by_month = {"yAxis": {"axisLabel": "Commits in 2022"}, "xAxis": {"rotateLabels": -90, "ticks": 12}, "data": [{"key": "Commits", "color": "#9400D3", "values": [{"x": 0, "y": 0}, {"x": 1, "y": 0}, {"x": 2, "y": 13}, {"x": 3, "y": 45}, {"x": 4, "y": 267}, {"x": 5, "y": 28}, {"x": 6, "y": 0}, {"x": 7, "y": 0}, {"x": 8, "y": 0}, {"x": 9, "y": 0}, {"x": 10, "y": 0}, {"x": 11, "y": 0}]}]}
+=======
+const commits_by_month = {"yAxis": {"axisLabel": "Commits in 2022"}, "xAxis": {"rotateLabels": -90, "ticks": 12}, "data": [{"key": "Commits", "color": "#9400D3", "values": [{"x": 0, "y": 0}, {"x": 1, "y": 0}, {"x": 2, "y": 13}, {"x": 3, "y": 45}, {"x": 4, "y": 267}, {"x": 5, "y": 35}, {"x": 6, "y": 3}, {"x": 7, "y": 22}, {"x": 8, "y": 150}, {"x": 9, "y": 219}, {"x": 10, "y": 0}, {"x": 11, "y": 0}]}]}
+>>>>>>> refactor/setupTests
 // Setup the chart
 nv.addGraph(function() {
 	var chart = nv.models.historicalBarChart().options({"padData": true, "showXAxis": true});
@@ -35,6 +47,7 @@ nv.addGraph(function() {
 	return chart;
 });
 
+<<<<<<< HEAD
 const commits_by_year_month = {"yAxis": {"axisLabel": "Commits by month"}, "xAxis": {"rotateLabels": -90, "ticks": 12}, "data": [{"key": "2022", "color": "#0000D3", "values": [{"x": 2, "y": 13}, {"x": 3, "y": 45}, {"x": 4, "y": 267}, {"x": 5, "y": 28}]}]}
 nv.addGraph(function() {
     var chart = nv.models.lineChart();
@@ -51,6 +64,8 @@ nv.addGraph(function() {
     return chart;
 });
 
+=======
+>>>>>>> refactor/setupTests
 nv.addGraph(function() {
   var chart = nv.models.discreteBarChart()
       .x(function(d) { return d.label })    //Specify the data accessors.
@@ -65,7 +80,11 @@ nv.addGraph(function() {
       .datum([{
         key: "Cumulative Return",
         color: "#9400D3",
+<<<<<<< HEAD
         values: [{"label": "= 0s", "value": 349}, {"label": "< 1hour", "value": 4}, {"label": "< 1day", "value": 0}, {"label": "< 2days", "value": 0}, {"label": "< 1week", "value": 0}, {"label": "< 2weeks", "value": 0}, {"label": "< 1month", "value": 0}, {"label": "< 6 months", "value": 0}, {"label": "< 3 years", "value": 0}]
+=======
+        values: [{"label": "= 0s", "value": 737}, {"label": "< 1hour", "value": 8}, {"label": "< 1day", "value": 9}, {"label": "< 2days", "value": 0}, {"label": "< 1week", "value": 0}, {"label": "< 2weeks", "value": 0}, {"label": "< 1month", "value": 0}, {"label": "< 6 months", "value": 0}, {"label": "< 3 years", "value": 0}]
+>>>>>>> refactor/setupTests
        }
   ]).call(chart);
 

@@ -1,0 +1,65 @@
+name: Generate Android APK WITHOUT waiting to complete
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - mobile/**
+  pull_request:
+    branches:
+      - develop
+    paths:
+      - mobile/**
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./mobile
+
+    steps:
+      - name: 🏗 Setup repo
+        uses: actions/checkout@v3
+
+      - name: 🏗 Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "npm"
+
+      - name: 🏗 Setup Expo and EAS
+        uses: expo/expo-github-action@v7
+        with:
+          expo-version: latest
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+          expo-cache: true
+
+      - name: 📦 Install dependencies
+        run: npm install
+
+      - name: 🚀 Build app
+        run: eas build -p android --profile local --non-interactive --no-wait
+
+      - name: Success build - Discord
+        if: success()
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_USERNAME: Jarvis
+          DISCORD_AVATAR: https://static.wikia.nocookie.net/universocinematograficomarvel/images/b/b0/JuARaVeInSy.png/revision/latest?cb=20150919150102&path-prefix=pt
+        uses: Ilshidur/action-discord@master
+        with:
+          args: "@everyone ${{ github.actor }} requisitou um APK Android com SUCESSO do {{ EVENT_PAYLOAD.repository.full_name }}."
+
+      - name: Failed deploy - Discord
+        if: failure()
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_USERNAME: Jarvis
+          DISCORD_AVATAR: https://static.wikia.nocookie.net/universocinematograficomarvel/images/b/b0/JuARaVeInSy.png/revision/latest?cb=20150919150102&path-prefix=pt
+        uses: Ilshidur/action-discord@master
+        with:
+          args: "@everyone ${{ github.actor }} tentou requisitar um APK com FALHA do {{ EVENT_PAYLOAD.repository.full_name }}"

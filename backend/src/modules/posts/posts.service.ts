@@ -2,6 +2,21 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/shared/database/prisma.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+import { Prisma } from '@prisma/client';
+import { PrismaService } from 'src/shared/database/prisma.service';
+import {
+  PaginateOptions,
+  parsePaginationToPrisma,
+} from 'src/shared/utils/parsePaginationToPrisma';
+import { CreatePostDto } from './dto/create-post.dto';
+import { UpdatePostDto } from './dto/update-post.dto';
+
+const countLikesAndCommentsQuery = {
+  select: {
+    comments: true,
+    likes: true,
+  },
+};
 
 @Injectable()
 export class PostsService {
@@ -19,6 +34,44 @@ export class PostsService {
     const post = await this.prisma.post.findUnique({
       where: {
         id,
+
+  async findAll(options: PaginateOptions) {
+    const { skip, take, where, orderBy, include, cursor } =
+      parsePaginationToPrisma<
+        Prisma.PostWhereInput,
+        Prisma.PostInclude,
+        Prisma.PostWhereUniqueInput
+      >(options);
+
+    return await this.prisma.post.findMany({
+      skip,
+      take,
+      where,
+      orderBy,
+      cursor,
+      include: {
+        _count: countLikesAndCommentsQuery,
+        owner: true,
+        ...include,
+      },
+    });
+  }
+
+  async findOne(id: string, options: PaginateOptions) {
+    const { where, include } = parsePaginationToPrisma<
+      Prisma.PostWhereInput,
+      Prisma.PostInclude
+    >(options);
+
+    const post = await this.prisma.post.findUnique({
+      where: {
+        id,
+        ...where,
+      },
+      include: {
+        _count: countLikesAndCommentsQuery,
+        owner: true,
+        ...include,
       },
     });
     return post;
@@ -33,5 +86,14 @@ export class PostsService {
 
   remove(id: string) {
     return this.prisma.post.delete({ where: { id } });
+
+  async remove(id: string) {
+    return await this.prisma.post.update({
+      where: { id },
+      data: {
+        deactivatedAt: new Date().toISOString(),
+        isActive: false,
+      },
+    });
   }
 }

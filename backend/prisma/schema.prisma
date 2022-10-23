@@ -24,15 +24,24 @@ type Preference {
 }
 
 model User {
+<<<<<<< HEAD
   id       String @id @default(auto()) @map("_id") @db.ObjectId
   email    String @unique
   username String @unique
 
   name String
+=======
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  email    String  @unique
+  username String  @unique
+  name     String
+  isActive Boolean @default(value: true)
+>>>>>>> refactor/setupTests
 
   birthdate           DateTime?
   biograph            String?
   picture             String?
+<<<<<<< HEAD
   preferences         Preference?
   lovelyCategoriesIds String[]    @db.ObjectId
 
@@ -49,14 +58,41 @@ model User {
   Post     Post[]
   Like     Like[]
   Comment  Comment[]
+=======
+  deactivationReason  String?
+  preferences         Preference?
+  lovelyCategoriesIds String[]    @db.ObjectId
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deactivatedAt DateTime?
+
+  category Category? @relation(fields: [lovelyCategoriesIds], references: [id])
+
+  Location     Location[]
+  Review       Review[]
+  Post         Post[]
+  Like         Like[]
+  Comment      Comment[]
+  Device       Device[]
+  Notification Notification[]
+>>>>>>> refactor/setupTests
 
   @@map("users")
 }
 
 model Category {
+<<<<<<< HEAD
   id    String  @id @default(auto()) @map("_id") @db.ObjectId
   name  String? @unique
   title String?
+=======
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String? @unique
+  title       String?
+  icon        String?
+  description String?
+>>>>>>> refactor/setupTests
 
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
@@ -64,18 +100,35 @@ model Category {
   Subcategory Subcategory[]
   Location    Location[]
   User        User[]
+<<<<<<< HEAD
 }
 
 model Subcategory {
   id    String @id @default(auto()) @map("_id") @db.ObjectId
   name  String @unique
   title String
+=======
+  Post        Post[]
+}
+
+model Subcategory {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String  @unique
+  title       String
+  icon        String?
+  description String?
+>>>>>>> refactor/setupTests
 
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
 
   category      Category? @relation(fields: [categoriesIds], references: [id])
   categoriesIds String[]  @db.ObjectId
+<<<<<<< HEAD
+=======
+
+  Post Post[]
+>>>>>>> refactor/setupTests
 }
 
 model Like {
@@ -91,11 +144,21 @@ model Like {
 }
 
 model Comment {
+<<<<<<< HEAD
   id   String @id @default(auto()) @map("_id") @db.ObjectId
   text String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+=======
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  text     String
+  isActive Boolean @default(true)
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deactivatedAt DateTime?
+>>>>>>> refactor/setupTests
 
   ownerId String  @db.ObjectId
   postId  String  @db.ObjectId
@@ -109,6 +172,7 @@ model Comment {
 }
 
 model Post {
+<<<<<<< HEAD
   id      String   @id @default(auto()) @map("_id") @db.ObjectId
   title   String
   content String
@@ -133,6 +197,40 @@ model Review {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+=======
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  title    String
+  content  String
+  isActive Boolean @default(true)
+
+  images String[]
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deactivatedAt DateTime?
+
+  ownerId       String  @db.ObjectId
+  categoryId    String? @db.ObjectId
+  subcategoryId String? @db.ObjectId
+
+  owner       User         @relation(fields: [ownerId], references: [id])
+  category    Category?    @relation(fields: [categoryId], references: [id])
+  subcategory Subcategory? @relation(fields: [subcategoryId], references: [id])
+
+  likes    Like[]
+  comments Comment[]
+}
+
+model Review {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  text     String
+  stars    Int
+  isActive Boolean @default(true)
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deactivatedAt DateTime?
+>>>>>>> refactor/setupTests
 
   ownerId    String @db.ObjectId
   locationId String @db.ObjectId
@@ -155,7 +253,10 @@ model Location {
   address     String?
   description String?
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> refactor/setupTests
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -170,4 +271,36 @@ model Location {
   Review Review[]
 
   @@map("locations")
+<<<<<<< HEAD
+=======
+}
+
+model Device {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  token    String
+  platform String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ownerId String @db.ObjectId
+
+  owner User @relation(fields: [ownerId], references: [id])
+}
+
+model Notification {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  title   String
+  message String
+  data    String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ownerId String @db.ObjectId
+
+  owner User @relation(fields: [ownerId], references: [id])
+>>>>>>> refactor/setupTests
 }

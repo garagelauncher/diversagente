@@ -16,4 +16,8 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   createdAt?: string | Date;
   updatedAt?: string | Date;
   preferences?: UserPreference;
+<<<<<<< HEAD
+=======
+  lovelyCategoriesIds?: string[];
+>>>>>>> refactor/setupTests
 }
