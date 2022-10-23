@@ -2,6 +2,8 @@ import 'intl';
 import 'intl/locale-data/jsonp/en';
 import 'intl/locale-data/jsonp/pt-BR';
 import 'react-native-gesture-handler';
+import './src/services/notifications/config';
+
 import { Poppins_700Bold } from '@expo-google-fonts/poppins';
 import { LinkingOptions, NavigationContainer } from '@react-navigation/native';
 import * as Font from 'expo-font';
@@ -21,8 +23,6 @@ import { Routes } from '@src/routes';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
 import { RootBottomTabParamList } from '@src/routes/tabs';
 import { queryClient } from '@src/services/queryClient';
-
-import './src/services/notifications/config';
 
 const prefix = Linking.createURL('/');
 
