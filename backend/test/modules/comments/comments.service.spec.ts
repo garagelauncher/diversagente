@@ -42,11 +42,11 @@ describe('CommentsService', () => {
     expect(createdComment).toEqual(commentMock);
   });
 
-  it('should be able to delete a category with success', async () => {
-    const deletedCategory = await commentService.remove(
+  it('should be able to delete a comment with success', async () => {
+    const deletedComment = await commentService.remove(
       'aaaaa',
     );
-    expect(deletedCategory).toEqual(commentMock);
+    expect(deletedComment).toEqual(commentMock);
   });
 
   it('should be able to update a comment with success', async () => {
