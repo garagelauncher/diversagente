@@ -1,5 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
+import { ComplaintResources } from '@src/contracts/Complaint';
 import { CategoriesFilter } from '@src/screens/CategoriesFilter';
 import { Comments } from '@src/screens/Comments';
 import { FormCreatePost } from '@src/screens/FormCreatePost';
@@ -7,6 +8,7 @@ import { FormCreateSubcategory } from '@src/screens/FormCreateSubcategory';
 import { Home } from '@src/screens/Home';
 import { Likes } from '@src/screens/Likes';
 import { PostDetails } from '@src/screens/PostDetails';
+import { SelectComplaint } from '@src/screens/SelectComplaint';
 import { SubcategoryFilter } from '@src/screens/SubcategoriesFilter';
 import { Subcategory } from '@src/screens/Subcategory';
 
@@ -14,16 +16,20 @@ export type StackForumNavigatorParamList = {
   Forum: undefined;
   FormCreatePost: { categoryId?: string | null; subcategoryId?: string | null };
   SelectCategory: undefined;
-  SelectSubcategory: { categoryId: string; categoryTitle: string };
+  SelectSubcategory: {
+    categoryId?: string;
+    categoryTitle?: string;
+  };
   Subcategory: {
-    subcategoryId: string | undefined;
-    categoryId: string | undefined;
-    categoryTitle: string | undefined;
+    subcategoryId?: string;
+    categoryId?: string;
+    categoryTitle?: string;
   };
   PostDetails: { postId: string };
   Comments: { postId: string };
   Likes: { postId: string };
-  FormCreateSubcategory: { categoryId: string; subcategoryId?: string };
+  FormCreateSubcategory: { categoryId?: string; subcategoryId?: string };
+  SelectComplaint: { resource: ComplaintResources; resourceId: string };
 };
 
 const { Navigator, Screen } =
@@ -46,6 +52,7 @@ export const StackForumPrivateRoutes = () => {
       <Screen name="SelectSubcategory" component={SubcategoryFilter} />
       <Screen name="Subcategory" component={Subcategory} />
       <Screen name="FormCreateSubcategory" component={FormCreateSubcategory} />
+      <Screen name="SelectComplaint" component={SelectComplaint} />
     </Navigator>
   );
 };

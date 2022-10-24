@@ -1,9 +1,9 @@
 import { diversagenteBaseApi } from '../baseUrl';
 
+import { IncludeInto } from '@src/@types/generics/includeInto';
 import { Category } from '@src/contracts/Category';
 import { QueryOptions } from '@src/contracts/QueryOptions';
 import { parseQueryOptions } from '@src/utils/parseQuery';
-import { IncludeInto } from '@src/@types/generics/includeInto';
 
 export const findAllCategories = async (options: QueryOptions = {}) => {
   try {
@@ -24,11 +24,8 @@ export const findAllCategories = async (options: QueryOptions = {}) => {
   }
 };
 
-
-export const findCategoryById = async <
-  GenericIncluded extends object = object,
->(
-  categoryId: string,
+export const findCategoryById = async <GenericIncluded extends object = object>(
+  categoryId?: string,
   options: QueryOptions = {},
 ) => {
   try {

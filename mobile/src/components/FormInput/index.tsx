@@ -21,8 +21,6 @@ export function FormInput({
   error,
   ...rest
 }: FormInputProps) {
-  console.log('error in input', error);
-
   return (
     <SafeAreaView>
       <VStack>
@@ -36,6 +34,7 @@ export function FormInput({
             <Input
               borderColor={[error ? 'red.500' : 'blue.800']}
               size="md"
+              lineHeight={0.85}
               placeholder={placeholder}
               value={value}
               {...rest}
@@ -47,6 +46,7 @@ export function FormInput({
             <TextArea
               h={280}
               borderColor={[error ? 'red.500' : 'blue.800']}
+              lineHeight={0.85}
               size="md"
               placeholder={placeholder}
               autoCompleteType="off"
