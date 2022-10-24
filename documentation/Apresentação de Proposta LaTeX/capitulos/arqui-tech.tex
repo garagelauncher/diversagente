@@ -384,29 +384,22 @@ A funcionalidade de denúncia de posts foi mais uma importante sugestão dada pe
 Decisões de escopo anteriormente informadas para entrega final do projeto como informa o \autoref{descisoes-entrega} precisaram ser modificadas devidos a alguns fatores. Com a verificação dos pontos centrais e do que seria necessário para agregar um valor para a entrega final e ter um conteúdo que a equipe acredita ser condizente com o propósito inicial do projeto, uma rede social para que pais e responsáveis de pessoas neurodiversas possam compartilhar e encontrar recomendações de lugares, dicas e profissionais com que se sintam confortáveis para frequentar ou adquirir algum tipo de serviço, e com isso, para a aplicação ter um valor agregado grande na apresentação, melhor distribuição de tarefas no decorrer do semestre e devido ao curto período disponível para o desenvolvimento, o chat e o feed de notícias foram retirados do escopo. Com o novo fluxo de login social se tornou, no momento, desncessário a implantação de cadastro através da aplicação e recuperação de senha, já que o usuário nesse primeiro momento consegue se logar apenas através do seu e-mail gmail. 
  
 %---------------------------------------------------------------
-\section{Métricas da aplicação}
+\section{Análises}
 
-A aplicação em Node.js é acessível via protocolo \ac{https} e no site \waUrlTitle{https://securityheaders.com/}{Security Headers}  obteve a nota A conforme evidenciam \autoref{metricas-1}. Os headers configurados na aplicação contribuem para prevenir ataques como os do tipo \ac{xxs}, ou, clickjacking,  caracterizados pela alteração indevida da interface por atacantes e que confundem o usuário a fim de levá-lo a acessar locais diferentes do que está sendo exibido, além de conter headers que visam reforçar a segurança provida pelo \ac{tls}, como o Strict-Transport-Security, e que permitem definições específicas e bem delimitadas acerca do que e quanto deve aparecer acerca das visitações que a \ac{url} recebeu, com o header Referrer-Policy. 
-
-\begin{figure}[h]
-	\centering
-	\caption{\label{fig_arq_virado}Métricas Security Headers}
-	\includegraphics[width=0.90\textwidth]{anexos/metricas1.png}
-	\label{metricas-1}
-	\fonte{Security Headers, 2022}
-\end{figure}
+A aplicação em Node.js é acessível via protocolo \ac{https} e no site \waUrlTitle{https://securityheaders.com/}{Security Headers}  obteve a nota A tanto para a parte I e II da construção do projeto conforme evidenciam \autoref{metricas-1} e \autoref{securityHeadersII} respectivamente no \autoref{analiseExterna}. Os headers configurados na aplicação contribuem para prevenir ataques como os do tipo \ac{xxs}, ou, clickjacking,  caracterizados pela alteração indevida da interface por atacantes e que confundem o usuário a fim de levá-lo a acessar locais diferentes do que está sendo exibido, além de conter headers que visam reforçar a segurança provida pelo \ac{tls}, como o Strict-Transport-Security, e que permitem definições específicas e bem delimitadas acerca do que e quanto deve aparecer acerca das visitações que a \ac{url} recebeu, com o header Referrer-Policy. 
 
 
-Além disso, o aplicativo obteve nota 'A' no site \waUrlTitle{https://www.ssllabs.com}{SSL Labs} conforme \autoref{metricas-4}, pois conta com o certificado SSL configurado automaticamente pelo Heroku nos aplicativos hospedados na plataforma chamado Automated Certificate Management, o qual implementa o protocolo Let’s Encrypt.
+
+
+Além disso, o aplicativo obteve as notas 'A' para a primeira parte de construção do projeto, como mostra a \autoref{metricas-4} que pode ser encontrada dentro do \autoref{analiseExterna} e na segunda parte de desenvolvimento a nota máxima 'A+' \autoref{SSLLabsII} foi alcançada na   na análise externa do site \waUrlTitle{https://www.ssllabs.com}{SSL Labs}, este conta com o certificado SSL configurado automaticamente pelo Heroku nos aplicativos hospedados na plataforma chamado Automated Certificate Management, o qual implementa o protocolo Let’s Encrypt.
 
 \begin{figure}[h]
 	\centering
-	\caption{\label{fig_arq_virado}Teste Qualys \ac{ssl} Labs}
-	\includegraphics[width=0.90\textwidth]{anexos/metricas4.png}
-	\label{metricas-4}
+	\caption{\label{fig_arq_virado}Teste Qualys Etapa II \ac{ssl} Labs}
+	\includegraphics[width=0.90\textwidth]{anexos/SSLlabsII.png}
+	\label{SSLLabsII}
 	\fonte{Qualys SSL Labs, 2022 }
 \end{figure}
-
 
 \pagebreak
 
