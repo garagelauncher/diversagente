@@ -15,6 +15,8 @@ import { Share } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useMutation } from 'react-query';
 
+import { PostMoreActions } from './PostMoreActions';
+
 import { IncludeInto } from '@src/@types/generics/includeInto';
 import { Like } from '@src/contracts/Like';
 import type { Post as PostData } from '@src/contracts/Post';
@@ -47,6 +49,8 @@ export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
     const post = await diversaGenteServices.findPostById(data.postId);
 
     queryClient.invalidateQueries(['diversagente@posts']);
+    queryClient.invalidateQueries(['diversagente@post']);
+    queryClient.invalidateQueries(['diversagente@likes', post.id]);
     queryClient.setQueryData(['diversagente@posts', post.id], post);
   };
 
@@ -57,6 +61,7 @@ export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
     onSuccess: onSuccessToggleLike,
   });
 
+  const isOwner = user?.id === post.owner.id;
   const isLiking = mutationCreateLike.isLoading || mutationDeleteLike.isLoading;
   const hasLiked = post.likes.length > 0;
 
@@ -129,19 +134,28 @@ export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
       paddingY={5}
       width="100%"
     >
-      <Flex direction="row">
-        <Avatar
-          borderRadius={6}
-          backgroundColor={post.owner.picture ? 'transparent' : 'primary.500'}
-          source={{
-            uri: String(post.owner.picture),
-          }}
-        >
-          {userInitials}
-        </Avatar>
-        <Flex marginLeft={5}>
-          <Text fontWeight={'bold'}>{post.owner.name}</Text>
-          <Text color="gray.500">{formattedCreatedAtDate}</Text>
+      <Flex
+        direction="row"
+        alignItems="flex-start"
+        justifyContent="space-between"
+      >
+        <Flex direction="row" alignItems="center">
+          <Avatar
+            borderRadius={6}
+            backgroundColor={post.owner.picture ? 'transparent' : 'primary.500'}
+            source={{
+              uri: String(post.owner.picture),
+            }}
+          >
+            {userInitials}
+          </Avatar>
+          <Flex marginLeft={5}>
+            <Text fontWeight={'bold'}>{post.owner.name}</Text>
+            <Text color="gray.500">{formattedCreatedAtDate}</Text>
+          </Flex>
+        </Flex>
+        <Flex bg="red">
+          <PostMoreActions isOwner={isOwner} postId={post.id} />
         </Flex>
       </Flex>
 

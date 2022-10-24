@@ -13,17 +13,17 @@ export class SubcategoriesService {
   constructor(private readonly prisma: PrismaService) {}
 
   private async getIconFromSubcategory(subcategoryDto: UpdateSubcategoryDto) {
-    const categoriesIds = subcategoryDto.categoriesIds;
+    const categoryId = subcategoryDto.categoryId;
     const hasCategory =
-      Array.isArray(categoriesIds) && categoriesIds.length > 0;
+      Array.isArray(categoryId) && categoryId.length > 0;
 
     if (hasCategory) {
       const category = await this.prisma.category.findUnique({
-        where: { id: categoriesIds[0] },
+        where: { id: categoryId[0] },
       });
 
       if (!category) {
-        throw new NotFoundException(`Category ${categoriesIds[0]} not found`);
+        throw new NotFoundException(`Category ${categoryId[0]} not found`);
       }
 
       return category.icon;

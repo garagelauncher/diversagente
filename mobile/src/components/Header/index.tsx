@@ -1,4 +1,4 @@
-import { AntDesign, Feather } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import {
   NavigationProp,
   useLinkTo,
@@ -6,12 +6,11 @@ import {
 } from '@react-navigation/native';
 import {
   Avatar,
-  Box,
+  Badge,
   Flex,
   Heading,
   Icon,
   IconButton,
-  Pressable,
   Text,
 } from 'native-base';
 import React, { FunctionComponent } from 'react';
@@ -24,6 +23,9 @@ type HeaderProps = {
   screenName?: string;
   avatar?: string | null;
   subtitle: string;
+  badgeName?: string;
+  navigationToScreenName?: string;
+  navigationParams?: any;
 };
 
 type HeaderNavigationProps = NavigationProp<any>;
@@ -33,6 +35,9 @@ export const Header: FunctionComponent<HeaderProps> = ({
   screenName,
   subtitle,
   avatar,
+  badgeName,
+  navigationToScreenName,
+  navigationParams,
 }) => {
   const userInitials = username ? getUsernameInitials(username) : null;
   const avatarUri = String(avatar);
@@ -42,6 +47,10 @@ export const Header: FunctionComponent<HeaderProps> = ({
   const navigation = useNavigation<HeaderNavigationProps>();
 
   const handleNavigateBack = () => {
+    if (navigationToScreenName) {
+      return navigation.navigate(navigationToScreenName, navigationParams);
+    }
+
     navigation.goBack();
   };
 
@@ -95,27 +104,51 @@ export const Header: FunctionComponent<HeaderProps> = ({
         </>
       )}
       <Flex
-        paddingTop={[screenName ? 4 : 12]}
+        paddingTop={[screenName ? 0 : 8]}
         paddingX={4}
-        paddingBottom={9}
+        paddingBottom={4}
         backgroundColor="darkBlue.700"
-        width="100%"
-        direction="row"
+        flexDirection={'row'}
         justifyContent="space-between"
+        width={'100%'}
       >
-        <Flex padding={4}>
-          {username && <Heading color="white">Olá, {username}</Heading>}
-          {screenName && (
-            <Heading color="white" fontSize={'32'} letterSpacing={0.85}>
-              {screenName}
-            </Heading>
-          )}
-          <Text color="gray.200" marginTop={3} fontSize={16}>
-            {subtitle}
-          </Text>
+        <Flex paddingX={4} paddingY={6} flexDir={'column'} w={'100%'}>
+          <Flex>
+            {username && <Heading color="white">Olá, {username}</Heading>}
+            {screenName && (
+              <Heading
+                paddingRight={4}
+                color="white"
+                fontSize={'32'}
+                letterSpacing={0.85}
+              >
+                {screenName}{' '}
+                {badgeName && (
+                  <Flex justifyContent={'center'}>
+                    <Badge height={8} borderRadius={8}>
+                      <Text
+                        alignItems={'center'}
+                        fontSize={16}
+                        color={'darkBlue.600'}
+                        fontWeight="bold"
+                      >
+                        {badgeName}
+                      </Text>
+                    </Badge>
+                  </Flex>
+                )}
+              </Heading>
+            )}
+          </Flex>
+          <Flex w={'100%'}>
+            <Text color="gray.200" marginTop={3} fontSize={16}>
+              {subtitle}
+            </Text>
+          </Flex>
         </Flex>
+
         {!screenName && (
-          <Flex marginLeft={-12}>
+          <Flex marginLeft={-16} mt={3}>
             <TouchableOpacity onPress={handleNavigationToUserProfile}>
               <Avatar
                 backgroundColor={'orange.500'}

@@ -58,3 +58,22 @@ export const createComment = async ({
     throw error;
   }
 };
+
+export const deleteComment = async (postId: string) => {
+  try {
+    const response = await diversagenteBaseApi.delete<Comment>(
+      `/posts/${postId}/comments/`,
+    );
+
+    return response.data;
+  } catch (error: any) {
+    console.error('error when delete comment');
+    console.error(postId);
+
+    if (error.isAxiosError) {
+      console.error(error.response);
+    }
+
+    throw error;
+  }
+};

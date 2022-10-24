@@ -24,28 +24,33 @@ type Preference {
 }
 
 model User {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  email    String @unique
-  username String @unique
-
-  name String
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  email    String  @unique
+  username String  @unique
+  name     String
+  isActive Boolean @default(value: true)
 
   birthdate           DateTime?
   biograph            String?
   picture             String?
+  deactivationReason  String?
   preferences         Preference?
   lovelyCategoriesIds String[]    @db.ObjectId
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deactivatedAt DateTime?
 
   category Category? @relation(fields: [lovelyCategoriesIds], references: [id])
 
-  Location Location[]
-  Review   Review[]
-  Post     Post[]
-  Like     Like[]
-  Comment  Comment[]
+  Location     Location[]
+  Review       Review[]
+  Post         Post[]
+  Like         Like[]
+  Comment      Comment[]
+  Device       Device[]
+  Notification Notification[]
+  Complaint    Complaint[]
 
   @@map("users")
 }
@@ -79,7 +84,7 @@ model Subcategory {
   category      Category? @relation(fields: [categoriesIds], references: [id])
   categoriesIds String[]  @db.ObjectId
 
-  Post        Post[]
+  Post Post[]
 }
 
 model Like {
@@ -95,11 +100,13 @@ model Like {
 }
 
 model Comment {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  text String
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  text     String
+  isActive Boolean @default(true)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deactivatedAt DateTime?
 
   ownerId String  @db.ObjectId
   postId  String  @db.ObjectId
@@ -109,46 +116,51 @@ model Comment {
   post  Post     @relation(fields: [postId], references: [id])
   reply Comment? @relation(name: "ReplyComment", fields: [replyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
-  replies Comment[] @relation(name: "ReplyComment")
+  replies          Comment[]          @relation(name: "ReplyComment")
+  CommentComplaint CommentComplaint[]
 }
 
 model Post {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  title   String
-  content String
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  title    String
+  content  String
   isActive Boolean @default(true)
 
-  images  String[]
+  images String[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  deletedAt DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deactivatedAt DateTime?
 
-  ownerId String @db.ObjectId
-  categoryId String? @db.ObjectId
+  ownerId       String  @db.ObjectId
+  categoryId    String? @db.ObjectId
   subcategoryId String? @db.ObjectId
 
-  owner User @relation(fields: [ownerId], references: [id])
-  category Category? @relation(fields: [categoryId], references: [id])
+  owner       User         @relation(fields: [ownerId], references: [id])
+  category    Category?    @relation(fields: [categoryId], references: [id])
   subcategory Subcategory? @relation(fields: [subcategoryId], references: [id])
-  
-  likes    Like[]
-  comments Comment[]
+
+  likes         Like[]
+  comments      Comment[]
+  PostComplaint PostComplaint[]
 }
 
 model Review {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  text  String
-  stars Int
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  text     String
+  stars    Int
+  isActive Boolean @default(true)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deactivatedAt DateTime?
 
   ownerId    String @db.ObjectId
   locationId String @db.ObjectId
 
-  owner    User     @relation(fields: [ownerId], references: [id])
-  location Location @relation(fields: [locationId], references: [id])
+  owner           User              @relation(fields: [ownerId], references: [id])
+  location        Location          @relation(fields: [locationId], references: [id])
+  ReviewComplaint ReviewComplaint[]
 }
 
 type Geoposition {
@@ -160,7 +172,8 @@ model Location {
   id    String @id @default(auto()) @map("_id") @db.ObjectId
   title String
 
-  photos String[]
+  photos   String[]
+  isActive Boolean  @default(true)
 
   address     String?
   description String?
@@ -176,7 +189,97 @@ model Location {
   category Category? @relation(fields: [categoriesIds], references: [id])
   owner    User?     @relation(fields: [ownerId], references: [id])
 
-  Review Review[]
+  Review            Review[]
+  LocationComplaint LocationComplaint[]
 
   @@map("locations")
+}
+
+model Device {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  token    String
+  isActive Boolean @default(true)
+  platform String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ownerId String @db.ObjectId
+
+  owner User @relation(fields: [ownerId], references: [id])
+}
+
+model Notification {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  title   String
+  message String
+  data    String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ownerId String @db.ObjectId
+
+  owner User @relation(fields: [ownerId], references: [id])
+}
+
+model Complaint {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  message String?
+  data    String?
+  reason  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ownerId String @db.ObjectId
+
+  owner             User                @relation(fields: [ownerId], references: [id])
+  PostComplaint     PostComplaint[]
+  CommentComplaint  CommentComplaint[]
+  ReviewComplaint   ReviewComplaint[]
+  LocationComplaint LocationComplaint[]
+}
+
+model PostComplaint {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  complaintId String @db.ObjectId
+  postId      String @db.ObjectId
+
+  complaint Complaint @relation(fields: [complaintId], references: [id])
+  post      Post      @relation(fields: [postId], references: [id])
+}
+
+model CommentComplaint {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  complaintId String @db.ObjectId
+  commentId   String @db.ObjectId
+
+  complaint Complaint @relation(fields: [complaintId], references: [id])
+  comment   Comment   @relation(fields: [commentId], references: [id])
+}
+
+model ReviewComplaint {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  complaintId String @db.ObjectId
+  reviewId    String @db.ObjectId
+
+  complaint Complaint @relation(fields: [complaintId], references: [id])
+  review    Review    @relation(fields: [reviewId], references: [id])
+}
+
+model LocationComplaint {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  complaintId String @db.ObjectId
+  locationId  String @db.ObjectId
+
+  complaint Complaint @relation(fields: [complaintId], references: [id])
+  location  Location  @relation(fields: [locationId], references: [id])
 }

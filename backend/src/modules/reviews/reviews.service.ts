@@ -63,9 +63,11 @@ export class ReviewsService {
   }
 
   async remove(id: string) {
-    return await this.prisma.review.delete({
-      where: {
-        id,
+    return await this.prisma.review.update({
+      where: { id },
+      data: {
+        deactivatedAt: new Date().toISOString(),
+        isActive: false,
       },
     });
   }

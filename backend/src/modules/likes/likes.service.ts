@@ -1,6 +1,7 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/shared/database/prisma.service';
+import { PushNotificationsService } from 'src/shared/services/push-notifications/push-notifications.service';
 import {
   PaginateOptions,
   parsePaginationToPrisma,
@@ -11,7 +12,53 @@ import { Like } from './entities/like.entity';
 
 @Injectable()
 export class LikesService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly pushNotificationsService: PushNotificationsService,
+  ) {}
+
+  fireAndForgetLikeNotification(like: Like) {
+    this.notifyUserAboutLike(like);
+  }
+
+  async notifyUserAboutLike(like: Like) {
+    const { postId } = like;
+
+    const post = await this.prisma.post.findUnique({
+      where: { id: postId },
+      include: {
+        owner: {
+          select: {
+            id: true,
+            name: true,
+            preferences: true,
+          },
+        },
+      },
+    });
+
+    if (!post) {
+      throw new NotFoundException(`Post ${postId} was not found`);
+    }
+
+    const deviceTokens = await this.prisma.device.findMany({
+      where: {
+        ownerId: post.owner.id,
+      },
+    });
+
+    const tokens = deviceTokens.map((device) => device.token);
+
+    console.log(tokens);
+    console.log({
+      title: 'Nova curtida',
+      body: `${post.owner.name} curtiu seu post`,
+    });
+    this.pushNotificationsService.sendPushNotifications(tokens, {
+      title: 'Nova curtida',
+      body: `${post.owner.name} curtiu seu post`,
+    });
+  }
 
   create(createLikeDto: Like) {
     return this.prisma.like.create({ data: createLikeDto });

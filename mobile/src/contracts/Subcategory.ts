@@ -5,4 +5,13 @@ export interface Subcategory {
   createdAt: string;
   updatedAt: string;
   categoriesIds: string[];
+  description: string;
+  icon: string;
+}
+
+export interface SubcategoryForm {
+  name: string;
+  title: string;
+  description: string;
+  categoriesIds: [string];
 }
