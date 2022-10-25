@@ -10,6 +10,7 @@ export type FormInputProps = TextInputProps & {
   hasImage?: boolean;
   isTextArea: boolean;
   error?: FieldError;
+  inputVariant?: 'underlined' | 'outline';
 };
 
 export function FormInput({
@@ -19,13 +20,14 @@ export function FormInput({
   isTextArea,
   hasImage,
   error,
+  inputVariant = 'outline',
   ...rest
 }: FormInputProps) {
   return (
     <SafeAreaView>
       <VStack>
         <FormControl.Label isRequired={!hasImage ? true : false}>
-          <Text fontSize="18" fontWeight="bold" marginBottom="2">
+          <Text fontSize="16" fontWeight="bold" color={'gray.500'}>
             {label}
           </Text>
         </FormControl.Label>
@@ -34,9 +36,10 @@ export function FormInput({
             <Input
               borderColor={[error ? 'red.500' : 'blue.800']}
               size="md"
-              lineHeight={0.85}
+              variant={inputVariant}
               placeholder={placeholder}
               value={value}
+              alignItems="center"
               {...rest}
             />
           </Stack>
@@ -48,6 +51,7 @@ export function FormInput({
               borderColor={[error ? 'red.500' : 'blue.800']}
               lineHeight={0.85}
               size="md"
+              mt={4}
               placeholder={placeholder}
               autoCompleteType="off"
               {...rest}
