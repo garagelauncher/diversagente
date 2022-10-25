@@ -14,13 +14,7 @@ export const EditPersonalInformation = () => {
   return (
     <ScrollView>
       <VStack width={'100%'} height={500} marginTop={100}>
-        <Text
-          fontSize={'2xl'}
-          textAlign={'center'}
-          marginTop={100}
-          bold
-          color={theme.colors.warmGray700}
-        >
+        <Text fontSize={'2xl'} textAlign={'center'} marginTop={100} bold>
           {'Editar informações\npessoais'}
         </Text>
         <FormControl mb={5}>

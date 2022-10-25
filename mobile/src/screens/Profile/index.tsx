@@ -1,6 +1,8 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 import { AntDesign, SimpleLineIcons, FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { Header } from '@react-navigation/stack';
 import axios from 'axios';
 import { isLoading } from 'expo-font';
 import * as ExpoLocation from 'expo-location';
@@ -19,9 +21,12 @@ import {
   ScrollView,
   Skeleton,
   Spinner,
+  Container,
+  HamburgerIcon,
+  Menu,
 } from 'native-base';
 import React, { useEffect, useState } from 'react';
-import { Alert, FlatList, TouchableOpacity } from 'react-native';
+import { Alert, FlatList, Pressable } from 'react-native';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
 import { LoadingFallback } from '@src/components/LoadingFallback';
@@ -29,11 +34,18 @@ import { Post, UserHasInteracted } from '@src/components/Post';
 import { PER_PAGE_ITEMS, userIdHelper } from '@src/configs';
 import { usePosts } from '@src/hooks/queries/usePosts';
 import { useAuth } from '@src/hooks/useAuth';
+import { StackProfileNavigatorParamList } from '@src/routes/stacks/profileStack.routes';
+
+type ProfileScreenNavigationProps = NavigationProp<
+  StackProfileNavigatorParamList,
+  'EditPersonalInformation'
+>;
 
 export const Profile = () => {
   const { signOut, user, setUser } = useAuth();
 
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
+  const [isHeaderVisible, setIsHeaderVisible] = useState<boolean>(true);
 
   const [bio, setBio] = useState<string>();
   const [name, setName] = useState<string>();
@@ -110,6 +122,15 @@ export const Profile = () => {
     refetch();
   };
 
+  const hideHeader = () => {
+    setIsHeaderVisible(false);
+  };
+
+  const showHeader = () => {
+    console.log('teste');
+    setIsHeaderVisible(true);
+  };
+
   const verifyDateSinceMember = () => {
     const currentISODate = new Date().toISOString();
     const creationISODate = new Date(user?.createdAt?.toLocaleString() ?? '');
@@ -121,7 +142,7 @@ export const Profile = () => {
     const diffInMilliseconds =
       new Date(currentISODate).getTime() - new Date(creationISODate).getTime();
 
-    const diffInDays = Math.round(diffInMilliseconds / dayUnitInMilliseconds);
+    let diffInDays = Math.round(diffInMilliseconds / dayUnitInMilliseconds);
     const diffInMonths = Math.round(
       diffInMilliseconds / monthUnitInMilliseconds,
     );
@@ -136,8 +157,18 @@ export const Profile = () => {
     console.log('monthUnitInMilliseconds', diffInMonths);
     console.log('diffInYears', diffInYears);
 
+    if (diffInDays <= 0) {
+      diffInDays = 1;
+    }
+
     return diffInDays;
   };
+
+  const navigation = useNavigation<ProfileScreenNavigationProps>();
+
+  function handleNavigateToEditProfileInfo() {
+    navigation.navigate('EditPersonalInformation');
+  }
 
   const {
     data,
@@ -165,139 +196,149 @@ export const Profile = () => {
 
   return (
     <>
-      <ScrollView>
-        <Flex>
-          <Flex alignItems="center" mt={statusBarHeight + 30}>
-            <Flex flexDir={'row'} justifyContent={'flex-end'} w={'90%'}>
-              <TouchableOpacity>
-                <Ionicons name="settings-outline" size={32} color="black" />
-              </TouchableOpacity>
-            </Flex>
-            <Flex flexDir={'row'} px={4}>
-              <Box px={2}>
-                <Avatar
-                  alignSelf="center"
-                  size="xl"
-                  source={{
-                    uri: picture,
-                  }}
-                />
-              </Box>
-              <Box px={2} mt={2} w={'70%'}>
-                <Heading>{user?.name}</Heading>
-                <Text>
-                  {user?.bio}Lorem Ipsum is simply dummy text of the printing
-                  and typesetting industry. Lorem Ipsum has been the industrys
-                  standard dummy text ever since the 1500s,
-                </Text>
-              </Box>
-            </Flex>
-
-            <Box
-              w={'85%'}
-              mt={10}
-              mb={8}
-              h={24}
-              borderRadius={10}
-              bgColor={'darkBlue.600'}
-              padding={4}
+      <Flex>
+        <Flex alignItems="center" mt={statusBarHeight + 38}>
+          <Flex flexDir={'row'} justifyContent={'flex-end'} w={'90%'}>
+            <Menu
+              mt={1}
+              mx={4}
+              trigger={(triggerProps) => {
+                return (
+                  <Pressable
+                    accessibilityLabel="Opções do perfil"
+                    {...triggerProps}
+                  >
+                    <Ionicons name="settings-outline" size={32} color="black" />
+                  </Pressable>
+                );
+              }}
             >
-              <SimpleGrid ml={3} columns={3} space={4} w={'90%'}>
-                <Flex flexDir={'column'} alignItems={'center'}>
-                  <Text
-                    opacity={1}
-                    color={'white'}
-                    fontWeight={'bold'}
-                    fontSize={18}
-                  >
-                    1548
-                  </Text>
-                  <Text
-                    color={'white'}
-                    fontWeight={'bold'}
-                    fontSize={14}
-                    mt={2}
-                  >
-                    postagens feitas
-                  </Text>
-                </Flex>
-                <Divider
-                  bg="white"
-                  thickness="2"
-                  mx="2"
-                  orientation="vertical"
-                />
-                <Flex flexDir={'column'} alignItems={'center'}>
-                  <Text
-                    color={'white'}
-                    fontWeight={'bold'}
-                    fontSize={18}
-                    opacity={1}
-                    zIndex={1}
-                  >
-                    {verifyDateSinceMember()}
-                  </Text>
-                  <Text
-                    mt={2}
-                    color={'white'}
-                    fontWeight={'bold'}
-                    fontSize={14}
-                  >
-                    dias como membro
-                  </Text>
-                </Flex>
-              </SimpleGrid>
+              <Menu.Item onPress={handleNavigateToEditProfileInfo}>
+                Editar dados da conta
+              </Menu.Item>
+            </Menu>
+          </Flex>
+
+          <Flex flexDir={'row'} px={4}>
+            <Box px={2}>
+              <Avatar
+                alignSelf="center"
+                size="xl"
+                source={{
+                  uri: picture,
+                }}
+              />
+            </Box>
+            <Box px={2} mt={2} w={'70%'}>
+              <Heading>{user?.name}</Heading>
+              <Text>{user?.bio === '' ? '🙂' : user?.bio}</Text>
             </Box>
           </Flex>
-        </Flex>
 
-        <Heading px={8} py={2}>
-          Postagens de {userFirstname}
-        </Heading>
-        <Flex mb={-80}>
-          <LoadingFallback
-            isLoading={isLoading}
-            fallback={
-              <VStack space={6}>
-                <Skeleton width="100%" height={200} />
-                <Skeleton width="100%" height={200} />
-                <Skeleton width="100%" height={200} />
-              </VStack>
-            }
+          <Box
+            w={'85%'}
+            mt={10}
+            mb={4}
+            py={4}
+            h={24}
+            borderRadius={10}
+            borderWidth={2}
+            borderColor={'darkBlue.600'}
+            padding={2}
           >
-            <FlatList
-              data={data?.pages.map((page) => page.results).flat()}
-              renderItem={({ item }) => (
-                <Box marginBottom={4}>
-                  <Post post={item} isPreview />
-                </Box>
-              )}
-              keyExtractor={(item) => item.id}
-              contentContainerStyle={{ paddingBottom: 350 }}
-              onEndReached={handleLoadMorePosts}
-              onEndReachedThreshold={0.85}
-              refreshing={isRefetching && !isFetchingNextPage}
-              onRefresh={handlePullPostListToRefresh}
-              ListFooterComponent={
-                <LoadingFallback
-                  fallback={<Spinner color="orange.500" size="lg" />}
-                  isLoading={isFetchingNextPage}
+            <SimpleGrid ml={3} columns={3} space={4} w={'90%'}>
+              <Flex flexDir={'column'} alignItems={'center'}>
+                <Text
+                  opacity={1}
+                  color={'darkBlue.600'}
+                  fontWeight={'bold'}
+                  fontSize={18}
                 >
-                  <Flex
-                    width="100%"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <Text color="gray.500">
-                      Não há mais postagens para esse usuário.
-                    </Text>
-                  </Flex>
-                </LoadingFallback>
-              }
-            />
-          </LoadingFallback>
+                  15
+                </Text>
+                <Text
+                  color={'darkBlue.600'}
+                  fontWeight={'bold'}
+                  fontSize={14}
+                  mt={2}
+                >
+                  postagens criadas
+                </Text>
+              </Flex>
+              <Divider
+                bg={'darkBlue.600'}
+                thickness="2"
+                mx="2"
+                orientation="vertical"
+              />
+              <Flex flexDir={'column'} alignItems={'center'}>
+                <Text
+                  color={'darkBlue.600'}
+                  fontWeight={'bold'}
+                  fontSize={18}
+                  opacity={1}
+                  zIndex={1}
+                >
+                  {verifyDateSinceMember()}
+                </Text>
+                <Text
+                  mt={2}
+                  color={'darkBlue.600'}
+                  fontWeight={'bold'}
+                  fontSize={14}
+                >
+                  dias como membro
+                </Text>
+              </Flex>
+            </SimpleGrid>
+          </Box>
         </Flex>
-      </ScrollView>
+      </Flex>
+
+      <Heading fontSize={20} px={8} py={6} pt={4} fontWeight="medium">
+        Postagens de {userFirstname}
+      </Heading>
+      <Flex mb={20}>
+        <LoadingFallback
+          isLoading={isLoading}
+          fallback={
+            <VStack space={6}>
+              <Skeleton width="100%" height={200} />
+              <Skeleton width="100%" height={200} />
+              <Skeleton width="100%" height={200} />
+            </VStack>
+          }
+        >
+          <FlatList
+            data={data?.pages.map((page) => page.results).flat()}
+            renderItem={({ item }) => (
+              <Box marginBottom={4}>
+                <Post post={item} isPreview />
+              </Box>
+            )}
+            keyExtractor={(item) => item.id}
+            contentContainerStyle={{ paddingBottom: 350 }}
+            onEndReached={handleLoadMorePosts}
+            onEndReachedThreshold={0.85}
+            refreshing={isRefetching && !isFetchingNextPage}
+            onRefresh={handlePullPostListToRefresh}
+            onScroll={hideHeader}
+            onScrollToTop={showHeader}
+            ListFooterComponent={
+              <LoadingFallback
+                fallback={<Spinner color="orange.500" size="lg" />}
+                isLoading={isFetchingNextPage}
+              >
+                <Flex width="100%" alignItems="center" justifyContent="center">
+                  <Text color="gray.500">
+                    Não há mais postagens para esse usuário.
+                  </Text>
+                </Flex>
+              </LoadingFallback>
+            }
+          />
+        </LoadingFallback>
+      </Flex>
     </>
   );
 };
