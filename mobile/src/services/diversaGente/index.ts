@@ -1,6 +1,7 @@
 import { diversagenteBaseApi, setAuthToken, clearAuthToken } from './baseUrl';
 import * as categoriesMethods from './categories';
 import * as commentsMethods from './comments';
+import * as complaintsMethods from './complaints';
 import * as devicesMethods from './devices';
 import * as likesMethods from './likes';
 import * as locationsMethods from './locations';
@@ -18,4 +19,5 @@ export const diversaGenteServices = {
   ...likesMethods,
   ...commentsMethods,
   ...devicesMethods,
+  ...complaintsMethods,
 };
