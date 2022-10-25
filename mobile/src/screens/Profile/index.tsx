@@ -214,7 +214,7 @@ export const Profile = () => {
               }}
             >
               <Menu.Item onPress={handleNavigateToEditProfileInfo}>
-                Editar dados da conta
+                Editar perfil
               </Menu.Item>
             </Menu>
           </Flex>
