@@ -33,4 +33,11 @@ export type CreateCommentDTO = {
   postId: string;
 };
 
+export type UpdateCommentDTO = {
+  text: string;
+  postId: string;
+  commentId: string;
+};
+
 export type CreateCommentForm = Pick<CreateCommentDTO, 'text'>;
+export type UpdateCommentForm = Pick<UpdateCommentDTO, 'text'>;

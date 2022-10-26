@@ -129,9 +129,15 @@ export const PostDetails = () => {
         </LoadingFallback>
 
         <ConditionallyRender
-          condition={isLoadedNoComment}
+          condition={isLoading}
           trueComponent={<></>}
-          falseComponent={<Heading>Último comentário</Heading>}
+          falseComponent={
+            <ConditionallyRender
+              condition={isLoadedNoComment}
+              trueComponent={<></>}
+              falseComponent={<Heading>Último comentário</Heading>}
+            />
+          }
         />
 
         <ConditionallyRender

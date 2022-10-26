@@ -26,15 +26,20 @@ export class SubcategoriesService {
         throw new NotFoundException(`Category ${categoriesIds[0]} not found`);
       }
 
-      return category.icon;
+      return {
+        icon: category.icon,
+        provider: category.iconProvider,
+      };
     }
 
     return null;
   }
 
   async create(createSubcategoryDto: CreateSubcategoryDto) {
+    const category = await this.getIconFromSubcategory(createSubcategoryDto);
     Object.assign(createSubcategoryDto, {
-      icon: await this.getIconFromSubcategory(createSubcategoryDto),
+      icon: category?.icon,
+      iconProvider: category?.provider,
     });
 
     return await this.prisma.subcategory.create({ data: createSubcategoryDto });
@@ -62,8 +67,10 @@ export class SubcategoriesService {
   }
 
   async update(id: string, updateSubcategoryDto: UpdateSubcategoryDto) {
+    const category = await this.getIconFromSubcategory(updateSubcategoryDto);
     Object.assign(updateSubcategoryDto, {
-      icon: await this.getIconFromSubcategory(updateSubcategoryDto),
+      icon: category?.icon,
+      iconProvider: category?.provider,
     });
 
     return await this.prisma.subcategory.update({

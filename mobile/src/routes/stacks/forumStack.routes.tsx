@@ -19,6 +19,8 @@ export type StackForumNavigatorParamList = {
   SelectSubcategory: {
     categoryId?: string;
     categoryTitle?: string;
+    icon?: string;
+    iconProvider?: string;
   };
   Subcategory: {
     subcategoryId?: string;
