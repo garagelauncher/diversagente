@@ -64,7 +64,7 @@ export const findPostById = async <GenericIncluded extends object = object>(
     const post = response.data;
     return post;
   } catch (error: any) {
-    console.error('error when fetchi post', id);
+    console.error('error when fetch post', id);
 
     if (error.isAxiosError) {
       console.error(error.response);
@@ -74,13 +74,30 @@ export const findPostById = async <GenericIncluded extends object = object>(
   }
 };
 
+export const updatePostById = async (postId: string, data: Partial<Post>) => {
+  try {
+    const response = await diversagenteBaseApi.patch<Post>(`/posts/${postId}`);
+
+    return response.data;
+  } catch (error: any) {
+    console.error('error when patch post');
+    console.error(postId);
+
+    if (error.isAxiosError) {
+      console.error(error.response);
+    }
+
+    throw error;
+  }
+}
+
 export const deletePostById = async (postId: string) => {
   try {
     const response = await diversagenteBaseApi.delete<Post>(`/posts/${postId}`);
 
     return response.data;
   } catch (error: any) {
-    console.error('error when delete comment');
+    console.error('error when delete post');
     console.error(postId);
 
     if (error.isAxiosError) {
