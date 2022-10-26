@@ -74,6 +74,14 @@ export const PostMoreActions: FunctionComponent<PostMoreActionsProps> = ({
     setIsModalVisible(true);
   };
 
+  const handleActivateEditMode = () => {
+    onActivatePostEditMode();
+    toast.show({
+      description: 'Modo de edição',
+      background: 'blue.400',
+    });
+  };
+
   const handleCopyToClipboard = useCallback(async () => {
     await clipboard.onCopy(`https://diversagente.com.br/post/${postId}`);
     toast.show({
@@ -138,7 +146,7 @@ export const PostMoreActions: FunctionComponent<PostMoreActionsProps> = ({
             <PostActionMenuItem
               icon="edit"
               label="Editar conteúdo"
-              onPress={onActivatePostEditMode}
+              onPress={handleActivateEditMode}
             />
           }
           falseComponent={<></>}
