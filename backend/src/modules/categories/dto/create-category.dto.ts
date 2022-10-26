@@ -11,5 +11,8 @@ export class CreateCategoryDto {
   icon?: string;
 
   @ApiProperty()
+  iconProvider?: string;
+
+  @ApiProperty()
   description?: string;
 }
