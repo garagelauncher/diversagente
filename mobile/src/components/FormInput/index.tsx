@@ -52,6 +52,7 @@ export function FormInput({
               lineHeight={0.85}
               size="md"
               mt={4}
+              py={6}
               placeholder={placeholder}
               autoCompleteType="off"
               {...rest}
