@@ -35,6 +35,7 @@ import { useCategories } from '@src/hooks/queries/useCategories';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackProfileNavigatorParamList } from '@src/routes/stacks/profileStack.routes';
 import { theme } from '@src/styles/theme';
+import { UserEditForm } from '@src/contracts/User';
 
 type ProfileScreenNavigationProps = NavigationProp<
   StackProfileNavigatorParamList,
@@ -48,7 +49,7 @@ export const EditPersonalInformation = () => {
   const [isPreferencesAtAppOpen, setPreferencesAtAppOpen] = useState(false);
   const [isSecurityAndPrivacyOpen, setSecurityAndPrivacyOpen] = useState(false);
 
-  const [isPortugueseSelected, setPortugueseSelected] = useState(true);
+  const [isPortugueseSelected, setPortugueseSelected] = useState(false);
   const [isEnglishSelected, setEnglishSeselected] = useState(false);
 
   const schema = yup.object({
@@ -59,21 +60,24 @@ export const EditPersonalInformation = () => {
       .required('Nome é obrigatório.'),
     biograph: yup
       .string()
-      .min(25, 'A descrição deve conter no mínimo 50 caracteres')
+      .min(25, 'A descrição deve conter no mínimo 25 caracteres')
       .max(100, 'A descrição deve conter no máximo 100 caracteres')
       .required('Descrição é obrigatória.'),
-    lovelyCategories: yup
+    lovelyCategoriesIds: yup
       .array()
-      .min(1, 'Selecione pelo menos uma categoria de interesse.'),
+      .min(1, 'Selecione pelo menos uma categoria de interesse.')
+      .required('Por favor, selecione ao menos uma categoria.'),
+    language: yup
+      .string()
+      .required(),
   });
 
   const {
     control,
     handleSubmit,
     reset,
-    register,
     formState: { errors },
-  } = useForm<any>({
+  } = useForm<UserEditForm>({
     resolver: yupResolver(schema),
   });
 
@@ -93,8 +97,7 @@ export const EditPersonalInformation = () => {
 
   const handlePortugueseSelection = () => {
     setPortugueseSelected(!isPortugueseSelected);
-
-    setEnglishSeselected(true);
+    setEnglishSeselected(false);
   };
 
   const handleEnglishSelection = () => {
@@ -106,28 +109,28 @@ export const EditPersonalInformation = () => {
     navigation.navigate('Profile', { userId: user?.id as string });
   };
 
-  type Checkbox = {
+  type CheckboxType = {
     title: string;
-    value: string;
+    categoryId: string;
   };
 
   const lovelyCategories: string[] = [];
-  function CheckboxComponent({ value, title }: Checkbox) {
+  function CheckboxComponent({ categoryId, title }: CheckboxType) {
     const [checked, setChecked] = useState(false);
 
     const handleLovelyCategories = (value: string) => {
       setChecked(!checked);
-      verifyIfShouldAddToLovelyCategories(value, checked);
+      verifyIfShouldAddToLovelyCategories(categoryId, checked);
     };
 
     const verifyIfShouldAddToLovelyCategories = (
-      value: string,
+      categoryId: string,
       isChecked: boolean,
     ) => {
       if (!isChecked) {
-        lovelyCategories.push(value);
+        lovelyCategories.push(categoryId);
       } else {
-        lovelyCategories.splice(lovelyCategories.indexOf(value), 1);
+        lovelyCategories.splice(lovelyCategories.indexOf(categoryId), 1);
       }
     };
 
@@ -225,7 +228,7 @@ export const EditPersonalInformation = () => {
                   label={'Biografia'}
                   defaultValue={user?.bio ?? '🙂'}
                   isTextArea={true}
-                  placeholder="Caracteres: máximo de 240 e mínimo de 50"
+                  placeholder="Caracteres: máximo de 100 e mínimo de 25"
                 ></ControlledInput>
               </Box>
             </Collapse>
@@ -272,7 +275,7 @@ export const EditPersonalInformation = () => {
                       .map((category) => (
                         <Box key={category.id} mb={2}>
                           <CheckboxComponent
-                            value={category.name}
+                            value={category.id}
                             title={category.title}
                           />
                         </Box>
