@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 import { AntDesign, SimpleLineIcons, FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Header } from '@react-navigation/stack';
 import axios from 'axios';
@@ -26,7 +27,7 @@ import {
   Menu,
 } from 'native-base';
 import React, { useEffect, useState } from 'react';
-import { Alert, FlatList, Pressable } from 'react-native';
+import { Alert, FlatList, Pressable, TouchableOpacity } from 'react-native';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
 import { LoadingFallback } from '@src/components/LoadingFallback';
@@ -34,12 +35,11 @@ import { Post, UserHasInteracted } from '@src/components/Post';
 import { PER_PAGE_ITEMS, userIdHelper } from '@src/configs';
 import { usePosts } from '@src/hooks/queries/usePosts';
 import { useAuth } from '@src/hooks/useAuth';
-import { Feather } from '@expo/vector-icons';
 import { StackProfileNavigatorParamList } from '@src/routes/stacks/profileStack.routes';
 
 type ProfileScreenNavigationProps = NavigationProp<
   StackProfileNavigatorParamList,
-  'EditPersonalInformation'
+  'EditProfile'
 >;
 
 export const Profile = () => {
@@ -168,7 +168,7 @@ export const Profile = () => {
   const navigation = useNavigation<ProfileScreenNavigationProps>();
 
   function handleNavigateToEditProfileInfo() {
-    navigation.navigate('EditPersonalInformation');
+    navigation.navigate('EditProfile');
   }
 
   const {
@@ -214,18 +214,23 @@ export const Profile = () => {
                 );
               }}
             >
-              <Flex flexDir={'row'} justifyContent={'space-between'}>
-              <Feather name="edit-3" size={14} color={'gray.500'} />
               <Menu.Item onPress={handleNavigateToEditProfileInfo}>
-                Editar perfil
+                <Flex flexDir={'row'} justifyContent={'space-between'}>
+                  <Feather name="edit" size={22} color="gray" />
+                  <Text ml={4} fontSize={14} fontWeight={'bold'}>
+                    Editar perfil
+                  </Text>
+                </Flex>
               </Menu.Item>
-              </Flex>
-              <Flex flexDir={'row'} justifyContent={'space-between'}>
-              <Feather name="log-out" size={16} color="black" />
+
               <Menu.Item onPress={handleLogout}>
-                Sair da conta
+                <Flex flexDir={'row'} justifyContent={'space-between'}>
+                  <Feather name="log-out" size={22} color="gray" />
+                  <Text fontSize={14} fontWeight={'bold'}>
+                    Sair da conta
+                  </Text>
+                </Flex>
               </Menu.Item>
-              </Flex>
             </Menu>
           </Flex>
 
