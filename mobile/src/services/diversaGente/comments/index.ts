@@ -59,7 +59,7 @@ export const createComment = async ({
   }
 };
 
-export const deleteComment = async (postId: string) => {
+export const deleteCommentById = async (postId: string) => {
   try {
     const response = await diversagenteBaseApi.delete<Comment>(
       `/posts/${postId}/comments/`,

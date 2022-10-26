@@ -166,7 +166,7 @@ export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
             <Text color="gray.500">{formattedCreatedAtDate}</Text>
           </Flex>
         </Flex>
-        <Flex bg="red">
+        <Flex>
           <PostMoreActions
             isOwner={isOwner}
             postId={post.id}
