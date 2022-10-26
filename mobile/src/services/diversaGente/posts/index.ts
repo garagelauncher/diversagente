@@ -74,14 +74,20 @@ export const findPostById = async <GenericIncluded extends object = object>(
   }
 };
 
-export const updatePostById = async (postId: string, data: Partial<Post>) => {
+export const updatePostById = async ({
+  id,
+  ...data
+}: Partial<Post> & Required<Pick<Post, 'id'>>): Promise<Post> => {
   try {
-    const response = await diversagenteBaseApi.patch<Post>(`/posts/${postId}`);
+    const response = await diversagenteBaseApi.patch<Post>(
+      `/posts/${id}`,
+      data,
+    );
 
     return response.data;
   } catch (error: any) {
     console.error('error when patch post');
-    console.error(postId);
+    console.error(id);
 
     if (error.isAxiosError) {
       console.error(error.response);
@@ -89,7 +95,7 @@ export const updatePostById = async (postId: string, data: Partial<Post>) => {
 
     throw error;
   }
-}
+};
 
 export const deletePostById = async (postId: string) => {
   try {
