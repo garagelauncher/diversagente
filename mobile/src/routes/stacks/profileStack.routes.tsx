@@ -9,7 +9,7 @@ import { EditProfile } from '@src/screens/Profile/EditProfile';
 export type StackProfileNavigatorParamList = {
   Messages: undefined;
   Profile: { userId: string };
-  EditPersonalInformation: undefined;
+  EditProfile: undefined;
 };
 
 const { Navigator, Screen } =
@@ -22,10 +22,9 @@ export const StackProfilePrivateRoutes = () => (
     }}
   >
     <Screen name="Profile" component={Profile} />
-    {/* <Screen name="Profile" component={EditProfile} /> */}
     <Screen
-      name="EditPersonalInformation"
-      component={EditPersonalInformation}
+      name="EditProfile"
+      component={EditProfile}
     />
     {/* <Screen name="Profile" component={Notifications} /> */}
     {/* <Screen name="Profile" component={AllowLocation} /> */}
