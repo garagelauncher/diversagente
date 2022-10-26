@@ -16,6 +16,7 @@ import {
 import React, { FunctionComponent } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import { getIconProviderByName } from '@src/utils/getIconProvider';
 import { getUsernameInitials } from '@src/utils/getUsernameInitials';
 
 type HeaderProps = {
@@ -26,6 +27,8 @@ type HeaderProps = {
   badgeName?: string;
   navigationToScreenName?: string;
   navigationParams?: any;
+  icon?: string;
+  iconProvider?: string;
 };
 
 type HeaderNavigationProps = NavigationProp<any>;
@@ -38,6 +41,8 @@ export const Header: FunctionComponent<HeaderProps> = ({
   badgeName,
   navigationToScreenName,
   navigationParams,
+  icon,
+  iconProvider,
 }) => {
   const userInitials = username ? getUsernameInitials(username) : null;
   const avatarUri = String(avatar);
@@ -113,7 +118,11 @@ export const Header: FunctionComponent<HeaderProps> = ({
         width={'100%'}
       >
         <Flex paddingX={4} paddingY={6} flexDir={'column'} w={'100%'}>
-          <Flex>
+          <Flex
+            flexDirection={'row'}
+            justifyContent={'space-between'}
+            alignItems={'center'}
+          >
             {username && <Heading color="white">Olá, {username}</Heading>}
             {screenName && (
               <Heading
@@ -138,6 +147,17 @@ export const Header: FunctionComponent<HeaderProps> = ({
                   </Flex>
                 )}
               </Heading>
+            )}
+            {icon && (
+              <IconButton
+                variant={'ghost'}
+                size={'lg'}
+                _icon={{
+                  as: getIconProviderByName(iconProvider),
+                  name: icon,
+                  color: 'white',
+                }}
+              />
             )}
           </Flex>
           <Flex w={'100%'}>
