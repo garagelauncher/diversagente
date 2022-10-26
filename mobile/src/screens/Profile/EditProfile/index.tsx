@@ -23,19 +23,20 @@ import {
   List,
   Checkbox,
   Switch,
+  Select,
 } from 'native-base';
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { useForm } from 'react-hook-form';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import * as yup from 'yup';
 
 import { ControlledInput } from '@src/components/ControlledInput';
+import { UserEditForm } from '@src/contracts/User';
 import { useCategories } from '@src/hooks/queries/useCategories';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackProfileNavigatorParamList } from '@src/routes/stacks/profileStack.routes';
 import { theme } from '@src/styles/theme';
-import { UserEditForm } from '@src/contracts/User';
 
 type ProfileScreenNavigationProps = NavigationProp<
   StackProfileNavigatorParamList,
@@ -43,7 +44,7 @@ type ProfileScreenNavigationProps = NavigationProp<
 >;
 
 export const EditProfile = () => {
-  const { user } = useAuth();
+  const { signOut, user, setUser } = useAuth();
   const { data, isLoading } = useCategories();
   const [isPersonalInfoOpen, setPersonalInfoOpen] = useState(true);
   const [isPreferencesAtAppOpen, setPreferencesAtAppOpen] = useState(false);
@@ -67,9 +68,7 @@ export const EditProfile = () => {
       .array()
       .min(1, 'Selecione pelo menos uma categoria de interesse.')
       .required('Por favor, selecione ao menos uma categoria.'),
-    language: yup
-      .string()
-      .required(),
+    language: yup.string().required(),
   });
 
   const {
@@ -95,12 +94,19 @@ export const EditProfile = () => {
     setSecurityAndPrivacyOpen(!isSecurityAndPrivacyOpen);
   };
 
+  const handleLanguageChange = () => {
+    setPortugueseSelected(!isPortugueseSelected);
+    setEnglishSeselected(!isEnglishSelected);
+  };
+
   const handlePortugueseSelection = () => {
+    console.log('Portuguese selected', isPortugueseSelected);
     setPortugueseSelected(!isPortugueseSelected);
     setEnglishSeselected(false);
   };
 
   const handleEnglishSelection = () => {
+    console.log('english', isEnglishSelected);
     setEnglishSeselected(!isEnglishSelected);
     setPortugueseSelected(false);
   };
@@ -109,43 +115,15 @@ export const EditProfile = () => {
     navigation.navigate('Profile', { userId: user?.id as string });
   };
 
-  type CheckboxType = {
+  type CategoriesCheckboxType = {
     title: string;
     categoryId: string;
   };
 
-  const lovelyCategories: string[] = [];
-  function CheckboxComponent({ categoryId, title }: CheckboxType) {
-    const [checked, setChecked] = useState(false);
-
-    const handleLovelyCategories = (value: string) => {
-      setChecked(!checked);
-      verifyIfShouldAddToLovelyCategories(categoryId, checked);
-    };
-
-    const verifyIfShouldAddToLovelyCategories = (
-      categoryId: string,
-      isChecked: boolean,
-    ) => {
-      if (!isChecked) {
-        lovelyCategories.push(categoryId);
-      } else {
-        lovelyCategories.splice(lovelyCategories.indexOf(categoryId), 1);
-      }
-    };
-
-    console.log(lovelyCategories);
-
-    return (
-      <Checkbox
-        isChecked={checked}
-        onChange={() => handleLovelyCategories(value)}
-        value={value}
-      >
-        <Text ml={2}>{title}</Text>
-      </Checkbox>
-    );
-  }
+  type LanguageCheckboxType = {
+    title: string;
+    languageId: string;
+  };
 
   return (
     <ScrollView>
@@ -256,32 +234,7 @@ export const EditProfile = () => {
             <Collapse isOpen={isPreferencesAtAppOpen} mt={2} w={'100%'}>
               <Box mb={6}>
                 <Flex>
-                  <FormControl.Label isRequired>
-                    <Text
-                      mb={2}
-                      fontSize="16"
-                      fontWeight="bold"
-                      color={'gray.500'}
-                    >
-                      Categorias de interesse
-                    </Text>
-                  </FormControl.Label>
-
-                  {!isLoading &&
-                    data &&
-                    data?.pages
-                      .map((page) => page.results)
-                      .flat()
-                      .map((category) => (
-                        <Box key={category.id} mb={2}>
-                          <CheckboxComponent
-                            value={category.id}
-                            title={category.title}
-                          />
-                        </Box>
-                      ))}
-
-                  <FormControl.Label isRequired>
+                  <FormControl.Label mt={2} isRequired>
                     <Text
                       mb={2}
                       fontSize="16"
@@ -291,24 +244,10 @@ export const EditProfile = () => {
                       Idioma
                     </Text>
                   </FormControl.Label>
-                  <Flex flexDir={'row'} alignItems={'center'}>
-                    <Text>Português</Text>
-                    <Switch
-                      value={isPortugueseSelected}
-                      onValueChange={handlePortugueseSelection}
-                      offTrackColor="gray.200"
-                      onTrackColor="lime.200"
-                    />
-                  </Flex>
-                  <Flex flexDir={'row'} alignItems={'center'}>
-                    <Text>Inglês</Text>
-                    <Switch
-                      value={isEnglishSelected}
-                      onValueChange={handleEnglishSelection}
-                      offTrackColor="gray.200"
-                      onTrackColor="lime.200"
-                    />
-                  </Flex>
+                  <Select defaultValue="pt-BR">
+                    <Select.Item label="Português" value="pt-BR" />
+                    <Select.Item label="Inglês" value="en-US" />
+                  </Select>
                 </Flex>
               </Box>
             </Collapse>
@@ -336,7 +275,13 @@ export const EditProfile = () => {
             </TouchableOpacity>
 
             <Collapse isOpen={isSecurityAndPrivacyOpen} mt={2} w={'100%'}>
-              teste
+              <TouchableOpacity activeOpacity={0.6}>
+                <Button mt={2} mb={4} bgColor={'red.500'}>
+                  <Text fontSize={16} color={'white'} fontWeight={'bold'}>
+                    Deletar conta
+                  </Text>
+                </Button>
+              </TouchableOpacity>
             </Collapse>
           </Box>
         </Flex>
