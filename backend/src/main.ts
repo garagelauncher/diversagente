@@ -28,6 +28,15 @@ async function bootstrap() {
     .setTitle(packageJSON.name)
     .setDescription(packageJSON.description)
     .setVersion(packageJSON.version)
+    .addTag('Categories')
+    .addTag('Subcategories')
+    .addTag('Posts')
+    .addTag('Comments')
+    .addTag('Locations')
+    .addTag('Reviews')
+    .addTag('Likes')
+    .addTag('Users')
+    .addTag('User Devices')
     .build();
 
   const document = SwaggerModule.createDocument(app, documentationConfig);

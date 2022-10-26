@@ -1,9 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateCommentDto {
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Texto do comentário.',
+    example: 'Ótimo conteúdo!',
+  })
   text: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Id do criador do comentário.',
+    example: 'mapiqeqmp-45642-hoeahue-1924903',
+  })
   ownerId: string;
 }

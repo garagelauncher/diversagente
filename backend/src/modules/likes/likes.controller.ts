@@ -11,9 +11,10 @@ import {
 import { LikesService } from './likes.service';
 import { CreateLikeDto } from './dto/create-like.dto';
 import { UpdateLikeDto } from './dto/update-like.dto';
-import { ApiQuery } from '@nestjs/swagger';
+import { ApiQuery, ApiTags } from '@nestjs/swagger';
 import { fireFunctionAndForget } from 'src/shared/utils/fireFunctionAndForget';
 
+@ApiTags('Likes')
 @Controller('posts/:postId/likes')
 export class LikesController {
   constructor(private readonly likesService: LikesService) {}
