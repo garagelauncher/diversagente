@@ -1,6 +1,8 @@
 import { Avatar, Flex, Text } from 'native-base';
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useState } from 'react';
 
+import { ConditionallyRender } from '../ConditionallyRender';
+import { CommentEdit } from './CommentEdit';
 import { CommentMoreActions } from './CommentMoreActions';
 
 import { IncludeInto } from '@src/@types/generics/includeInto';
@@ -14,9 +16,10 @@ export type UserCommentProps = {
 };
 
 export const UserComment: FunctionComponent<UserCommentProps> = ({
-  comment: { owner, text, createdAt, id },
+  comment: { owner, text, createdAt, id, postId },
 }) => {
   const { user } = useAuth();
+  const [isEditModeActive, setIsEditModeActive] = useState(false);
 
   const isOwner = user?.id === owner.id;
   const userInitials = getUsernameInitials(owner.name);
@@ -53,17 +56,29 @@ export const UserComment: FunctionComponent<UserCommentProps> = ({
         <Flex>
           <CommentMoreActions
             isOwner={isOwner}
-            onActivateCommentEditMode={() =>
-              console.log('onActivateCommentEditMode')
-            }
+            onActivateCommentEditMode={() => setIsEditModeActive(true)}
             commentId={id}
           />
         </Flex>
       </Flex>
 
-      <Text color="gray.500" marginTop={4} fontSize={'md'}>
-        {text}
-      </Text>
+      <ConditionallyRender
+        condition={isEditModeActive}
+        trueComponent={
+          <CommentEdit
+            commentId={id}
+            postId={postId}
+            isEditModeActive={isEditModeActive}
+            onDeactiveEditMode={() => setIsEditModeActive(false)}
+            previousText={text}
+          />
+        }
+        falseComponent={
+          <Text color="gray.500" marginTop={4} fontSize={'md'}>
+            {text}
+          </Text>
+        }
+      />
     </Flex>
   );
 };
