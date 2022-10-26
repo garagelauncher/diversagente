@@ -9,7 +9,8 @@ export class CreatePostDto {
 
   @ApiProperty({
     description: 'Texto do comentário.',
-    example: 'A escola é local importante não apenas para aprendizado mas também para socialização...',
+    example:
+      'A escola é local importante não apenas para aprendizado mas também para socialização...',
   })
   content: string;
 

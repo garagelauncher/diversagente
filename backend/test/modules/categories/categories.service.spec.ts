@@ -81,5 +81,4 @@ describe('CategoriesService', () => {
 
     expect(foundCategory).toEqual(expect.objectContaining(expectedCategory));
   });
-
 });

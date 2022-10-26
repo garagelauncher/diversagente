@@ -20,11 +20,11 @@ describe('ReviewsService', () => {
     prisma.review.delete = jest.fn().mockResolvedValue(reviewMock);
     prisma.review.update = jest.fn().mockResolvedValue({
       ...reviewMock,
-      text: 'Nova descrição do review'
+      text: 'Nova descrição do review',
     });
     prisma.review.findUnique = jest.fn().mockResolvedValue({
-      ...reviewMock
-    })
+      ...reviewMock,
+    });
   });
 
   it('should be defined', () => {

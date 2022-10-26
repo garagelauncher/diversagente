@@ -18,13 +18,13 @@ export const description = 'Description';
 
 export const address = 'Address';
 
-export const createLocation= 'Create location';
+export const createLocation = 'Create location';
 
 export const averageRating = 'Rating: ';
 
 export const lastRating = 'Total rating for the last: ';
 
-export const day  = 'Day';
+export const day = 'Day';
 
 export const week = 'Week';
 
@@ -32,9 +32,9 @@ export const month = 'Month';
 
 export const year = 'Year';
 
-export const createdIn= 'Created in: ';
+export const createdIn = 'Created in: ';
 
-export const lookGoogleRoutes= 'Look up for Google Maps routes';
+export const lookGoogleRoutes = 'Look up for Google Maps routes';
 
 export const look = 'See ratings';
 
@@ -44,7 +44,7 @@ export const reviews = 'Reviews';
 
 export const choosePeriod = 'Choose a period: ';
 
-export const howWasYourExperience= 'How was your experience?';
+export const howWasYourExperience = 'How was your experience?';
 
 export const tellHere = 'Tell us here!';
 
@@ -82,7 +82,7 @@ export const art = 'Art';
 
 export const seriesMovies = 'Series/Movies';
 
-export const lastPosts= 'Last Posts';
+export const lastPosts = 'Last Posts';
 
 export const noMorePosts = 'There is no more posts in this category';
 
@@ -92,7 +92,8 @@ export const newPost = 'New post';
 
 export const beforeCreatePost = 'Before creating posts';
 
-export const beRespectful = 'Remember to be respectul and that this community is faced towards helping neurodiversity kids parents, relatives and friends.';
+export const beRespectful =
+  'Remember to be respectul and that this community is faced towards helping neurodiversity kids parents, relatives and friends.';
 
 export const selectCategory = 'Select a category';
 
@@ -100,11 +101,12 @@ export const selectSubCategory = 'Select a subcategory';
 
 export const title = 'Title';
 
-export const maxFortyMinSix= 'Caracteres: maximum of 40 and minimum of 6';
+export const maxFortyMinSix = 'Caracteres: maximum of 40 and minimum of 6';
 
 export const content = 'Content';
 
-export const maxEighteenHundreds = 'Caracteres: máximum of 1800 and minimum of 140';
+export const maxEighteenHundreds =
+  'Caracteres: máximum of 1800 and minimum of 140';
 
 export const cancel = 'Cancel';
 
