@@ -1,8 +1,9 @@
-import { commentMock } from './../../__mocks__/comment';
+import { commentMock, deleteCommentMock } from './../../__mocks__/comment';
 import { CommentsService } from './../../../src/modules/comments/comments.service';
 import { createPrismaProviderMock } from 'test/__mocks__/prisma';
 import { PrismaService } from 'src/shared/database/prisma.service';
 import { Test, TestingModule } from '@nestjs/testing';
+import { deletedlikeMock } from 'test/__mocks__/like';
 
 describe('CommentsService', () => {
   let commentService: CommentsService;
@@ -17,11 +18,12 @@ describe('CommentsService', () => {
     prisma = module.get<PrismaService>(PrismaService);
 
     prisma.comment.create = jest.fn().mockResolvedValue(commentMock);
-    prisma.comment.delete = jest.fn().mockResolvedValue(commentMock);
+    prisma.comment.delete = jest.fn().mockResolvedValue(deletedlikeMock);
     prisma.comment.update = jest.fn().mockResolvedValue({
       ...commentMock,
       comment: 'novo comentário',
     });
+    prisma.comment.findUnique = jest.fn().mockResolvedValue(undefined);
   });
 
   it('should be defined', () => {
@@ -42,11 +44,14 @@ describe('CommentsService', () => {
     expect(createdComment).toEqual(commentMock);
   });
 
-  it('should be able to delete a category with success', async () => {
-    const deletedCategory = await commentService.remove(
-      'aaaaa',
+  it('should be able to delete a comment with success', async () => {
+    
+    const deletedComment = await commentService.remove({
+      id:'aaaaa',
+      postId:'cccc',
+    },
     );
-    expect(deletedCategory).toEqual(commentMock);
+    expect(deletedComment).toEqual(deleteCommentMock);
   });
 
   it('should be able to update a comment with success', async () => {
@@ -66,10 +71,10 @@ describe('CommentsService', () => {
   });
 
   it('should not be able to get one comment that doesnt exist', async () => {
-    prisma.comment.findUnique = jest.fn().mockResolvedValue(undefined);
+    prisma.comment.findUnique = jest.fn().mockRejectedValue(undefined);
 
-    await expect(commentService.findOne('1')).rejects.toThrowError(
-      'comment with id 1 not found',
+    await expect(commentService.findOne("1")).rejects.toThrowError(
+      'Comment with this id was not found.'
     );
   });
-  });
+});
