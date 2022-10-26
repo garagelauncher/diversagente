@@ -34,6 +34,7 @@ import { Post, UserHasInteracted } from '@src/components/Post';
 import { PER_PAGE_ITEMS, userIdHelper } from '@src/configs';
 import { usePosts } from '@src/hooks/queries/usePosts';
 import { useAuth } from '@src/hooks/useAuth';
+import { Feather } from '@expo/vector-icons';
 import { StackProfileNavigatorParamList } from '@src/routes/stacks/profileStack.routes';
 
 type ProfileScreenNavigationProps = NavigationProp<
@@ -213,9 +214,18 @@ export const Profile = () => {
                 );
               }}
             >
+              <Flex flexDir={'row'} justifyContent={'space-between'}>
+              <Feather name="edit-3" size={14} color={'gray.500'} />
               <Menu.Item onPress={handleNavigateToEditProfileInfo}>
                 Editar perfil
               </Menu.Item>
+              </Flex>
+              <Flex flexDir={'row'} justifyContent={'space-between'}>
+              <Feather name="log-out" size={16} color="black" />
+              <Menu.Item onPress={handleLogout}>
+                Sair da conta
+              </Menu.Item>
+              </Flex>
             </Menu>
           </Flex>
 
