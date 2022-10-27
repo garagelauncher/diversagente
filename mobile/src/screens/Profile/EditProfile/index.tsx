@@ -1,14 +1,6 @@
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-3;
-import { ControlledInput } from '@src/components/ControlledInput';
-import { User, UserEditProps } from '@src/contracts/User';
-import { useAuth } from '@src/hooks/useAuth';
-import { StackProfileNavigatorParamList } from '@src/routes/stacks/profileStack.routes';
-import { diversaGenteServices } from '@src/services/diversaGente';
-import { queryClient } from '@src/services/queryClient';
-import { placeholder } from 'i18n-js';
 import {
   ScrollView,
   Button,
@@ -23,7 +15,6 @@ import {
   Collapse,
   Select,
   useToast,
-  CheckIcon,
   WarningOutlineIcon,
   TextArea,
   Input,
@@ -34,10 +25,10 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useMutation } from 'react-query';
 import * as yup from 'yup';
 
-type ProfileScreenNavigationProps = NavigationProp<
-  StackProfileNavigatorParamList,
-  'Profile'
->;
+import { UserEditProps } from '@src/contracts/User';
+import { useAuth } from '@src/hooks/useAuth';
+import { StackProfileNavigatorParamList } from '@src/routes/stacks/profileStack.routes';
+import { diversaGenteServices } from '@src/services/diversaGente';
 
 type ProfileScreenNavigationProps = NavigationProp<
   StackProfileNavigatorParamList,
@@ -45,7 +36,7 @@ type ProfileScreenNavigationProps = NavigationProp<
 >;
 
 export const EditProfile = () => {
-  const { signOut, user, setUser, refetchUser } = useAuth();
+  const { user, refetchUser } = useAuth();
   const [isPersonalInfoOpen, setPersonalInfoOpen] = useState(true);
   const [isPreferencesAtAppOpen, setPreferencesAtAppOpen] = useState(false);
   const [isSecurityAndPrivacyOpen, setSecurityAndPrivacyOpen] = useState(false);
