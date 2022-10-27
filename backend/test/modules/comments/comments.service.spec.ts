@@ -43,7 +43,10 @@ describe('CommentsService', () => {
   });
 
   it('should be able to delete a category with success', async () => {
-    const deletedCategory = await commentService.remove('aaaaa');
+    const deletedCategory = await commentService.remove({
+      postId: 'aaaaa',
+      id: 'bbbbb',
+    });
     expect(deletedCategory).toEqual(commentMock);
   });
 

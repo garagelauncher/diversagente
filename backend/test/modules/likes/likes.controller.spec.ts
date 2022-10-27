@@ -16,6 +16,7 @@ describe('LikesController', () => {
         findOne: jest.fn().mockResolvedValue(likeMock),
         update: jest.fn().mockResolvedValue(likeMock),
         remove: jest.fn().mockResolvedValue(likeMock),
+        fireAndForgetLikeNotification: jest.fn(),
       },
     };
 
