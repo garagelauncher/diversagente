@@ -21,6 +21,7 @@ import { Location } from '@src/contracts/Location';
 import { translate } from '@src/i18n';
 import { StackLocationNavigatorParamList } from '@src/routes/stacks/locationStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
+import { getIconProviderByName } from '@src/utils/getIconProvider';
 
 type LocationScreenNavigationProps = NavigationProp<
   StackLocationNavigatorParamList,
@@ -242,7 +243,15 @@ export const Locations = () => {
                   justifyContent="center"
                   backgroundColor="blue.400"
                 >
-                  <Feather name="cloud" size={40} color="white" />
+                  <IconButton
+                    variant={'ghost'}
+                    size={'lg'}
+                    _icon={{
+                      as: getIconProviderByName(location.iconProvider),
+                      name: location.icon ?? 'map-pin',
+                      color: 'white',
+                    }}
+                  />
                 </Box>
                 <Text
                   flex={2}
