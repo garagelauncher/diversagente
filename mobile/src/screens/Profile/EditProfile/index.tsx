@@ -2,6 +2,7 @@ import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 3;
+import { placeholder } from 'i18n-js';
 import {
   ScrollView,
   Button,
@@ -16,9 +17,13 @@ import {
   Collapse,
   Select,
   useToast,
+  CheckIcon,
+  WarningOutlineIcon,
+  TextArea,
+  Input,
 } from 'native-base';
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useMutation } from 'react-query';
 import * as yup from 'yup';
@@ -89,6 +94,24 @@ export const EditProfile = () => {
   );
 
   const handleUpdateUserPersonalInfo = async (data: Partial<UserEditProps>) => {
+    console.log('handleUpdateUserPerfonalInfo');
+    await updateUserDataMutation.mutateAsync({
+      username: user?.username,
+      ...data,
+    });
+  };
+
+  const handleUpdateAppPreferences = async (data: Partial<UserEditProps>) => {
+    console.log('handleUpdateUserPerfonalInfo');
+    await updateUserDataMutation.mutateAsync({
+      username: user?.username,
+      ...data,
+    });
+  };
+
+  const handleUpdateSecurityAndPrivacy = async (
+    data: Partial<UserEditProps>,
+  ) => {
     console.log('handleUpdateUserPerfonalInfo');
     await updateUserDataMutation.mutateAsync({
       username: user?.username,
@@ -178,28 +201,73 @@ export const EditProfile = () => {
 
             <Collapse isOpen={isPersonalInfoOpen} mt={2} w={'100%'}>
               <Box mb={6}>
-                <ControlledInput
-                  inputVariant="underlined"
+                <Controller
                   control={control}
-                  name={'name'}
-                  error={errors.name}
-                  defaultValue={user?.name}
-                  label={'Nome'}
-                  isTextArea={false}
-                ></ControlledInput>
+                  name="name"
+                  rules={{ required: true }}
+                  render={({ field: { onChange } }) => (
+                    <FormControl w="100%">
+                      <FormControl.Label isRequired>Nome</FormControl.Label>
+
+                      <Input
+                        borderColor={[errors.name ? 'red.500' : 'blue.800']}
+                        size="md"
+                        variant={'underlined'}
+                        placeholder={'Informe como quer ser chamado.'}
+                        onChangeText={onChange}
+                      />
+
+                      {errors.biograph && (
+                        <FormControl.ErrorMessage
+                          leftIcon={<WarningOutlineIcon size="xs" />}
+                        >
+                          <Text>{errors.biograph?.message}</Text>
+                        </FormControl.ErrorMessage>
+                      )}
+                    </FormControl>
+                  )}
+                ></Controller>
               </Box>
 
               <Box mb={6}>
-                <ControlledInput
+                <Controller
                   control={control}
-                  error={errors.biograph}
-                  name={'biograph'}
-                  label={'Biografia'}
-                  defaultValue={user?.bio ?? '🙂'}
-                  isTextArea={true}
-                  placeholder="Caracteres: máximo de 100 e mínimo de 25"
-                ></ControlledInput>
+                  name="biograph"
+                  rules={{ required: true }}
+                  render={({ field: { onChange } }) => (
+                    <FormControl w="100%">
+                      <FormControl.Label isRequired>
+                        Biografia
+                      </FormControl.Label>
+
+                      <TextArea
+                        h={280}
+                        borderColor={[errors.biograph ? 'red.500' : 'blue.800']}
+                        size="md"
+                        py={4}
+                        px={4}
+                        placeholder={
+                          'Adicione uma biografia para que as pessoas te conheçam melhor.'
+                        }
+                        autoCompleteType="off"
+                        onChangeText={onChange}
+                      />
+
+                      {errors.biograph && (
+                        <FormControl.ErrorMessage
+                          leftIcon={<WarningOutlineIcon size="xs" />}
+                        >
+                          <Text>{errors.biograph?.message}</Text>
+                        </FormControl.ErrorMessage>
+                      )}
+                    </FormControl>
+                  )}
+                ></Controller>
               </Box>
+
+              <Button onPress={handleSubmit(handleUpdateUserPersonalInfo)}>
+                Salvar
+              </Button>
             </Collapse>
           </Box>
 
@@ -241,6 +309,7 @@ export const EditProfile = () => {
                   </Select>
                 </Flex>
               </Box>
+              <Button>Salvar</Button>
             </Collapse>
           </Box>
 
