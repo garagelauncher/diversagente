@@ -10,7 +10,7 @@ export type User = {
   name: string;
   isActive: boolean;
   birthdate?: string | null;
-  biograph: string;
+  biograph?: string;
   picture?: string | null;
   deactivationReason?: string | null;
   preferences: UserPreferences;
