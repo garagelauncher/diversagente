@@ -24,12 +24,18 @@ export const findNearLocationListMock = [
       longitude: 0,
     },
     ownerId: '01923408oaskfjoasdj=jiasfjsdi-oiashjdfk',
+    categoryId: 'hjudasfhasdu-18473-mnksadfjs-1924903',
+    icon: 'icon',
+    iconProvider: 'Feather',
   },
 ];
 
 export const locationsRawMock: LocationRaw[] = [
   {
     _id: {
+      $oid: 'hjudasfhasdu-18473-mnksadfjs-1924903',
+    },
+    categoryId: {
       $oid: 'hjudasfhasdu-18473-mnksadfjs-1924903',
     },
     createdAt: {
@@ -46,5 +52,7 @@ export const locationsRawMock: LocationRaw[] = [
       coordinates: [0, 0],
     },
     title: 'Localização mock',
+    icon: 'icon',
+    iconProvider: 'Feather',
   },
 ];
