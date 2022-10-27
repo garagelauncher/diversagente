@@ -135,42 +135,31 @@ Para as regras de negócio, \autoref{regra-negocio}, são úteis para definir co
 	\hline
 	\thead{Código} & \thead{Requisito}  & \thead{Descrição} \\
 	\hline
-	RF01 &Visualizar notícias.  & O usuário deve conseguir visualizar as notícias dentro da aba news, imagens, títulos e início do texto que estão associados a notícia.\\
-	\hline
-	RF02 & Gerenciar subcategorias. &
+	RF01 & Gerenciar subcategorias. &
 	O usuário consegue criar uma nova subcategoria dentro de uma categoria.
 	O usuário que criou a subcategoria consegue editar o título das categorias criadas.
 	O usuário consegue excluir a categoria que foi criada, recebendo um aviso se realmente é aquilo que ele deseja fazer.
 	\\
 	\hline
-	RF03 & Gerenciar publicações.   & O usuário consegue criar uma nova publicação em uma subcategoria. 
+	RF02 & Gerenciar publicações.   & O usuário consegue criar uma nova publicação em uma subcategoria. 
 	O usuário consegue editar uma nova publicação dentro de uma subcategoria. 
 	O usuário consegue excluir uma publicação dentro de uma subcategoria\\
 	\hline
-	RF04 & Publicar comentários dentro das subcategorias de discussões dos fóruns criados. & O usuário consegue comentar em cada publicação. O usuário consegue excluir o comentário em cada publicação. \\
+	RF03 & Publicar comentários post  & O usuário consegue comentar em cada publicação. O usuário consegue excluir o comentário em cada publicação. \\
 	\hline
-	RF05 & Compartilhar imagem dentro das publicações de subcategorias dos fóruns criados &
+	RF04 & Compartilhar imagem dentro das publicações de subcategorias dos fóruns criados &
 	O usuário consegue compartilhar as imagens em cada publicação. O usuário consegue excluir as imagens compartilhadas em cada publicação.\\
 	\hline
-	RF06 & Compartilhar nos aplicativos compatíveis as notícias e os postagens das subcategorias de discussões dos fóruns criados.  & O usuário deve conseguir compartilhar as noti1cias e postagens com os aplicativos compatíveis.\\
+	RF05 & Compartilhar nos aplicativos compatíveis as postagens das subcategorias de discussões dos fóruns criados.  & O usuário deve conseguir compartilhar as postagens com os aplicativos compatíveis.\\
 	\hline
-	RF07 & Favoritar mensagens dentro das subcategorias de discussões dos fóruns criados. & O usuário deve conseguir favoritar as mensagens. \\
+	RF06 & Favoritar posts dentro das subcategorias de discussões dos fóruns criados. & O usuário deve conseguir favoritar as mensagens. \\
 	\hline
-	RF08 & Gerenciar Locais Avaliados. & O usuário deve conseguir cadastrar, editar e excluir um local. O usuário deve conseguir filtrar locais mais próximos do local que se encontra ou de um endereço desejado. \\
+	RF07 & Gerenciar Locais Avaliados. & O usuário deve conseguir cadastrar, editar e excluir um local. O usuário deve conseguir filtrar locais mais próximos do local que se encontra ou de um endereço desejado. \\
 	\hline
-	RF09 & Consultar Chats.   &O usuário deve conseguir trocar mensagens instantâneas entre outro usuário.\\
+	RF08 & Permitir que o usuário se cadastre na plataforma. & O usuário deve conseguir criar um cadastro através de login social do google.\\
 	\hline
-	RF10 &Receber notificações de mensagens novas. &
-	O usuário deve receber uma notificação no aparelho quando receber novas mensagens do chat, mostrando quem mandou a mensagem.\\
-	\hline
-	RF11 & Filtrar conversas privadas do próprio usuário.  & O usuário deve conseguir pesquisar pelo nome do usuário dentro da aba conversar.\\
-	\hline
-	RF12 & Permitir que o usuário se cadastre na plataforma. & O usuário deve conseguir criar um cadastro através de login social do google.\\
-	\hline
-	RF13 & Gerenciar Perfil.  &
+	RF09 & Gerenciar Perfil.  &
 	O usuário deve conseguiralterar os seus dados através de uma página de perfil.  \\
-	\hline
-	RF14 & Permitir que usuário bloqueie o recebimento de novas mensagens.  & O usuário poderá bloquear que usuários novos mandem mensagem.\\
 	\hline
 \end{longtable}
 \fonte{Equipe diversaGente (2022)}
@@ -216,8 +205,6 @@ Para as regras de negócio, \autoref{regra-negocio}, são úteis para definir co
 		RN03 & Caso o usuário seja o criador de uma subcategoria, será possível editá-la e excluí-la.  \\
 		\hline
 		RN04 & Somente o usuário que é criador de uma avaliação da seção ‘Locais Avaliados’ é capaz de editá-la ou excluí-la. \\
-		\hline
-		RN05 & O recebimento de mensagens requer a permissão do usuário. \\
 		\hline
 		RN06 & Não devem haver subcategorias com o mesmo nome. \\
 		\hline
@@ -406,15 +393,17 @@ Além disso, o aplicativo obteve as notas 'A' para a primeira parte de construç
 \section{Gitstats}
 
 A ferramenta principal para o versionamento de código utilizada pela equipe de desenvolvimento é o \waUrlTitle{https://github.com/
-}{GitHub}, e por meio do Gitstats foram geradas métricas gerais, das atividades, dos autores, dos arquivos e das tags no repositório. 
+}{GitHub}, e por meio do Gitstats foram geradas métricas gerais, das atividades, dos autores, dos arquivos e das tags no repositório. Para o desenvolvimento da parte I, todas as respectivas imagens das métricas podem ser encontradas dentro do \autoref{gisStatsI} e para a para uma análise mais completa, o 
+\href{https://dev-diversagente.herokuapp.com/public/gitstats/}{Gitstats} é encontrado dentro no link: https://dev-diversagente.herokuapp.com/public/gitstats/
 
-Nas métricas gerais do projeto \autoref{metricas-5}, a branch analisada consta como a main, a qual já conta com mais de 350 commits dos sete integrantes do grupo no projeto diversaGente, e esses commits abarcam os trabalhos feitos desde a fundação dos projetos back-end e front-end mobile, além da organização da documentação LaTeX. 
+
+Nas métricas gerais do projeto \autoref{metricas1PartII}, a branch analisada consta como a gitstats, a qual já conta com mais de 863 commits dos sete integrantes do grupo no projeto diversaGente um aumento de cerca de 500 commits, e esses commits abarcam os trabalhos feitos desde a fundação dos projetos back-end e front-end mobile, além da organização da documentação LaTeX. 
 
 \begin{figure}[htb]
 	\centering
-	\caption{\label{fig_arq_virado}Gitstats métricas gerais}
-	\includegraphics[width=1.00\textwidth]{anexos/metricas5.png}
-	\label{metricas-5}
+	\caption{\label{fig_arq_virado}Gitstats métricas gerais Parte II}
+	\includegraphics[width=1.00\textwidth]{anexos/metricas1PartII.png}
+	\label{metricas1PartII}
 	\fonte{Gitstats, 2022}
 \end{figure}
 
@@ -424,47 +413,47 @@ Nas métricas gerais do projeto \autoref{metricas-5}, a branch analisada consta 
 
 \end{itemize}
 
-Na aba de atividades \autoref{metricas-6}, são encontrados gráficos acerca da frequência dos commits realizados no projeto. É possível obter uma visualização em gráfico por mês do ano e horas por semana, por exemplo, evidenciando picos de trabalho durante o período de 365 dias da existência do projeto.
+Na aba de atividades \autoref{metricas2PartII}, são encontrados gráficos acerca da frequência dos commits realizados no projeto. É possível obter uma visualização em gráfico por mês do ano e horas por semana, por exemplo, evidenciando picos de trabalho durante o período de 365 dias da existência do projeto.
 
 \begin{figure}[htb]
 	\centering
-	\caption{\label{fig_arq_virado}Gitstats métricas atividades}
-	\includegraphics[width=0.90\textwidth]{anexos/metricas6.png}
-	\label{metricas-6}
+	\caption{\label{fig_arq_virado}Gitstats métricas atividades Parte II}
+	\includegraphics[width=0.90\textwidth]{anexos/metricas2PartII.png}
+	\label{metricas2PartII}
 	\fonte{Gitstats, 2022}
 \end{figure}
 
-Esse indicador demonstra \autoref{metricas-7} os autores mais ativos no projeto ao longo de sua existência. Devido as preparações para as demonstrações de \ac{poc} e \ac{mvp} do semestre, atuaram nesse início de forma mais intensa os que tinham um pouco mais de experiência com desenvolvimento, mas todos puderam contribuir para a entrega do projeto como um todo. 
+Esse indicador demonstra \autoref{metricas3PartII} os autores mais ativos no projeto ao longo de sua existência. Devido as preparações para as demonstrações de \ac{poc} e \ac{mvp} e projeto final durante o ano, atuaram de forma mais intensa os que tinham um pouco mais de experiência com desenvolvimento, mas todos puderam contribuir para a entrega do projeto como um todo. 
 
 \begin{figure}[htb]
 	\centering
-	\caption{\label{fig_arq_virado}Gitstats métricas autores}
-	\includegraphics[width=1.00\textwidth]{anexos/metricas7.png}
-	\label{metricas-7}
+	\caption{\label{fig_arq_virado}Gitstats métricas autores Parte II}
+	\includegraphics[width=1.00\textwidth]{anexos/metricas3PartII.png}
+	\label{metricas3PartII}
 	\fonte{Gitstats, 2022}
 \end{figure}
 
-Com essa métrica  \autoref{metricas-8},é possível constatar que atualmente a base de códigos do projeto possui tamanho de 29.3 \ac{mb}, 524 arquivos no total, sendo os arquivos do tipo typescript os mais presentes em todo o projeto. 
+Com essa métrica  \autoref{metricas4PartII}, é possível constatar que atualmente a base de códigos do projeto possui tamanho de 29.6 \ac{mb}, 637 arquivos no total, sendo os arquivos do tipo typescript os mais presentes em todo o projeto. 
 
 \pagebreak
 
 
 
-No momento, o projeto consta com apenas uma única tag \autoref{metricas-9}. Mas com o foco maior na parte de desenvolvimento da aplicação no próximo semestre, a quantidade de tags tende a aumentar progressivamente.
+No momento, o projeto consta com apenas uma única tag \autoref{metricas5PartII}. Mas com o foco maior na parte de desenvolvimento da aplicação no próximo semestre, a quantidade de tags tende a aumentar progressivamente.
 
 
 \begin{figure}[htb]
 	\centering
-	\caption{\label{fig_arq_virado}Gitstats métricas arquivos}
-	\includegraphics[width=1.00\textwidth]{anexos/metricas8.png}
-	\label{metricas-8}
+	\caption{\label{fig_arq_virado}Gitstats métricas arquivos Parte II}
+	\includegraphics[width=1.00\textwidth]{anexos/metricas4PartII.png}
+	\label{metricas4PartII}
 	\fonte{Gitstats, 2022}
 \end{figure}
 
 \begin{figure}[htb]
 	\centering
-	\caption{\label{fig_arq_virado}Gitstats tags}
-	\includegraphics[width=1.00\textwidth]{anexos/metricas9.png}
-	\label{metricas-9}
+	\caption{\label{fig_arq_virado}Gitstats tags Parte II }
+	\includegraphics[width=1.00\textwidth]{anexos/metricas5PartII.png}
+	\label{metricas5PartII}
 	\fonte{Gitstats, 2022}
 \end{figure}
