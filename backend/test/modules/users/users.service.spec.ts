@@ -5,7 +5,7 @@ import { userMock } from 'test/__mocks__/user';
 import { createPrismaProviderMock } from 'test/__mocks__/prisma';
 import { CloudinaryService } from 'src/shared/services/cloudinary/cloudinary.service';
 
-describe.skip('UsersService', () => {
+describe('UsersService', () => {
   let userService: UsersService;
   let prisma: PrismaService;
 
@@ -26,14 +26,10 @@ describe.skip('UsersService', () => {
     prisma = module.get<PrismaService>(PrismaService);
 
     prisma.user.create = jest.fn().mockResolvedValue(userMock);
-    prisma.user.delete = jest.fn().mockResolvedValue(userMock);
     prisma.user.update = jest.fn().mockResolvedValue({
       ...userMock,
       username: 'novoUsername',
     });
-    prisma.user.findUnique = jest.fn().mockResolvedValue({
-      ...userMock,
-  });
 });
 
   it('should be defined', () => {
@@ -42,9 +38,12 @@ describe.skip('UsersService', () => {
 
   it('should be able to create a user with success', async () => {
     const user = {
+      id: 'aaaaaa-1111',
       email: "gabriel@email.com",
       username: "gabiru",
-      name: "gabriel"
+      name: "gabriel",
+      createdAt: '2021-01-01T00:00:00.000Z',
+      updatedAt: '2021-01-01T00:00:00.000Z',
       }
 
     const createdUser = await userService.create(user);
@@ -52,6 +51,11 @@ describe.skip('UsersService', () => {
   });
 
   it('should be able to delete a user with success', async () => {
+
+    prisma.user.update = jest.fn().mockResolvedValue({
+      ...userMock
+    });
+
     const deletedUser = await userService.remove(
       'aaaaaa-2222',
     );
@@ -75,6 +79,10 @@ describe.skip('UsersService', () => {
   });
 
   it('should be able to get one user by id with success', async () => {
+    prisma.user.findUnique = jest.fn().mockResolvedValue({
+      ...userMock,
+  });
+
     const foundUser = await userService.findOne(
       'aaaaaa-2222',
     );

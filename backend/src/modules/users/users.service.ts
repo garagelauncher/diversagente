@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/shared/database/prisma.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CloudinaryService } from 'src/shared/services/cloudinary/cloudinary.service';
@@ -12,7 +12,7 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const userFound = await this.findOne(createUserDto.email);
+    const userFound = await this.findOneforCreate(createUserDto.email);
 
     if (!userFound) {
       const createdUser = await this.prisma.user.create({
@@ -35,6 +35,18 @@ export class UsersService {
     return await this.prisma.user.findMany({});
   }
 
+  async findOneforCreate(email: string) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    Logger.debug('recovering user', user);
+
+    return user;
+  }
+
   async findOne(email: string) {
     const user = await this.prisma.user.findUnique({
       where: {
@@ -43,6 +55,10 @@ export class UsersService {
     });
 
     Logger.debug('recovering user', user);
+
+    if (!user) {
+      throw new NotFoundException(`User with id ${email} not found`);
+    }
 
     return user;
   }

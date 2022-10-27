@@ -3,7 +3,6 @@ import { CommentsService } from './../../../src/modules/comments/comments.servic
 import { createPrismaProviderMock } from 'test/__mocks__/prisma';
 import { PrismaService } from 'src/shared/database/prisma.service';
 import { Test, TestingModule } from '@nestjs/testing';
-import { deletedlikeMock } from 'test/__mocks__/like';
 
 describe('CommentsService', () => {
   let commentService: CommentsService;
