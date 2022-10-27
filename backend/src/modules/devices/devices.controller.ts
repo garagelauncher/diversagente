@@ -14,7 +14,7 @@ import { CreateDeviceDto } from './dto/create-device.dto';
 import { UpdateDeviceDto } from './dto/update-device.dto';
 
 @ApiTags('User Devices')
-@Controller('users/:ownerId/devices')
+@Controller('devices')
 export class DevicesController {
   constructor(private readonly devicesService: DevicesService) {}
 
