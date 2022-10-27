@@ -24,6 +24,9 @@ export class LocationsService {
       address,
       description,
       photos,
+      categoryId,
+      icon,
+      iconProvider,
     } = createLocationDto;
 
     return await this.prisma.location.create({
@@ -33,6 +36,9 @@ export class LocationsService {
         address,
         description,
         photos,
+        categoryId,
+        icon,
+        iconProvider,
         geoposition: {
           type: 'Point',
           coordinates: [longitude, latitude],
@@ -68,7 +74,7 @@ export class LocationsService {
         limit,
       },
     })) as unknown as LocationRaw[];
-
+    console.log(locations);
     const parsedLocations = locations.map((location) => ({
       id: location._id.$oid,
       title: location.title,

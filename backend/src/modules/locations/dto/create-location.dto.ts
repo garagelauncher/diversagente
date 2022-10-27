@@ -38,4 +38,22 @@ export class CreateLocationDto {
     example: 'mapiqeqmp-45642-hoeahue-1924903',
   })
   ownerId: string;
+
+  @ApiProperty({
+    description: 'Id da categoria do local avaliado.',
+    example: 'mapiqeqmp-45642-hoeahue-1924903',
+  })
+  categoryId: string;
+
+  @ApiProperty({
+    description: 'Ícone do local avaliado.',
+    example: 'church',
+  })
+  icon?: string;
+
+  @ApiProperty({
+    description: 'Provedor do ícone do local avaliado.',
+    example: 'church',
+  })
+  iconProvider?: string;
 }

@@ -195,8 +195,10 @@ model Location {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  ownerId    String  @db.ObjectId
-  categoryId String? @db.ObjectId
+  ownerId      String  @db.ObjectId
+  categoryId   String? @db.ObjectId
+  icon         String?
+  iconProvider String?
 
   geoposition Geoposition
 
