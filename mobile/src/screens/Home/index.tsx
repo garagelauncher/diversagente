@@ -40,11 +40,19 @@ export const Home = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
     null,
   );
+  const [searchPostText, setSearchPostText] = useState<string>('');
 
   console.log('selectedCategoryId', selectedCategoryId);
 
-  const postFilters = {
+  const postCategoryFilters = {
     categoryId: selectedCategoryId,
+  };
+
+  const postTextFilters = {
+    OR: [
+      { content: { contains: searchPostText, mode: 'insensitive' } },
+      { title: { contains: searchPostText, mode: 'insensitive' } },
+    ],
   };
 
   const {
@@ -60,7 +68,8 @@ export const Home = () => {
       range: [0, PER_PAGE_ITEMS],
       sort: ['createdAt', 'DESC'],
       filter: {
-        ...(postFilters.categoryId ? postFilters : {}),
+        ...(postCategoryFilters.categoryId ? postCategoryFilters : {}),
+        ...(searchPostText ? postTextFilters : {}),
       },
       include: {
         likes: {
@@ -78,6 +87,10 @@ export const Home = () => {
         toast.show({
           title: 'Error',
           description: 'Falha ao buscar posts',
+          background: 'red.500',
+        });
+        toast.show({
+          description: error.message,
           background: 'red.500',
         });
       },
@@ -98,6 +111,10 @@ export const Home = () => {
 
   const isLoadedCategories =
     isSuccessCategories && !isLoadingCategories && !isErrorCategories;
+
+  const handleChangeSearchPostText = useCallback((text: string) => {
+    setSearchPostText(text);
+  }, []);
 
   const handleSelectCategoryId = (categoryId: string | null) => {
     console.log('categoryId', categoryId);
@@ -156,7 +173,7 @@ export const Home = () => {
       >
         {!isReadingModeActive && (
           <>
-            <CreatePostForm />
+            <CreatePostForm onSearch={handleChangeSearchPostText} />
 
             <CategoriesList
               onPressSeeMore={handleNavigatoToCategorySelecionScreen}
