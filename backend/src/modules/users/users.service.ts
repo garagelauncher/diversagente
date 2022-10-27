@@ -54,10 +54,29 @@ export class UsersService {
     });
   }
 
-  async findOne(email: string) {
+  async findOne(email: string, options: PaginateOptions = {}) {
+    const { where, include } = parsePaginationToPrisma<
+      Prisma.UserWhereUniqueInput,
+      Prisma.UserInclude,
+      Prisma.UserWhereUniqueInput
+    >(options);
+
     const user = await this.prisma.user.findUnique({
       where: {
+        ...where,
         email,
+      },
+      include: {
+        _count: {
+          select: {
+            Comment: true,
+            Like: true,
+            Post: true,
+            Review: true,
+            Location: true,
+            Complaint: true,
+          },
+        },
       },
     });
 

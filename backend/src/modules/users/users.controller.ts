@@ -76,9 +76,19 @@ export class UsersController {
     });
   }
 
+  @ApiQuery({
+    name: 'include',
+    type: String,
+    description: 'An optional include',
+    example: `{"_count":{"select":{"Comment":true,"Like":true,"Post":true,"Review":true,"Location":true,"Complaint":true}}}`,
+    required: false,
+  })
   @Get(':email')
-  async findOne(@Param('email') email: string) {
-    const user = await this.usersService.findOne(email);
+  async findOne(
+    @Param('email') email: string,
+    @Query('include') include?: string,
+  ) {
+    const user = await this.usersService.findOne(email, { include });
 
     if (!user) {
       throw new NotFoundException(`User with email ${email} was not found.`);
