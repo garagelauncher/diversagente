@@ -72,39 +72,45 @@ const schema = yup.object({
 export const FormCreatePost = () => {
   const [isClosed, setIsClosed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorAtPostCreation, setErrorAtPostCreation] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
   const [categoryId, setCategoryId] = useState<string>('');
   const { user } = useAuth();
   //const [selectedImage, setSelectedImage] = useState<any>(null);
-  const toast = useToast();
   const navigation = useNavigation<FormCreatePostNavigationProps>();
 
-  const {
-    mutateAsync,
-    isLoading: isLoadinCreatePost,
-    isError: errorAtPostCreation,
-  } = useMutation(diversaGenteServices.createPost, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('diversagente@posts');
-      queryClient.invalidateQueries('post');
-      queryClient.invalidateQueries('userPosts');
-      queryClient.invalidateQueries('userPost');
+  const toast = useToast();
 
-      toast.show({
-        title: 'Post criado com sucesso!',
-        background: 'green.500',
-      });
-      queryClient.invalidateQueries('diversagente@posts');
-      navigation.navigate('Forum');
+  const { mutateAsync, isLoading: isLoadingCreatePost } = useMutation(
+    diversaGenteServices.createPost,
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('diversagente@posts');
+        queryClient.invalidateQueries('post');
+        queryClient.invalidateQueries('userPosts');
+        queryClient.invalidateQueries('userPost');
+
+        toast.show({
+          title: 'Post criado com sucesso!',
+          background: 'green.500',
+        });
+        queryClient.invalidateQueries('diversagente@posts');
+        navigation.navigate('Forum');
+      },
+      onError: (error: any) => {
+        setErrorAtPostCreation(true);
+        toast.show({
+          title: 'Erro ao criar post',
+          background: 'red.500',
+        });
+        toast.show({
+          description: error.message,
+          background: 'red.500',
+        });
+      },
     },
-    onError: () => {
-      toast.show({
-        title: 'Erro ao criar post',
-        background: 'red.500',
-      });
-    },
-  });
+  );
 
   const fetchAllCategories = async () => {
     try {
@@ -178,16 +184,21 @@ export const FormCreatePost = () => {
     navigation.goBack();
   };
 
-  async function createPost(data: PostForm): Promise<PostForm | undefined> {
+  async function createPost(data: PostForm): Promise<void> {
+    setErrorAtPostCreation(false);
     setIsLoading(true);
     try {
-      const createdPost = await diversaGenteServices.createPost({
+      setErrorAtPostCreation(false);
+
+      await mutateAsync({
         ...data,
         ownerId: String(user?.id),
       });
 
-      return createdPost;
+      queryClient.invalidateQueries('diversagente@posts');
+      navigation.navigate('Forum');
     } catch (error) {
+      setErrorAtPostCreation(true);
       setIsLoading(false);
     } finally {
       setIsLoading(false);
@@ -470,7 +481,7 @@ export const FormCreatePost = () => {
                 onPress={handleSubmit(onSubmitPostCreation)}
                 colorScheme="blue"
                 type="submit"
-                isLoading={isLoading}
+                isLoading={isLoading || isLoadingCreatePost}
               >
                 Criar
               </Button>
