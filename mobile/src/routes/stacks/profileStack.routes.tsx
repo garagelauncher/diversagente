@@ -22,10 +22,7 @@ export const StackProfilePrivateRoutes = () => (
     }}
   >
     <Screen name="Profile" component={Profile} />
-    <Screen
-      name="EditProfile"
-      component={EditProfile}
-    />
+    <Screen name="EditProfile" component={EditProfile} />
     {/* <Screen name="Profile" component={Notifications} /> */}
     {/* <Screen name="Profile" component={AllowLocation} /> */}
     {/* <Screen name="Profile" component={DeleteAccount} /> */}

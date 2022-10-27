@@ -67,9 +67,7 @@ export const EditPersonalInformation = () => {
       .array()
       .min(1, 'Selecione pelo menos uma categoria de interesse.')
       .required('Por favor, selecione ao menos uma categoria.'),
-    language: yup
-      .string()
-      .required(),
+    language: yup.string().required(),
   });
 
   const {

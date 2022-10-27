@@ -68,4 +68,17 @@ describe('CategoriesService', () => {
       description: 'descrição atualizada de saúde',
     });
   });
+
+  it('should be able to get one category by id with success', async () => {
+    prisma.category.findUnique = jest.fn().mockResolvedValue(categoryMock);
+    const foundCategory = await categoryService.findOne(
+      'aaaaaa-1111-aaaaaaa-1111',
+    );
+
+    const expectedCategory = {
+      ...categoryMock,
+    };
+
+    expect(foundCategory).toEqual(expect.objectContaining(expectedCategory));
+  });
 });
