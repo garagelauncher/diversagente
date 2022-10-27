@@ -24,10 +24,10 @@ describe('CommentsService', () => {
 
     prisma.comment.create = jest.fn().mockResolvedValue(commentMock);
     prisma.comment.update = jest.fn().mockResolvedValue({
-      id: 'aaaaa',
+      id: '',
       text: 'novo comentário',
       ownerId: 'bbbbb',
-      postId: 'cccc',
+      postId: '',
       createdAt: '2021-01-01T00:00:00.000Z',
       updatedAt: '2021-01-01T00:00:00.000Z',
     });
@@ -87,7 +87,7 @@ describe('CommentsService', () => {
   });
 
   it('should not be able to get one comment that doesnt exist', async () => {
-    prisma.comment.findUnique = jest.fn().mockRejectedValue(undefined);
+    prisma.comment.findUnique = jest.fn().mockResolvedValue(undefined);
 
     await expect(commentService.findOne('1')).rejects.toThrowError(
       'Comment with id 1 not found',
