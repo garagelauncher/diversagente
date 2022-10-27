@@ -18,6 +18,13 @@ describe('ReviewsService', () => {
 
     prisma.review.create = jest.fn().mockResolvedValue(reviewMock);
     prisma.review.delete = jest.fn().mockResolvedValue(reviewMock);
+    prisma.review.update = jest.fn().mockResolvedValue({
+      ...reviewMock,
+      text: 'Nova descrição do review',
+    });
+    prisma.review.findUnique = jest.fn().mockResolvedValue({
+      ...reviewMock,
+    });
   });
 
   it('should be defined', () => {
@@ -38,7 +45,24 @@ describe('ReviewsService', () => {
     expect(createdReview).toEqual(reviewMock);
   });
 
+  it('should be able update a review with success', async () => {
+    const reviewToUpdate = {
+      text: 'Nova descrição do review',
+    };
+
+    const reviewUpdated = await reviewService.update(
+      reviewMock.id,
+      reviewToUpdate,
+    );
+
+    expect(reviewUpdated).toEqual({
+      ...reviewMock,
+      text: 'Nova descrição do review',
+    });
+  });
+
   it('should be able to delete a review with success', async () => {
+    prisma.review.update = jest.fn().mockResolvedValue(reviewMock);
     const deletedReview = await reviewService.remove(
       'pipipipipi-00000-popopopo-001111',
     );
@@ -61,10 +85,8 @@ describe('ReviewsService', () => {
   it('should not be able to get a review that doest exists', async () => {
     prisma.review.findUnique = jest.fn().mockResolvedValue(undefined);
 
-    await expect(
-      reviewService.findOne('pipipipipi-00000-popopopo-001111'),
-    ).rejects.toThrowError(
-      'Review pipipipipi-00000-popopopo-001111 was not found',
+    await expect(reviewService.findOne('1')).rejects.toThrowError(
+      'Review 1 was not found',
     );
   });
 });

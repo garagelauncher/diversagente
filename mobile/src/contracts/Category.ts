@@ -4,4 +4,6 @@ export interface Category {
   title: string;
   createdAt: string;
   updatedAt: string;
+  icon?: string;
+  iconProvider?: string;
 }

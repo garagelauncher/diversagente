@@ -15,8 +15,9 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { DeleteUserDto } from './dto/delete-user.dto';
 
-@ApiTags('users')
+@ApiTags('Users')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -73,7 +74,7 @@ export class UsersController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(id);
+  remove(@Param('id') id: string, @Body() deleteUserDto?: DeleteUserDto) {
+    return this.usersService.remove(id, deleteUserDto?.reason);
   }
 }

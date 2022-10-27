@@ -14,6 +14,10 @@ export const usePosts = <GenericIncluded extends object = object>(
         ...options,
         cursor: pageParam.cursor,
         range: pageParam.range ?? options.range,
+        filter: {
+          ...(options.filter ?? {}),
+          isActive: true,
+        },
       }),
     {
       getNextPageParam: (lastPage) => {

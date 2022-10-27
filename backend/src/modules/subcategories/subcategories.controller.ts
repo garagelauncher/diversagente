@@ -12,7 +12,9 @@ import { SubcategoriesService } from './subcategories.service';
 import { CreateSubcategoryDto } from './dto/create-subcategory.dto';
 import { UpdateSubcategoryDto } from './dto/update-subcategory.dto';
 import { ApiQuery } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Subcategories')
 @Controller('subcategories')
 export class SubcategoriesController {
   constructor(private readonly subcategoriesService: SubcategoriesService) {}

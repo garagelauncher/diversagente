@@ -13,7 +13,6 @@ import {
   Skeleton,
   Text,
   Spinner,
-  HStack,
   Icon,
   Input,
 } from 'native-base';
@@ -27,13 +26,14 @@ import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.rout
 
 type SubcategoriesNavigationProps = NavigationProp<
   StackForumNavigatorParamList,
-  'SelectSubcategory'
+  'SelectSubcategory',
+  'Subcategory'
 >;
 
 export const SubcategoryFilter = () => {
   const route =
     useRoute<RouteProp<StackForumNavigatorParamList, 'SelectSubcategory'>>();
-  const { categoryId, categoryTitle } = route.params;
+  const { categoryId, categoryTitle, icon, iconProvider } = route.params;
   const { user } = useAuth();
 
   const { data, hasNextPage, fetchNextPage, isLoading, isFetchingNextPage } =
@@ -45,7 +45,7 @@ export const SubcategoryFilter = () => {
       },
     });
 
-  const skeletonsSubcategories = new Array(5).fill(0);
+  const skeletonsSubcategories = new Array(4).fill(0);
 
   const navigation = useNavigation<SubcategoriesNavigationProps>();
 
@@ -56,6 +56,20 @@ export const SubcategoryFilter = () => {
     }
   };
 
+  const handleNavigationToSubcategoryCreation = () => {
+    navigation.navigate('FormCreateSubcategory', {
+      categoryId,
+    });
+  };
+
+  const handleNavigateToSubcategory = (subcategoryId: string) => {
+    navigation.navigate('Subcategory', {
+      subcategoryId,
+      categoryTitle,
+      categoryId,
+    });
+  };
+
   return (
     <>
       <Box bgColor={'darkBlue.700'} height={300} mb={10}>
@@ -64,6 +78,8 @@ export const SubcategoryFilter = () => {
             avatar={user?.picture}
             screenName={`${categoryTitle}`}
             subtitle={`Aqui estarão todas as subcategorias que se relacionam com a categoria ${categoryTitle}.\nSe não encontrar o que procura, crie uma nova subcategoria! 😃`}
+            icon={icon}
+            iconProvider={iconProvider}
           ></Header>
         </Box>
       </Box>
@@ -71,21 +87,23 @@ export const SubcategoryFilter = () => {
       <Box
         width="100%"
         flex={1}
-        marginTop={-8}
+        marginTop={-12}
         backgroundColor={'gray.50'}
         alignItems="center"
         justifyContent="center"
         borderTopLeftRadius={16}
         borderTopRightRadius={16}
       >
-        <HStack paddingX={6} paddingTop={6} width={'100%'}>
-          <Box>
-            <HStack>
+        <>
+          {!isFetchingNextPage && (
+            <>
               <Flex
                 direction="row"
                 justifyContent={'space-between'}
                 alignItems={'center'}
                 width={'100%'}
+                paddingX={6}
+                paddingTop={6}
               >
                 <Input
                   mx="3"
@@ -104,7 +122,10 @@ export const SubcategoryFilter = () => {
                     </TouchableOpacity>
                   }
                 />
-                <TouchableOpacity activeOpacity={0.5}>
+                <TouchableOpacity
+                  activeOpacity={0.5}
+                  onPress={handleNavigationToSubcategoryCreation}
+                >
                   <Icon
                     as={AntDesign}
                     name="plussquareo"
@@ -113,10 +134,65 @@ export const SubcategoryFilter = () => {
                   />
                 </TouchableOpacity>
               </Flex>
-            </HStack>
-          </Box>
-        </HStack>
-        <>
+              <FlatList
+                width={'100%'}
+                data={data?.pages.map((page) => page.results).flat()}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    key={item.id}
+                    activeOpacity={0.6}
+                    onPress={() => handleNavigateToSubcategory(item.id)}
+                  >
+                    <Box marginBottom={4}>
+                      <Flex
+                        h={73}
+                        w={'100%'}
+                        borderRadius={8}
+                        bg={'blue.700'}
+                        rounded="md"
+                        justifyContent="center"
+                      >
+                        <Text
+                          fontSize="xl"
+                          justifyContent="center"
+                          color={'white'}
+                          py={5}
+                          px={5}
+                          bold
+                        >
+                          {item.title}
+                        </Text>
+                      </Flex>
+                    </Box>
+                  </TouchableOpacity>
+                )}
+                keyExtractor={(item) => item.id}
+                contentContainerStyle={{ padding: 20 }}
+                onEndReached={handleLoadMoreSubcategories}
+                onEndReachedThreshold={0.9}
+                ListFooterComponent={
+                  isFetchingNextPage && !hasNextPage ? (
+                    <Spinner color="orange.500" size="sm" />
+                  ) : (
+                    <Box marginTop={4}>
+                      <TouchableOpacity activeOpacity={0.8}>
+                        <Button
+                          variant={'outline'}
+                          borderColor={'darkBlue.600'}
+                          _text={{ color: 'darkBlue.600' }}
+                          height={12}
+                          onPress={handleNavigationToSubcategoryCreation}
+                        >
+                          Criar nova subcategoria
+                        </Button>
+                      </TouchableOpacity>
+                    </Box>
+                  )
+                }
+              />
+            </>
+          )}
+
           {(isLoading || isFetchingNextPage) &&
             skeletonsSubcategories.map((_, index) => (
               <Skeleton
@@ -125,60 +201,9 @@ export const SubcategoryFilter = () => {
                 width={'90%'}
                 borderRadius={8}
                 alignItems={'center'}
-                marginBottom={4}
+                mt={4}
               ></Skeleton>
             ))}
-          <FlatList
-            width={'100%'}
-            data={data?.pages.map((page) => page.results).flat()}
-            renderItem={({ item }) => (
-              <TouchableOpacity key={item.id} activeOpacity={0.6}>
-                <Box marginBottom={4}>
-                  <Flex
-                    h={73}
-                    w={'100%'}
-                    borderRadius={8}
-                    bg={'blue.700'}
-                    rounded="md"
-                    justifyContent="center"
-                  >
-                    <Text
-                      fontSize="xl"
-                      justifyContent="center"
-                      color={'white'}
-                      py={5}
-                      px={5}
-                      bold
-                    >
-                      {item.title}
-                    </Text>
-                  </Flex>
-                </Box>
-              </TouchableOpacity>
-            )}
-            keyExtractor={(item) => item.id}
-            contentContainerStyle={{ padding: 20 }}
-            onEndReached={handleLoadMoreSubcategories}
-            onEndReachedThreshold={0.9}
-            ListFooterComponent={
-              isFetchingNextPage && !hasNextPage ? (
-                <Spinner color="orange.500" size="sm" />
-              ) : (
-                <Box marginTop={4}>
-                  <TouchableOpacity activeOpacity={0.8}>
-                    <Button
-                      variant={'outline'}
-                      borderColor={'darkBlue.600'}
-                      _text={{ color: 'darkBlue.600' }}
-                      height={12}
-                    >
-                      Criar nova subcategoria
-                    </Button>
-                  </TouchableOpacity>
-                </Box>
-              )
-            }
-          />
         </>
       </Box>
     </>

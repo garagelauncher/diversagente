@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/shared/database/prisma.service';
 import {
@@ -32,13 +32,16 @@ export class CommentsService {
   }
 
   async findOne(id: string) {
-    //return this.prisma.category.findUnique({ where: { id } });
-
     const comment = await this.prisma.comment.findUnique({
       where: {
         id,
       },
     });
+
+    if (!comment) {
+      throw new NotFoundException(`Comment with id ${id} not found`);
+    }
+
     return comment;
   }
 
@@ -49,8 +52,14 @@ export class CommentsService {
     });
   }
 
-  remove({ id, postId }: DeleteCommentDto) {
+  async remove({ id, postId }: DeleteCommentDto) {
     Logger.warn(`Removed like ${id} from post ${postId}`);
-    return this.prisma.comment.delete({ where: { id } });
+    return await this.prisma.comment.update({
+      where: { id },
+      data: {
+        deactivatedAt: new Date().toISOString(),
+        isActive: false,
+      },
+    });
   }
 }

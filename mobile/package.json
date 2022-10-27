@@ -27,7 +27,7 @@
     "@react-navigation/stack": "^6.2.1",
     "axios": "^0.27.2",
     "dayjs": "^1.11.5",
-    "expo": "~45.0.0",
+    "expo": "^45.0.0",
     "expo-auth-session": "~3.6.1",
     "expo-clipboard": "~3.0.1",
     "expo-font": "~10.1.0",
@@ -57,7 +57,8 @@
     "webpack-dev-server": "~3.11.0",
     "yup": "^0.32.11",
     "expo-image-picker": "~13.1.1",
-    "expo-linking": "~3.1.0"
+    "expo-linking": "~3.1.0",
+    "expo-notifications": "~0.15.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

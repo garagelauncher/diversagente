@@ -1,8 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import * as AuthSession from 'expo-auth-session';
-import { ReactNode, useEffect, useState } from 'react';
+import { useToast } from 'native-base';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
+import { useMutation } from 'react-query';
 
 import { Oauth2 } from '@src/configs';
 import {
@@ -10,7 +12,9 @@ import {
   GoogleUserData,
   UserData,
 } from '@src/contexts/AuthContext';
+import { User, UserPreferences } from '@src/contracts/User';
 import { diversaGenteServices } from '@src/services/diversaGente';
+import { getPushNotificationToken } from '@src/services/notifications';
 
 type AuthProvidersProps = {
   children: ReactNode;
@@ -24,9 +28,48 @@ type AuthResponse = {
 };
 
 export const AuthProvider = ({ children }: AuthProvidersProps) => {
+  const toast = useToast();
+  const mutationCreateDevice = useMutation(diversaGenteServices.createDevice, {
+    onSuccess: () => {
+      console.log('Device created');
+    },
+  });
+
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState<UserData | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const storeUserDevice = useCallback(
+    async (ownerId: string) => {
+      try {
+        const lastStoredToken = await AsyncStorage.getItem(
+          'diversagente@deviceToken',
+        );
+        const actualToken = await getPushNotificationToken();
+        // toast.show({
+        //   title: 'Token',
+        //   description: actualToken,
+        //   bg: 'green.500',
+        // });
+        const token = actualToken ?? lastStoredToken;
+        console.log('show device token', token);
+
+        if (token) {
+          await AsyncStorage.setItem('diversagente@deviceToken', token);
+          await mutationCreateDevice.mutateAsync({ ownerId, token });
+          console.log('Device stored');
+        }
+      } catch (err) {
+        console.log(err);
+        // toast.show({
+        //   title: 'Error',
+        //   description: err,
+        //   bg: 'red.500',
+        // });
+      }
+    },
+    [mutationCreateDevice],
+  );
 
   async function signInWithGoogle() {
     setIsLoading(true);
@@ -79,6 +122,9 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
           biograph?: string;
           picture?: string;
           createdAt?: string;
+          preferences: UserPreferences;
+          lovelyCategoriesIds: string[];
+          isActive: boolean;
         } | null>('https://dev-diversagente.herokuapp.com/users', {
           email: googleUserData.email,
           name: googleUserData.name,
@@ -90,16 +136,23 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
         console.debug(responseCreateUser.data);
         console.debug(responseCreateUser.status);
 
-        const userPayload = {
-          id: responseCreateUser.data?.id || '',
+        if (!responseCreateUser.data) {
+          return;
+        }
+
+        const userPayload: UserData = {
+          id: responseCreateUser.data.id || '',
           googleUserData,
           email: googleUserData.email,
           name: googleUserData.name,
           picture:
             responseCreateUser.data?.picture ?? googleUserData.picture ?? '',
           username: responseCreateUser.data?.username ?? googleUserData.email,
-          bio: responseCreateUser.data?.biograph ?? '',
+          biograph: responseCreateUser.data?.biograph ?? '',
           createdAt: responseCreateUser.data?.createdAt ?? '',
+          preferences: responseCreateUser.data?.preferences,
+          lovelyCategoriesIds: responseCreateUser.data?.lovelyCategoriesIds,
+          isActive: responseCreateUser.data.isActive,
         };
         setUser(userPayload);
         setLoggedIn(true);
@@ -143,6 +196,32 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
     getUser();
   }, []);
 
+  const refetchUser = useCallback(async () => {
+    if (user) {
+      const userResponse = await axios.get<User>(
+        `https://dev-diversagente.herokuapp.com/users/${user.username}`,
+      );
+
+      const userPayload: UserData = {
+        ...user,
+        ...userResponse.data,
+      };
+
+      setUser(userPayload);
+      await AsyncStorage.setItem(
+        'diversagente@user',
+        JSON.stringify(userPayload),
+      );
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (isLoggedIn && user?.id) {
+      storeUserDevice(user.id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoggedIn]);
+
   return (
     <AuthContext.Provider
       value={{
@@ -152,6 +231,7 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
         user,
         setUser,
         isLoading,
+        refetchUser,
       }}
     >
       {children}
