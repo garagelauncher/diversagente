@@ -10,11 +10,13 @@ import {
   FavouriteIcon,
   Pressable,
 } from 'native-base';
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useState } from 'react';
 import { Share } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useMutation } from 'react-query';
 
+import { ConditionallyRender } from '../ConditionallyRender';
+import { PostEdit } from './PostEdit';
 import { PostMoreActions } from './PostMoreActions';
 
 import { IncludeInto } from '@src/@types/generics/includeInto';
@@ -61,6 +63,8 @@ export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
     onSuccess: onSuccessToggleLike,
   });
 
+  const [isEditModeActive, setIsEditModeActive] = useState(false);
+
   const isOwner = user?.id === post.owner.id;
   const isLiking = mutationCreateLike.isLoading || mutationDeleteLike.isLoading;
   const hasLiked = post.likes.length > 0;
@@ -69,6 +73,14 @@ export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
   const contentPreview = post.content.slice(0, 255);
 
   const formattedCreatedAtDate = formatDateSocialMedia(post.createdAt);
+
+  const handleActivePostEditMode = () => {
+    setIsEditModeActive(true);
+  };
+
+  const handleDeactivatePostEditMode = () => {
+    setIsEditModeActive(false);
+  };
 
   const handleTogglePostLike = async () => {
     try {
@@ -154,25 +166,50 @@ export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
             <Text color="gray.500">{formattedCreatedAtDate}</Text>
           </Flex>
         </Flex>
-        <Flex bg="red">
-          <PostMoreActions isOwner={isOwner} />
+        <Flex>
+          <PostMoreActions
+            isOwner={isOwner}
+            postId={post.id}
+            onActivatePostEditMode={handleActivePostEditMode}
+          />
         </Flex>
       </Flex>
 
       <Flex marginTop={3}>
-        <TouchableOpacity onPress={handleNavigateToPostDetails}>
-          <Heading>{post.title}</Heading>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleNavigateToPostDetails}>
-          <Text color="gray.500" marginTop={4} fontSize={'md'}>
-            {isPreview ? contentPreview : post.content}
-            {isPreview && (
-              <Text color="blue.500" marginTop={7} underline fontSize={'md'}>
-                ...Ver mais
-              </Text>
-            )}
-          </Text>
-        </TouchableOpacity>
+        <ConditionallyRender
+          condition={isEditModeActive}
+          trueComponent={
+            <PostEdit
+              isEditModeActive={isEditModeActive}
+              onDeactiveEditMode={handleDeactivatePostEditMode}
+              postId={post.id}
+              previousTitle={post.title}
+              previousContent={post.content}
+            />
+          }
+          falseComponent={
+            <>
+              <TouchableOpacity onPress={handleNavigateToPostDetails}>
+                <Heading>{post.title}</Heading>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleNavigateToPostDetails}>
+                <Text color="gray.500" marginTop={4} fontSize={'md'}>
+                  {isPreview ? contentPreview : post.content}
+                  {isPreview && (
+                    <Text
+                      color="blue.500"
+                      marginTop={7}
+                      underline
+                      fontSize={'md'}
+                    >
+                      ...Ver mais
+                    </Text>
+                  )}
+                </Text>
+              </TouchableOpacity>
+            </>
+          }
+        />
       </Flex>
 
       <Flex

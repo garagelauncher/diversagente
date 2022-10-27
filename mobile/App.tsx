@@ -2,6 +2,8 @@ import 'intl';
 import 'intl/locale-data/jsonp/en';
 import 'intl/locale-data/jsonp/pt-BR';
 import 'react-native-gesture-handler';
+import './src/services/notifications/config';
+
 import { Poppins_700Bold } from '@expo-google-fonts/poppins';
 import { LinkingOptions, NavigationContainer } from '@react-navigation/native';
 import * as Font from 'expo-font';
@@ -21,8 +23,6 @@ import { Routes } from '@src/routes';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
 import { RootBottomTabParamList } from '@src/routes/tabs';
 import { queryClient } from '@src/services/queryClient';
-
-import './src/services/notifications/config';
 
 const prefix = Linking.createURL('/');
 
@@ -44,11 +44,12 @@ export default function App() {
       screens: {
         ForumStack: {
           screens: {
-            Home: 'home',
+            Forum: 'home',
             FormCreatePost: 'create-post',
             PostDetails: 'posts/:postId',
             Comments: 'posts/:postId/comments',
             Likes: 'posts/:postId/likes',
+            SelectComplaint: 'complaints/:resource/:resourceId/',
           },
         },
         ProfileStack: {

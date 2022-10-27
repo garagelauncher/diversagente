@@ -292,7 +292,7 @@ export const FormCreatePost = () => {
               render={({ field: { onChange } }) => (
                 <FormControl
                   w="100%"
-                  isDisabled={categories.length > 0 ? false : true}
+                  isDisabled={categoryId.length > 0 ? false : true}
                 >
                   <FormControl.Label>
                     Selecione a subcategoria

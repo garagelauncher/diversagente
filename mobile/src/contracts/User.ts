@@ -1,16 +1,21 @@
 export interface UserPreferences {
   canReceivedMessage: boolean;
-  latitude: boolean;
+  language: string;
 }
 
 export interface User {
-  biograph: string;
-  birthdate: string;
-  createdAt: string;
-  email: string;
   id: string;
-  lovelyCategoriesIds: string[];
+  email: string;
+  username: string;
   name: string;
-  picture: string;
+  isActive: boolean;
+  birthdate?: string | null;
+  biograph: string;
+  picture?: string | null;
+  deactivationReason?: string | null;
   preferences: UserPreferences;
+  lovelyCategoriesIds: string[];
+  createdAt: string;
 }
+
+export type UserEditForm = Partial<Omit<User, 'id' | 'createdAt' | 'isActive'>>;

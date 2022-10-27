@@ -13,7 +13,6 @@ import {
   Skeleton,
   Text,
   Spinner,
-  HStack,
   Icon,
   Input,
 } from 'native-base';
@@ -34,7 +33,7 @@ type SubcategoriesNavigationProps = NavigationProp<
 export const SubcategoryFilter = () => {
   const route =
     useRoute<RouteProp<StackForumNavigatorParamList, 'SelectSubcategory'>>();
-  const { categoryId, categoryTitle } = route.params;
+  const { categoryId, categoryTitle, icon, iconProvider } = route.params;
   const { user } = useAuth();
 
   const { data, hasNextPage, fetchNextPage, isLoading, isFetchingNextPage } =
@@ -79,6 +78,8 @@ export const SubcategoryFilter = () => {
             avatar={user?.picture}
             screenName={`${categoryTitle}`}
             subtitle={`Aqui estarão todas as subcategorias que se relacionam com a categoria ${categoryTitle}.\nSe não encontrar o que procura, crie uma nova subcategoria! 😃`}
+            icon={icon}
+            iconProvider={iconProvider}
           ></Header>
         </Box>
       </Box>
@@ -180,6 +181,7 @@ export const SubcategoryFilter = () => {
                           borderColor={'darkBlue.600'}
                           _text={{ color: 'darkBlue.600' }}
                           height={12}
+                          onPress={handleNavigationToSubcategoryCreation}
                         >
                           Criar nova subcategoria
                         </Button>

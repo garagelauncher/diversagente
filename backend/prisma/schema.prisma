@@ -50,16 +50,18 @@ model User {
   Comment      Comment[]
   Device       Device[]
   Notification Notification[]
+  Complaint    Complaint[]
 
   @@map("users")
 }
 
 model Category {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  name        String? @unique
-  title       String?
-  icon        String?
-  description String?
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  name         String? @unique
+  title        String?
+  icon         String?
+  iconProvider String?
+  description  String?
 
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
@@ -68,14 +70,17 @@ model Category {
   Location    Location[]
   User        User[]
   Post        Post[]
+
+  @@map("categories")
 }
 
 model Subcategory {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  name        String  @unique
-  title       String
-  icon        String?
-  description String?
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  name         String  @unique
+  title        String
+  icon         String?
+  iconProvider String?
+  description  String?
 
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
@@ -84,6 +89,8 @@ model Subcategory {
   categoriesIds String[]  @db.ObjectId
 
   Post Post[]
+
+  @@map("subcategories")
 }
 
 model Like {
@@ -96,6 +103,8 @@ model Like {
 
   owner User @relation(fields: [ownerId], references: [id])
   post  Post @relation(fields: [postId], references: [id])
+
+  @@map("likes")
 }
 
 model Comment {
@@ -115,7 +124,10 @@ model Comment {
   post  Post     @relation(fields: [postId], references: [id])
   reply Comment? @relation(name: "ReplyComment", fields: [replyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
-  replies Comment[] @relation(name: "ReplyComment")
+  replies          Comment[]          @relation(name: "ReplyComment")
+  CommentComplaint CommentComplaint[]
+
+  @@map("comments")
 }
 
 model Post {
@@ -138,8 +150,11 @@ model Post {
   category    Category?    @relation(fields: [categoryId], references: [id])
   subcategory Subcategory? @relation(fields: [subcategoryId], references: [id])
 
-  likes    Like[]
-  comments Comment[]
+  likes         Like[]
+  comments      Comment[]
+  PostComplaint PostComplaint[]
+
+  @@map("posts")
 }
 
 model Review {
@@ -155,8 +170,11 @@ model Review {
   ownerId    String @db.ObjectId
   locationId String @db.ObjectId
 
-  owner    User     @relation(fields: [ownerId], references: [id])
-  location Location @relation(fields: [locationId], references: [id])
+  owner           User              @relation(fields: [ownerId], references: [id])
+  location        Location          @relation(fields: [locationId], references: [id])
+  ReviewComplaint ReviewComplaint[]
+
+  @@map("reviews")
 }
 
 type Geoposition {
@@ -168,7 +186,8 @@ model Location {
   id    String @id @default(auto()) @map("_id") @db.ObjectId
   title String
 
-  photos String[]
+  photos   String[]
+  isActive Boolean  @default(true)
 
   address     String?
   description String?
@@ -176,15 +195,16 @@ model Location {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  ownerId       String   @db.ObjectId
-  categoriesIds String[] @db.ObjectId
+  ownerId    String  @db.ObjectId
+  categoryId String? @db.ObjectId
 
   geoposition Geoposition
 
-  category Category? @relation(fields: [categoriesIds], references: [id])
+  category Category? @relation(fields: [categoryId], references: [id])
   owner    User?     @relation(fields: [ownerId], references: [id])
 
-  Review Review[]
+  Review            Review[]
+  LocationComplaint LocationComplaint[]
 
   @@map("locations")
 }
@@ -193,6 +213,7 @@ model Device {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
   token    String
+  isActive Boolean @default(true)
   platform String?
 
   createdAt DateTime @default(now())
@@ -201,6 +222,8 @@ model Device {
   ownerId String @db.ObjectId
 
   owner User @relation(fields: [ownerId], references: [id])
+
+  @@map("devices")
 }
 
 model Notification {
@@ -216,4 +239,75 @@ model Notification {
   ownerId String @db.ObjectId
 
   owner User @relation(fields: [ownerId], references: [id])
+
+  @@map("notifications")
+}
+
+model Complaint {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  message String?
+  data    String?
+  reason  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ownerId String @db.ObjectId
+
+  owner             User                @relation(fields: [ownerId], references: [id])
+  PostComplaint     PostComplaint[]
+  CommentComplaint  CommentComplaint[]
+  ReviewComplaint   ReviewComplaint[]
+  LocationComplaint LocationComplaint[]
+
+  @@map("complaints")
+}
+
+model PostComplaint {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  complaintId String @db.ObjectId
+  postId      String @db.ObjectId
+
+  complaint Complaint @relation(fields: [complaintId], references: [id])
+  post      Post      @relation(fields: [postId], references: [id])
+
+  @@map("post_complaints")
+}
+
+model CommentComplaint {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  complaintId String @db.ObjectId
+  commentId   String @db.ObjectId
+
+  complaint Complaint @relation(fields: [complaintId], references: [id])
+  comment   Comment   @relation(fields: [commentId], references: [id])
+
+  @@map("comment_complaints")
+}
+
+model ReviewComplaint {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  complaintId String @db.ObjectId
+  reviewId    String @db.ObjectId
+
+  complaint Complaint @relation(fields: [complaintId], references: [id])
+  review    Review    @relation(fields: [reviewId], references: [id])
+
+  @@map("review_complaints")
+}
+
+model LocationComplaint {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  complaintId String @db.ObjectId
+  locationId  String @db.ObjectId
+
+  complaint Complaint @relation(fields: [complaintId], references: [id])
+  location  Location  @relation(fields: [locationId], references: [id])
+
+  @@map("location_complaints")
 }
