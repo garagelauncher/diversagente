@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { likeMock } from "test/__mocks__/like";
+import { likeMock } from 'test/__mocks__/like';
 import { LikesController } from '../../../src/modules/likes/likes.controller';
 import { LikesService } from '../../../src/modules/likes/likes.service';
 
@@ -16,6 +16,7 @@ describe('LikesController', () => {
         findOne: jest.fn().mockResolvedValue(likeMock),
         update: jest.fn().mockResolvedValue(likeMock),
         remove: jest.fn().mockResolvedValue(likeMock),
+        fireAndForgetLikeNotification: jest.fn(),
       },
     };
 
@@ -51,7 +52,7 @@ describe('LikesController', () => {
     });
 
     it('should be able to create a like', async () => {
-      const createdLike = await likesController.create("",like);
+      const createdLike = await likesController.create('', like);
       expect(createdLike).toEqual(likeMock);
     });
 
@@ -65,7 +66,7 @@ describe('LikesController', () => {
     it('should be able to delete a like', async () => {
       const deletedLike = await likesController.remove(
         'pipipipipi-00000-popopopo-000000',
-        ''
+        '',
       );
       expect(deletedLike).toEqual(likeMock);
     });
@@ -75,6 +76,4 @@ describe('LikesController', () => {
       expect(likes).toEqual([likeMock]);
     });
   });
-
-
 });

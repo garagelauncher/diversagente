@@ -53,7 +53,7 @@ describe('ReviewsController', () => {
     });
 
     it('should be able to create a review', async () => {
-      const createdReview = await reviewsController.create("", review);
+      const createdReview = await reviewsController.create('', review);
       expect(createdReview).toEqual(reviewMock);
     });
 
@@ -72,7 +72,9 @@ describe('ReviewsController', () => {
     });
 
     it('should be able to findAll reviews', async () => {
-      const reviews = await reviewsController.findAll('hjudasfhasdu-18473-mnksadfjs-1924903');
+      const reviews = await reviewsController.findAll(
+        'hjudasfhasdu-18473-mnksadfjs-1924903',
+      );
       expect(reviews).toEqual([reviewMock]);
     });
   });

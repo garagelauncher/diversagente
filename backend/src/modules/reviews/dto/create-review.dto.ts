@@ -1,8 +1,9 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateReviewDto {
   @ApiProperty({
-    description: 'Quantidade de estrelas equivalente ao grau de satisfação do usuário com o local em questão.',
+    description:
+      'Quantidade de estrelas equivalente ao grau de satisfação do usuário com o local em questão.',
     example: 3,
   })
   stars: number;

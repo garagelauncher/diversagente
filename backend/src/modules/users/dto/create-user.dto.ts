@@ -9,7 +9,8 @@ export class CreateUserDto {
   email: string;
 
   @ApiProperty({
-    description: 'Nome pelo qual o usuário gostaria de ser chamado dentro da plataforma.',
+    description:
+      'Nome pelo qual o usuário gostaria de ser chamado dentro da plataforma.',
     example: 'Diverso',
   })
   username: string;
@@ -22,7 +23,8 @@ export class CreateUserDto {
 
   @ApiProperty({
     description: 'Breve biografia descrita pelo próprio usuário.',
-    example: 'Pai de uma menina autista em busca de um mundo melhor para as nossas crianças',
+    example:
+      'Pai de uma menina autista em busca de um mundo melhor para as nossas crianças',
   })
   biograph?: string;
 

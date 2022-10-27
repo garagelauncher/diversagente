@@ -1,19 +1,10 @@
 import { Feather } from '@expo/vector-icons';
 import { useLinkTo } from '@react-navigation/native';
-import {
-  Box,
-  Icon,
-  Menu,
-  Pressable,
-  Spinner,
-  useClipboard,
-  useToast,
-} from 'native-base';
+import { Box, Icon, Menu, Pressable, Spinner, useToast } from 'native-base';
 import { FunctionComponent, useCallback, useState } from 'react';
 import { useMutation } from 'react-query';
 
-import { ModalWantRemovePost } from '../ModalWantRemovePost';
-import { PostActionMenuItem } from './PostActionMenuItem';
+import { CommentActionMenuItem } from './CommentActionMenuItem';
 
 import { ConditionallyRender } from '@src/components/ConditionallyRender';
 import { LoadingFallback } from '@src/components/LoadingFallback';
@@ -21,18 +12,17 @@ import { ModalConfirmAction } from '@src/components/ModalConfirmAction';
 import { diversaGenteServices } from '@src/services/diversaGente';
 import { queryClient } from '@src/services/queryClient';
 
-export type PostMoreActionsProps = {
+export type CommentMoreActionsProps = {
   isOwner: boolean;
-  postId: string;
-  onActivatePostEditMode: () => void;
+  commentId: string;
+  onActivateCommentEditMode: () => void;
 };
 
-export const PostMoreActions: FunctionComponent<PostMoreActionsProps> = ({
+export const CommentMoreActions: FunctionComponent<CommentMoreActionsProps> = ({
   isOwner,
-  postId,
-  onActivatePostEditMode,
+  commentId,
+  onActivateCommentEditMode,
 }) => {
-  const clipboard = useClipboard();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [
     isConfirmationComplaintModalVisible,
@@ -40,64 +30,47 @@ export const PostMoreActions: FunctionComponent<PostMoreActionsProps> = ({
   ] = useState(false);
   const linkTo = useLinkTo();
   const toast = useToast();
-  const deletePostMutation = useMutation(diversaGenteServices.deletePostById, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['diversagente@posts']);
-      queryClient.invalidateQueries(['diversagente@post', postId]);
-      queryClient.invalidateQueries(['diversagente@likes', postId]);
-      queryClient.invalidateQueries(['diversagente@comments', postId]);
+  const deleteCommentMutation = useMutation(
+    diversaGenteServices.deleteCommentById,
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['diversagente@comments', commentId]);
 
-      toast.show({
-        description: 'Post excluído com sucesso!',
-        bg: 'green.500',
-      });
-      linkTo('/home');
+        toast.show({
+          description: 'Comentário excluído com sucesso!',
+          bg: 'green.500',
+        });
+        linkTo('/home');
+      },
+      onError: () => {
+        toast.show({
+          description: 'Não foi possível excluir o comentário!',
+          background: 'red.500',
+        });
+        linkTo('/home');
+      },
     },
-    onError: () => {
-      toast.show({
-        description: 'Não foi possível excluir o post!',
-        background: 'red.500',
-      });
-      linkTo('/home');
-    },
-  });
+  );
 
   const handleDontLike = () => {
     toast.show({
-      description:
-        'Obrigado. O diversagente usará isso para aprimorar sua timeline.',
+      description: 'O diversagente usará isso para aprimorar sua timeline.',
       background: 'muted.400',
     });
   };
 
-  const handleWantRemovePost = () => {
+  const handleWantRemoveComment = () => {
     setIsModalVisible(true);
   };
 
-  const handleActivateEditMode = () => {
-    onActivatePostEditMode();
-    toast.show({
-      description: 'Modo de edição',
-      background: 'blue.400',
-    });
-  };
-
-  const handleCopyToClipboard = useCallback(async () => {
-    await clipboard.onCopy(`https://diversagente.com.br/post/${postId}`);
-    toast.show({
-      description: 'Link copiado com sucesso!',
-      bg: 'green.500',
-    });
-  }, [clipboard, postId, toast]);
-
-  const handleConfirmDeletePost = useCallback(async () => {
+  const handleConfirmDeleteComment = useCallback(async () => {
     if (isOwner) {
-      await deletePostMutation.mutateAsync(postId);
+      await deleteCommentMutation.mutateAsync(commentId);
     }
-  }, [deletePostMutation, isOwner, postId]);
+  }, [deleteCommentMutation, isOwner, commentId]);
 
   const handleOpenComplaint = () => {
-    linkTo(`/complaints/post/${postId}`);
+    linkTo(`/complaints/comment/${commentId}`);
   };
 
   return (
@@ -109,11 +82,11 @@ export const PostMoreActions: FunctionComponent<PostMoreActionsProps> = ({
         trigger={(triggerProps) => {
           return (
             <Pressable
-              accessibilityLabel="More post options menu"
+              accessibilityLabel="More comment options menu"
               {...triggerProps}
             >
               <LoadingFallback
-                isLoading={deletePostMutation.isLoading}
+                isLoading={deleteCommentMutation.isLoading}
                 fallback={<Spinner size="lg" color="orange.500" />}
               >
                 <Icon as={Feather} name="more-horizontal" size={6} />
@@ -125,7 +98,7 @@ export const PostMoreActions: FunctionComponent<PostMoreActionsProps> = ({
         <ConditionallyRender
           condition={!isOwner}
           trueComponent={
-            <PostActionMenuItem
+            <CommentActionMenuItem
               icon="frown"
               label="Não tenho interesse"
               onPress={handleDontLike}
@@ -134,19 +107,13 @@ export const PostMoreActions: FunctionComponent<PostMoreActionsProps> = ({
           falseComponent={<></>}
         />
 
-        <PostActionMenuItem
-          label="Copiar link"
-          icon="link"
-          onPress={handleCopyToClipboard}
-        />
-
         <ConditionallyRender
           condition={isOwner}
           trueComponent={
-            <PostActionMenuItem
+            <CommentActionMenuItem
               icon="edit"
               label="Editar conteúdo"
-              onPress={handleActivateEditMode}
+              onPress={onActivateCommentEditMode}
             />
           }
           falseComponent={<></>}
@@ -155,33 +122,38 @@ export const PostMoreActions: FunctionComponent<PostMoreActionsProps> = ({
         <ConditionallyRender
           condition={isOwner}
           trueComponent={
-            <PostActionMenuItem
+            <CommentActionMenuItem
               icon="trash-2"
               label="Excluir post"
-              onPress={handleWantRemovePost}
+              onPress={handleWantRemoveComment}
             />
           }
           falseComponent={<></>}
         />
 
-        <PostActionMenuItem
+        <CommentActionMenuItem
           icon="flag"
           label="Denunciar"
           onPress={() => setIsConfirmationComplaintModalVisible(true)}
         />
       </Menu>
 
-      <ModalWantRemovePost
+      <ModalConfirmAction
         isOpen={isModalVisible}
         onClose={() => setIsModalVisible(false)}
-        onConfirm={handleConfirmDeletePost}
+        onConfirm={handleConfirmDeleteComment}
+        title="Remover comentário"
+        description="Você tem certeza que deseja remover o seu comentário nessa publicação? Essa ação não pode ser desfeita."
+        confirmText="Sim, tenho certeza"
+        confirmColor="red"
       />
+
       <ModalConfirmAction
         isOpen={isConfirmationComplaintModalVisible}
         onClose={() => setIsConfirmationComplaintModalVisible(false)}
         onConfirm={handleOpenComplaint}
-        title="Abrir denúncia"
-        description="Você tem certeza que deseja abrir uma denúncia para esta publicação?"
+        title="Abrir denúncia de comentário"
+        description="Você tem certeza que deseja abrir uma denúncia para esse comentário?"
         confirmText="Sim, tenho certeza"
         confirmColor="red"
       />

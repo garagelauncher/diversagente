@@ -42,32 +42,24 @@ describe('CommentsController', () => {
     };
 
     it('should be able to update a comment', async () => {
-      const updatedComment = await commentsController.update(
-        'aaaaa',
-        {
-          text: 'Localização mock alterado',
-        },
-      );
+      const updatedComment = await commentsController.update('aaaaa', {
+        text: 'Localização mock alterado',
+      });
       expect(updatedComment).toEqual(commentMock);
     });
 
     it('should be able to create a comment', async () => {
-      const createdComment = await commentsController.create(" ", comment);
+      const createdComment = await commentsController.create(' ', comment);
       expect(createdComment).toEqual(commentMock);
     });
 
     it('should be able to find one comment', async () => {
-      const foundComment = await commentsController.findOne(
-        'aaaaa',
-      );
+      const foundComment = await commentsController.findOne('aaaaa');
       expect(foundComment).toEqual(commentMock);
     });
 
     it('should be able to delete a comment', async () => {
-      const deletedComment = await commentsController.remove(
-        'aaaaa',
-        ''
-      );
+      const deletedComment = await commentsController.remove('aaaaa', '');
       expect(deletedComment).toEqual(commentMock);
     });
 

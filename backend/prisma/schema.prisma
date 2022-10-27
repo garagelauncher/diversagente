@@ -56,11 +56,12 @@ model User {
 }
 
 model Category {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  name        String? @unique
-  title       String?
-  icon        String?
-  description String?
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  name         String? @unique
+  title        String?
+  icon         String?
+  iconProvider String?
+  description  String?
 
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
@@ -69,14 +70,17 @@ model Category {
   Location    Location[]
   User        User[]
   Post        Post[]
+
+  @@map("categories")
 }
 
 model Subcategory {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  name        String  @unique
-  title       String
-  icon        String?
-  description String?
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  name         String  @unique
+  title        String
+  icon         String?
+  iconProvider String?
+  description  String?
 
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
@@ -85,6 +89,8 @@ model Subcategory {
   categoriesIds String[]  @db.ObjectId
 
   Post Post[]
+
+  @@map("subcategories")
 }
 
 model Like {
@@ -97,6 +103,8 @@ model Like {
 
   owner User @relation(fields: [ownerId], references: [id])
   post  Post @relation(fields: [postId], references: [id])
+
+  @@map("likes")
 }
 
 model Comment {
@@ -118,6 +126,8 @@ model Comment {
 
   replies          Comment[]          @relation(name: "ReplyComment")
   CommentComplaint CommentComplaint[]
+
+  @@map("comments")
 }
 
 model Post {
@@ -143,6 +153,8 @@ model Post {
   likes         Like[]
   comments      Comment[]
   PostComplaint PostComplaint[]
+
+  @@map("posts")
 }
 
 model Review {
@@ -161,6 +173,8 @@ model Review {
   owner           User              @relation(fields: [ownerId], references: [id])
   location        Location          @relation(fields: [locationId], references: [id])
   ReviewComplaint ReviewComplaint[]
+
+  @@map("reviews")
 }
 
 type Geoposition {
@@ -181,12 +195,12 @@ model Location {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  ownerId       String   @db.ObjectId
-  categoriesIds String[] @db.ObjectId
+  ownerId    String  @db.ObjectId
+  categoryId String? @db.ObjectId
 
   geoposition Geoposition
 
-  category Category? @relation(fields: [categoriesIds], references: [id])
+  category Category? @relation(fields: [categoryId], references: [id])
   owner    User?     @relation(fields: [ownerId], references: [id])
 
   Review            Review[]
@@ -208,6 +222,8 @@ model Device {
   ownerId String @db.ObjectId
 
   owner User @relation(fields: [ownerId], references: [id])
+
+  @@map("devices")
 }
 
 model Notification {
@@ -223,6 +239,8 @@ model Notification {
   ownerId String @db.ObjectId
 
   owner User @relation(fields: [ownerId], references: [id])
+
+  @@map("notifications")
 }
 
 model Complaint {
@@ -242,6 +260,8 @@ model Complaint {
   CommentComplaint  CommentComplaint[]
   ReviewComplaint   ReviewComplaint[]
   LocationComplaint LocationComplaint[]
+
+  @@map("complaints")
 }
 
 model PostComplaint {
@@ -252,6 +272,8 @@ model PostComplaint {
 
   complaint Complaint @relation(fields: [complaintId], references: [id])
   post      Post      @relation(fields: [postId], references: [id])
+
+  @@map("post_complaints")
 }
 
 model CommentComplaint {
@@ -262,6 +284,8 @@ model CommentComplaint {
 
   complaint Complaint @relation(fields: [complaintId], references: [id])
   comment   Comment   @relation(fields: [commentId], references: [id])
+
+  @@map("comment_complaints")
 }
 
 model ReviewComplaint {
@@ -272,6 +296,8 @@ model ReviewComplaint {
 
   complaint Complaint @relation(fields: [complaintId], references: [id])
   review    Review    @relation(fields: [reviewId], references: [id])
+
+  @@map("review_complaints")
 }
 
 model LocationComplaint {
@@ -282,4 +308,6 @@ model LocationComplaint {
 
   complaint Complaint @relation(fields: [complaintId], references: [id])
   location  Location  @relation(fields: [locationId], references: [id])
+
+  @@map("location_complaints")
 }

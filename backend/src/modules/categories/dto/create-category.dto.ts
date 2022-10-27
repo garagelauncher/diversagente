@@ -1,28 +1,35 @@
-import { ApiProperty } from '@nestjs/swagger';
-
-
 export class CreateCategoryDto {
-  /**
-   * Id é utilizado para ser o identificador uma subcategoria
-   * @example 628a97973ce262268e3bfeed
-   */
-  id: string;
-
-  /**
-   * Nome utilizado para a subcategoria
-   * @example Alergias
-   */
+  @ApiProperty({
+    description: 'O nome é o marcador da categoria.',
+    example: 'health',
+  })
   name: string;
 
-  /**
-   * Nome utilizado para a subcategoria
-   * @example Alimentacao
-   */
+  @ApiProperty({
+    description:
+      'O título é utilizado para identificar o tema geral abordado pela categoria.',
+    example: 'Saúde',
+  })
   title: string;
 
-  /**
-   * Breve descrição do que a subcategoria irá se tratar.
-   * @example Alergias
-   */
+  @ApiProperty({
+    description:
+      'O nome do ícone será utilizado como elemento visual da categoria.',
+    example: 'book',
+  })
+  icon?: string;
+
+  @ApiProperty({
+    description:
+      'O nome do provedor de ícone será utilizado como elemento visual da categoria.',
+    example: 'Feather',
+  })
+  iconProvider?: string;
+
+  @ApiProperty({
+    description: 'Breve descrição do tema abordado pela categoria.',
+    example:
+      'Nesta categoria poderão ser debatidos temas como alimentação, rotina de exercícios e desenvolvimento social',
+  })
   description?: string;
 }

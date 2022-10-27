@@ -22,7 +22,8 @@ export class CreateLocationDto {
 
   @ApiProperty({
     description: 'Endereço do local avaliado.',
-    example: 'Av. Pedro Álvares Cabral - Vila Mariana, São Paulo - SP, 04094-050',
+    example:
+      'Av. Pedro Álvares Cabral - Vila Mariana, São Paulo - SP, 04094-050',
   })
   address?: string;
 
