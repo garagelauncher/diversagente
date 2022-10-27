@@ -4,8 +4,14 @@ import { PER_PAGE_ITEMS } from '@src/configs';
 import { QueryOptions } from '@src/contracts/QueryOptions';
 import { diversaGenteServices } from '@src/services/diversaGente';
 
+type InfinityQueryOptions = {
+  onSuccess?: (data: any) => void;
+  onError?: (error: any) => void;
+};
+
 export const usePosts = <GenericIncluded extends object = object>(
   options: QueryOptions = {},
+  infinityQueryOptions = {} as InfinityQueryOptions,
 ) =>
   useInfiniteQuery(
     ['diversagente@posts', options.cursor, options.range, options.filter],
@@ -40,5 +46,7 @@ export const usePosts = <GenericIncluded extends object = object>(
 
         return cursor;
       },
+      onSuccess: infinityQueryOptions.onSuccess,
+      onError: infinityQueryOptions.onError,
     },
   );

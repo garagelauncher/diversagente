@@ -55,23 +55,34 @@ export const Home = () => {
     isFetchingNextPage,
     refetch,
     isRefetching,
-  } = usePosts<UserHasInteracted>({
-    range: [0, PER_PAGE_ITEMS],
-    sort: ['createdAt', 'DESC'],
-    filter: {
-      ...(postFilters.categoryId ? postFilters : {}),
-    },
-    include: {
-      likes: {
-        select: { id: true },
-        where: { ownerId: user?.id ?? userIdHelper },
+  } = usePosts<UserHasInteracted>(
+    {
+      range: [0, PER_PAGE_ITEMS],
+      sort: ['createdAt', 'DESC'],
+      filter: {
+        ...(postFilters.categoryId ? postFilters : {}),
       },
-      comments: {
-        select: { id: true },
-        where: { ownerId: user?.id ?? userIdHelper },
+      include: {
+        likes: {
+          select: { id: true },
+          where: { ownerId: user?.id ?? userIdHelper },
+        },
+        comments: {
+          select: { id: true },
+          where: { ownerId: user?.id ?? userIdHelper },
+        },
       },
     },
-  });
+    {
+      onError: (error) => {
+        toast.show({
+          title: 'Error',
+          description: 'Falha ao buscar posts',
+          background: 'red.500',
+        });
+      },
+    },
+  );
 
   const {
     data: categoriesData,

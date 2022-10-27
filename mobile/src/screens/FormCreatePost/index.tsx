@@ -17,6 +17,7 @@ import {
   CheckIcon,
   Select,
   Collapse,
+  useToast,
 } from 'native-base';
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -27,6 +28,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useMutation } from 'react-query';
 import * as yup from 'yup';
 
 import { ControlledInput } from '@src/components/ControlledInput';
@@ -70,14 +72,39 @@ const schema = yup.object({
 export const FormCreatePost = () => {
   const [isClosed, setIsClosed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorAtPostCreation, setErrorAtPostCreation] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
   const [categoryId, setCategoryId] = useState<string>('');
   const { user } = useAuth();
   //const [selectedImage, setSelectedImage] = useState<any>(null);
-
+  const toast = useToast();
   const navigation = useNavigation<FormCreatePostNavigationProps>();
+
+  const {
+    mutateAsync,
+    isLoading: isLoadinCreatePost,
+    isError: errorAtPostCreation,
+  } = useMutation(diversaGenteServices.createPost, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('diversagente@posts');
+      queryClient.invalidateQueries('post');
+      queryClient.invalidateQueries('userPosts');
+      queryClient.invalidateQueries('userPost');
+
+      toast.show({
+        title: 'Post criado com sucesso!',
+        background: 'green.500',
+      });
+      queryClient.invalidateQueries('diversagente@posts');
+      navigation.navigate('Forum');
+    },
+    onError: () => {
+      toast.show({
+        title: 'Erro ao criar post',
+        background: 'red.500',
+      });
+    },
+  });
 
   const fetchAllCategories = async () => {
     try {
@@ -152,19 +179,15 @@ export const FormCreatePost = () => {
   };
 
   async function createPost(data: PostForm): Promise<PostForm | undefined> {
-    setErrorAtPostCreation(false);
     setIsLoading(true);
     try {
-      setErrorAtPostCreation(false);
       const createdPost = await diversaGenteServices.createPost({
         ...data,
         ownerId: String(user?.id),
       });
-      queryClient.invalidateQueries('diversagente@posts');
-      navigation.navigate('Forum');
+
       return createdPost;
     } catch (error) {
-      setErrorAtPostCreation(true);
       setIsLoading(false);
     } finally {
       setIsLoading(false);
