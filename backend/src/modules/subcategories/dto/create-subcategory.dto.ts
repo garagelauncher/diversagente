@@ -22,5 +22,5 @@ export class CreateSubcategoryDto {
     description: 'Id da categoria a qual o post pertence',
     example: 'mapiqeqmp-45642-hoeahue-1924903',
   })
-  categoriesIds?: string[];
+  categoriesIds?: string;
 }
