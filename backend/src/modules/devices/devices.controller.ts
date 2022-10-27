@@ -8,11 +8,12 @@ import {
   Delete,
   Query,
 } from '@nestjs/common';
-import { ApiQuery } from '@nestjs/swagger';
+import { ApiQuery, ApiTags } from '@nestjs/swagger';
 import { DevicesService } from './devices.service';
 import { CreateDeviceDto } from './dto/create-device.dto';
 import { UpdateDeviceDto } from './dto/update-device.dto';
 
+@ApiTags('User Devices')
 @Controller('users/:ownerId/devices')
 export class DevicesController {
   constructor(private readonly devicesService: DevicesService) {}
