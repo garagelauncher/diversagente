@@ -1,42 +1,43 @@
-import { Feather, Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 3;
+import { ControlledInput } from '@src/components/ControlledInput';
+import { User, UserEditProps } from '@src/contracts/User';
+import { useAuth } from '@src/hooks/useAuth';
+import { StackProfileNavigatorParamList } from '@src/routes/stacks/profileStack.routes';
+import { diversaGenteServices } from '@src/services/diversaGente';
+import { queryClient } from '@src/services/queryClient';
+import { placeholder } from 'i18n-js';
 import {
   ScrollView,
-  VStack,
   Button,
   Text,
   FormControl,
-  Input,
   Avatar,
   Icon,
   Box,
   Flex,
   IconButton,
   Heading,
-  Accordion,
   Collapse,
-  CloseIcon,
-  HStack,
-  Alert,
-  List,
-  Checkbox,
-  Switch,
   Select,
+  useToast,
+  CheckIcon,
+  WarningOutlineIcon,
+  TextArea,
+  Input,
 } from 'native-base';
-import React, { useState, memo } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import { useMutation } from 'react-query';
 import * as yup from 'yup';
 
-import { ControlledInput } from '@src/components/ControlledInput';
-import { UserEditForm } from '@src/contracts/User';
-import { useCategories } from '@src/hooks/queries/useCategories';
-import { useAuth } from '@src/hooks/useAuth';
-import { StackProfileNavigatorParamList } from '@src/routes/stacks/profileStack.routes';
-import { theme } from '@src/styles/theme';
+type ProfileScreenNavigationProps = NavigationProp<
+  StackProfileNavigatorParamList,
+  'Profile'
+>;
 
 type ProfileScreenNavigationProps = NavigationProp<
   StackProfileNavigatorParamList,
@@ -44,14 +45,10 @@ type ProfileScreenNavigationProps = NavigationProp<
 >;
 
 export const EditProfile = () => {
-  const { signOut, user, setUser } = useAuth();
-  const { data, isLoading } = useCategories();
+  const { signOut, user, setUser, refetchUser } = useAuth();
   const [isPersonalInfoOpen, setPersonalInfoOpen] = useState(true);
   const [isPreferencesAtAppOpen, setPreferencesAtAppOpen] = useState(false);
   const [isSecurityAndPrivacyOpen, setSecurityAndPrivacyOpen] = useState(false);
-
-  const [isPortugueseSelected, setPortugueseSelected] = useState(false);
-  const [isEnglishSelected, setEnglishSeselected] = useState(false);
 
   const schema = yup.object({
     name: yup
@@ -61,14 +58,14 @@ export const EditProfile = () => {
       .required('Nome é obrigatório.'),
     biograph: yup
       .string()
-      .min(25, 'A descrição deve conter no mínimo 25 caracteres')
-      .max(100, 'A descrição deve conter no máximo 100 caracteres')
-      .required('Descrição é obrigatória.'),
-    lovelyCategoriesIds: yup
-      .array()
-      .min(1, 'Selecione pelo menos uma categoria de interesse.')
-      .required('Por favor, selecione ao menos uma categoria.'),
-    language: yup.string().required(),
+      .min(3, 'A descrição deve conter no mínimo 3 caracteres')
+      .max(100, 'A descrição deve conter no máximo 100 caracteres'),
+    // lovelyCategoriesIds: yup
+    //   .array()
+    //   .of(yup.string())
+    //   .min(1, 'Selecione pelo menos uma categoria de interesse.')
+    //   .required('Por favor, selecione ao menos uma categoria.'),
+    // language: yup.string().required(),
   });
 
   const {
@@ -76,9 +73,60 @@ export const EditProfile = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<UserEditForm>({
+  } = useForm<UserEditProps>({
     resolver: yupResolver(schema),
+    defaultValues: {
+      name: user?.name,
+      biograph: String(user?.biograph),
+    },
   });
+  console.log('errors', errors);
+  const toast = useToast();
+  const updateUserDataMutation = useMutation(
+    diversaGenteServices.updateUserData,
+    {
+      onSuccess: async () => {
+        toast.show({
+          description: 'Post atualizado com sucesso!',
+          bg: 'green.500',
+        });
+        await refetchUser();
+      },
+      onError: () => {
+        toast.show({
+          description: 'Não foi possível atualizar o post!',
+          background: 'red.500',
+        });
+      },
+    },
+  );
+
+  const handleUpdateUserPersonalInfo = async (data: UserEditProps) => {
+    console.log('handleUpdateUserPerfonalInfo', data);
+    await updateUserDataMutation.mutateAsync({
+      username: user?.username,
+      biograph: data.biograph,
+      name: data.name,
+    });
+  };
+
+  const handleUpdateAppPreferences = async (data: Partial<UserEditProps>) => {
+    console.log('handleUpdateUserPerfonalInfo');
+    await updateUserDataMutation.mutateAsync({
+      username: user?.username,
+      ...data,
+    });
+  };
+
+  const handleUpdateSecurityAndPrivacy = async (
+    data: Partial<UserEditProps>,
+  ) => {
+    console.log('handleUpdateUserPerfonalInfo');
+    await updateUserDataMutation.mutateAsync({
+      username: user?.username,
+      ...data,
+    });
+  };
 
   const navigation = useNavigation<ProfileScreenNavigationProps>();
 
@@ -94,35 +142,8 @@ export const EditProfile = () => {
     setSecurityAndPrivacyOpen(!isSecurityAndPrivacyOpen);
   };
 
-  const handleLanguageChange = () => {
-    setPortugueseSelected(!isPortugueseSelected);
-    setEnglishSeselected(!isEnglishSelected);
-  };
-
-  const handlePortugueseSelection = () => {
-    console.log('Portuguese selected', isPortugueseSelected);
-    setPortugueseSelected(!isPortugueseSelected);
-    setEnglishSeselected(false);
-  };
-
-  const handleEnglishSelection = () => {
-    console.log('english', isEnglishSelected);
-    setEnglishSeselected(!isEnglishSelected);
-    setPortugueseSelected(false);
-  };
-
   const handleNavigateBackToProfile = () => {
     navigation.navigate('Profile', { userId: user?.id as string });
-  };
-
-  type CategoriesCheckboxType = {
-    title: string;
-    categoryId: string;
-  };
-
-  type LanguageCheckboxType = {
-    title: string;
-    languageId: string;
   };
 
   return (
@@ -189,26 +210,73 @@ export const EditProfile = () => {
 
             <Collapse isOpen={isPersonalInfoOpen} mt={2} w={'100%'}>
               <Box mb={6}>
-                <ControlledInput
-                  inputVariant="underlined"
+                <Controller
                   control={control}
-                  name={'name'}
-                  defaultValue={user?.name}
-                  label={'Nome'}
-                  isTextArea={false}
-                ></ControlledInput>
+                  name="name"
+                  rules={{ required: true }}
+                  render={({ field: { onChange, value } }) => (
+                    <FormControl w="100%">
+                      <FormControl.Label isRequired>Nome</FormControl.Label>
+
+                      <Input
+                        borderColor={[errors.name ? 'red.500' : 'blue.800']}
+                        size="md"
+                        variant={'underlined'}
+                        placeholder={'Informe como quer ser chamado.'}
+                        onChangeText={onChange}
+                        value={value}
+                      />
+
+                      {errors.biograph && (
+                        <FormControl.ErrorMessage
+                          leftIcon={<WarningOutlineIcon size="xs" />}
+                        >
+                          <Text>{errors.biograph?.message}</Text>
+                        </FormControl.ErrorMessage>
+                      )}
+                    </FormControl>
+                  )}
+                ></Controller>
               </Box>
 
               <Box mb={6}>
-                <ControlledInput
+                <Controller
                   control={control}
-                  name={'biograph'}
-                  label={'Biografia'}
-                  defaultValue={user?.bio ?? '🙂'}
-                  isTextArea={true}
-                  placeholder="Caracteres: máximo de 100 e mínimo de 25"
-                ></ControlledInput>
+                  name="biograph"
+                  rules={{ required: true }}
+                  render={({ field: { onChange, value } }) => (
+                    <FormControl w="100%">
+                      <FormControl.Label>Biografia</FormControl.Label>
+
+                      <TextArea
+                        h={280}
+                        borderColor={[errors.biograph ? 'red.500' : 'blue.800']}
+                        size="md"
+                        py={4}
+                        px={4}
+                        placeholder={
+                          'Adicione uma biografia para que as pessoas te conheçam melhor.'
+                        }
+                        autoCompleteType="off"
+                        onChangeText={onChange}
+                        value={value}
+                      />
+
+                      {errors.biograph && (
+                        <FormControl.ErrorMessage
+                          leftIcon={<WarningOutlineIcon size="xs" />}
+                        >
+                          <Text>{errors.biograph?.message}</Text>
+                        </FormControl.ErrorMessage>
+                      )}
+                    </FormControl>
+                  )}
+                ></Controller>
               </Box>
+
+              <Button onPress={handleSubmit(handleUpdateUserPersonalInfo)}>
+                Salvar
+              </Button>
             </Collapse>
           </Box>
 
@@ -250,6 +318,7 @@ export const EditProfile = () => {
                   </Select>
                 </Flex>
               </Box>
+              <Button>Salvar</Button>
             </Collapse>
           </Box>
 
