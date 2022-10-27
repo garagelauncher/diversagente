@@ -115,6 +115,7 @@ export const CreatePostForm: FunctionComponent<CreatePostFormProps> = ({
         onChangeText={setSearchPostText}
         onSubmitEditing={(event) => handleSearchPost(event.nativeEvent.text)}
         clearButtonMode="while-editing"
+        value={searchPostText}
       />
       <TouchableOpacity>
         <Button
