@@ -74,13 +74,16 @@ export class LocationsService {
         limit,
       },
     })) as unknown as LocationRaw[];
-    console.log(locations);
+
     const parsedLocations = locations.map((location) => ({
       id: location._id.$oid,
       title: location.title,
       ownerId: location.ownerId.$oid,
       createdAt: location.createdAt.$date,
       updatedAt: location.updatedAt.$date,
+      icon: location.icon,
+      iconProvider: location.iconProvider,
+      categoryId: location.categoryId.$oid,
       coordinates: {
         latitude: location.geoposition.coordinates[1],
         longitude: location.geoposition.coordinates[0],
