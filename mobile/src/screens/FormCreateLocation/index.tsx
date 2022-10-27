@@ -12,9 +12,11 @@ import {
   Heading,
   Input,
   ScrollView,
+  Select,
   Text,
   View,
   VStack,
+  CheckIcon,
 } from 'native-base';
 import { useCallback, useEffect, useState } from 'react';
 import { Alert, Dimensions, StyleSheet } from 'react-native';
@@ -22,6 +24,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import MapView, { Marker, Region } from 'react-native-maps';
 
 import { baseCoordinates } from '@src/configs';
+import { Category } from '@src/contracts/Category';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackLocationNavigatorParamList } from '@src/routes/stacks/locationStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
@@ -48,6 +51,8 @@ export const FormCreateLocation = () => {
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [category, setCategory] = useState<Category | null>(null);
 
   const [initialPosition, setInitialPosition] = useState<Region | undefined>({
     ...selectedLocation,
@@ -57,10 +62,20 @@ export const FormCreateLocation = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const shouldNotActiveForm = !title || !description || !selectedAddress;
+  const shouldNotActiveForm =
+    !title || !description || !selectedAddress || !category;
 
   const handleNavigateToSelectMapLocation = () => {
     navigation.navigate('SelectLocationMap');
+  };
+
+  const fetchAllCategories = async () => {
+    try {
+      const categoriesFromApi = await diversaGenteServices.findAllCategories();
+      setCategories(categoriesFromApi.results);
+    } catch (error) {
+      console.info('Error while fetching all categories', error);
+    }
   };
 
   const getCurrentUserLocation = useCallback(async () => {
@@ -100,6 +115,9 @@ export const FormCreateLocation = () => {
           longitude: selectedLocation.longitude,
         },
         ownerId: String(user?.id),
+        categoryId: category?.id,
+        icon: category?.icon,
+        iconProvider: category?.iconProvider,
       };
 
       await diversaGenteServices.createLocation(location);
@@ -119,6 +137,10 @@ export const FormCreateLocation = () => {
       setInitialPosition(undefined);
     };
   }, [getCurrentUserLocation]);
+
+  const updateCategoryIdSelected = (category: Category) => {
+    setCategory(category);
+  };
 
   return (
     <Box width="100%" backgroundColor="gray.100" flex={1}>
@@ -200,7 +222,7 @@ export const FormCreateLocation = () => {
 
           <Flex>
             <Text fontSize={16} color={'blue.500'} fontWeight={'bold'}>
-              Descrição
+              Descrição*
             </Text>
             <Input
               placeholder="Descrição"
@@ -214,7 +236,7 @@ export const FormCreateLocation = () => {
 
           <Flex>
             <Text fontSize={16} color={'blue.500'} fontWeight={'bold'}>
-              Endereço
+              Endereço*
             </Text>
             <Input
               disabled={true}
@@ -224,6 +246,35 @@ export const FormCreateLocation = () => {
               color={'gray.800'}
               marginTop={4}
             />
+          </Flex>
+
+          <Flex>
+            <Text fontSize={16} color={'blue.500'} fontWeight={'bold'}>
+              Categoria*
+            </Text>
+            <Select
+              borderColor={'blue.800'}
+              minWidth="200"
+              accessibilityLabel="Selecione uma categoria"
+              placeholder="Selecione uma categoria"
+              _selectedItem={{
+                bg: 'teal.600',
+                endIcon: <CheckIcon size={5} />,
+              }}
+              mt="1"
+              onOpen={fetchAllCategories}
+            >
+              {categories.map((category) => {
+                return (
+                  <Select.Item
+                    key={category.id}
+                    label={category.title}
+                    value={category.id}
+                    onPressIn={() => updateCategoryIdSelected(category)}
+                  />
+                );
+              })}
+            </Select>
           </Flex>
 
           <Button

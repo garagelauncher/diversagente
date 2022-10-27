@@ -18,4 +18,7 @@ export interface LocationRaw {
   createdAt: LocationRawDate;
   updatedAt: LocationRawDate;
   ownerId: ID;
+  icon: string;
+  iconProvider: string;
+  categoryId: ID;
 }

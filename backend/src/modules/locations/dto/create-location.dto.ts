@@ -10,7 +10,7 @@ export class CreateLocationDto {
 
   @ApiProperty({
     description: 'Foto do local avaliado.',
-    example: '[URL da imagem]',
+    example: '["https://i.imgur.com/removed.png"]',
   })
   photos?: string[];
 
@@ -29,7 +29,7 @@ export class CreateLocationDto {
 
   @ApiProperty({
     description: 'Coordenadas do local de acordo com a API do Google Maps.',
-    example: 'coordinates: {latitude: 23.5874, longitude: 46.6576}',
+    example: { latitude: 23.5874, longitude: 46.6576 },
   })
   coordinates: Coordinates;
 
@@ -38,4 +38,22 @@ export class CreateLocationDto {
     example: 'mapiqeqmp-45642-hoeahue-1924903',
   })
   ownerId: string;
+
+  @ApiProperty({
+    description: 'Id da categoria do local avaliado.',
+    example: '635ac4605aac5b264639f283',
+  })
+  categoryId: string;
+
+  @ApiProperty({
+    description: 'Ícone do local avaliado.',
+    example: 'church',
+  })
+  icon?: string;
+
+  @ApiProperty({
+    description: 'Provedor do ícone do local avaliado.',
+    example: 'Feather',
+  })
+  iconProvider?: string;
 }

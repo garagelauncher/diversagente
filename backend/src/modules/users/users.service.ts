@@ -3,6 +3,11 @@ import { PrismaService } from 'src/shared/database/prisma.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CloudinaryService } from 'src/shared/services/cloudinary/cloudinary.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import {
+  PaginateOptions,
+  parsePaginationToPrisma,
+} from 'src/shared/utils/parsePaginationToPrisma';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
@@ -31,14 +36,47 @@ export class UsersService {
     return userFound;
   }
 
-  async findAll() {
-    return await this.prisma.user.findMany({});
+  async findAll(options: PaginateOptions) {
+    const { skip, take, where, orderBy, include, cursor } =
+      parsePaginationToPrisma<
+        Prisma.UserWhereInput,
+        Prisma.UserInclude,
+        Prisma.UserWhereUniqueInput
+      >(options);
+
+    return await this.prisma.user.findMany({
+      skip,
+      take,
+      where,
+      orderBy,
+      cursor,
+      include,
+    });
   }
 
-  async findOne(email: string) {
+  async findOne(email: string, options: PaginateOptions = {}) {
+    const { where, include } = parsePaginationToPrisma<
+      Prisma.UserWhereUniqueInput,
+      Prisma.UserInclude,
+      Prisma.UserWhereUniqueInput
+    >(options);
+
     const user = await this.prisma.user.findUnique({
       where: {
+        ...where,
         email,
+      },
+      include: {
+        _count: {
+          select: {
+            Comment: true,
+            Like: true,
+            Post: true,
+            Review: true,
+            Location: true,
+            Complaint: true,
+          },
+        },
       },
     });
 
