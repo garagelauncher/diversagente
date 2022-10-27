@@ -1,3 +1,5 @@
+import { ApiProperty } from '@nestjs/swagger';
+
 export class CreateCategoryDto {
   @ApiProperty({
     description: 'O nome é o marcador da categoria.',
