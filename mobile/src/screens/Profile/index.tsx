@@ -60,7 +60,7 @@ export const Profile = () => {
   const userFirstname = user?.name?.split(' ')[0];
 
   useEffect(() => {
-    setBio(user?.bio ?? '');
+    setBio(user?.biograph ?? '');
     setName(user?.name);
     setPicture(user?.picture ?? '');
     setUsername(user?.username ?? '');
@@ -246,7 +246,7 @@ export const Profile = () => {
             </Box>
             <Box px={2} mt={2} w={'70%'}>
               <Heading>{user?.name}</Heading>
-              <Text>{user?.bio === '' ? '🙂' : user?.bio}</Text>
+              <Text>{user?.biograph === '' ? '🙂' : user?.biograph}</Text>
             </Box>
           </Flex>
 

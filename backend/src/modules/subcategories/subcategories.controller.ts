@@ -15,7 +15,7 @@ import { ApiQuery } from '@nestjs/swagger';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Subcategories')
-@Controller('/categories/:categoryId/subcategories')
+@Controller('subcategories')
 export class SubcategoriesController {
   constructor(private readonly subcategoriesService: SubcategoriesService) {}
 
