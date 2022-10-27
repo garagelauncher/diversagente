@@ -1,5 +1,7 @@
 import { createContext } from 'react';
 
+import { User } from '@src/contracts/User';
+
 export type GoogleUserData = {
   id: string;
   email: string;
@@ -9,16 +11,6 @@ export type GoogleUserData = {
   locale: string;
   given_name: string;
   family_name?: string;
-};
-
-export type User = {
-  id: string;
-  email: string;
-  name: string;
-  username?: string;
-  bio?: string | null;
-  picture?: string | null;
-  createdAt?: Date | string;
 };
 
 export type UserData = {
@@ -32,6 +24,7 @@ export type AuthContextProps = {
   user: UserData | undefined;
   setUser: (user: UserData | undefined) => void;
   isLoading: boolean;
+  refetchUser: () => Promise<void>;
 };
 
 export const AuthContext = createContext<AuthContextProps>(

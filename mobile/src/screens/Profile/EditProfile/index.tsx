@@ -41,7 +41,7 @@ type ProfileScreenNavigationProps = NavigationProp<
 >;
 
 export const EditProfile = () => {
-  const { signOut, user, setUser } = useAuth();
+  const { signOut, user, setUser, refetchUser } = useAuth();
   const [isPersonalInfoOpen, setPersonalInfoOpen] = useState(true);
   const [isPreferencesAtAppOpen, setPreferencesAtAppOpen] = useState(false);
   const [isSecurityAndPrivacyOpen, setSecurityAndPrivacyOpen] = useState(false);
@@ -54,15 +54,14 @@ export const EditProfile = () => {
       .required('Nome é obrigatório.'),
     biograph: yup
       .string()
-      .min(25, 'A descrição deve conter no mínimo 25 caracteres')
-      .max(100, 'A descrição deve conter no máximo 100 caracteres')
-      .required('Descrição é obrigatória.'),
-    lovelyCategoriesIds: yup
-      .array()
-      .of(yup.string())
-      .min(1, 'Selecione pelo menos uma categoria de interesse.')
-      .required('Por favor, selecione ao menos uma categoria.'),
-    language: yup.string().required(),
+      .min(3, 'A descrição deve conter no mínimo 3 caracteres')
+      .max(100, 'A descrição deve conter no máximo 100 caracteres'),
+    // lovelyCategoriesIds: yup
+    //   .array()
+    //   .of(yup.string())
+    //   .min(1, 'Selecione pelo menos uma categoria de interesse.')
+    //   .required('Por favor, selecione ao menos uma categoria.'),
+    // language: yup.string().required(),
   });
 
   const {
@@ -72,17 +71,22 @@ export const EditProfile = () => {
     formState: { errors },
   } = useForm<UserEditProps>({
     resolver: yupResolver(schema),
+    defaultValues: {
+      name: user?.name,
+      biograph: String(user?.biograph),
+    },
   });
-
+  console.log('errors', errors);
   const toast = useToast();
   const updateUserDataMutation = useMutation(
     diversaGenteServices.updateUserData,
     {
-      onSuccess: () => {
+      onSuccess: async () => {
         toast.show({
           description: 'Post atualizado com sucesso!',
           bg: 'green.500',
         });
+        await refetchUser();
       },
       onError: () => {
         toast.show({
@@ -93,11 +97,12 @@ export const EditProfile = () => {
     },
   );
 
-  const handleUpdateUserPersonalInfo = async (data: Partial<UserEditProps>) => {
-    console.log('handleUpdateUserPerfonalInfo');
+  const handleUpdateUserPersonalInfo = async (data: UserEditProps) => {
+    console.log('handleUpdateUserPerfonalInfo', data);
     await updateUserDataMutation.mutateAsync({
       username: user?.username,
-      ...data,
+      biograph: data.biograph,
+      name: data.name,
     });
   };
 
@@ -205,7 +210,7 @@ export const EditProfile = () => {
                   control={control}
                   name="name"
                   rules={{ required: true }}
-                  render={({ field: { onChange } }) => (
+                  render={({ field: { onChange, value } }) => (
                     <FormControl w="100%">
                       <FormControl.Label isRequired>Nome</FormControl.Label>
 
@@ -215,6 +220,7 @@ export const EditProfile = () => {
                         variant={'underlined'}
                         placeholder={'Informe como quer ser chamado.'}
                         onChangeText={onChange}
+                        value={value}
                       />
 
                       {errors.biograph && (
@@ -234,11 +240,9 @@ export const EditProfile = () => {
                   control={control}
                   name="biograph"
                   rules={{ required: true }}
-                  render={({ field: { onChange } }) => (
+                  render={({ field: { onChange, value } }) => (
                     <FormControl w="100%">
-                      <FormControl.Label isRequired>
-                        Biografia
-                      </FormControl.Label>
+                      <FormControl.Label>Biografia</FormControl.Label>
 
                       <TextArea
                         h={280}
@@ -251,6 +255,7 @@ export const EditProfile = () => {
                         }
                         autoCompleteType="off"
                         onChangeText={onChange}
+                        value={value}
                       />
 
                       {errors.biograph && (
