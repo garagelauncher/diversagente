@@ -9,12 +9,13 @@ import {
   UseInterceptors,
   UploadedFile,
   NotFoundException,
+  Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { DeleteUserDto } from './dto/delete-user.dto';
 
 @ApiTags('Users')
@@ -27,9 +28,52 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
+  @ApiQuery({
+    name: 'filter',
+    type: String,
+    description: 'An optional filter',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'include',
+    type: String,
+    description: 'An optional include',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'sort',
+    type: String,
+    description: 'An optional sort',
+    example: `["createdAt", "DESC"]`,
+    required: false,
+  })
+  @ApiQuery({
+    name: 'range',
+    type: String,
+    description: 'A optional range as [1, 1]',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'cursor',
+    type: String,
+    description: 'An optional cursor',
+    required: false,
+  })
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  async findAll(
+    @Query('filter') filter?: string,
+    @Query('sort') sort?: string,
+    @Query('range') range?: string,
+    @Query('include') include?: string,
+    @Query('cursor') cursor?: string,
+  ) {
+    return await this.usersService.findAll({
+      filter,
+      sort,
+      range,
+      include,
+      cursor,
+    });
   }
 
   @Get(':email')
