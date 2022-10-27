@@ -18,4 +18,6 @@ export interface User {
   createdAt: string;
 }
 
-export type UserEditForm = Partial<Omit<User, 'id' | 'createdAt' | 'isActive'>>;
+export type UserEditProps = Partial<
+  Omit<User, 'id' | 'createdAt' | 'isActive'>
+>;

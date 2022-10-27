@@ -1,42 +1,34 @@
-import { Feather, Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 3;
 import {
   ScrollView,
-  VStack,
   Button,
   Text,
   FormControl,
-  Input,
   Avatar,
   Icon,
   Box,
   Flex,
   IconButton,
   Heading,
-  Accordion,
   Collapse,
-  CloseIcon,
-  HStack,
-  Alert,
-  List,
-  Checkbox,
-  Switch,
   Select,
+  useToast,
 } from 'native-base';
-import React, { useState, memo } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import { useMutation } from 'react-query';
 import * as yup from 'yup';
 
 import { ControlledInput } from '@src/components/ControlledInput';
-import { UserEditForm } from '@src/contracts/User';
-import { useCategories } from '@src/hooks/queries/useCategories';
+import { User, UserEditProps } from '@src/contracts/User';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackProfileNavigatorParamList } from '@src/routes/stacks/profileStack.routes';
-import { theme } from '@src/styles/theme';
+import { diversaGenteServices } from '@src/services/diversaGente';
+import { queryClient } from '@src/services/queryClient';
 
 type ProfileScreenNavigationProps = NavigationProp<
   StackProfileNavigatorParamList,
@@ -45,13 +37,9 @@ type ProfileScreenNavigationProps = NavigationProp<
 
 export const EditProfile = () => {
   const { signOut, user, setUser } = useAuth();
-  const { data, isLoading } = useCategories();
   const [isPersonalInfoOpen, setPersonalInfoOpen] = useState(true);
   const [isPreferencesAtAppOpen, setPreferencesAtAppOpen] = useState(false);
   const [isSecurityAndPrivacyOpen, setSecurityAndPrivacyOpen] = useState(false);
-
-  const [isPortugueseSelected, setPortugueseSelected] = useState(false);
-  const [isEnglishSelected, setEnglishSeselected] = useState(false);
 
   const schema = yup.object({
     name: yup
@@ -66,6 +54,7 @@ export const EditProfile = () => {
       .required('Descrição é obrigatória.'),
     lovelyCategoriesIds: yup
       .array()
+      .of(yup.string())
       .min(1, 'Selecione pelo menos uma categoria de interesse.')
       .required('Por favor, selecione ao menos uma categoria.'),
     language: yup.string().required(),
@@ -76,9 +65,36 @@ export const EditProfile = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<UserEditForm>({
+  } = useForm<UserEditProps>({
     resolver: yupResolver(schema),
   });
+
+  const toast = useToast();
+  const updateUserDataMutation = useMutation(
+    diversaGenteServices.updateUserData,
+    {
+      onSuccess: () => {
+        toast.show({
+          description: 'Post atualizado com sucesso!',
+          bg: 'green.500',
+        });
+      },
+      onError: () => {
+        toast.show({
+          description: 'Não foi possível atualizar o post!',
+          background: 'red.500',
+        });
+      },
+    },
+  );
+
+  const handleUpdateUserPersonalInfo = async (data: Partial<UserEditProps>) => {
+    console.log('handleUpdateUserPerfonalInfo');
+    await updateUserDataMutation.mutateAsync({
+      username: user?.username,
+      ...data,
+    });
+  };
 
   const navigation = useNavigation<ProfileScreenNavigationProps>();
 
@@ -94,35 +110,8 @@ export const EditProfile = () => {
     setSecurityAndPrivacyOpen(!isSecurityAndPrivacyOpen);
   };
 
-  const handleLanguageChange = () => {
-    setPortugueseSelected(!isPortugueseSelected);
-    setEnglishSeselected(!isEnglishSelected);
-  };
-
-  const handlePortugueseSelection = () => {
-    console.log('Portuguese selected', isPortugueseSelected);
-    setPortugueseSelected(!isPortugueseSelected);
-    setEnglishSeselected(false);
-  };
-
-  const handleEnglishSelection = () => {
-    console.log('english', isEnglishSelected);
-    setEnglishSeselected(!isEnglishSelected);
-    setPortugueseSelected(false);
-  };
-
   const handleNavigateBackToProfile = () => {
     navigation.navigate('Profile', { userId: user?.id as string });
-  };
-
-  type CategoriesCheckboxType = {
-    title: string;
-    categoryId: string;
-  };
-
-  type LanguageCheckboxType = {
-    title: string;
-    languageId: string;
   };
 
   return (
@@ -193,6 +182,7 @@ export const EditProfile = () => {
                   inputVariant="underlined"
                   control={control}
                   name={'name'}
+                  error={errors.name}
                   defaultValue={user?.name}
                   label={'Nome'}
                   isTextArea={false}
@@ -202,6 +192,7 @@ export const EditProfile = () => {
               <Box mb={6}>
                 <ControlledInput
                   control={control}
+                  error={errors.biograph}
                   name={'biograph'}
                   label={'Biografia'}
                   defaultValue={user?.bio ?? '🙂'}
