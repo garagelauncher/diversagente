@@ -3,7 +3,7 @@ export interface UserPreferences {
   language: string;
 }
 
-export interface User {
+export type User = {
   id: string;
   email: string;
   username: string;
@@ -16,6 +16,8 @@ export interface User {
   preferences: UserPreferences;
   lovelyCategoriesIds: string[];
   createdAt: string;
-}
+};
 
-export type UserEditForm = Partial<Omit<User, 'id' | 'createdAt' | 'isActive'>>;
+export type UserEditProps = Partial<
+  Omit<User, 'id' | 'createdAt' | 'isActive'>
+>;

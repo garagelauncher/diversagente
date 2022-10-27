@@ -1,10 +1,9 @@
-import { diversagenteBaseApi } from '../baseUrl';
-
 import { IncludeInto } from '@src/@types/generics/includeInto';
-import { Category } from '@src/contracts/Category';
 import { QueryOptions } from '@src/contracts/QueryOptions';
-import { User } from '@src/contracts/User';
+import { User, UserEditProps } from '@src/contracts/User';
 import { parseQueryOptions } from '@src/utils/parseQuery';
+
+import { diversagenteBaseApi } from '../baseUrl';
 
 export const findAllUsers = async (options: QueryOptions = {}) => {
   try {
@@ -61,24 +60,20 @@ export const deleteUser = async (userId: string) => {
   }
 };
 
-export const updateUserData = async <GenericIncluded extends object = object>(
-  username?: string,
-  options: QueryOptions = {},
-) => {
+export const updateUserData = async ({
+  username,
+  ...data
+}: Partial<UserEditProps>): Promise<UserEditProps> => {
   try {
-    const response = await diversagenteBaseApi.patch<
-      IncludeInto<User, GenericIncluded>
-    >(`/users/${username}`, {
-      params: {
-        ...parseQueryOptions(options),
-      },
-    });
+    const response = await diversagenteBaseApi.patch<UserEditProps>(
+      `/users/${username}`,
+      data,
+    );
 
-    const user = response.data;
-    console.info('CATEGORY!', response.data);
-    return user;
+    return response.data;
   } catch (error: any) {
-    console.error('error when fetching category info', username);
+    console.error('error when patch user');
+    console.error(username);
 
     if (error.isAxiosError) {
       console.error(error.response);

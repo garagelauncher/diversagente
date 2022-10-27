@@ -7,6 +7,7 @@ import * as likesMethods from './likes';
 import * as locationsMethods from './locations';
 import * as postsMethods from './posts';
 import * as subcategoriesMethods from './subcategories';
+import * as usersMethods from './users';
 
 export const diversaGenteServices = {
   diversagenteBaseApi,
@@ -20,4 +21,5 @@ export const diversaGenteServices = {
   ...commentsMethods,
   ...devicesMethods,
   ...complaintsMethods,
+  ...usersMethods,
 };

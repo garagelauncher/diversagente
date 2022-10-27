@@ -1,4 +1,4 @@
-%% Adaptado a partir de :
+ %% Adaptado a partir de :
 %%    abtex2-modelo-trabalho-academico.tex, v-1.9.2 laurocesar
 %% para ser um modelo para os trabalhos no IFSP-SPO
 
@@ -22,7 +22,6 @@
     english,            % idioma adicional para hifenização
     brazil              % o último idioma é o principal do documento
     ]{ifsp-spo-inf-ctds} % ajustar de acordo com o modelo desejado para o curso
-\AtBeginDocument{\todo[inline]{Ajustar a classe de referencia de documentclass no inicio do arquivo principal de acordo com o curso do(s) aluno(s)}}
 
 % ---
 % Informações de dados para CAPA e FOLHA DE ROSTO
@@ -37,7 +36,7 @@
 \renewcommand{\imprimirautor}{
 \begin{tabular}{lr}
 GABRIEL DE MORAIS RUIZ & SP3046893 \\
-GRAZIELLI LIMA BERTI com sobrenome grande & SP3046966 \\
+GRAZIELLI LIMA BERTI & SP3046966 \\
 GUSTAVO LOURENÇO DE FREITAS & SP3049566 \\
 JOÃO VITOR SILVA BISPO & SP3052672 \\
 TAYNA RITA DE FRANÇA SOUZA & SP3050173 \\
@@ -47,12 +46,12 @@ VIVIANE DE SANTANA QUEIROZ & SP3053601 \\
 }
 
 
-\disciplina{PIA5 -Projeto Integrado I}
+\disciplina{PIA5 - Projeto Integrado II}
 
 \preambulo{Documentação da aplicação apresentada no
 curso de Tecnologia em Análise e Desenvolvimento
 de Sistemas do Instituto Federal de
-São Paulo, da disciplina de PIA5.}
+São Paulo, da disciplina de Projeto Integrado II.}
 
 \data{2022}
 
@@ -60,9 +59,9 @@ São Paulo, da disciplina de PIA5.}
 % Utilizar o Nome Completo, abntex tem orientador e coorientador
 % então vão ser utilizados na definição de professor
 \renewcommand{\orientadorname}{Professor:}
-\orientador{JOSÉ BRAZ DE ARAUJO}
+\orientador{CARLOS HENRIQUE VERÍSSIMO PEREIRA}
 \renewcommand{\coorientadorname}{Professor:}
-\coorientador{MARCELO TAVARES DE SANTANA}
+\coorientador{JOSÉ BRAZ DE ARAUJO}
 
 
 % ---
@@ -98,25 +97,19 @@ São Paulo, da disciplina de PIA5.}
 % ----
 \begin{document}
 
-
-
 % Retira espaço extra obsoleto entre as frases.
 \frenchspacing 
-
-%somente para o exemplo, fica primeiro
-\todo[inline]{Remover texto informativo inicial}
-\input{00-info}
 
 % -- lista de pendencias gerada pelo todonotes
 % -- altere opções do usepackage para remover na versão final....
 %\listoftodos
 %\todo[inline]{remover lista de todo da versão final...}
-\newpage
+%\newpage
 
 % ----------------------------------------------------------
 % ELEMENTOS PRÉ-TEXTUAIS
 % ----------------------------------------------------------
-\pretextual
+%\pretextual
 
 % ---
 % Capa
@@ -164,9 +157,9 @@ São Paulo, da disciplina de PIA5.}
 % ---
 % inserir lista de tabelas
 % ---
-\pdfbookmark[0]{\listtablename}{lot}
-\listoftables*
-\cleardoublepage
+%\pdfbookmark[0]{\listtablename}{lot}
+%\listoftables*
+%\cleardoublepage
 % ---
 
 % ---
@@ -205,10 +198,10 @@ São Paulo, da disciplina de PIA5.}
 
 
 % exemplos de escrita LaTeX e erros comuns
-\input{exemplos/exemplos}
-\input{erros/erros-comuns-documentos}
-\input{erros/erros-comuns-projetos}
-\input{erros/revisao}
+%\input{exemplos/exemplos}
+%\input{erros/erros-comuns-documentos}
+%\input{erros/erros-comuns-projetos}
+%\input{erros/revisao}
 
 
 
@@ -231,20 +224,9 @@ São Paulo, da disciplina de PIA5.}
 % Referências bibliográficas
 % ----------------------------------------------------------
 % quando não esta utilizando biblatex tem que carregar as referencias aqui
-\IfPackageLoaded{biblatex}{%
 \printbibliography
 
-\ifthenelse{\boolean{utilizarREFINDENT}}{%
-\explicacao{Essa formatação não é exatamente a definida na ABNT, mas deixa a lista bem mais legível e pode ser desativada facilmente na definição de parâmetros do documento}
-}{}
-
-\explicacao{Existe um bug no biblatex que o backref não conta corretamente o número de citações em fontes de ilustrações. Em um trabalho normal as citações devem aparecer no texto e dessa forma o bug não vai acontecer. Nesse documento existem citações diretamente na fonte de ilustrações gerando o problema da indicação \enquote{Citado 0 vez na página ...}}
-
-}{%
-\bibliography{referencias,exemplos/abntex2-doc-abnt-6023}
-}
-
-\input{pos-glossario.tex}
+%\input{pos-glossario}
 
 \input{pos-apendices}
 
@@ -259,7 +241,7 @@ São Paulo, da disciplina de PIA5.}
 % As palavras indexadas devem ser definidas com \index{} no texto
 %---------------------------------------------------------------------
 \phantompart
-\printindex
+%\printindex
 
 %---------------------------------------------------------------------
 
