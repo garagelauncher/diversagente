@@ -45,11 +45,11 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
           'diversagente@deviceToken',
         );
         const actualToken = await getPushNotificationToken();
-        toast.show({
-          title: 'Token',
-          description: actualToken,
-          bg: 'green.500',
-        });
+        // toast.show({
+        //   title: 'Token',
+        //   description: actualToken,
+        //   bg: 'green.500',
+        // });
         const token = actualToken ?? lastStoredToken;
         console.log('show device token', token);
 
@@ -60,14 +60,14 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
         }
       } catch (err) {
         console.log(err);
-        toast.show({
-          title: 'Error',
-          description: err,
-          bg: 'red.500',
-        });
+        // toast.show({
+        //   title: 'Error',
+        //   description: err,
+        //   bg: 'red.500',
+        // });
       }
     },
-    [mutationCreateDevice, toast],
+    [mutationCreateDevice],
   );
 
   async function signInWithGoogle() {

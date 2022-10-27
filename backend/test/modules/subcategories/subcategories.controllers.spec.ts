@@ -24,8 +24,11 @@ describe('SubcategoriesController', () => {
       providers: [SubcategoriesService, mockSubcategoryService],
     }).compile();
 
-    subcategoriesController = module.get<SubcategoriesController>(SubcategoriesController);
-    subcategoriesService = module.get<SubcategoriesService>(SubcategoriesService);
+    subcategoriesController = module.get<SubcategoriesController>(
+      SubcategoriesController,
+    );
+    subcategoriesService =
+      module.get<SubcategoriesService>(SubcategoriesService);
   });
 
   it('should be defined', () => {
@@ -38,7 +41,7 @@ describe('SubcategoriesController', () => {
       id: 'aaaaaa-1111',
       name: 'especificação x',
       text: 'subcategoria de saúde específica',
-      title: "a"
+      title: 'a',
     };
 
     it('should be able to update a subcategory', async () => {
@@ -52,7 +55,9 @@ describe('SubcategoriesController', () => {
     });
 
     it('should be able to create a subcategory', async () => {
-      const createdSubcategory = await subcategoriesController.create(subcategory);
+      const createdSubcategory = await subcategoriesController.create(
+        subcategory,
+      );
       expect(createdSubcategory).toEqual(subcategoryMock);
     });
 

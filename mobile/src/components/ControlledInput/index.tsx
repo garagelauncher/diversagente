@@ -1,6 +1,12 @@
 import { Text, WarningOutlineIcon, HStack } from 'native-base';
 import React from 'react';
-import { Control, Controller, FieldError } from 'react-hook-form';
+import {
+  Control,
+  Controller,
+  FieldError,
+  FieldErrorsImpl,
+  Merge,
+} from 'react-hook-form';
 import { TextInputProps } from 'react-native';
 
 import { FormInputProps, FormInput } from '../FormInput';
@@ -9,7 +15,7 @@ type Props = FormInputProps &
   TextInputProps & {
     control: Control<any>;
     name: string;
-    error?: FieldError;
+    error?: FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined;
   };
 
 export function ControlledInput({ control, name, error, ...rest }: Props) {

@@ -24,7 +24,8 @@ describe('CategoriesController', () => {
       providers: [CategoriesService, mockCategoryService],
     }).compile();
 
-    categoriesController = module.get<CategoriesController>(CategoriesController);
+    categoriesController =
+      module.get<CategoriesController>(CategoriesController);
     categoriesService = module.get<CategoriesService>(CategoriesService);
   });
 
@@ -35,7 +36,7 @@ describe('CategoriesController', () => {
 
   describe('success case', () => {
     const category = {
-      id: "aaaaaa-1111-aaaaaaa-1111",
+      id: 'aaaaaa-1111-aaaaaaa-1111',
       name: 'Categoria mock',
       title: 'Titulo da categoria mock',
       ownerId: '01923408oaskfjoasdj=jiasfjsdi-oiashjdfk',

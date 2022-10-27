@@ -13,28 +13,33 @@ export class SubcategoriesService {
   constructor(private readonly prisma: PrismaService) {}
 
   private async getIconFromSubcategory(subcategoryDto: UpdateSubcategoryDto) {
-    const categoryId = subcategoryDto.categoryId;
+    const categoriesIds = subcategoryDto.categoriesIds;
     const hasCategory =
-      Array.isArray(categoryId) && categoryId.length > 0;
+      Array.isArray(categoriesIds) && categoriesIds.length > 0;
 
     if (hasCategory) {
       const category = await this.prisma.category.findUnique({
-        where: { id: categoryId[0] },
+        where: { id: categoriesIds[0] },
       });
 
       if (!category) {
-        throw new NotFoundException(`Category ${categoryId[0]} not found`);
+        throw new NotFoundException(`Category ${categoriesIds[0]} not found`);
       }
 
-      return category.icon;
+      return {
+        icon: category.icon,
+        provider: category.iconProvider,
+      };
     }
 
     return null;
   }
 
   async create(createSubcategoryDto: CreateSubcategoryDto) {
+    const category = await this.getIconFromSubcategory(createSubcategoryDto);
     Object.assign(createSubcategoryDto, {
-      icon: await this.getIconFromSubcategory(createSubcategoryDto),
+      icon: category?.icon,
+      iconProvider: category?.provider,
     });
 
     return await this.prisma.subcategory.create({ data: createSubcategoryDto });
@@ -62,8 +67,10 @@ export class SubcategoriesService {
   }
 
   async update(id: string, updateSubcategoryDto: UpdateSubcategoryDto) {
+    const category = await this.getIconFromSubcategory(updateSubcategoryDto);
     Object.assign(updateSubcategoryDto, {
-      icon: await this.getIconFromSubcategory(updateSubcategoryDto),
+      icon: category?.icon,
+      iconProvider: category?.provider,
     });
 
     return await this.prisma.subcategory.update({

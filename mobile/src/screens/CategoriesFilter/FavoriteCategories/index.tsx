@@ -11,12 +11,14 @@ import {
   Skeleton,
   Spinner,
   Button,
+  IconButton,
 } from 'native-base';
 import React from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { useCategories } from '@src/hooks/queries/useCategories';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
+import { getIconProviderByName } from '@src/utils/getIconProvider';
 
 type FavoriteCategoriesNavigationProps = NavigationProp<
   StackForumNavigatorParamList,
@@ -32,13 +34,22 @@ export const FavoriteCategories = () => {
   const navigation = useNavigation<FavoriteCategoriesNavigationProps>();
   const linkTo = useLinkTo();
 
-  const handleNavigateToSubcategoriesFilter = async (
-    categoryId: string,
-    categoryTitle: string,
-  ) => {
+  const handleNavigateToSubcategoriesFilter = async ({
+    categoryId,
+    categoryTitle,
+    icon,
+    iconProvider,
+  }: {
+    categoryId: string;
+    categoryTitle: string;
+    icon?: string;
+    iconProvider?: string;
+  }) => {
     navigation.navigate('SelectSubcategory', {
       categoryId,
       categoryTitle,
+      icon,
+      iconProvider,
     });
   };
 
@@ -74,7 +85,12 @@ export const FavoriteCategories = () => {
             key={item.id}
             activeOpacity={0.6}
             onPress={() =>
-              handleNavigateToSubcategoriesFilter(item.id, item.title)
+              handleNavigateToSubcategoriesFilter({
+                categoryId: item.id,
+                categoryTitle: item.title,
+                icon: item.icon,
+                iconProvider: item.iconProvider,
+              })
             }
           >
             <Box marginBottom={4}>
@@ -86,11 +102,21 @@ export const FavoriteCategories = () => {
                 borderWidth={1.5}
                 opacity={0.8}
                 rounded="md"
-                justifyContent="center"
+                justifyContent="space-between"
+                direction="row"
               >
                 <Text fontSize="xl" justifyContent="center" py={5} px={5} bold>
                   {item.title}
                 </Text>
+                <IconButton
+                  colorScheme={'orange'}
+                  variant={'ghost'}
+                  size={'lg'}
+                  _icon={{
+                    as: getIconProviderByName(item?.iconProvider),
+                    name: item.icon,
+                  }}
+                />
               </Flex>
             </Box>
           </TouchableOpacity>

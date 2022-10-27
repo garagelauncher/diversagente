@@ -1,4 +1,5 @@
 import * as Notifications from 'expo-notifications';
+import { Platform } from 'react-native';
 
 export const getPushNotificationToken = async () => {
   console.log('@getPushNotificationToken');
@@ -9,6 +10,7 @@ export const getPushNotificationToken = async () => {
     await Notifications.requestPermissionsAsync();
 
     if (!granted) {
+      alert('Denied push notifications!');
       return;
     }
   }
@@ -19,5 +21,14 @@ export const getPushNotificationToken = async () => {
     console.log(' pushToken', pushToken);
     console.log('@pushToken');
     return pushToken.data;
+  }
+
+  if (Platform.OS === 'android') {
+    Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: '#FF231F7C',
+    });
   }
 };
