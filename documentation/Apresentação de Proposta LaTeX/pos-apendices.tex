@@ -47,48 +47,7 @@
 	\endhead
 	Descrição & Ao realizar o processo de login, o usuário terá acesso a todas as funcionalidades do aplicativo como consultar o feed de notícias, ter acesso ao fórum podendo criar subcategorias e post e compartilhar informações nos canais de texto, enviar mensagens privadas a outras pessoas que também estão logadas no app e avaliar locais a partir da sua vivência deste estabelecimento \\
 	\hline
-	Fluxo Básico  & 
-	\begin{enumerate}
-		\item O usuário entra no aplicativo e visualiza a tela de login;
-		\item O usuário insere seu email e senha;
-		\item Usuário entra no aplicativo;
-		\item O caso de uso é encerrado. 
-	\end{enumerate}\\
-	\hline
-	Fluxo Alternativo  & O usuário esqueceu a senha:
-	\begin{enumerate}
-		\item O usuário entra no aplicativo e visualiza a tela de login;
-		\item O usuário insere seu email e senha;
-		\item O sistema informa que a senha inserida está incorreta.
-		\item O usuário clica em "Esqueci minha senha";
-		\item O sistema envia um e-mail para o ator para trocar a senha;
-		\item O usuário abre o e-mail e redefine sua senha;
-		\item O fluxo principal é recomeçado.
-		\item O caso de uso é encerrado.
-	\end{enumerate} \\
-	\hline
-	Fluxo Alternativo  &  Preenchimento incorreto da senha:
-	\begin{enumerate}
-		\item O usuário entra no aplicativo e visualiza a tela de login;
-		\item O usuário insere seu email e senha;
-		\item O sistema informa que a senha inserida está incorreta.
-		\item O sistema informa que a senha inserida está incorreta.
-		\item O caso de uso é encerrado. 
-	\end{enumerate}\\
-	\hline
-	Fluxo Alternativo & Primeiro Acesso
-	\begin{enumerate}
-		\item O usuário entra no aplicativo e visualiza a tela de login;
-		\item O usuário clica em "cadastrar";
-		\item O sistema apresenta a tela de boas vindas;
-		\item O usuário clica em "Avançar"
-		\item O usuário insere as informações necessárias para o cadastramento no aplicativo;
-		\item O usuário recebe a mensagem de "Cadastro feito com sucesso";
-		\item O fluxo principal é começado para o usuário;
-		\item O caso de uso é encerrado.
-	\end{enumerate} \\
-	\hline
-	Fluxo Alternativo & Login Social (Google):
+	Fluxo Básico & Login Social (Google):
 	\begin{enumerate}
 		\item O usuário entra no aplicativo e visualiza a tela de login;
 		\item O usuário clica no botão de realizar o login social;
@@ -130,20 +89,7 @@
 	\endhead
 	Descrição & Esse caso terá como funcionalidade o cadastrar novos usuários na aplicação.\\
 	\hline
-	Fluxo Básico  & 
-	\begin{enumerate}
-		\item O usuário entra no aplicativo e visualiza a tela de login;
-		\item O usuário clica em "cadastrar";
-		\item O sistema apresenta a tela de boas vindas;
-		\item O usuário clica em "Avançar";
-		\item O usuário clica em "Cadastrar no App";
-		\item O usuário insere as informações necessárias para o cadastramento no aplicativo;
-		\item É retornado ao usuário: "Cadastro realizado com sucesso";
-		\item O fluxo principal é começado para o usuário;
-		\item O caso de uso é encerrado.. 
-	\end{enumerate}\\
-	\hline
-	Fluxo Alternativo  & Cadastro com a conta Google:
+	Fluxo Básico  & Cadastro com a conta Google:
 	\begin{enumerate}
 		\item O usuário entra no aplicativo e visualiza a tela de login;
 		\item O usuário clica em "cadastrar";
@@ -197,7 +143,7 @@
 		\begin{enumerate}
 			\item O usuário seleciona a seção "Perfil";
 			\item O usuário seleciona "Editar Perfil";
-			\item O sistema exibe os dados do perfil: nome, data de nascimento, e-mail, neuro diversidades que tem interesse, abertura de mensagens privadas;
+			\item O sistema exibe os dados do perfil: nome, e-mail, biografia, preferência  no app e segurança e privacidade;
 			\item O usuário seleciona o(s) dado(s) que deseja editar;
 			\item O usuário atualiza as suas informações e pressiona no botão "Salvar";
 			\item O sistema valida os dados conforme requeridos e atualiza o perfil do assinante;
@@ -243,6 +189,7 @@
 		Fluxo Básico  & 
 		\begin{enumerate}
 			\item O usuário seleciona a seção "Fórum";
+   			\item O usuário seleciona "Ver mais";
 			\item O usuário seleciona a categoria desejada;
 			\item O sistema mostra todas as subcategorias relacionadas categoria escolhida pelo usuário;
 			\item O usuário escolhe uma subcategoria;
@@ -281,41 +228,26 @@
 		{{ \autoref{casos-de-uso5} continued from previous page}} \\
 		\endhead
 		
-		Descrição & Ao criar uma subcategoria, o cliente poderá excluir sua própria mensagem dentro do canal de texto e poderá excluir as mensagens de outros dentro dessa subcategoria que ele criou. O Administrador terá permissão de excluir as mensagens das subcategorias, até mesmo do criador dela.\\
+		Descrição & Ao criar uma subcategoria, o cliente poderá excluir sua própria mensagem dentro do canal de texto.\\
 		\hline
 		Fluxo Básico  & 
 		Para o cliente:
 		\begin{enumerate}
 			\item O usuário seleciona a seção "Fórum";
+      	    \item O usuário seleciona "Ver mais";
 			\item O usuário seleciona a categoria desejada;
 			\item O sistema mostra todas as subcategorias relacionadas à categoria escolhida pelo usuário;
 			\item O usuário escolhe uma subcategoria;
 			\item O sistema mostra todas as mensagens ocorridas nesse canal de texto até o momento. 
-			\item O usuário seleciona a mensagem que deseja excluir;
+			\item O usuário seleciona a sua mensagem que deseja excluir;
+   			\item O usuário seleciona " Sim, tenho certeza" no pop-up que aparece para deletar a sua mensagem;
 			\item O sistema atualiza o canal de texto retirando a mensagem excluída. 
 			\item O  caso de uso é encerrado. 
-		\end{enumerate}\\
-		\hline
-		Fluxo Básico  & 
-		Para o Administrador:
-		\begin{enumerate}
-			\item O administrador seleciona a seção "Fórum";
-			\item O administrador seleciona a categoria desejada;
-			\item O administrador mostra todas as subcategorias relacionadas à categoria escolhida pelo usuário;
-			\item O administrador escolhe uma subcategoria;
-			\item O sistema mostra todas as mensagens ocorridas nesse canal de texto até o momento. 
-			\item O administrador seleciona a mensagem que deseja excluir;
-			\item O sistema atualiza o canal de texto retirando a mensagem excluída. 
-			\item O caso de uso é encerrado. 
 		\end{enumerate}\\
 		\hline
 		Pré-condições & Para o Cliente: 
 		
 		O cliente deve estar logado no app e ser o criador do subcategoria escolhida.\\
-		\hline
-		Pré-Condições & Para o Administrador:
-		
-		Deve-ser ter o permissionamento de acesso necessário.
 		\hline
 		Pós-condições & O sistema deve atualizar o canal de texto já retirando a mensagem de texto excluída.
 		\hline
@@ -323,7 +255,7 @@
 	\fonte{Equipe diversaGente (2022)}
 	
 %--------------------------------------------------------------
-	
+ 
 	\begin{itemize}
 		\item UC06: Curtir mensagens no Fórum. Este uso de caso é abordado quando o cliente for curtir uma mensagem do fórum. O 	\autoref{casos-de-uso6} informa uma descrição, fluxo básico, pré-condições e  pós-condições.\\
 	\end{itemize}
@@ -353,9 +285,7 @@
 		Fluxo Básico  & 
 		\begin{enumerate}
 			\item O usuário seleciona a seção "Fórum";
-			\item O usuário seleciona a categoria desejada;
-			\item O sistema mostra todas as subcategorias relacionadas categoria escolhida pelo usuário;
-			\item O usuário escolhe uma subcategoria;
+			\item O usuário seleciona a categoria desejada; 
 			\item O sistema mostra todas as mensagens ocorridas nesse canal de texto até o momento. 
 			\item  O usuário seleciona a mensagem desejada e clica em "curtir mensagem";
 			\item  O sistema atualiza o canal de texto;
@@ -440,14 +370,15 @@
 		{{ \autoref{casos-de-uso8} continued from previous page}} \\
 		\endhead
 		
-		Descrição & O cliente e/ou administrador devem conseguir criar subcategorias a partir das categorias já criadas pelo administrador.\\
+		Descrição & O cliente  devem conseguir criar subcategorias a partir das categorias já criadas pelo administrador.\\
 		\hline
 		Fluxo Básico  & 
 		\begin{enumerate}
 			\item O usuário seleciona a seção "Fórum";
+         	  \item O usuário seleciona "Ver mais";
 			\item O usuário seleciona a categoria desejada;
-			\item O usuário clica no botão "+" ao lado do nome da categoria selecionada;
-			\item O usuário escreve o nome da subcategoria e clica em "Salvar"
+			\item O usuário clica no botão "+";
+			\item O usuário escreve o nome da subcategoria, descrição  e clica em "Criar"
 			\item O sistema atualiza com a nova subcategoria criada. 
 			\item O caso de uso é encerrado. 
 		\end{enumerate}
@@ -460,8 +391,8 @@
 	\fonte{Equipe diversaGente (2022)}
 	
 %---------------------------------------------------------------
-	
-	\begin{itemize}
+ \begin{comment}
+    \begin{itemize}
 		\item UC09: Remover uma subcategoria - Este uso de caso é abordado quando o cliente for remover uma subcategoria. O 	\autoref{casos-de-uso9}	informa uma descrição, o fluxo básico de cadastro, pré-condições necessárias para conseguir fazer o uso de caso e pós-condições quando o uso de caso é concluído com sucesso.\\
 	\end{itemize}
 	
@@ -488,6 +419,7 @@
 		\begin{enumerate}
 			\item O usuário seleciona a seção "Fórum";
 			\item O usuário seleciona uma categoria;
+             \item O usuário seleciona "Ver mais";
 			\item O sistema mostra todas as subcategoria existentes;
 			\item O cliente seleciona a subcategoria desejada;
 			\item O cliente pressiona a subcategoria;
@@ -522,11 +454,13 @@
 		\hline
 	\end{longtable}
 	\fonte{Equipe diversaGente (2022)}
-	
+    
+    \end{comment} 
+ 
 	%-----------------------------------------------------------
 	
 	\begin{itemize}
-		\item UC10: Criação do Local Avaliado - Este uso de caso é abordado quando o cliente for criar um local para ser avaliado. O \autoref{casos-de-uso10} informa uma descrição, o fluxo básico de cadastro, um fluxo de exceção, pré-condições necessárias para conseguir fazer o uso de caso e pós-condições quando o uso de caso é concluído com sucesso.\\	
+		\item UC09: Criação do Local Avaliado - Este uso de caso é abordado quando o cliente for criar um local para ser avaliado. O \autoref{casos-de-uso10} informa uma descrição, o fluxo básico de cadastro, um fluxo de exceção, pré-condições necessárias para conseguir fazer o uso de caso e pós-condições quando o uso de caso é concluído com sucesso.\\	
 	\end{itemize}
 		
 	\begin{quadro}[htb]
@@ -551,38 +485,42 @@
 		\hline
 		Fluxo Básico  & 
 		\begin{enumerate}
-			\item O usuário clica na seção 'Locais Avaliados';
-			\item O usuário clica na aba 'Meus Locais Avaliados';
-			\item O usuário clica em "Adicionar Avaliação";
+			\item O usuário clica na seção 'Locais';
+   			\item O usuário clica no "+" para adicionar uma local ;
+			\item O usuário no mapa seleciona o local que deseja adicionar ;
+			\item O usuário clica em "Próximo";
+   			\item O usuário preenche os campos "Título do lugar", "Descrição";
+			\item O usuário clica em "Criar local";
 			\item O sistema fornece a parte de "Adicionar Avaliação";
 			\item O usuário cadastra a avaliação e clica em "Salvar";
 			\item O sistema busca identificar e confirmar os dados inseridos pelo usuário.
 			\item O sistema retorna "Avaliação Adicionada" e adiciona na lista de locais avaliados;
 			\item O caso de uso é encerrado.
-		\end{enumerate}
+		\end{enumerate}\\
 		\hline
 		Fluxo de Exceção & O usuário não insere todos os dados necessários: 
 		\begin{enumerate}
 			\item O usuário clica na aba 'Meus Locais Avaliados';
-			\item O usuário clica em "Adicionar Avaliação";
-			\item O sistema fornece a parte de "Adicionar Avaliação";
-			\item O usuário cadastra a avaliação e clica em "Salvar";
-			\item O sistema retorna os dados obrigatórios que o usuário não inseriu ao cadastrar e impede que a avaliação seja salva;
+   			\item O usuário clica no "+" para adicionar uma local ;
+			\item O usuário no mapa seleciona o local que deseja adicionar ;
+			\item O usuário clica em "Próximo";
+	   		\item O usuário preenche os campos "Título do lugar";
+      	   	\item O botão "Criar local" não fica habilitado para criação de uma novo local;
 			\item O caso de uso é encerrado. 
 		\end{enumerate}
 		\hline
 		Pré-condições & Ter acesso à internet e estar previamente logado no aplicativo.
 		\hline
-		Pós-condições & Apresentar o Local Avaliado cadastrado pelo usuário na aba ’Locais Avaliados’.
+		Pós-condições & O sistema mostrará a nova localização após a reinicialização do app.
 		\hline
 	\end{longtable}
 	\fonte{Equipe diversaGente (2022)}
-	\pagebreak
+	%\pagebreak
 	
 %---------------------------------------------------------------
 	
 	\begin{itemize}
-		\item UC11: Consultar Locais Avaliados - Este uso de caso é abordado quando o cliente for consultar locais avaliados. O \autoref{casos-de-uso11} informa uma descrição, o fluxo básico de cadastro, pré-condições necessárias para conseguir fazer o uso de caso e pós-condições quando o uso de caso é concluído com sucesso.	
+		\item UC10: Consultar Locais Avaliados - Este uso de caso é abordado quando o cliente for consultar locais avaliados. O \autoref{casos-de-uso11} informa uma descrição, o fluxo básico de cadastro, pré-condições necessárias para conseguir fazer o uso de caso e pós-condições quando o uso de caso é concluído com sucesso.	
 	\end{itemize}
 	
 	\begin{quadro}[htb]
@@ -606,10 +544,9 @@
 		\hline
 		Fluxo Básico  & 
 		\begin{enumerate}
-			\item O usuário clica na seção 'Locais Avaliados';
-			\item O usuário clica na aba 'Todos Locais Avaliados';  
+			\item O usuário clica na seção 'Locais';
 			\item O usuário clica no nome de um local avaliado;
-			\item O usuário visualiza a avaliação;
+			\item O usuário visualiza a média de avaliação;
 			\item O caso de uso é encerrado. 
 		\end{enumerate}\\
 		\hline
@@ -621,7 +558,8 @@
 	\fonte{Equipe diversaGente (2022)}
 	
 	%---------------------------------------------------------------
-	
+	 \begin{comment}
+
 	\begin{itemize}
 		\item UC12: Editar Locais Avaliados - Este uso de caso é abordado quando o cliente for editar um local avaliado. O 	\autoref{casos-de-uso12} informa uma descrição, o fluxo básico de cadastro, pré-condições necessárias para conseguir fazer o uso de caso e pós-condições quando o uso de caso é concluído com sucesso.\\
 	\end{itemize}
@@ -663,10 +601,12 @@
 		\hline
 	\end{longtable}
 	\fonte{Equipe diversaGente (2022)}
+ 
+
 	%---------------------------------------------------------------
-	
-	
-		\begin{itemize}
+
+
+        \begin{itemize}
 		\item UC13: Remover Local Avaliado - Este uso de caso é abordado quando o cliente remover um local avaliado. O \autoref{casos-de-uso13} informa uma descrição, o fluxo básico de cadastro, pré-condições necessárias para conseguir fazer o uso de caso e pós-condições quando o uso de caso é concluído com sucesso.\\		
 	\end{itemize}
 	
@@ -707,14 +647,15 @@
 		\hline
 	\end{longtable}
 	\fonte{Equipe diversaGente (2022)}
-	
+	  \end{comment}
+
 	%---------------------------------------------------------------
 	
 	\begin{itemize}
-		\item UC14: Visualizar Perfil dos usuários - Este uso de caso é abordado quando o cliente for visualizar um perfil de um outro usuário na plataforma. O \autoref{casos-de-uso14} informa uma descrição, o fluxo básico de cadastro, um fluxo alternativo, pré-condições necessárias para conseguir fazer o uso de caso e pós-condições quando o uso de caso é concluído com sucesso.\\	
+		\item UC11: Visualizar Perfil - Este uso de caso é abordado quando o cliente for visualizar o seu próprio perfil na plataforma. O \autoref{casos-de-uso14} informa uma descrição, o fluxo básico de cadastro, um fluxo alternativo, pré-condições necessárias para conseguir fazer o uso de caso e pós-condições quando o uso de caso é concluído com sucesso.\\	
 	\end{itemize}
 	
-	\pagebreak
+	%\pagebreak
 	
 	\begin{quadro}[htb]
 		\centering
@@ -737,15 +678,8 @@
 		\hline
 		Fluxo Básico  & 
 		\begin{enumerate}
-			\item O usuário clica na imagem do usuário;
-			\item O usuário visualiza o perfil de outro usuário;
-			\item O caso de uso está encerrado.
-		\end{enumerate}\\
-		\hline
-		Fluxo Alternativo & 
-		\begin{enumerate}
-			\item O usuário clica no nome do usuário;
-			\item O usuário visualiza o perfil de outro usuário;
+			\item O usuário clica na parte "perfil" da aplicação;
+			\item O usuário visualiza o seu perfil;
 			\item O caso de uso está encerrado.
 		\end{enumerate}\\
 		\hline
@@ -757,8 +691,9 @@
 	\fonte{Equipe diversaGente (2022)}
 	
 	%---------------------------------------------------------------
+	\begin{comment}
 	
-	\begin{itemize}
+    \begin{itemize}
 		\item UC15: Troca de mensagens de texto em chat individual - Este uso de caso é abordado quando o cliente for trocar uma mensagem de texto com outro perfil. O \autoref{casos-de-uso15} informa uma descrição, o fluxo básico de ação, um fluxo alternativo, pré-condições necessárias para conseguir fazer o uso de caso e pós-condições quando o uso de caso é concluído com sucesso.\\
 	\end{itemize}
 	
@@ -809,6 +744,7 @@
 	\end{longtable}
 	\fonte{Equipe diversaGente (2022)}
 	
+
 	%---------------------------------------------------------------
 	
 	\begin{itemize}
@@ -857,11 +793,13 @@
 		\hline
 	\end{longtable}
 	\fonte{Equipe diversaGente (2022)}
-	
+
+    \end{comment}
+
 	%---------------------------------------------------------------
 	
 	\begin{itemize}
-		\item UC17: Criar um Post -Este uso de caso é abordado quando o cliente quiser criar uma postagem na plataforma. O 	\autoref{casos-de-uso17} informa uma descrição, o fluxo básico de ação, pré-condições necessárias para a realização do caso e pós-condições da ação.\\
+		\item UC12: Criar um Post -Este uso de caso é abordado quando o cliente quiser criar uma postagem na plataforma. O 	\autoref{casos-de-uso17} informa uma descrição, o fluxo básico de ação, pré-condições necessárias para a realização do caso e pós-condições da ação.\\
 	\end{itemize}
 	
 	\begin{quadro}[htb]
@@ -887,9 +825,9 @@
 		Fluxo Básico  & 
 		\begin{enumerate}
 			\item O usuário seleciona uma subcategoria selecionada;
-			\item O usuário clica no botão "+" ao lado do nome da subcategoria selecionada para criar o post;
+			\item O usuário clica no botão "+" para criar o post;
 			\item O usuário insere as informações necessárias para a criação do post;
-			\item O usuário clica em "Criar Post"; 
+			\item O usuário clica em "Criar"; 
 			\item O caso de uso é encerrado. 
 		\end{enumerate}\\
 		\hline
@@ -902,9 +840,9 @@
 	%---------------------------------------------------------------
 
 	\begin{itemize}
-		\item UC18: Remover um Post - Este uso de caso é abordado quando o cliente vai fazer a remoção de uma postagem previamente feita. O \autoref{casos-de-uso18} informa uma descrição, o fluxo básico de ação, um fluxo alternativo, pré-condições necessárias para a realização do caso e pós-condições da ação.\\
+		\item UC13: Remover um Post - Este uso de caso é abordado quando o cliente vai fazer a remoção de uma postagem previamente feita. O \autoref{casos-de-uso18} informa uma descrição, o fluxo básico de ação, um fluxo alternativo, pré-condições necessárias para a realização do caso e pós-condições da ação.\\
 	\end{itemize}
-\pagebreak
+%\pagebreak
 	\begin{quadro}[htb]
 		\centering
 		\ABNTEXfontereduzida
@@ -928,18 +866,10 @@
 		Fluxo Básico  & 
 		\begin{enumerate}
 			\item O usuário seleciona um post;
-			\item O usuário clica na opção "Apagar Post";
+			\item O usuário clica na opção "Excluir Post";
+   			\item O usuário clica na opção "Sim, excluir";
 			\item O sistema apaga o post criado pelo usuário;
 			\item O caso de uso é encerrado.
-		\end{enumerate}\\
-		\hline
-		Fluxo Alternativo & 
-		O administrador remove um post
-		\begin{enumerate}
-			\item O administrador seleciona um post;
-			\item O administrador clica na opção "Apagar Post";
-			\item O sistema apaga o post criado pelo administrador;
-			\item O caso de uso é encerrado. 
 		\end{enumerate}\\
 		\hline
 		Pré-condições & Ter acesso à internet, estar previamente logado no aplicativo e já ter uma postagem própria criada.
@@ -952,10 +882,10 @@
 	%---------------------------------------------------------------
 	
 	\begin{itemize}
-		\item UC19: Comentar Post - Este uso de caso é abordado quando o cliente fizer um comentário em uma postagem. O \autoref{casos-de-uso19} informa uma descrição, o fluxo básico de ação, pré-condições necessárias para a realização do caso e pós-condições da ação.\\
+		\item UC14: Comentar Post - Este uso de caso é abordado quando o cliente fizer um comentário em uma postagem. O \autoref{casos-de-uso19} informa uma descrição, o fluxo básico de ação, pré-condições necessárias para a realização do caso e pós-condições da ação.\\
 	\end{itemize}
 	
-\pagebreak
+%\pagebreak
 	
 	\begin{quadro}[htb]
 		\centering
@@ -986,7 +916,7 @@
 		\hline
 		Pré-condições & Ter acesso à internet e estar previamente logado no aplicativo
 		\hline
-		Pós-condições & O sistema deve mostrar o comentário do usuário no post selecionado.
+		Pós-condições & O sistema deve mostrar o comentário do usuário no post selecionado.\\
 		\hline
 	\end{longtable}
 	\fonte{Equipe diversaGente (2022)}
@@ -994,7 +924,7 @@
 	%---------------------------------------------------------------
 	
 	\begin{itemize}
-		\item UC20: Curtir Post - Este uso de caso é abordado quando o cliente realiza a ação de curtir uma postagem. O \autoref{casos-de-uso20} informa uma descrição, o fluxo básico de ação, pré-condições necessárias e pós-condições da ação.\\
+		\item UC15: Curtir Post - Este uso de caso é abordado quando o cliente realiza a ação de curtir uma postagem. O \autoref{casos-de-uso20} informa uma descrição, o fluxo básico de ação, pré-condições necessárias e pós-condições da ação.\\
 		
 		
 	\end{itemize}
@@ -1034,7 +964,8 @@
 	\pagebreak
 	
 	%---------------------------------------------------------------
-	
+	  \begin{comment}
+
 	\begin{itemize}
 		\item UC21: Comentar notícias - Este uso de caso é abordado quando o cliente vai fazer um comentário em uma notícia. O \autoref{casos-de-uso21} informa uma descrição, o fluxo básico do comentário, pré-condições necessárias para ser possível comentar e as condições pós o comentário ser realizado.\\
 	\end{itemize}
@@ -1075,6 +1006,9 @@
 		\hline
 	\end{longtable}
 	\fonte{Equipe diversaGente (2022)}
+ 
+ 	  \end{comment}
+
 
 % ----------------------------------------------------------
 \chapter{Imagens obtidas em análises externas}
