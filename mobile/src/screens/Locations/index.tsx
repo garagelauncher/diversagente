@@ -45,10 +45,7 @@ export const Locations = () => {
 
   const navigation = useNavigation<LocationScreenNavigationProps>();
 
-  console.log('locations state', locations);
-
   function handleNavigateToLocationDetails(id: string) {
-    console.log('handleNavigateToLocationDetails', id);
     navigation.navigate('LocationDetails', { id });
   }
 
@@ -94,8 +91,6 @@ export const Locations = () => {
             distanceInKilometer: radius,
             limit: quantity,
           });
-        console.debug('foundLocations');
-        console.debug(foundLocations);
         setLocations(foundLocations);
       } catch (error) {
         console.error(error);
@@ -178,8 +173,9 @@ export const Locations = () => {
         <Spinner
           size={'lg'}
           position="absolute"
-          left={'50%'}
-          top={'50%'}
+          alignSelf="center"
+          mt="49%"
+          color="orange.500"
           zIndex={1}
         />
       )}
