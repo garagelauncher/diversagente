@@ -13,12 +13,12 @@ import {
   Heading,
   Icon,
   IconButton,
-  Image,
   ScrollView,
   Select,
   Spinner,
   Stack,
   Text,
+  useToast,
   View,
   VStack,
 } from 'native-base';
@@ -42,6 +42,7 @@ type LocationDetailsScreenNavigationProps = NavigationProp<
 >;
 
 export const LocationDetails = () => {
+  const toast = useToast();
   const [ratePeriod, setRatePeriod] = useState<RatePeriod>('week');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -91,6 +92,10 @@ export const LocationDetails = () => {
   const copyAddressToClipBoard = async (address: string) => {
     await copyToClipBoard(address);
     setIsCopyToClipboard(true);
+    toast.show({
+      description: 'Endereço copiado com sucesso!',
+      background: 'green.500',
+    });
   };
 
   useEffect(() => {
@@ -147,7 +152,7 @@ export const LocationDetails = () => {
       </Alert> */}
 
       <IconButton
-        colorScheme="gray"
+        colorScheme="warmGray"
         variant={'solid'}
         icon={<Icon as={<Feather name="arrow-left" />} />}
         onPress={handleNavigateGoBack}
@@ -157,8 +162,8 @@ export const LocationDetails = () => {
         zIndex={1}
       />
       <Flex
-        height={100}
-        bg="rgba(0, 0, 0, .1)"
+        height={120}
+        bg="blue.100"
         width={'100%'}
         alignItems="center"
         justifyContent="center"
@@ -170,6 +175,7 @@ export const LocationDetails = () => {
             as: getIconProviderByName(location.iconProvider),
             name: location.icon ?? 'map-pin',
             color: 'orange.500',
+            size: '6xl',
           }}
         />
       </Flex>
