@@ -53,7 +53,7 @@ export class CommentsService {
   }
 
   async remove({ id, postId }: DeleteCommentDto) {
-    Logger.warn(`Removed like ${id} from post ${postId}`);
+    Logger.warn(`Removed comment ${id} from post ${postId}`);
     return await this.prisma.comment.update({
       where: { id },
       data: {

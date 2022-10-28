@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/shared/database/prisma.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CloudinaryService } from 'src/shared/services/cloudinary/cloudinary.service';

@@ -29,7 +29,7 @@ export class LikesController {
       postId,
     });
 
-    this.likesService.fireAndForgetLikeNotification(createdLike);
+    // this.likesService.fireAndForgetLikeNotification(createdLike);
     return createdLike;
   }
 
