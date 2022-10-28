@@ -20,12 +20,15 @@ async function bootstrap() {
       'https://diversagente.herokuapp.com',
     ],
   });
-  app.use(helmet());
+  app.use(
+    helmet({
+      contentSecurityPolicy: false,
+    }),
+  );
   app.use(
     permissionsPolicy({
       features: {
         fullscreen: ['self'],
-        vibrate: ['self'],
         payment: ['self'],
         syncXhr: [],
         geolocation: ['self'],
