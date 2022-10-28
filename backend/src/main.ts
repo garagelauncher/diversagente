@@ -13,7 +13,13 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   // security
-  app.enableCors();
+  app.enableCors({
+    origin: [
+      'http://localhost:3000',
+      'https://dev-diversagente.herokuapp.com',
+      'https://diversagente.herokuapp.com',
+    ],
+  });
   app.use(helmet());
   app.use(
     permissionsPolicy({
