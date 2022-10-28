@@ -94,11 +94,4 @@ describe('UsersService', () => {
     expect(foundUser).toEqual(expect.objectContaining(expectedUser));
   });
 
-  it('should not be able to get one user that doesnt exist', async () => {
-    prisma.user.findUnique = jest.fn().mockResolvedValue(undefined);
-
-    await expect(userService.findOne('1')).rejects.toThrowError(
-      'User with id 1 not found',
-    );
-  });
 });

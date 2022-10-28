@@ -17,7 +17,7 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const userFound = await this.findOneforCreate(createUserDto.email);
+    const userFound = await this.findOne(createUserDto.email);
 
     if (!userFound) {
       const createdUser = await this.prisma.user.create({
@@ -60,7 +60,7 @@ export class UsersService {
       Prisma.UserInclude,
       Prisma.UserWhereUniqueInput
     >(options);
-    
+
     const user = await this.prisma.user.findUnique({
       where: {
         ...where,
@@ -81,10 +81,6 @@ export class UsersService {
     });
 
     Logger.debug('recovering user', user);
-
-    if (!user) {
-      throw new NotFoundException(`User with id ${email} not found`);
-    }
 
     return user;
   }
