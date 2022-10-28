@@ -259,33 +259,15 @@ export const Profile = () => {
             borderRadius={10}
             borderWidth={2}
             borderColor={'darkBlue.600'}
-            padding={2}
+            padding={1}
           >
-            <SimpleGrid ml={3} columns={3} space={4} w={'90%'}>
-              <Flex flexDir={'column'} alignItems={'center'}>
-                <Text
-                  opacity={1}
-                  color={'darkBlue.600'}
-                  fontWeight={'bold'}
-                  fontSize={18}
-                >
-                  15
-                </Text>
-                <Text
-                  color={'darkBlue.600'}
-                  fontWeight={'bold'}
-                  fontSize={14}
-                  mt={2}
-                >
-                  postagens criadas
-                </Text>
-              </Flex>
-              <Divider
-                bg={'darkBlue.600'}
-                thickness="2"
-                mx="2"
-                orientation="vertical"
-              />
+            <SimpleGrid
+              ml={3}
+              columns={3}
+              space={4}
+              w={'90%'}
+              alignItems={'center'}
+            >
               <Flex flexDir={'column'} alignItems={'center'}>
                 <Text
                   color={'darkBlue.600'}
@@ -300,9 +282,9 @@ export const Profile = () => {
                   mt={2}
                   color={'darkBlue.600'}
                   fontWeight={'bold'}
-                  fontSize={14}
+                  fontSize={16}
                 >
-                  dias como membro
+                  dias como membro do diversaGente 🎉
                 </Text>
               </Flex>
             </SimpleGrid>

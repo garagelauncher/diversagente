@@ -118,6 +118,13 @@ export const FormCreateSubcategory = () => {
           subcategoryId: data.id,
         });
       },
+      onError: () => {
+        toast.show({
+          description: 'Ops, algo deu errado na criação dessa subcategoria!',
+          background: 'red.500',
+        });
+        reset();
+      },
     },
   );
 

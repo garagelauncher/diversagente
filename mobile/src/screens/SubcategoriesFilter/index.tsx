@@ -16,7 +16,7 @@ import {
   Icon,
   Input,
 } from 'native-base';
-import React from 'react';
+import React, { memo, useMemo } from 'react';
 import { TouchableOpacity } from 'react-native';
 
 import { Header } from '@src/components/Header';
@@ -34,6 +34,7 @@ export const SubcategoryFilter = () => {
   const route =
     useRoute<RouteProp<StackForumNavigatorParamList, 'SelectSubcategory'>>();
   const { categoryId, categoryTitle, icon, iconProvider } = route.params;
+
   const { user } = useAuth();
 
   const { data, hasNextPage, fetchNextPage, isLoading, isFetchingNextPage } =
@@ -72,7 +73,7 @@ export const SubcategoryFilter = () => {
 
   return (
     <>
-      <Box bgColor={'darkBlue.700'} height={300} mb={10}>
+      <Box bgColor={'darkBlue.700'} height={340} mb={10}>
         <Box marginBottom={4}>
           <Header
             avatar={user?.picture}
