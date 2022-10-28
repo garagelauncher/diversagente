@@ -51,9 +51,9 @@ async function bootstrap() {
   );
 
   app.use(function (req, res, next) {
-    // apply style-src inline only in /docs
+    // apply style-src inline only in /docs and /public
 
-    if (req.path.startsWith('/docs')) {
+    if (req.path.startsWith('/docs') || req.path.startsWith('/public')) {
       const oldContentSecurityPolicy = res.getHeader(
         'Content-Security-Policy',
       ) as string;
