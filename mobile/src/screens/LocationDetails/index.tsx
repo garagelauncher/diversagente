@@ -34,6 +34,7 @@ import { StackLocationNavigatorParamList } from '@src/routes/stacks/locationStac
 import { diversaGenteServices } from '@src/services/diversaGente';
 import { copyToClipBoard } from '@src/utils/copyToClipBoard';
 import { formatDate } from '@src/utils/formatDate';
+import { getIconProviderByName } from '@src/utils/getIconProvider';
 
 type LocationDetailsScreenNavigationProps = NavigationProp<
   StackLocationNavigatorParamList,
@@ -155,17 +156,24 @@ export const LocationDetails = () => {
         left={4}
         zIndex={1}
       />
-      <Image
-        source={{
-          uri: `https://unsplash.it/400/200`,
-        }}
-        resizeMode={'cover'}
+      <Flex
+        height={100}
+        bg="rgba(0, 0, 0, .1)"
         width={'100%'}
-        height={200}
-        style={{
-          backgroundColor: 'rgba(0, 0, 0, .5)',
-        }}
-      />
+        alignItems="center"
+        justifyContent="center"
+      >
+        <IconButton
+          variant={'ghost'}
+          size={'lg'}
+          _icon={{
+            as: getIconProviderByName(location.iconProvider),
+            name: location.icon ?? 'map-pin',
+            color: 'orange.500',
+          }}
+        />
+      </Flex>
+
       <ScrollView
         flex={1}
         padding={4}
@@ -188,8 +196,14 @@ export const LocationDetails = () => {
               <Text fontSize={16} color={'gray.800'} fontWeight={'bold'}>
                 Nota média:{' '}
               </Text>
-              <Text fontSize={32} color={'yellow.400'} fontWeight={'bold'}>
-                {!isLoading && location.starsAverage}
+              <Text
+                fontSize={location.starsAverage === null ? 16 : 32}
+                color={'yellow.500'}
+                fontWeight={'bold'}
+              >
+                {location.starsAverage === null
+                  ? 'N/A - não avaliado no período abaixo'
+                  : location.starsAverage}
               </Text>
             </Flex>
             <Flex
@@ -197,6 +211,7 @@ export const LocationDetails = () => {
               justifyContent="flex-start"
               alignItems="center"
               width="100%"
+              mt={4}
             >
               <Text
                 fontSize={16}
@@ -220,7 +235,7 @@ export const LocationDetails = () => {
               </Select>
             </Flex>
           </Flex>
-          <Flex>
+          <Flex mt={2}>
             <Text fontSize={16} color={'blue.500'} fontWeight={'bold'}>
               Criado na comunidade em
             </Text>
