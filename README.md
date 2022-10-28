@@ -49,7 +49,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 ## 🔖 Layout
 
 ### Wireframe
-Você pode visualizar o layout do projeto no formato através [desse link](https://www.figma.com/file/tAK6gFJICW2ClcDUpbAS5t/diversaGente?node-id=0%3A1). Lembrando que você irá precisar ter uma conta no [Figma](http://figma.com/).
+Você pode visualizar o layout do projeto no formato através [desse link](https://www.figma.com/file/keVJqAYP58lULTCFnXtPYx/diversaGente-UI). Lembrando que você irá precisar ter uma conta no [Figma](http://figma.com/).
 
 ## ⛹️ Contribuidores
 

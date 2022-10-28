@@ -20,16 +20,61 @@ async function bootstrap() {
       'https://diversagente.herokuapp.com',
     ],
   });
+
   app.use(
     helmet({
-      contentSecurityPolicy: false,
+      contentSecurityPolicy: {
+        useDefaults: true,
+        reportOnly: false,
+        directives: {
+          defaultSrc: [`'self'`],
+          styleSrc: [`'self'`],
+          imgSrc: [
+            `'self'`,
+            'data:',
+            'validator.swagger.io',
+            'www.google-analytics.com',
+            'https:',
+          ],
+          scriptSrc: [
+            `'self'`,
+            'https://*.herokuapp.com',
+            'http://localhost:3000',
+            'validator.swagger.io',
+            'www.google-analytics.com',
+            'https://apis.google.com',
+            'https:',
+          ],
+        },
+      },
     }),
   );
+
+  app.use(function (req, res, next) {
+    // apply style-src inline only in /docs and /public
+
+    if (req.path.startsWith('/docs') || req.path.startsWith('/public')) {
+      const oldContentSecurityPolicy = res.getHeader(
+        'Content-Security-Policy',
+      ) as string;
+
+      // PUT new CSP header
+      res.setHeader(
+        'Content-Security-Policy',
+        oldContentSecurityPolicy.replace(
+          "style-src 'self'",
+          "style-src 'self' 'unsafe-inline'",
+        ),
+      );
+    }
+
+    return next();
+  });
+
   app.use(
     permissionsPolicy({
       features: {
         fullscreen: ['self'],
-        payment: ['self'],
         syncXhr: [],
         geolocation: ['self'],
       },
