@@ -9,6 +9,9 @@ export interface Location {
   coordinates: Coordinates;
   reviewCount: number;
   starsAverage: number;
+  categoryId: string;
+  icon: string;
+  iconProvider: string;
 }
 
 export interface Coordinates {

@@ -23,6 +23,7 @@ describe('SubcategoriesService', () => {
       title: 'novo título da subcategoria',
       description: 'descrição atualizada de subcategoria',
     });
+    prisma.subcategory.findMany = jest.fn().mockResolvedValue([subcategoryMock]);
   });
 
   it('should be defined', () => {
@@ -43,6 +44,21 @@ describe('SubcategoriesService', () => {
 
     const createdSubcategory = await subcategoryService.create(subcategory1);
     expect(createdSubcategory).toEqual(subcategoryMock);
+  });
+
+  it('should be able to find one subcategory', async () => {
+    const subcategory = {
+      id: 'aaaaaa-1111',
+      name: 'especificação x',
+      text: 'subcategoria de saúde específica',
+      createdAt: '2021-01-01T00:00:00.000Z',
+      updatedAt: '2021-01-01T00:00:00.000Z',
+      ownerId: '01923408oaskfjoasdj=jiasfjsdi-oiashjdfk',
+      categoryId: 'aaaaaa-1111-aaaaaaa-1111',
+    };
+    
+    const foundSubcategory = await subcategoryService.findOne(subcategory.id);
+    expect(subcategory).toEqual(subcategoryMock);
   });
 
   it('should be able to delete a subcategory with success', async () => {
@@ -84,5 +100,10 @@ describe('SubcategoriesService', () => {
     expect(foundSubcategory).toEqual(
       expect.objectContaining(expectedSubcategory),
     );
+  });
+
+  it('should be able to findAll subcategories', async () => {
+    const subcategories = await subcategoryService.findAll({});
+    expect(subcategories).toEqual([subcategoryMock]);
   });
 });

@@ -1,10 +1,18 @@
-import { CommentRaw } from 'src/shared/contracts/CommentRaw';
-
 export const commentMock = {
-  id: 'aaaaa',
-  text: 'gostei gostei',
-  ownerId: 'bbbbb',
-  postId: 'cccc',
-  createdAt: '2021-01-01T00:00:00.000Z',
-  updatedAt: '2021-01-01T00:00:00.000Z',
-};
+    id: '',
+    text: 'gostei gostei',
+    ownerId: 'bbbbb',
+    postId: '',
+    createdAt: '2021-01-01T00:00:00.000Z',
+    updatedAt: '2021-01-01T00:00:00.000Z',
+}
+
+export const deleteCommentMock = {
+    id: '',
+    text: 'gostei gostei',
+    ownerId: 'bbbbb',
+    postId: '',
+    createdAt: '2021-01-01T00:00:00.000Z',
+    updatedAt: '2021-01-01T00:00:00.000Z',
+    comment: 'novo comentário',
+}

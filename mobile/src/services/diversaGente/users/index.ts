@@ -1,9 +1,9 @@
+import { diversagenteBaseApi } from '../baseUrl';
+
 import { IncludeInto } from '@src/@types/generics/includeInto';
 import { QueryOptions } from '@src/contracts/QueryOptions';
 import { User, UserEditProps } from '@src/contracts/User';
 import { parseQueryOptions } from '@src/utils/parseQuery';
-
-import { diversagenteBaseApi } from '../baseUrl';
 
 export const findAllUsers = async (options: QueryOptions = {}) => {
   try {

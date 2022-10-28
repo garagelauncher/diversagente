@@ -7,13 +7,34 @@ import packageJSON from '../package.json';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import helmet from 'helmet';
+import permissionsPolicy from 'permissions-policy';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   // security
-  app.enableCors();
-  app.use(helmet());
+  app.enableCors({
+    origin: [
+      'http://localhost:3000',
+      'https://dev-diversagente.herokuapp.com',
+      'https://diversagente.herokuapp.com',
+    ],
+  });
+  app.use(
+    helmet({
+      contentSecurityPolicy: false,
+    }),
+  );
+  app.use(
+    permissionsPolicy({
+      features: {
+        fullscreen: ['self'],
+        payment: ['self'],
+        syncXhr: [],
+        geolocation: ['self'],
+      },
+    }),
+  );
 
   // serve static files
   app.useStaticAssets(join(__dirname, '..', '..', 'public'), {

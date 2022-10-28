@@ -1,4 +1,3 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import {
@@ -17,6 +16,7 @@ import {
   CheckIcon,
   Select,
   Collapse,
+  useToast,
 } from 'native-base';
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -27,6 +27,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useMutation } from 'react-query';
 import * as yup from 'yup';
 
 import { ControlledInput } from '@src/components/ControlledInput';
@@ -76,8 +77,39 @@ export const FormCreatePost = () => {
   const [categoryId, setCategoryId] = useState<string>('');
   const { user } = useAuth();
   //const [selectedImage, setSelectedImage] = useState<any>(null);
-
   const navigation = useNavigation<FormCreatePostNavigationProps>();
+
+  const toast = useToast();
+
+  const { mutateAsync, isLoading: isLoadingCreatePost } = useMutation(
+    diversaGenteServices.createPost,
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('diversagente@posts');
+        queryClient.invalidateQueries('post');
+        queryClient.invalidateQueries('userPosts');
+        queryClient.invalidateQueries('userPost');
+
+        toast.show({
+          title: 'Post criado com sucesso!',
+          background: 'green.500',
+        });
+        queryClient.invalidateQueries('diversagente@posts');
+        navigation.navigate('Forum');
+      },
+      onError: (error: any) => {
+        setErrorAtPostCreation(true);
+        toast.show({
+          title: 'Erro ao criar post',
+          background: 'red.500',
+        });
+        toast.show({
+          description: error.message,
+          background: 'red.500',
+        });
+      },
+    },
+  );
 
   const fetchAllCategories = async () => {
     try {
@@ -151,18 +183,19 @@ export const FormCreatePost = () => {
     navigation.goBack();
   };
 
-  async function createPost(data: PostForm): Promise<PostForm | undefined> {
+  async function createPost(data: PostForm): Promise<void> {
     setErrorAtPostCreation(false);
     setIsLoading(true);
     try {
       setErrorAtPostCreation(false);
-      const createdPost = await diversaGenteServices.createPost({
+
+      await mutateAsync({
         ...data,
         ownerId: String(user?.id),
       });
+
       queryClient.invalidateQueries('diversagente@posts');
       navigation.navigate('Forum');
-      return createdPost;
     } catch (error) {
       setErrorAtPostCreation(true);
       setIsLoading(false);
@@ -447,7 +480,7 @@ export const FormCreatePost = () => {
                 onPress={handleSubmit(onSubmitPostCreation)}
                 colorScheme="blue"
                 type="submit"
-                isLoading={isLoading}
+                isLoading={isLoading || isLoadingCreatePost}
               >
                 Criar
               </Button>

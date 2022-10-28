@@ -56,7 +56,8 @@ export const parseFilterToWhere = (
 ): Record<string, any> => {
   const where = Object.keys(filter).reduce((previousValue, currentKey) => {
     const value = filter[currentKey];
-    if (Array.isArray(value)) {
+    const ignoreListKeys = ['OR', 'AND', 'NOT'];
+    if (Array.isArray(value) && !ignoreListKeys.includes(currentKey)) {
       return {
         ...previousValue,
         [currentKey]: {

@@ -56,6 +56,7 @@ describe('LocationsService', () => {
         longitude: 0,
       },
       ownerId: '1',
+      categoryId: 'id',
     };
 
     const createdLocation = await locationService.create(location);

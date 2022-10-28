@@ -43,6 +43,9 @@ describe('LocationsController', () => {
         longitude: 0,
       },
       ownerId: '01923408oaskfjoasdj=jiasfjsdi-oiashjdfk',
+      categoryId: '01923408oaskfjoasdj=jiasfjsdi-oiashjdfk',
+      icon: 'icon',
+      iconProvider: 'Feather',
     };
 
     it('should be able to update a location', async () => {

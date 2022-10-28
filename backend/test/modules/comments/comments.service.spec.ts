@@ -1,4 +1,4 @@
-import { commentMock } from './../../__mocks__/comment';
+import { commentMock, deleteCommentMock } from './../../__mocks__/comment';
 import { CommentsService } from './../../../src/modules/comments/comments.service';
 import { createPrismaProviderMock } from 'test/__mocks__/prisma';
 import { PrismaService } from 'src/shared/database/prisma.service';
@@ -22,15 +22,15 @@ describe('CommentsService', () => {
     prisma = module.get<PrismaService>(PrismaService);
 
     prisma.comment.create = jest.fn().mockResolvedValue(commentMock);
-
     prisma.comment.update = jest.fn().mockResolvedValue({
-      id: 'aaaaa',
+      id: '',
       text: 'novo comentário',
       ownerId: 'bbbbb',
-      postId: 'cccc',
+      postId: '',
       createdAt: '2021-01-01T00:00:00.000Z',
       updatedAt: '2021-01-01T00:00:00.000Z',
     });
+    prisma.comment.findUnique = jest.fn().mockResolvedValue(undefined);
   });
 
   it('should be defined', () => {

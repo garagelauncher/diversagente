@@ -40,11 +40,19 @@ export const Home = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
     null,
   );
+  const [searchPostText, setSearchPostText] = useState<string>('');
 
   console.log('selectedCategoryId', selectedCategoryId);
 
-  const postFilters = {
+  const postCategoryFilters = {
     categoryId: selectedCategoryId,
+  };
+
+  const postTextFilters = {
+    OR: [
+      { content: { contains: searchPostText, mode: 'insensitive' } },
+      { title: { contains: searchPostText, mode: 'insensitive' } },
+    ],
   };
 
   const {
@@ -55,23 +63,39 @@ export const Home = () => {
     isFetchingNextPage,
     refetch,
     isRefetching,
-  } = usePosts<UserHasInteracted>({
-    range: [0, PER_PAGE_ITEMS],
-    sort: ['createdAt', 'DESC'],
-    filter: {
-      ...(postFilters.categoryId ? postFilters : {}),
-    },
-    include: {
-      likes: {
-        select: { id: true },
-        where: { ownerId: user?.id ?? userIdHelper },
+  } = usePosts<UserHasInteracted>(
+    {
+      range: [0, PER_PAGE_ITEMS],
+      sort: ['createdAt', 'DESC'],
+      filter: {
+        ...(postCategoryFilters.categoryId ? postCategoryFilters : {}),
+        ...(searchPostText ? postTextFilters : {}),
       },
-      comments: {
-        select: { id: true },
-        where: { ownerId: user?.id ?? userIdHelper },
+      include: {
+        likes: {
+          select: { id: true },
+          where: { ownerId: user?.id ?? userIdHelper },
+        },
+        comments: {
+          select: { id: true },
+          where: { ownerId: user?.id ?? userIdHelper },
+        },
       },
     },
-  });
+    {
+      onError: (error) => {
+        toast.show({
+          title: 'Error',
+          description: 'Falha ao buscar posts',
+          background: 'red.500',
+        });
+        toast.show({
+          description: error.message,
+          background: 'red.500',
+        });
+      },
+    },
+  );
 
   const {
     data: categoriesData,
@@ -87,6 +111,10 @@ export const Home = () => {
 
   const isLoadedCategories =
     isSuccessCategories && !isLoadingCategories && !isErrorCategories;
+
+  const handleChangeSearchPostText = useCallback((text: string) => {
+    setSearchPostText(text);
+  }, []);
 
   const handleSelectCategoryId = (categoryId: string | null) => {
     console.log('categoryId', categoryId);
@@ -145,7 +173,7 @@ export const Home = () => {
       >
         {!isReadingModeActive && (
           <>
-            <CreatePostForm />
+            <CreatePostForm onSearch={handleChangeSearchPostText} />
 
             <CategoriesList
               onPressSeeMore={handleNavigatoToCategorySelecionScreen}

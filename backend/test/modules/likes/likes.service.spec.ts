@@ -27,6 +27,7 @@ describe('LikesService', () => {
       ...likeMock,
       ownerId: 'qqq',
     });
+    prisma.like.findMany = jest.fn().mockResolvedValue([likeMock]);
   });
 
   it('should be defined', () => {
@@ -85,5 +86,10 @@ describe('LikesService', () => {
       ...likeMock,
       ownerId: 'qqq',
     });
+  });
+
+  it('should be able to findAll likes', async () => {
+    const likes = await likeService.findAll({});
+    expect(likes).toEqual([likeMock]);
   });
 });

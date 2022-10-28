@@ -24,6 +24,9 @@ export class LocationsService {
       address,
       description,
       photos,
+      categoryId,
+      icon,
+      iconProvider,
     } = createLocationDto;
 
     return await this.prisma.location.create({
@@ -33,6 +36,9 @@ export class LocationsService {
         address,
         description,
         photos,
+        categoryId,
+        icon,
+        iconProvider,
         geoposition: {
           type: 'Point',
           coordinates: [longitude, latitude],
@@ -75,6 +81,9 @@ export class LocationsService {
       ownerId: location.ownerId.$oid,
       createdAt: location.createdAt.$date,
       updatedAt: location.updatedAt.$date,
+      icon: location.icon,
+      iconProvider: location.iconProvider,
+      categoryId: location?.categoryId?.$oid,
       coordinates: {
         latitude: location.geoposition.coordinates[1],
         longitude: location.geoposition.coordinates[0],

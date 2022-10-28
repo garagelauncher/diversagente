@@ -9,7 +9,14 @@ export const LoadingScreen = () => {
       alignItems="center"
       justifyContent="center"
     >
-      <Spinner size={'large'} />
+      <Spinner
+        size={'lg'}
+        position="absolute"
+        alignSelf="center"
+        justifyContent="center"
+        color="orange.500"
+        zIndex={1}
+      />
     </Box>
   );
 };
