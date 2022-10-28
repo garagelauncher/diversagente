@@ -3,7 +3,6 @@ import { UsersController } from 'src/modules/users/users.controller';
 import { UsersService } from 'src/modules/users/users.service';
 import { userMock } from 'test/__mocks__/user';
 
-
 describe('UsersController', () => {
   let usersController: UsersController;
   let usersService: UsersService;
@@ -37,9 +36,9 @@ describe('UsersController', () => {
   describe('success case', () => {
     const user = {
       id: 'aaaaaa-1111',
-      email: "gabriel@email.com",
-      username: "gabiru",
-      name: "gabriel",
+      email: 'gabriel@email.com',
+      username: 'gabiru',
+      name: 'gabriel',
       createdAt: '2021-01-01T00:00:00.000Z',
       updatedAt: '2021-01-01T00:00:00.000Z',
     };
