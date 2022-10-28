@@ -75,7 +75,6 @@ async function bootstrap() {
     permissionsPolicy({
       features: {
         fullscreen: ['self'],
-        payment: ['self'],
         syncXhr: [],
         geolocation: ['self'],
       },
