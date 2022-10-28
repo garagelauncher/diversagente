@@ -1,22 +1,11 @@
-import {
-  NavigationProp,
-  useRoute,
-  RouteProp,
-  useNavigationState,
-  useNavigation,
-} from '@react-navigation/native';
-import { Box, Divider, Flex, SimpleGrid, Text } from 'native-base';
+import { useRoute, RouteProp } from '@react-navigation/native';
+import { Box, Flex } from 'native-base';
 import React from 'react';
 
 import { Header } from '@src/components/Header';
 import { useSubcategoryDetails } from '@src/hooks/queries/details/useSubcategoryDetails';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
-
-type SubcategoryHeaderNavigationProps = NavigationProp<
-  StackForumNavigatorParamList,
-  'SelectSubcategory'
->;
 
 type HeaderSubcategoryProps = {
   categoryId: string | undefined;
@@ -29,8 +18,6 @@ export const SubcategoryHeader = ({ categoryId }: HeaderSubcategoryProps) => {
   const { user } = useAuth();
 
   const { data } = useSubcategoryDetails(subcategoryId as string);
-
-  const navigation = useNavigation<SubcategoryHeaderNavigationProps>();
 
   const navigateBackScreenName = 'SelectSubcategory';
   const navigateBackParams = { categoryId, categoryTitle };

@@ -4,10 +4,8 @@ import {
   Text,
   VStack,
   InfoIcon,
-  HStack,
   Button,
   Popover,
-  Skeleton,
 } from 'native-base';
 import React, { useState } from 'react';
 
