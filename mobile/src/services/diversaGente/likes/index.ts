@@ -1,9 +1,9 @@
 import { diversagenteBaseApi } from '../baseUrl';
 
 import { IncludeInto } from '@src/@types/generics/includeInto';
-import { parseQueryOptions } from '@src/utils/parseQuery';
-import { QueryOptions } from '@src/contracts/QueryOptions';
 import { Like } from '@src/contracts/Like';
+import { QueryOptions } from '@src/contracts/QueryOptions';
+import { parseQueryOptions } from '@src/utils/parseQuery';
 
 export type CreateLikeDTO = {
   postId: string;

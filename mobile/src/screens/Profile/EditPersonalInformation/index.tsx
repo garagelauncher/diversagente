@@ -31,11 +31,11 @@ import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import * as yup from 'yup';
 
 import { ControlledInput } from '@src/components/ControlledInput';
+import { UserEditForm } from '@src/contracts/User';
 import { useCategories } from '@src/hooks/queries/useCategories';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackProfileNavigatorParamList } from '@src/routes/stacks/profileStack.routes';
 import { theme } from '@src/styles/theme';
-import { UserEditForm } from '@src/contracts/User';
 
 type ProfileScreenNavigationProps = NavigationProp<
   StackProfileNavigatorParamList,
