@@ -22,7 +22,29 @@ async function bootstrap() {
   });
   app.use(
     helmet({
-      contentSecurityPolicy: false,
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          defaultSrc: [
+            `'self'`,
+            'https://*.herokuapp.com',
+            'http://localhost:3000',
+          ],
+          styleSrc: [
+            `'self'`,
+            `'unsafe-inline'`,
+            'https://*.herokuapp.com',
+            'http://localhost:3000',
+          ],
+          imgSrc: [
+            `'self'`,
+            'data:',
+            'validator.swagger.io',
+            'www.google-analytics.com',
+            'https:',
+          ],
+        },
+      },
     }),
   );
   app.use(
