@@ -24,11 +24,13 @@ import { queryClient } from '@src/services/queryClient';
 export type PostMoreActionsProps = {
   isOwner: boolean;
   postId: string;
+  onActivatePostEditMode: () => void;
 };
 
 export const PostMoreActions: FunctionComponent<PostMoreActionsProps> = ({
   isOwner,
   postId,
+  onActivatePostEditMode,
 }) => {
   const clipboard = useClipboard();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -70,6 +72,14 @@ export const PostMoreActions: FunctionComponent<PostMoreActionsProps> = ({
 
   const handleWantRemovePost = () => {
     setIsModalVisible(true);
+  };
+
+  const handleActivateEditMode = () => {
+    onActivatePostEditMode();
+    toast.show({
+      description: 'Modo de edição',
+      background: 'blue.400',
+    });
   };
 
   const handleCopyToClipboard = useCallback(async () => {
@@ -136,7 +146,7 @@ export const PostMoreActions: FunctionComponent<PostMoreActionsProps> = ({
             <PostActionMenuItem
               icon="edit"
               label="Editar conteúdo"
-              onPress={() => console.log('Editar')}
+              onPress={handleActivateEditMode}
             />
           }
           falseComponent={<></>}

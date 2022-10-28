@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/shared/database/prisma.service';
 import {
@@ -32,13 +32,16 @@ export class CommentsService {
   }
 
   async findOne(id: string) {
-    //return this.prisma.category.findUnique({ where: { id } });
-
     const comment = await this.prisma.comment.findUnique({
       where: {
         id,
       },
     });
+
+    if (!comment) {
+      throw new NotFoundException(`Comment with id ${id} not found`);
+    }
+
     return comment;
   }
 

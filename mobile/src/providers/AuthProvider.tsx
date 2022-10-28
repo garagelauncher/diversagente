@@ -12,6 +12,7 @@ import {
   GoogleUserData,
   UserData,
 } from '@src/contexts/AuthContext';
+import { User, UserPreferences } from '@src/contracts/User';
 import { diversaGenteServices } from '@src/services/diversaGente';
 import { getPushNotificationToken } from '@src/services/notifications';
 
@@ -45,11 +46,11 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
           'diversagente@deviceToken',
         );
         const actualToken = await getPushNotificationToken();
-        toast.show({
-          title: 'Token',
-          description: actualToken,
-          bg: 'green.500',
-        });
+        // toast.show({
+        //   title: 'Token',
+        //   description: actualToken,
+        //   bg: 'green.500',
+        // });
         const token = actualToken ?? lastStoredToken;
         console.log('show device token', token);
 
@@ -60,14 +61,14 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
         }
       } catch (err) {
         console.log(err);
-        toast.show({
-          title: 'Error',
-          description: err,
-          bg: 'red.500',
-        });
+        // toast.show({
+        //   title: 'Error',
+        //   description: err,
+        //   bg: 'red.500',
+        // });
       }
     },
-    [mutationCreateDevice, toast],
+    [mutationCreateDevice],
   );
 
   async function signInWithGoogle() {
@@ -121,6 +122,9 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
           biograph?: string;
           picture?: string;
           createdAt?: string;
+          preferences: UserPreferences;
+          lovelyCategoriesIds: string[];
+          isActive: boolean;
         } | null>('https://dev-diversagente.herokuapp.com/users', {
           email: googleUserData.email,
           name: googleUserData.name,
@@ -132,16 +136,23 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
         console.debug(responseCreateUser.data);
         console.debug(responseCreateUser.status);
 
-        const userPayload = {
-          id: responseCreateUser.data?.id || '',
+        if (!responseCreateUser.data) {
+          return;
+        }
+
+        const userPayload: UserData = {
+          id: responseCreateUser.data.id || '',
           googleUserData,
           email: googleUserData.email,
           name: googleUserData.name,
           picture:
             responseCreateUser.data?.picture ?? googleUserData.picture ?? '',
           username: responseCreateUser.data?.username ?? googleUserData.email,
-          bio: responseCreateUser.data?.biograph ?? '',
+          biograph: responseCreateUser.data?.biograph ?? '',
           createdAt: responseCreateUser.data?.createdAt ?? '',
+          preferences: responseCreateUser.data?.preferences,
+          lovelyCategoriesIds: responseCreateUser.data?.lovelyCategoriesIds,
+          isActive: responseCreateUser.data.isActive,
         };
         setUser(userPayload);
         setLoggedIn(true);
@@ -185,6 +196,25 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
     getUser();
   }, []);
 
+  const refetchUser = useCallback(async () => {
+    if (user) {
+      const userResponse = await axios.get<User>(
+        `https://dev-diversagente.herokuapp.com/users/${user.username}`,
+      );
+
+      const userPayload: UserData = {
+        ...user,
+        ...userResponse.data,
+      };
+
+      setUser(userPayload);
+      await AsyncStorage.setItem(
+        'diversagente@user',
+        JSON.stringify(userPayload),
+      );
+    }
+  }, [user]);
+
   useEffect(() => {
     if (isLoggedIn && user?.id) {
       storeUserDevice(user.id);
@@ -201,6 +231,7 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
         user,
         setUser,
         isLoading,
+        refetchUser,
       }}
     >
       {children}

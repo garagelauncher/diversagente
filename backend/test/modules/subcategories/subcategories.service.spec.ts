@@ -70,7 +70,9 @@ describe('SubcategoriesService', () => {
   });
 
   it('should be able to get one subcategory by id with success', async () => {
-    prisma.subcategory.findUnique = jest.fn().mockResolvedValue(subcategoryMock);
+    prisma.subcategory.findUnique = jest
+      .fn()
+      .mockResolvedValue(subcategoryMock);
     const foundSubcategory = await subcategoryService.findOne(
       'aaaaaa-1111-aaaaaaa-1111',
     );
@@ -79,7 +81,8 @@ describe('SubcategoriesService', () => {
       ...subcategoryMock,
     };
 
-    expect(foundSubcategory).toEqual(expect.objectContaining(expectedSubcategory));
+    expect(foundSubcategory).toEqual(
+      expect.objectContaining(expectedSubcategory),
+    );
   });
-
 });

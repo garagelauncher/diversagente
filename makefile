@@ -5,8 +5,8 @@ OS := $(shell uname)
 GOURCE_TITLE = 'Setembro'
 GOURCE_START_DATE = '2022-09-01 00:00:00 +24'
 GOURCE_END_DATE = '2022-10-01 00:00:00 +24'
-REMOTE_USERNAME = ''
-REMOTE_EMAIL = ''
+REMOTE_USERNAME = 'vivianequeiroz'
+REMOTE_EMAIL = 'vivianedsqueiroz@gmail.com'
 NODE_VERSION = 12
 
 # generate venv

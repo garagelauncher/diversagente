@@ -25,8 +25,8 @@ describe('LikesService', () => {
     prisma.like.delete = jest.fn().mockResolvedValue(likeMock);
     prisma.like.update = jest.fn().mockResolvedValue({
       ...likeMock,
-      ownerId: "qqq",
-    })
+      ownerId: 'qqq',
+    });
   });
 
   it('should be defined', () => {
@@ -44,9 +44,7 @@ describe('LikesService', () => {
 
   it('should be able to get one like by id with success', async () => {
     prisma.like.findUnique = jest.fn().mockResolvedValue(likeMock);
-    const foundLike = await likeService.findOne(
-      'aaaaaa-1111-aaaaaaa-1111',
-    );
+    const foundLike = await likeService.findOne('aaaaaa-1111-aaaaaaa-1111');
 
     const expectedLike = {
       ...likeMock,
@@ -87,5 +85,5 @@ describe('LikesService', () => {
       ...likeMock,
       ownerId: 'qqq',
     });
-});
+  });
 });

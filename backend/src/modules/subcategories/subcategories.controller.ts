@@ -14,9 +14,8 @@ import { UpdateSubcategoryDto } from './dto/update-subcategory.dto';
 import { ApiQuery } from '@nestjs/swagger';
 import { ApiTags } from '@nestjs/swagger';
 
-// posts/:postId/comments
-@ApiTags('Subcategories') 
-@Controller('/categories/:categoryId/subcategories')
+@ApiTags('Subcategories')
+@Controller('subcategories')
 export class SubcategoriesController {
   constructor(private readonly subcategoriesService: SubcategoriesService) {}
 

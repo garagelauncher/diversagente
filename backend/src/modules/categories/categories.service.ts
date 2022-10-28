@@ -51,7 +51,7 @@ export class CategoriesService {
       data: updateCategoryDto,
     });
 
-    if (updateCategoryDto.icon) {
+    if (updateCategoryDto.icon || updateCategoryDto.iconProvider) {
       await this.prisma.subcategory.updateMany({
         where: {
           categoriesIds: {
@@ -60,6 +60,7 @@ export class CategoriesService {
         },
         data: {
           icon: updateCategoryDto.icon,
+          iconProvider: updateCategoryDto.iconProvider,
         },
       });
     }

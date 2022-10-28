@@ -18,13 +18,13 @@ export const description = 'Descrição';
 
 export const address = 'Endereço';
 
-export const createLocation= 'Criar local';
+export const createLocation = 'Criar local';
 
 export const averageRating = 'Nota média: ';
 
 export const lastRating = 'Nota da(o) última(o): ';
 
-export const day  = 'Dia';
+export const day = 'Dia';
 
 export const week = 'Semana';
 
@@ -32,9 +32,9 @@ export const month = 'Mês';
 
 export const year = 'Ano';
 
-export const createdIn= 'Criado na comunidade em: ';
+export const createdIn = 'Criado na comunidade em: ';
 
-export const lookGoogleRoutes= 'Ver rotas no Google Maps';
+export const lookGoogleRoutes = 'Ver rotas no Google Maps';
 
 export const look = 'Ver avaliações';
 
@@ -44,7 +44,7 @@ export const reviews = 'Avaliações';
 
 export const choosePeriod = 'Escolha um período: ';
 
-export const howWasYourExperience= 'Como foi a sua experiência?';
+export const howWasYourExperience = 'Como foi a sua experiência?';
 
 export const tellHere = 'Conte aqui!';
 
@@ -82,17 +82,19 @@ export const art = 'Arte';
 
 export const seriesMovies = 'Séries/Filmes';
 
-export const lastPosts= 'Últimas postagens';
+export const lastPosts = 'Últimas postagens';
 
 export const noMorePosts = 'Não há mais postagens nessa categoria.';
 
-export const clickHereNewPost = 'Você pode clicar aqui para criar um novo post!';
+export const clickHereNewPost =
+  'Você pode clicar aqui para criar um novo post!';
 
 export const newPost = 'Nova postagem';
 
 export const beforeCreatePost = 'Antes de criar postagens';
 
-export const beRespectful = 'Lembre-se de ser respeitoso e de que essa comunidade é voltada para ajudar pais, familiares e amigos de crianças neurodiversas.';
+export const beRespectful =
+  'Lembre-se de ser respeitoso e de que essa comunidade é voltada para ajudar pais, familiares e amigos de crianças neurodiversas.';
 
 export const selectCategory = 'Selecione a categoria';
 
@@ -100,7 +102,7 @@ export const selectSubCategory = 'Selecione a subcategoria';
 
 export const title = 'Título';
 
-export const maxFortyMinSix= 'Caracteres: máximo de 40 e mínimo de 6';
+export const maxFortyMinSix = 'Caracteres: máximo de 40 e mínimo de 6';
 
 export const content = 'Conteúdo';
 
