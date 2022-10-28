@@ -12,7 +12,7 @@
     "clear:cache": "rimraf node_modules/.cache/babel-loader/*,",
     "clear:expo": "expo r -c",
     "generate:apk": "eas build -p android --profile local",
-    "lint:fix": "eslint src/** --fix",
+    "lint:fix": "eslint src/** --fix --no-error-on-unmatched-pattern",
     "style:fix": "prettier --write src/**"
   },
   "dependencies": {
