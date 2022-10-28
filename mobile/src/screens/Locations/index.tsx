@@ -10,6 +10,7 @@ import {
   Modal,
   Spinner,
   Text,
+  useToast,
 } from 'native-base';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
@@ -32,6 +33,7 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = 0.0421;
 
 export const Locations = () => {
+  const toast = useToast();
   const [showModal, setShowModal] = useState(false);
   const [isFetchingLocations, setIsFetchingLocations] = useState(false);
   const [radius, setRadius] = useState(20);
@@ -97,12 +99,15 @@ export const Locations = () => {
         setLocations(foundLocations);
       } catch (error) {
         console.error(error);
-        console.error('deu ruim');
+        toast.show({
+          description: 'Erro ao buscar locais próximos',
+          backgroundColor: 'red.500',
+        });
       } finally {
         setIsFetchingLocations(false);
       }
     },
-    [quantity, radius],
+    [quantity, radius, toast],
   );
 
   const onOpenLocationTab = useCallback(async () => {
