@@ -83,7 +83,7 @@ export class LocationsService {
       updatedAt: location.updatedAt.$date,
       icon: location.icon,
       iconProvider: location.iconProvider,
-      categoryId: location.categoryId.$oid,
+      categoryId: location?.categoryId?.$oid,
       coordinates: {
         latitude: location.geoposition.coordinates[1],
         longitude: location.geoposition.coordinates[0],
