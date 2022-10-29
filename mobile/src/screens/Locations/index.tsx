@@ -10,6 +10,7 @@ import {
   Modal,
   Spinner,
   Text,
+  useToast,
 } from 'native-base';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
@@ -32,6 +33,7 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = 0.0421;
 
 export const Locations = () => {
+  const toast = useToast();
   const [showModal, setShowModal] = useState(false);
   const [isFetchingLocations, setIsFetchingLocations] = useState(false);
   const [radius, setRadius] = useState(20);
@@ -43,10 +45,7 @@ export const Locations = () => {
 
   const navigation = useNavigation<LocationScreenNavigationProps>();
 
-  console.log('locations state', locations);
-
   function handleNavigateToLocationDetails(id: string) {
-    console.log('handleNavigateToLocationDetails', id);
     navigation.navigate('LocationDetails', { id });
   }
 
@@ -92,17 +91,18 @@ export const Locations = () => {
             distanceInKilometer: radius,
             limit: quantity,
           });
-        console.debug('foundLocations');
-        console.debug(foundLocations);
         setLocations(foundLocations);
       } catch (error) {
         console.error(error);
-        console.error('deu ruim');
+        toast.show({
+          description: 'Erro ao buscar locais próximos',
+          backgroundColor: 'red.500',
+        });
       } finally {
         setIsFetchingLocations(false);
       }
     },
-    [quantity, radius],
+    [quantity, radius, toast],
   );
 
   const onOpenLocationTab = useCallback(async () => {
@@ -173,8 +173,9 @@ export const Locations = () => {
         <Spinner
           size={'lg'}
           position="absolute"
-          left={'50%'}
-          top={'50%'}
+          alignSelf="center"
+          mt="49%"
+          color="orange.500"
           zIndex={1}
         />
       )}

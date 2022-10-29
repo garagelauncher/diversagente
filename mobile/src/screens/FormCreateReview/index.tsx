@@ -17,7 +17,6 @@ import {
   TextArea,
   VStack,
   ScrollView,
-  Alert,
 } from 'native-base';
 import React, { useState } from 'react';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';

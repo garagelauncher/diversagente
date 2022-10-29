@@ -23,6 +23,7 @@ describe('CategoriesService', () => {
       title: 'novo título da categoria',
       description: 'descrição atualizada de saúde',
     });
+    prisma.category.findMany = jest.fn().mockResolvedValue([categoryMock]);
   });
 
   it('should be defined', () => {
@@ -42,6 +43,21 @@ describe('CategoriesService', () => {
 
     const createdCategory = await categoryService.create(category);
     expect(createdCategory).toEqual(categoryMock);
+  });
+
+  it('should be able to find one category', async () => {
+    const category = {
+      id: 'aaaaaa-1111-aaaaaaa-1111',
+      name: 'saúde',
+      title: 'saúde',
+      description: 'categoria de saúde',
+      createdAt: '2021-01-01T00:00:00.000Z',
+      updatedAt: '2021-01-01T00:00:00.000Z',
+      ownerId: '01923408oaskfjoasdj=jiasfjsdi-oiashjdfk',
+    };
+
+    await categoryService.findOne(category.id);
+    expect(category).toEqual(categoryMock);
   });
 
   it('should be able to delete a category with success', async () => {
@@ -80,5 +96,10 @@ describe('CategoriesService', () => {
     };
 
     expect(foundCategory).toEqual(expect.objectContaining(expectedCategory));
+  });
+
+  it('should be able to findAll categories', async () => {
+    const categories = await categoryService.findAll({});
+    expect(categories).toEqual([categoryMock]);
   });
 });

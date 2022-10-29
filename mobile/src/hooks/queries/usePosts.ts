@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useInfiniteQuery } from 'react-query';
 
 import { PER_PAGE_ITEMS } from '@src/configs';

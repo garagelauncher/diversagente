@@ -1,33 +1,23 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/jsx-no-duplicate-props */
-import { AntDesign, SimpleLineIcons, FontAwesome } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
+import { Feather, Ionicons } from '@expo/vector-icons';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { Header } from '@react-navigation/stack';
 import axios from 'axios';
-import { isLoading } from 'expo-font';
 import * as ExpoLocation from 'expo-location';
 import {
   Avatar,
   Box,
-  Button,
   Heading,
-  Icon,
-  Input,
   VStack,
   Flex,
   SimpleGrid,
   Text,
-  Divider,
-  ScrollView,
   Skeleton,
   Spinner,
-  Container,
-  HamburgerIcon,
   Menu,
 } from 'native-base';
 import React, { useEffect, useState } from 'react';
-import { Alert, FlatList, Pressable, TouchableOpacity } from 'react-native';
+import { Alert, FlatList, Pressable } from 'react-native';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
 import { LoadingFallback } from '@src/components/LoadingFallback';
@@ -45,14 +35,11 @@ type ProfileScreenNavigationProps = NavigationProp<
 export const Profile = () => {
   const { signOut, user, setUser } = useAuth();
 
-  const [isEditMode, setIsEditMode] = useState<boolean>(false);
-  const [isHeaderVisible, setIsHeaderVisible] = useState<boolean>(true);
-
   const [bio, setBio] = useState<string>();
   const [name, setName] = useState<string>();
   const [picture, setPicture] = useState<string>();
   const [username, setUsername] = useState<string>();
-  const [location, setLocation] = useState<ExpoLocation.LocationObject>(
+  const [_location, setLocation] = useState<ExpoLocation.LocationObject>(
     null as unknown as ExpoLocation.LocationObject,
   );
   const statusBarHeight = getStatusBarHeight();
@@ -65,7 +52,8 @@ export const Profile = () => {
     setPicture(user?.picture ?? '');
     setUsername(user?.username ?? '');
   }, [user]);
-
+  {
+    /*
   async function askUserToUpdateLocation() {
     const { status } = await ExpoLocation.requestForegroundPermissionsAsync();
 
@@ -82,35 +70,12 @@ export const Profile = () => {
     console.info('location', location);
     setLocation(location);
   }
-
-  async function handleUpdateUser() {
-    try {
-      const response = await axios.patch(
-        `https://dev-diversagente.herokuapp.com/users/${user?.email}`,
-        {
-          bio,
-          name,
-          picture,
-          username,
-        },
-      );
-
-      console.log(response.data);
-      setUser({ ...response.data, googleUserData: user?.googleUserData });
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsEditMode(false);
-    }
+*/
   }
 
   async function handleLogout() {
     console.log('Login');
     await signOut();
-  }
-
-  async function toogleEditMode() {
-    setIsEditMode(!isEditMode);
   }
 
   const handleLoadMorePosts = () => {
@@ -121,15 +86,6 @@ export const Profile = () => {
 
   const handlePullPostListToRefresh = () => {
     refetch();
-  };
-
-  const hideHeader = () => {
-    setIsHeaderVisible(false);
-  };
-
-  const showHeader = () => {
-    console.log('teste');
-    setIsHeaderVisible(true);
   };
 
   const verifyDateSinceMember = () => {
@@ -259,33 +215,15 @@ export const Profile = () => {
             borderRadius={10}
             borderWidth={2}
             borderColor={'darkBlue.600'}
-            padding={2}
+            padding={1}
           >
-            <SimpleGrid ml={3} columns={3} space={4} w={'90%'}>
-              <Flex flexDir={'column'} alignItems={'center'}>
-                <Text
-                  opacity={1}
-                  color={'darkBlue.600'}
-                  fontWeight={'bold'}
-                  fontSize={18}
-                >
-                  15
-                </Text>
-                <Text
-                  color={'darkBlue.600'}
-                  fontWeight={'bold'}
-                  fontSize={14}
-                  mt={2}
-                >
-                  postagens criadas
-                </Text>
-              </Flex>
-              <Divider
-                bg={'darkBlue.600'}
-                thickness="2"
-                mx="2"
-                orientation="vertical"
-              />
+            <SimpleGrid
+              ml={3}
+              columns={3}
+              space={4}
+              w={'90%'}
+              alignItems={'center'}
+            >
               <Flex flexDir={'column'} alignItems={'center'}>
                 <Text
                   color={'darkBlue.600'}
@@ -300,9 +238,9 @@ export const Profile = () => {
                   mt={2}
                   color={'darkBlue.600'}
                   fontWeight={'bold'}
-                  fontSize={14}
+                  fontSize={16}
                 >
-                  dias como membro
+                  dias como membro do diversaGente 🎉
                 </Text>
               </Flex>
             </SimpleGrid>
@@ -337,8 +275,6 @@ export const Profile = () => {
             onEndReachedThreshold={0.85}
             refreshing={isRefetching && !isFetchingNextPage}
             onRefresh={handlePullPostListToRefresh}
-            onScroll={hideHeader}
-            onScrollToTop={showHeader}
             ListFooterComponent={
               <LoadingFallback
                 fallback={<Spinner color="orange.500" size="lg" />}

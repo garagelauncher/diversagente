@@ -1,4 +1,4 @@
-import { Feather, Fontisto } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import {
   useNavigation,
   useRoute,
@@ -15,7 +15,6 @@ import {
   Text,
 } from 'native-base';
 import React from 'react';
-import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
 import { LoadingFallback } from '@src/components/LoadingFallback';
 import { UserComment } from '@src/components/UserComment';
@@ -36,7 +35,6 @@ export const Comments = () => {
 
   const {
     data,
-    isLoading,
     isFetchingNextPage,
     isRefetching,
     hasNextPage,
@@ -56,8 +54,6 @@ export const Comments = () => {
       owner: true,
     },
   });
-
-  const statusBarHeight = getStatusBarHeight();
 
   const handleNavigateGoBack = () => {
     navigation.goBack();

@@ -7,13 +7,79 @@ import packageJSON from '../package.json';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import helmet from 'helmet';
+import permissionsPolicy from 'permissions-policy';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   // security
-  app.enableCors();
-  app.use(helmet());
+  app.enableCors({
+    origin: [
+      'http://localhost:3000',
+      'https://dev-diversagente.herokuapp.com',
+      'https://diversagente.herokuapp.com',
+    ],
+  });
+
+  app.use(
+    helmet({
+      contentSecurityPolicy: {
+        useDefaults: true,
+        reportOnly: false,
+        directives: {
+          defaultSrc: [`'self'`],
+          styleSrc: [`'self'`],
+          imgSrc: [
+            `'self'`,
+            'data:',
+            'validator.swagger.io',
+            'www.google-analytics.com',
+            'https:',
+          ],
+          scriptSrc: [
+            `'self'`,
+            'https://*.herokuapp.com',
+            'http://localhost:3000',
+            'validator.swagger.io',
+            'www.google-analytics.com',
+            'https://apis.google.com',
+            'https:',
+          ],
+        },
+      },
+    }),
+  );
+
+  app.use(function (req, res, next) {
+    // apply style-src inline only in /docs and /public
+
+    if (req.path.startsWith('/docs') || req.path.startsWith('/public')) {
+      const oldContentSecurityPolicy = res.getHeader(
+        'Content-Security-Policy',
+      ) as string;
+
+      // PUT new CSP header
+      res.setHeader(
+        'Content-Security-Policy',
+        oldContentSecurityPolicy.replace(
+          "style-src 'self'",
+          "style-src 'self' 'unsafe-inline'",
+        ),
+      );
+    }
+
+    return next();
+  });
+
+  app.use(
+    permissionsPolicy({
+      features: {
+        fullscreen: ['self'],
+        syncXhr: [],
+        geolocation: ['self'],
+      },
+    }),
+  );
 
   // serve static files
   app.useStaticAssets(join(__dirname, '..', '..', 'public'), {

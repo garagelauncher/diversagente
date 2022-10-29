@@ -13,7 +13,6 @@ import {
   IconButton,
   Heading,
   Collapse,
-  Select,
   useToast,
   WarningOutlineIcon,
   TextArea,
@@ -38,8 +37,7 @@ type ProfileScreenNavigationProps = NavigationProp<
 export const EditProfile = () => {
   const { user, refetchUser } = useAuth();
   const [isPersonalInfoOpen, setPersonalInfoOpen] = useState(true);
-  const [isPreferencesAtAppOpen, setPreferencesAtAppOpen] = useState(false);
-  const [isSecurityAndPrivacyOpen, setSecurityAndPrivacyOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const schema = yup.object({
     name: yup
@@ -49,26 +47,29 @@ export const EditProfile = () => {
       .required('Nome é obrigatório.'),
     biograph: yup
       .string()
-      .min(3, 'A descrição deve conter no mínimo 3 caracteres')
-      .max(100, 'A descrição deve conter no máximo 100 caracteres'),
+      .max(100, 'A descrição deve conter no máximo 100 caracteres')
+      .optional(),
     // lovelyCategoriesIds: yup
     //   .array()
     //   .of(yup.string())
     //   .min(1, 'Selecione pelo menos uma categoria de interesse.')
     //   .required('Por favor, selecione ao menos uma categoria.'),
-    // language: yup.string().required(),
+    language: yup.string().optional(),
   });
 
   const {
     control,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<UserEditProps>({
     resolver: yupResolver(schema),
     defaultValues: {
       name: user?.name,
-      biograph: String(user?.biograph),
+      biograph: String(user?.biograph ?? ''),
+      preferences: {
+        language: user?.preferences.language,
+        canReceivedMessage: user?.preferences.canReceivedMessage ?? true,
+      },
     },
   });
   console.log('errors', errors);
@@ -78,21 +79,24 @@ export const EditProfile = () => {
     {
       onSuccess: async () => {
         toast.show({
-          description: 'Post atualizado com sucesso!',
+          description: 'Informações atualizadas com sucesso!',
           bg: 'green.500',
         });
+        setIsLoading(false);
         await refetchUser();
       },
       onError: () => {
         toast.show({
-          description: 'Não foi possível atualizar o post!',
+          description: 'Não foi possível atualizar as informações!',
           background: 'red.500',
         });
+        setIsLoading(false);
       },
     },
   );
 
   const handleUpdateUserPersonalInfo = async (data: UserEditProps) => {
+    setIsLoading(true);
     console.log('handleUpdateUserPerfonalInfo', data);
     await updateUserDataMutation.mutateAsync({
       username: user?.username,
@@ -101,13 +105,20 @@ export const EditProfile = () => {
     });
   };
 
+  {
+    /**
+
   const handleUpdateAppPreferences = async (data: Partial<UserEditProps>) => {
-    console.log('handleUpdateUserPerfonalInfo');
+    console.log('handleUpdateUserPerfonalInfo', data.preferences);
     await updateUserDataMutation.mutateAsync({
       username: user?.username,
-      ...data,
+      preferences: {
+        language: String(data.preferences?.language),
+        canReceivedMessage: true,
+      },
     });
   };
+
 
   const handleUpdateSecurityAndPrivacy = async (
     data: Partial<UserEditProps>,
@@ -118,19 +129,13 @@ export const EditProfile = () => {
       ...data,
     });
   };
+   */
+  }
 
   const navigation = useNavigation<ProfileScreenNavigationProps>();
 
   const handlePerfonalInfoClose = () => {
     setPersonalInfoOpen(!isPersonalInfoOpen);
-  };
-
-  const handlePreferencesAtAppClose = () => {
-    setPreferencesAtAppOpen(!isPreferencesAtAppOpen);
-  };
-
-  const handleSecurityAndPrivacyClose = () => {
-    setSecurityAndPrivacyOpen(!isSecurityAndPrivacyOpen);
   };
 
   const handleNavigateBackToProfile = () => {
@@ -173,11 +178,13 @@ export const EditProfile = () => {
             >
               NB
             </Avatar>
+            {/**
             <Box mt={-8} ml={32} bgColor={'blue.600'} p={2} borderRadius={20}>
               <TouchableOpacity>
                 <Feather name="edit" size={16} color="white" />
               </TouchableOpacity>
             </Box>
+            */}
           </Flex>
 
           <Box mt={6}>
@@ -204,7 +211,6 @@ export const EditProfile = () => {
                 <Controller
                   control={control}
                   name="name"
-                  rules={{ required: true }}
                   render={({ field: { onChange, value } }) => (
                     <FormControl w="100%">
                       <FormControl.Label isRequired>Nome</FormControl.Label>
@@ -218,12 +224,17 @@ export const EditProfile = () => {
                         value={value}
                       />
 
-                      {errors.biograph && (
-                        <FormControl.ErrorMessage
-                          leftIcon={<WarningOutlineIcon size="xs" />}
-                        >
-                          <Text>{errors.biograph?.message}</Text>
-                        </FormControl.ErrorMessage>
+                      {errors.name?.message && (
+                        <Flex flexDir={'row'} alignItems={'center'}>
+                          <WarningOutlineIcon
+                            mt={2}
+                            color={'red.600'}
+                            size="xs"
+                          />
+                          <Text ml={1} mt={2} color={'red.600'}>
+                            {errors.name?.message}
+                          </Text>
+                        </Flex>
                       )}
                     </FormControl>
                   )}
@@ -234,13 +245,12 @@ export const EditProfile = () => {
                 <Controller
                   control={control}
                   name="biograph"
-                  rules={{ required: true }}
                   render={({ field: { onChange, value } }) => (
                     <FormControl w="100%">
-                      <FormControl.Label>Biografia</FormControl.Label>
+                      <FormControl.Label mb={4}>Biografia</FormControl.Label>
 
                       <TextArea
-                        h={280}
+                        h={180}
                         borderColor={[errors.biograph ? 'red.500' : 'blue.800']}
                         size="md"
                         py={4}
@@ -252,25 +262,21 @@ export const EditProfile = () => {
                         onChangeText={onChange}
                         value={value}
                       />
-
-                      {errors.biograph && (
-                        <FormControl.ErrorMessage
-                          leftIcon={<WarningOutlineIcon size="xs" />}
-                        >
-                          <Text>{errors.biograph?.message}</Text>
-                        </FormControl.ErrorMessage>
-                      )}
                     </FormControl>
                   )}
                 ></Controller>
               </Box>
 
-              <Button onPress={handleSubmit(handleUpdateUserPersonalInfo)}>
-                Salvar
+              <Button
+                bgColor={'darkBlue.600'}
+                isLoading={isLoading}
+                onPress={handleSubmit(handleUpdateUserPersonalInfo)}
+              >
+                Salvar informações pessoais
               </Button>
             </Collapse>
           </Box>
-
+          {/*
           <Box>
             <TouchableOpacity onPress={handlePreferencesAtAppClose}>
               <Flex flexDir="row" mt={5}>
@@ -291,25 +297,31 @@ export const EditProfile = () => {
             </TouchableOpacity>
 
             <Collapse isOpen={isPreferencesAtAppOpen} mt={2} w={'100%'}>
-              <Box mb={6}>
-                <Flex>
-                  <FormControl.Label mt={2} isRequired>
-                    <Text
-                      mb={2}
-                      fontSize="16"
-                      fontWeight="bold"
-                      color={'gray.500'}
+              <Controller
+                control={control}
+                name="preferences"
+                render={({ field: { onChange, value } }) => (
+                  <FormControl w="100%">
+                    <FormControl.Label mb={4}>Idioma</FormControl.Label>
+
+                    <Select
+                      defaultValue={user?.preferences.language ?? 'pt-br'}
+                      onValueChange={onChange}
                     >
-                      Idioma
-                    </Text>
-                  </FormControl.Label>
-                  <Select defaultValue="pt-BR">
-                    <Select.Item label="Português" value="pt-BR" />
-                    <Select.Item label="Inglês" value="en-US" />
-                  </Select>
-                </Flex>
-              </Box>
-              <Button>Salvar</Button>
+                      <Select.Item label="Português" value="pt-br" />
+                      <Select.Item label="Inglês" value="en-us" />
+                    </Select>
+                  </FormControl>
+                )}
+              ></Controller>
+
+              <Button
+                mt={6}
+                bgColor={'darkBlue.600'}
+                onPress={handleSubmit(handleUpdateAppPreferences)}
+              >
+                Salvar preferências no app
+              </Button>
             </Collapse>
           </Box>
 
@@ -344,6 +356,7 @@ export const EditProfile = () => {
               </TouchableOpacity>
             </Collapse>
           </Box>
+          */}
         </Flex>
       </Flex>
     </ScrollView>

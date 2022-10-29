@@ -1,8 +1,9 @@
 // eslint-disable-next-line import/no-unresolved
-import { theme } from '@src/styles/theme';
-import { VStack, Text, Button, Stack, Center } from 'native-base';
+import { VStack, Text } from 'native-base';
 // eslint-disable-next-line import/default
 import React from 'react';
+
+import { theme } from '@src/styles/theme';
 
 export const Categories = () => {
   return (
