@@ -1,13 +1,14 @@
+import { useFonts, CarterOne_400Regular } from '@expo-google-fonts/carter-one';
 import { AntDesign } from '@expo/vector-icons';
 import {
   Button,
   Flex,
-  Heading,
   Icon,
   Image,
   Text,
   Box,
   NativeBaseProvider,
+  extendTheme,
   Center,
 } from 'native-base';
 import React, { useState } from 'react';
@@ -20,12 +21,34 @@ export const Login = () => {
   const { signInWithGoogle, isLoading } = useAuth();
   const [isActiveDeveloperHelper, setIsActiveDeveloperHelper] = useState(false);
 
+  const [fontsLoaded] = useFonts({
+    CarterOne_400Regular,
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
   const config = {
     dependencies: {
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       'linear-gradient': require('expo-linear-gradient').LinearGradient,
     },
   };
+
+  const theme = extendTheme({
+    fontConfig: {
+      CarterOne: {
+        400: {
+          normal: 'CarterOne_400Regular',
+        },
+      },
+    },
+    fonts: {
+      heading: 'CarterOne',
+      body: 'CarterOne',
+      mono: 'CarterOne',
+    },
+  });
 
   async function handleLogin() {
     console.log('Login');
@@ -39,13 +62,8 @@ export const Login = () => {
   }
 
   return (
-    <NativeBaseProvider config={config}>
-      <Flex
-        flex={1}
-        justifyContent="space-evenly"
-        padding={4}
-        alignItems="center"
-      >
+    <NativeBaseProvider config={config} theme={theme}>
+      <Flex flex={1} justifyContent="space-evenly">
         <Box
           bg={{
             linearGradient: {
@@ -55,37 +73,38 @@ export const Login = () => {
             },
           }}
           width={'100%'}
-          height={'90%'}
+          height={'100%'}
         >
           <Image
             source={DiversagenteLogo}
             alt="Diversagente"
-            height={350}
-            width={350}
+            height={400}
+            width={360}
             alignItems="center"
+            marginLeft={5}
           />
           <Center
             bg="lime.50"
             _text={{
               color: 'info.500',
-              fontWeight: 'bold',
               fontSize: '30',
-              fontFamily: 'body',
             }}
-            marginLeft={8}
+            marginLeft={12}
             height={250}
             shadow={4}
             width={{
               base: 300,
               lg: 250,
             }}
+            borderColor={'orange.400'}
+            borderWidth={4}
           >
             Bem-vindo ao
             <Flex direction="row">
-              <Text color={'blue.600'} fontSize="4xl" bold>
+              <Text color={'blue.600'} fontSize="4xl">
                 DIVERSA
               </Text>
-              <Text color={'amber.500'} fontSize="4xl" bold>
+              <Text color={'amber.500'} fontSize="4xl">
                 GENTE
               </Text>
             </Flex>
