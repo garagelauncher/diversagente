@@ -55,8 +55,8 @@ describe('CategoriesService', () => {
       updatedAt: '2021-01-01T00:00:00.000Z',
       ownerId: '01923408oaskfjoasdj=jiasfjsdi-oiashjdfk',
     };
-    
-    const foundCategory = await categoryService.findOne(category.id);
+
+    await categoryService.findOne(category.id);
     expect(category).toEqual(categoryMock);
   });
 

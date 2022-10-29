@@ -1,4 +1,4 @@
-import { commentMock, deleteCommentMock } from './../../__mocks__/comment';
+import { commentMock } from './../../__mocks__/comment';
 import { CommentsService } from './../../../src/modules/comments/comments.service';
 import { createPrismaProviderMock } from 'test/__mocks__/prisma';
 import { PrismaService } from 'src/shared/database/prisma.service';
