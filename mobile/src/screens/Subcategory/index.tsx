@@ -8,14 +8,11 @@ import {
 import {
   Box,
   Flex,
-  Button,
   FlatList,
   Skeleton,
   Text,
   Spinner,
-  HStack,
   Icon,
-  Input,
   VStack,
   Heading,
   IconButton,
@@ -25,11 +22,9 @@ import { TouchableOpacity } from 'react-native';
 
 import { SubcategoryHeader } from './SubcategoryHeader';
 
-import { Header } from '@src/components/Header';
 import { LoadingFallback } from '@src/components/LoadingFallback';
 import { Post, UserHasInteracted } from '@src/components/Post';
 import { PER_PAGE_ITEMS, userIdHelper } from '@src/configs';
-import { useSubcategoryDetails } from '@src/hooks/queries/details/useSubcategoryDetails';
 import { usePosts } from '@src/hooks/queries/usePosts';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';

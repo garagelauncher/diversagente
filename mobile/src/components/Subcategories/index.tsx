@@ -1,4 +1,4 @@
-import { Center, Button, HStack, VStack, Text, Box } from 'native-base';
+import { Center, Button, HStack, VStack, Text } from 'native-base';
 import React from 'react';
 
 import { Category } from '@src/contracts/Category';

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Owner } from './Owner';
 
 export type PostCount = {

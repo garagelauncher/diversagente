@@ -16,7 +16,7 @@ import {
   Icon,
   Input,
 } from 'native-base';
-import React, { memo, useMemo } from 'react';
+import React from 'react';
 import { TouchableOpacity } from 'react-native';
 
 import { Header } from '@src/components/Header';

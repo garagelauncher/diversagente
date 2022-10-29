@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { diversagenteBaseApi } from '../baseUrl';
 
 import { Location, SearchLocationByProximity } from '@src/contracts/Location';
