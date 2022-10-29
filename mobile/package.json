@@ -58,7 +58,8 @@
     "yup": "^0.32.11",
     "expo-image-picker": "~13.1.1",
     "expo-linking": "~3.1.0",
-    "expo-notifications": "~0.15.4"
+    "expo-notifications": "~0.15.4",
+    "expo-linear-gradient": "~11.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
