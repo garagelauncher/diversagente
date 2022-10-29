@@ -13,7 +13,6 @@ import {
   IconButton,
   Heading,
   Collapse,
-  Select,
   useToast,
   WarningOutlineIcon,
   TextArea,
@@ -38,8 +37,6 @@ type ProfileScreenNavigationProps = NavigationProp<
 export const EditProfile = () => {
   const { user, refetchUser } = useAuth();
   const [isPersonalInfoOpen, setPersonalInfoOpen] = useState(true);
-  const [isPreferencesAtAppOpen, setPreferencesAtAppOpen] = useState(false);
-  const [isSecurityAndPrivacyOpen, setSecurityAndPrivacyOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const schema = yup.object({
@@ -63,7 +60,6 @@ export const EditProfile = () => {
   const {
     control,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<UserEditProps>({
     resolver: yupResolver(schema),
@@ -109,6 +105,9 @@ export const EditProfile = () => {
     });
   };
 
+  {
+    /**
+
   const handleUpdateAppPreferences = async (data: Partial<UserEditProps>) => {
     console.log('handleUpdateUserPerfonalInfo', data.preferences);
     await updateUserDataMutation.mutateAsync({
@@ -120,6 +119,7 @@ export const EditProfile = () => {
     });
   };
 
+
   const handleUpdateSecurityAndPrivacy = async (
     data: Partial<UserEditProps>,
   ) => {
@@ -129,19 +129,13 @@ export const EditProfile = () => {
       ...data,
     });
   };
+   */
+  }
 
   const navigation = useNavigation<ProfileScreenNavigationProps>();
 
   const handlePerfonalInfoClose = () => {
     setPersonalInfoOpen(!isPersonalInfoOpen);
-  };
-
-  const handlePreferencesAtAppClose = () => {
-    setPreferencesAtAppOpen(!isPreferencesAtAppOpen);
-  };
-
-  const handleSecurityAndPrivacyClose = () => {
-    setSecurityAndPrivacyOpen(!isSecurityAndPrivacyOpen);
   };
 
   const handleNavigateBackToProfile = () => {

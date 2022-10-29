@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import * as AuthSession from 'expo-auth-session';
-import { useToast } from 'native-base';
 import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import { useMutation } from 'react-query';
@@ -28,7 +28,6 @@ type AuthResponse = {
 };
 
 export const AuthProvider = ({ children }: AuthProvidersProps) => {
-  const toast = useToast();
   const mutationCreateDevice = useMutation(diversaGenteServices.createDevice, {
     onSuccess: () => {
       console.log('Device created');
