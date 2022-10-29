@@ -83,56 +83,70 @@ export const Login = () => {
             alignItems="center"
             marginLeft={5}
           />
-          <Center
-            bg="lime.50"
-            _text={{
-              color: 'info.500',
-              fontSize: '30',
-            }}
-            marginLeft={12}
-            height={250}
-            shadow={4}
-            width={{
-              base: 300,
-              lg: 250,
-            }}
-            borderColor={'orange.400'}
-            borderWidth={4}
-          >
-            Bem-vindo ao
-            <Flex direction="row">
-              <Text color={'blue.600'} fontSize="4xl">
-                DIVERSA
-              </Text>
-              <Text color={'amber.500'} fontSize="4xl">
-                GENTE
-              </Text>
-            </Flex>
-            <Button
-              leftIcon={<Icon as={AntDesign} name="google" size={5} />}
-              colorScheme={'blue'}
-              borderRadius={4}
-              onPress={handleLogin}
-              size="sm"
-              isLoading={isLoading}
-              marginTop={5}
-              height={16}
-              width={225}
+          <Flex direction="column">
+            <Box
+              width="310"
+              bg="yellow.400"
+              p="4"
+              marginLeft={12}
+              borderColor={'orange.400'}
+              borderLeftWidth={4}
+              borderRightWidth={4}
+              borderTopWidth={4}
             >
-              <Text color="white" fontSize="md">
-                Entrar com o Google
-              </Text>
-            </Button>
-            <Button
-              size={'lg'}
-              backgroundColor={
-                isActiveDeveloperHelper ? 'pink.600' : 'transparent'
-              }
-              onPress={handleDeveloperHelper}
-              alignSelf={'flex-end'}
-            />
-            {isActiveDeveloperHelper && <Text>{JSON.stringify(Oauth2)}</Text>}
-          </Center>
+              <Box></Box>
+            </Box>
+            <Center
+              bg="lime.50"
+              _text={{
+                color: 'info.500',
+                fontSize: '30',
+              }}
+              marginLeft={12}
+              height={250}
+              shadow={4}
+              width={{
+                base: 310,
+                lg: 250,
+              }}
+              borderColor={'orange.400'}
+              borderWidth={4}
+            >
+              Bem-vindo ao
+              <Flex direction="row">
+                <Text color={'blue.600'} fontSize="4xl">
+                  DIVERSA
+                </Text>
+                <Text color={'amber.500'} fontSize="4xl">
+                  GENTE
+                </Text>
+              </Flex>
+              <Button
+                leftIcon={<Icon as={AntDesign} name="google" size={5} />}
+                colorScheme={'blue'}
+                borderRadius={4}
+                onPress={handleLogin}
+                size="sm"
+                isLoading={isLoading}
+                marginTop={5}
+                height={16}
+                width={225}
+              >
+                <Text color="white" fontSize="md">
+                  Entrar com o Google
+                </Text>
+              </Button>
+              <Button
+                size={'lg'}
+                backgroundColor={
+                  isActiveDeveloperHelper ? 'pink.600' : 'transparent'
+                }
+                onPress={handleDeveloperHelper}
+                alignSelf={'flex-end'}
+              />
+              {isActiveDeveloperHelper && <Text>{JSON.stringify(Oauth2)}</Text>}
+            </Center>
+          </Flex>
         </Box>
       </Flex>
     </NativeBaseProvider>
