@@ -1,8 +1,11 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/shared/database/prisma.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
-import { PaginateOptions } from 'src/shared/utils/parsePaginationToPrisma';
+import {
+  PaginateOptions,
+  parsePaginationToPrisma,
+} from 'src/shared/utils/parsePaginationToPrisma';
 import { Prisma } from '@prisma/client';
 
 @Injectable()
@@ -17,7 +20,7 @@ export class ReviewsService {
 
   async findAll(options: PaginateOptions) {
     const { skip, take, where, orderBy, include, cursor } =
-    parsePaginationToPrisma<Prisma.CommentWhereInput>(options);
+      parsePaginationToPrisma<Prisma.ReviewWhereInput>(options);
 
     return await this.prisma.review.findMany({
       skip,
