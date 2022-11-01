@@ -1,5 +1,5 @@
 import { AntDesign } from '@expo/vector-icons';
-import { Box, Button, Flex, Heading, Icon, Image, Text } from 'native-base';
+import { Button, Flex, Heading, Icon, Image, Text } from 'native-base';
 import { useState } from 'react';
 
 import DiversagenteLogo from '@src/assets/splash.png';

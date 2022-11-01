@@ -23,7 +23,9 @@ describe('SubcategoriesService', () => {
       title: 'novo título da subcategoria',
       description: 'descrição atualizada de subcategoria',
     });
-    prisma.subcategory.findMany = jest.fn().mockResolvedValue([subcategoryMock]);
+    prisma.subcategory.findMany = jest
+      .fn()
+      .mockResolvedValue([subcategoryMock]);
   });
 
   it('should be defined', () => {
@@ -56,8 +58,8 @@ describe('SubcategoriesService', () => {
       ownerId: '01923408oaskfjoasdj=jiasfjsdi-oiashjdfk',
       categoryId: 'aaaaaa-1111-aaaaaaa-1111',
     };
-    
-    const foundSubcategory = await subcategoryService.findOne(subcategory.id);
+
+    await subcategoryService.findOne(subcategory.id);
     expect(subcategory).toEqual(subcategoryMock);
   });
 

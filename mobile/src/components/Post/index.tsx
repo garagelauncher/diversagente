@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Feather } from '@expo/vector-icons';
 import { useLinkTo } from '@react-navigation/native';
 import {

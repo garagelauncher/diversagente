@@ -1,5 +1,3 @@
-import { SubcategoryRaw } from 'src/shared/contracts/SubcategoryRaw';
-
 export const subcategoryMock = {
   id: 'aaaaaa-1111',
   name: 'especificação x',

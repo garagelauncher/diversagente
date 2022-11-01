@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Text, WarningOutlineIcon, HStack } from 'native-base';
 import React from 'react';
 import {
