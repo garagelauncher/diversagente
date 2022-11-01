@@ -1,4 +1,4 @@
-import { Feather, Fontisto } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import {
   useNavigation,
   useRoute,
@@ -6,32 +6,27 @@ import {
   NavigationProp,
 } from '@react-navigation/native';
 import {
-  Avatar,
   Box,
-  Divider,
   Heading,
-  HStack,
   Icon,
   IconButton,
-  ScrollView,
   Select,
   Spinner,
   Text,
   VStack,
   FlatList,
+  Flex,
 } from 'native-base';
-import React, { useCallback, useEffect, useState } from 'react';
-import { getStatusBarHeight } from 'react-native-iphone-x-helper';
-import { AirbnbRating } from 'react-native-ratings';
+import React, { useMemo, useState } from 'react';
 
-import { RatePeriod, Review } from '@src/contracts/Review';
-import { StackLocationNavigatorParamList } from '@src/routes/stacks/locationStack.routes';
-import { diversaGenteServices } from '@src/services/diversaGente';
-import { formatDate } from '@src/utils/formatDate';
-import { useReviews } from '@src/hooks/queries/useReviews';
-import { subtractDate } from '@src/utils/time';
-import { PER_PAGE_ITEMS } from '@src/configs';
 import { UserReview } from './UserReview';
+
+import { LoadingFallback } from '@src/components/LoadingFallback';
+import { PER_PAGE_ITEMS } from '@src/configs';
+import { RatePeriod } from '@src/contracts/Review';
+import { useReviews } from '@src/hooks/queries/useReviews';
+import { StackLocationNavigatorParamList } from '@src/routes/stacks/locationStack.routes';
+import { subtractDate } from '@src/utils/time';
 
 export type ReviewsScreenNavigationProps = NavigationProp<
   StackLocationNavigatorParamList,
@@ -46,9 +41,13 @@ export const Reviews = () => {
     useRoute<RouteProp<StackLocationNavigatorParamList, 'Reviews'>>();
   const { locationId } = route.params;
 
+  const locationCreatedAt = useMemo(
+    () => subtractDate(1, ratePeriod),
+    [ratePeriod],
+  );
+
   const {
     data,
-    isLoading,
     isFetchingNextPage,
     isRefetching,
     hasNextPage,
@@ -62,16 +61,14 @@ export const Reviews = () => {
     filter: {
       locationId,
       createdAt: {
-        gt: subtractDate(1, ratePeriod)
-      }
-    }
+        gt: locationCreatedAt,
+      },
+    },
   });
 
   const handleNavigateGoBack = () => {
     navigation.goBack();
   };
-
-  const statusBarHeight = getStatusBarHeight();
 
   const handlePullReviewListToRefresh = () => {
     refetch();
@@ -83,71 +80,75 @@ export const Reviews = () => {
     }
   };
 
-
   return (
-    <VStack px={4} pt={6} flex={1} mt={statusBarHeight}>
+    <VStack space={2} px={4} pt={12} flex={1}>
       <IconButton
         colorScheme="gray"
         variant={'solid'}
         icon={<Icon as={<Feather name="arrow-left" />} />}
         onPress={handleNavigateGoBack}
         position="absolute"
-        top={6}
+        top={12}
         ml={4}
         mb={2}
         zIndex={1}
       />
-      <Heading fontSize={30} alignSelf={'center'} mt={6}>
+      <Heading fontSize={30} alignSelf={'center'}>
         Avaliações
       </Heading>
 
-        <Text
-          fontSize={16}
-          color={'gray.800'}
-          fontWeight={'bold'}
-          flex={1}
-          py={2}
-        >
-          Escolha um período:
-        </Text>
-        <Select
-          accessibilityLabel="Escolha um período para as avaliações"
-          flex={1}
-          selectedValue={ratePeriod}
-          onValueChange={(value) => setRatePeriod(value as RatePeriod)}
-        >
-          <Select.Item label="Dia" value="day" />
-          <Select.Item label="Semana" value="week" />
-          <Select.Item label="Mês" value="month" />
-          <Select.Item label="Ano" value="year" />
-        </Select>
-        <FlatList
-          width={'100%'}
-          data={data?.pages.map((page) => page.results).flat()}
-          renderItem={({ item }) => (
-            <Box marginBottom={4}>
-              <UserReview comment={item} />
-            </Box>
-          )}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={{ paddingBottom: 350 }}
-          onEndReached={handleLoadMoreReviews}
-          onEndReachedThreshold={0.85}
-          refreshing={isRefetching && !isFetchingNextPage}
-          onRefresh={handlePullReviewListToRefresh}
-          ListFooterComponent={
-            <LoadingFallback
-              fallback={<Spinner color="orange.500" size="lg" />}
-              isLoading={isFetchingNextPage}
-            >
-              <Flex width="100%" alignItems="center" justifyContent="center">
-                <Text color="gray.500">
-                  Esses foram os reviews desse local.
-                </Text>
-              </Flex>
-            </LoadingFallback>
-          }
-        />
+      <Text
+        fontSize={16}
+        color={'gray.800'}
+        fontWeight={'bold'}
+        flex={1}
+        py={2}
+      >
+        Escolha um período:
+      </Text>
+      <Select
+        accessibilityLabel="Escolha um período para as avaliações"
+        flex={1}
+        selectedValue={ratePeriod}
+        onValueChange={(value) => setRatePeriod(value as RatePeriod)}
+        minH={50}
+      >
+        <Select.Item label="Dia" value="day" />
+        <Select.Item label="Semana" value="week" />
+        <Select.Item label="Mês" value="month" />
+        <Select.Item label="Ano" value="year" />
+      </Select>
+
+      <FlatList
+        width={'100%'}
+        data={data?.pages.map((page) => page.results).flat()}
+        renderItem={({ item }) => (
+          <Box marginBottom={2}>
+            <UserReview review={item} />
+          </Box>
+        )}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={{ paddingBottom: 350 }}
+        onEndReached={handleLoadMoreReviews}
+        onEndReachedThreshold={0.85}
+        refreshing={isRefetching && !isFetchingNextPage}
+        onRefresh={handlePullReviewListToRefresh}
+        ListFooterComponent={
+          <LoadingFallback
+            fallback={<Spinner color="orange.500" size="lg" />}
+            isLoading={isFetchingNextPage}
+          >
+            <Flex width="100%" alignItems="center" justifyContent="center">
+              <Text color="gray.500">Esses foram os reviews desse local.</Text>
+            </Flex>
+          </LoadingFallback>
+        }
+        ListEmptyComponent={
+          <Flex width="100%" alignItems="center" justifyContent="center">
+            <Text color="gray.500">Nenhum review encontrado.</Text>
+          </Flex>
+        }
+      />
     </VStack>
   );
 };
