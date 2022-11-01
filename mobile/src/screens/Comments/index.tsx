@@ -1,4 +1,4 @@
-import { Feather, Fontisto } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import {
   useNavigation,
   useRoute,
@@ -56,8 +56,6 @@ export const Comments = () => {
       owner: true,
     },
   });
-
-  const statusBarHeight = getStatusBarHeight();
 
   const handleNavigateGoBack = () => {
     navigation.goBack();

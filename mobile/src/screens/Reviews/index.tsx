@@ -18,6 +18,7 @@ import {
   Spinner,
   Text,
   VStack,
+  FlatList,
 } from 'native-base';
 import React, { useCallback, useEffect, useState } from 'react';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
@@ -27,15 +28,17 @@ import { RatePeriod, Review } from '@src/contracts/Review';
 import { StackLocationNavigatorParamList } from '@src/routes/stacks/locationStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
 import { formatDate } from '@src/utils/formatDate';
+import { useReviews } from '@src/hooks/queries/useReviews';
+import { subtractDate } from '@src/utils/time';
+import { PER_PAGE_ITEMS } from '@src/configs';
+import { UserReview } from './UserReview';
 
-type ReviewsScreenNavigationProps = NavigationProp<
+export type ReviewsScreenNavigationProps = NavigationProp<
   StackLocationNavigatorParamList,
   'Reviews'
 >;
 
 export const Reviews = () => {
-  const [reviews, setReviews] = useState<Review[] | null>([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [ratePeriod, setRatePeriod] = useState<RatePeriod>('week');
 
   const navigation = useNavigation<ReviewsScreenNavigationProps>();
@@ -43,37 +46,46 @@ export const Reviews = () => {
     useRoute<RouteProp<StackLocationNavigatorParamList, 'Reviews'>>();
   const { locationId } = route.params;
 
+  const {
+    data,
+    isLoading,
+    isFetchingNextPage,
+    isRefetching,
+    hasNextPage,
+    refetch,
+    fetchNextPage,
+  } = useReviews({
+    locationId,
+    perPage: PER_PAGE_ITEMS,
+    range: [0, PER_PAGE_ITEMS],
+    sort: ['createdAt', 'DESC'],
+    filter: {
+      locationId,
+      createdAt: {
+        gt: subtractDate(1, ratePeriod)
+      }
+    }
+  });
+
   const handleNavigateGoBack = () => {
     navigation.goBack();
   };
 
-  const fetchAllReviewsFromLocation = useCallback(
-    async (locationId: string, ratePeriod: RatePeriod) => {
-      try {
-        setIsLoading(true);
-        const reviewsFromApi =
-          await diversaGenteServices.getReviewsByLocationId(
-            locationId,
-            ratePeriod,
-          );
-        setReviews(reviewsFromApi);
-      } catch (error) {
-        console.info('Error while fetching all reviews', error);
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    [],
-  );
-
-  useEffect(() => {
-    fetchAllReviewsFromLocation(locationId, ratePeriod);
-  }, [fetchAllReviewsFromLocation, locationId, ratePeriod]);
-
   const statusBarHeight = getStatusBarHeight();
 
+  const handlePullReviewListToRefresh = () => {
+    refetch();
+  };
+
+  const handleLoadMoreReviews = () => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  };
+
+
   return (
-    <VStack px={4} flex={1} mt={statusBarHeight}>
+    <VStack px={4} pt={6} flex={1} mt={statusBarHeight}>
       <IconButton
         colorScheme="gray"
         variant={'solid'}
@@ -89,7 +101,6 @@ export const Reviews = () => {
         Avaliações
       </Heading>
 
-      <ScrollView mt={6}>
         <Text
           fontSize={16}
           color={'gray.800'}
@@ -110,84 +121,33 @@ export const Reviews = () => {
           <Select.Item label="Mês" value="month" />
           <Select.Item label="Ano" value="year" />
         </Select>
-        {reviews?.map((item, index) => {
-          return (
-            <Box
-              key={index}
-              size="md"
-              borderRadius={20}
-              borderColor={'warning.300'}
-              borderWidth={1}
-              _text={{
-                color: 'amber.50',
-              }}
-              w={'100%'}
-              h={'auto'}
-              mt={10}
-              px={4}
-              py={8}
-              bg={'warning.100'}
-            >
-              <Fontisto name="quote-a-right" size={28} color="black" />
-              <Text mb={5} mt={4} fontSize={20}>
-                {item.text}
-              </Text>
-              <Divider my={5} bg={'muted.800'} />
-              <HStack
-                bottom={0}
-                alignItems="center"
-                justifyContent="space-evenly"
-              >
-                <HStack alignItems="center">
-                  {item.owner.picture ? (
-                    <Avatar
-                      size="md"
-                      source={{
-                        uri: item.owner.picture,
-                      }}
-                    >
-                      {item.owner.name}
-                    </Avatar>
-                  ) : (
-                    <Avatar size="md" bg={'info.600'}>
-                      {item.owner.name[0]}
-                    </Avatar>
-                  )}
-
-                  <VStack pl={2} pr={5}>
-                    <Text fontSize={16} color={'muted.800'}>
-                      {item.owner.name}
-                    </Text>
-                    <Text fontSize={16} color={'muted.500'}>
-                      {formatDate(item.updatedAt)}
-                    </Text>
-                  </VStack>
-                </HStack>
-                <Box>
-                  {isLoading && (
-                    <Spinner
-                      size={'lg'}
-                      position="absolute"
-                      left={'50%'}
-                      top={'50%'}
-                      zIndex={4}
-                    />
-                  )}
-                  {
-                    <AirbnbRating
-                      isDisabled={true}
-                      selectedColor="#d6c103"
-                      size={22}
-                      defaultRating={item.stars}
-                      showRating={false}
-                    />
-                  }
-                </Box>
-              </HStack>
+        <FlatList
+          width={'100%'}
+          data={data?.pages.map((page) => page.results).flat()}
+          renderItem={({ item }) => (
+            <Box marginBottom={4}>
+              <UserReview comment={item} />
             </Box>
-          );
-        })}
-      </ScrollView>
+          )}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={{ paddingBottom: 350 }}
+          onEndReached={handleLoadMoreReviews}
+          onEndReachedThreshold={0.85}
+          refreshing={isRefetching && !isFetchingNextPage}
+          onRefresh={handlePullReviewListToRefresh}
+          ListFooterComponent={
+            <LoadingFallback
+              fallback={<Spinner color="orange.500" size="lg" />}
+              isLoading={isFetchingNextPage}
+            >
+              <Flex width="100%" alignItems="center" justifyContent="center">
+                <Text color="gray.500">
+                  Esses foram os reviews desse local.
+                </Text>
+              </Flex>
+            </LoadingFallback>
+          }
+        />
     </VStack>
   );
 };

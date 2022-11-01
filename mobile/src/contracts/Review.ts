@@ -1,7 +1,24 @@
-import { User } from '@src/contexts/AuthContext';
+export type ReviewOwner = {
+  id: string;
+  biograph: null | string;
+  birthdate: null | string;
+  createdAt: string;
+  email: string;
+  lovelyCategoriesIds: string[];
+  name: string;
+  picture: string;
+  preferences: ReviewOwnerPreferences;
+  updatedAt: string;
+  username: string;
+};
+
+export type ReviewOwnerPreferences = {
+  canReceiveMessage: boolean;
+  language: string;
+};
 
 export interface Review {
-  owner: User;
+  owner: ReviewOwner;
   id: string;
   text: string;
   stars: number;
