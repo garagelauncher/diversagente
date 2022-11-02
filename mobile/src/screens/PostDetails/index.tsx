@@ -65,6 +65,7 @@ export const PostDetails = () => {
     sort: ['createdAt', 'DESC'],
     filter: {
       postId,
+      isActive: true,
     },
     include: {
       owner: true,
