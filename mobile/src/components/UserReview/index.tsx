@@ -1,7 +1,8 @@
-import { Fontisto } from '@expo/vector-icons';
 import { Avatar, Divider, Flex, Text } from 'native-base';
 import { FunctionComponent, useState } from 'react';
 import { AirbnbRating } from 'react-native-ratings';
+
+import { ReviewMoreActions } from './ReviewMoreActions';
 
 import { Review } from '@src/contracts/Review';
 import { useAuth } from '@src/hooks/useAuth';
@@ -51,17 +52,17 @@ export const UserReview: FunctionComponent<UserReviewProps> = ({ review }) => {
           </Flex>
         </Flex>
         <Flex>
-          {/* <CommentMoreActions
-          isOwner={isOwner}
-          onActivateCommentEditMode={() => setIsEditModeActive(true)}
-          commentId={id}
-        /> */}
+          <ReviewMoreActions
+            isOwner={isOwner}
+            locationId={review.locationId}
+            reviewId={review.id}
+          />
         </Flex>
       </Flex>
       <Text mt={4} fontSize={20}>
         {review.text}
       </Text>
-      <Divider my={5} bg={'muted.400'} />
+      <Divider my={5} bg={'muted.300'} />
       <AirbnbRating
         isDisabled={true}
         selectedColor="#d6c103"

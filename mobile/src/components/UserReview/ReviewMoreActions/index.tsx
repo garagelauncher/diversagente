@@ -16,14 +16,12 @@ export type ReviewMoreActionsProps = {
   isOwner: boolean;
   reviewId: string;
   locationId: string;
-  onActivateReviewEditMode: () => void;
 };
 
 export const ReviewMoreActions: FunctionComponent<ReviewMoreActionsProps> = ({
   isOwner,
   reviewId,
   locationId,
-  onActivateReviewEditMode,
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [
@@ -107,18 +105,6 @@ export const ReviewMoreActions: FunctionComponent<ReviewMoreActionsProps> = ({
               icon="frown"
               label="Não tenho interesse"
               onPress={handleDontLike}
-            />
-          }
-          falseComponent={<></>}
-        />
-
-        <ConditionallyRender
-          condition={isOwner}
-          trueComponent={
-            <ReviewActionMenuItem
-              icon="edit"
-              label="Editar conteúdo"
-              onPress={onActivateReviewEditMode}
             />
           }
           falseComponent={<></>}
