@@ -110,7 +110,7 @@ export const FormCreateReview = () => {
         icon={<Icon as={<Feather name="arrow-left" />} />}
         onPress={handleNavigateGoBack}
         position="absolute"
-        top={6}
+        top={3}
         ml={4}
         mb={2}
         zIndex={1}
@@ -129,15 +129,15 @@ export const FormCreateReview = () => {
               p={5}
               h={200}
               fontSize={16}
-              placeholder="Conte aqui!"
+              placeholder="Conte aqui o que achou desse local!"
               maxW="100%"
               autoCompleteType={undefined}
               onChangeText={textValue}
             />
           </Stack>
-          <Stack mt={5}>
-            <FormControl.Label mb={2}>
-              <Text fontSize={22}>Dê uma nota: </Text>
+          <Stack mt={4}>
+            <FormControl.Label>
+              <Heading>Dê uma nota: </Heading>
             </FormControl.Label>
             <AirbnbRating
               defaultRating={0}
