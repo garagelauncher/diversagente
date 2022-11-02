@@ -167,10 +167,10 @@ export const LocationDetails = () => {
         width={'100%'}
         alignItems="center"
         justifyContent="center"
+        pt={3}
       >
         <IconButton
           variant={'ghost'}
-          size={'lg'}
           _icon={{
             as: getIconProviderByName(location.iconProvider),
             name: location.icon ?? 'map-pin',
@@ -200,7 +200,7 @@ export const LocationDetails = () => {
               alignItems="center"
             >
               <Text fontSize={16} color={'gray.800'} fontWeight={'bold'}>
-                Nota média:{' '}
+                Nota média:{'   '}
               </Text>
               <Text
                 fontSize={location.starsAverage === null ? 16 : 32}
