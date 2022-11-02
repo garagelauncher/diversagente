@@ -16,6 +16,7 @@ import {
   VStack,
   FlatList,
   Flex,
+  Skeleton,
 } from 'native-base';
 import React, { useMemo, useState } from 'react';
 
@@ -47,6 +48,7 @@ export const Reviews = () => {
 
   const {
     data,
+    isLoading,
     isFetchingNextPage,
     isRefetching,
     hasNextPage,
@@ -120,37 +122,49 @@ export const Reviews = () => {
         <Select.Item label="Mês" value="month" />
         <Select.Item label="Ano" value="year" />
       </Select>
-
-      <FlatList
-        width={'100%'}
-        data={data?.pages.map((page) => page.results).flat()}
-        renderItem={({ item }) => (
-          <Box marginBottom={2}>
-            <UserReview review={item} />
-          </Box>
-        )}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={{ paddingBottom: 350 }}
-        onEndReached={handleLoadMoreReviews}
-        onEndReachedThreshold={0.85}
-        refreshing={isRefetching && !isFetchingNextPage}
-        onRefresh={handlePullReviewListToRefresh}
-        ListFooterComponent={
-          <LoadingFallback
-            fallback={<Spinner color="orange.500" size="lg" />}
-            isLoading={isFetchingNextPage}
-          >
+      <LoadingFallback
+        isLoading={isLoading}
+        fallback={
+          <VStack space={4}>
+            <Skeleton width="100%" height={200} />
+            <Skeleton width="100%" height={200} />
+            <Skeleton width="100%" height={200} />
+          </VStack>
+        }
+      >
+        <FlatList
+          width={'100%'}
+          data={data?.pages.map((page) => page.results).flat()}
+          renderItem={({ item }) => (
+            <Box marginBottom={2}>
+              <UserReview review={item} />
+            </Box>
+          )}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={{ paddingBottom: 350 }}
+          onEndReached={handleLoadMoreReviews}
+          onEndReachedThreshold={0.85}
+          refreshing={isRefetching && !isFetchingNextPage}
+          onRefresh={handlePullReviewListToRefresh}
+          ListFooterComponent={
+            <LoadingFallback
+              fallback={<Spinner color="orange.500" size="lg" />}
+              isLoading={isFetchingNextPage}
+            >
+              <Flex width="100%" alignItems="center" justifyContent="center">
+                <Text color="gray.500">
+                  Esses foram os reviews desse local.
+                </Text>
+              </Flex>
+            </LoadingFallback>
+          }
+          ListEmptyComponent={
             <Flex width="100%" alignItems="center" justifyContent="center">
-              <Text color="gray.500">Esses foram os reviews desse local.</Text>
+              <Text color="gray.500">Nenhum review encontrado.</Text>
             </Flex>
-          </LoadingFallback>
-        }
-        ListEmptyComponent={
-          <Flex width="100%" alignItems="center" justifyContent="center">
-            <Text color="gray.500">Nenhum review encontrado.</Text>
-          </Flex>
-        }
-      />
+          }
+        />
+      </LoadingFallback>
     </VStack>
   );
 };
