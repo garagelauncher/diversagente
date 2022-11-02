@@ -287,6 +287,11 @@ export const Profile = () => {
                 </Flex>
               </LoadingFallback>
             }
+            ListEmptyComponent={
+              <Flex width="100%" alignItems="center" justifyContent="center">
+                <Text color="gray.500">Nenhum post encontrado.</Text>
+              </Flex>
+            }
           />
         </LoadingFallback>
       </Flex>
