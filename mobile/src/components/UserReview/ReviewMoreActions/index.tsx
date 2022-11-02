@@ -42,14 +42,14 @@ export const ReviewMoreActions: FunctionComponent<ReviewMoreActionsProps> = ({
           description: 'Review excluído com sucesso!',
           bg: 'green.500',
         });
-        linkTo('/home');
+        linkTo(`/locations/${locationId}`);
       },
       onError: () => {
         toast.show({
           description: 'Não foi possível excluir o review!',
           background: 'red.500',
         });
-        linkTo('/home');
+        linkTo(`/locations/${locationId}`);
       },
     },
   );
@@ -69,10 +69,10 @@ export const ReviewMoreActions: FunctionComponent<ReviewMoreActionsProps> = ({
     if (isOwner) {
       await deleteReviewMutation.mutateAsync({
         locationId,
-        reviewId
+        reviewId,
       });
     }
-  }, [deleteReviewMutation, isOwner, reviewId]);
+  }, [deleteReviewMutation, isOwner, locationId, reviewId]);
 
   const handleOpenComplaint = () => {
     linkTo(`/complaints/review/${reviewId}`);
@@ -129,7 +129,7 @@ export const ReviewMoreActions: FunctionComponent<ReviewMoreActionsProps> = ({
           trueComponent={
             <ReviewActionMenuItem
               icon="trash-2"
-              label="Excluir post"
+              label="Excluir review"
               onPress={handleWantRemoveReview}
             />
           }
