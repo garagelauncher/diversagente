@@ -64,6 +64,7 @@ export const Reviews = () => {
       createdAt: {
         gt: locationCreatedAt,
       },
+      isActive: true,
     },
     include: {
       owner: true,
@@ -101,14 +102,8 @@ export const Reviews = () => {
         Avaliações
       </Heading>
 
-      <Text
-        fontSize={16}
-        color={'gray.800'}
-        fontWeight={'bold'}
-        flex={1}
-        py={2}
-      >
-        Escolha um período:
+      <Text fontSize={16} color={'gray.700'} fontWeight={'bold'} py={2}>
+        Escolha um período para ver as resenhas:
       </Text>
       <Select
         accessibilityLabel="Escolha um período para as avaliações"
