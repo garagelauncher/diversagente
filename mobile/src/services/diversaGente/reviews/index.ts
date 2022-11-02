@@ -5,6 +5,11 @@ import { QueryOptions } from '@src/contracts/QueryOptions';
 import { Review } from '@src/contracts/Review';
 import { parseQueryOptions } from '@src/utils/parseQuery';
 
+export type DeleteReviewDto = {
+  locationId: string;
+  reviewId: string;
+};
+
 export const getReviewsByLocationId = async <
   GenericIncluded extends object = object,
 >(
@@ -47,6 +52,28 @@ export const createReviewToLocation = async (
     return createdReview;
   } catch (error: any) {
     console.info('error when creating review');
+    if (error.isAxiosError) {
+      console.error(error.response);
+    }
+    throw error;
+  }
+};
+
+export const deleteReviewById = async ({
+  locationId,
+  reviewId,
+}: DeleteReviewDto) => {
+  try {
+    const response = await diversagenteBaseApi.delete<Review>(
+      `/locations/${locationId}/reviews/${reviewId}`,
+    );
+
+    const deletedReview = response.data;
+    console.info('deleted review');
+    console.info(deletedReview);
+    return deletedReview;
+  } catch (error: any) {
+    console.info('error when deleting review');
     if (error.isAxiosError) {
       console.error(error.response);
     }

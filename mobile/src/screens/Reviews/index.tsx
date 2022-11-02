@@ -19,7 +19,7 @@ import {
 } from 'native-base';
 import React, { useMemo, useState } from 'react';
 
-import { UserReview } from './UserReview';
+import { UserReview } from '@src/components/UserReview';
 
 import { LoadingFallback } from '@src/components/LoadingFallback';
 import { PER_PAGE_ITEMS } from '@src/configs';
