@@ -124,7 +124,7 @@ export const CommentMoreActions: FunctionComponent<CommentMoreActionsProps> = ({
           trueComponent={
             <CommentActionMenuItem
               icon="trash-2"
-              label="Excluir post"
+              label="Excluir comentário"
               onPress={handleWantRemoveComment}
             />
           }
