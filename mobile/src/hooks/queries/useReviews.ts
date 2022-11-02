@@ -17,9 +17,9 @@ export const useReviews = <GenericIncluded extends object = object>({
     [
       'diversagente@reviews',
       locationId,
+      options.filter,
       options.cursor,
       options.range,
-      options.filter,
     ],
     ({ pageParam = {} }) =>
       diversaGenteServices.getReviewsByLocationId<GenericIncluded>(locationId, {
