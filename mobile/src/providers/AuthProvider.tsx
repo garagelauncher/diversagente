@@ -70,6 +70,39 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
     [mutationCreateDevice],
   );
 
+  async function checkIfUserExistsByUsername() {
+    try {
+      const user = await diversaGenteServices.findUserByUsername();
+      return user;
+    } catch(error) {
+      console.log(error);
+      return null;
+    };
+  }
+
+  async function activateUserData(apiUser, googleUser) {
+    const userPayload: UserData = {
+      id: apiUser.data.id || '',
+      googleUserData: googleUser,
+      email: googleUser.email,
+      name: googleUser.name,
+      picture:
+        apiUser.data?.picture ?? googleUser.picture ?? '',
+      username: apiUser.data?.username ?? googleUser.email,
+      biograph: apiUser.data?.biograph ?? '',
+      createdAt: apiUser.data?.createdAt ?? '',
+      preferences: apiUser.data?.preferences,
+      lovelyCategoriesIds: apiUser.data?.lovelyCategoriesIds,
+      isActive: apiUser.data.isActive,
+    };
+
+    setUser(userPayload);
+    await AsyncStorage.setItem(
+      'diversagente@user',
+      JSON.stringify(userPayload),
+    );
+  };
+
   async function signInWithGoogle() {
     setIsLoading(true);
     try {
@@ -113,7 +146,11 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
           name: googleUserData.name,
           username: googleUserData.email,
         });
-        const responseCreateUser = await axios.post<{
+
+        const userAlreadyExists = await checkIfUserExistsByUsername(googleUserData.email);
+
+
+        const responseUserData = userAlreadyExists ? userAlreadyExists : await axios.post<{
           id: string;
           email: string;
           username?: string;
@@ -131,36 +168,17 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
           picture: googleUserData.picture ?? null,
         });
 
-        console.debug(responseCreateUser);
-        console.debug(responseCreateUser.data);
-        console.debug(responseCreateUser.status);
+        console.debug(responseUserData);
+        console.debug(responseUserData.data);
+        console.debug(responseUserData.status);
 
-        if (!responseCreateUser.data) {
+        if (!responseUserData.data) {
           return;
         }
 
-        const userPayload: UserData = {
-          id: responseCreateUser.data.id || '',
-          googleUserData,
-          email: googleUserData.email,
-          name: googleUserData.name,
-          picture:
-            responseCreateUser.data?.picture ?? googleUserData.picture ?? '',
-          username: responseCreateUser.data?.username ?? googleUserData.email,
-          biograph: responseCreateUser.data?.biograph ?? '',
-          createdAt: responseCreateUser.data?.createdAt ?? '',
-          preferences: responseCreateUser.data?.preferences,
-          lovelyCategoriesIds: responseCreateUser.data?.lovelyCategoriesIds,
-          isActive: responseCreateUser.data.isActive,
-        };
-        setUser(userPayload);
-        setLoggedIn(true);
-        await AsyncStorage.setItem(
-          'diversagente@user',
-          JSON.stringify(userPayload),
-        );
-      }
-      console.log('Sign in with Google');
+      activateUserData(responseUserData, googleUserData);
+      setLoggedIn(true);
+
     } catch (error: any) {
       console.error(error);
       console.error(error.name);
