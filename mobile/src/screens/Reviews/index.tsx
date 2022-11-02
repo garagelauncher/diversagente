@@ -19,9 +19,8 @@ import {
 } from 'native-base';
 import React, { useMemo, useState } from 'react';
 
-import { UserReview } from '@src/components/UserReview';
-
 import { LoadingFallback } from '@src/components/LoadingFallback';
+import { UserReview } from '@src/components/UserReview';
 import { PER_PAGE_ITEMS } from '@src/configs';
 import { RatePeriod } from '@src/contracts/Review';
 import { useReviews } from '@src/hooks/queries/useReviews';
@@ -63,6 +62,9 @@ export const Reviews = () => {
       createdAt: {
         gt: locationCreatedAt,
       },
+    },
+    include: {
+      owner: true,
     },
   });
 
@@ -108,10 +110,10 @@ export const Reviews = () => {
       </Text>
       <Select
         accessibilityLabel="Escolha um período para as avaliações"
-        flex={1}
         selectedValue={ratePeriod}
         onValueChange={(value) => setRatePeriod(value as RatePeriod)}
-        minH={50}
+        minH={60}
+        fontSize={16}
       >
         <Select.Item label="Dia" value="day" />
         <Select.Item label="Semana" value="week" />
