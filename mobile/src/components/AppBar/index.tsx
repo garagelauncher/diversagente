@@ -24,7 +24,7 @@ export const AppBar = () => {
             >
               <Icon as={Feather} name="wifi" size="sm" color="white" />
               <Heading marginLeft={4} color="white" size="md">
-                Conectado
+                Conectado: {netInfo.type}
               </Heading>
             </Flex>
           }
