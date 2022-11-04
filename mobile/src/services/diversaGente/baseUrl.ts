@@ -13,6 +13,8 @@ const diversagenteBaseApi = axios.create({
   timeout: maxTimeout,
 });
 
+diversagenteBaseApi.defaults.timeout = maxTimeout;
+
 async function clearAuthToken() {
   diversagenteBaseApi.defaults.headers.common['Authorization'] = '';
   delete diversagenteBaseApi.defaults.headers.common['Authorization'];
