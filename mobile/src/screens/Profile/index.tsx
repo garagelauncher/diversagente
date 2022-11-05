@@ -138,7 +138,10 @@ export const Profile = () => {
   } = usePosts<UserHasInteracted>({
     sort: ['createdAt', 'DESC'],
     range: [0, PER_PAGE_ITEMS],
-    filter: { ownerId: user?.id ?? userIdHelper },
+    filter: {
+      isActive: true,
+      ownerId: user?.id ?? userIdHelper,
+    },
     include: {
       likes: {
         select: { id: true },
