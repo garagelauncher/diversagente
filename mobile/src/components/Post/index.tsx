@@ -78,7 +78,10 @@ export const Post: FunctionComponent<PostProps> = ({
   const userInitials = getUsernameInitials(post.owner.username);
   const contentPreview = post.content.slice(0, 255);
 
-  const formattedCreatedAtDate = formatDateSocialMedia(post.createdAt);
+  const formattedCreatedAtDate =
+    post.createdAt !== post.updatedAt
+      ? formatDateSocialMedia(post.updatedAt) + ' (editado)'
+      : formatDateSocialMedia(post.createdAt);
 
   const handleActivePostEditMode = () => {
     setIsEditModeActive(true);
@@ -90,16 +93,12 @@ export const Post: FunctionComponent<PostProps> = ({
 
   const handleTogglePostLike = async () => {
     try {
-      console.debug(`toggled by ${user?.id}`);
-
       if (!hasLiked) {
-        console.debug(`Liked by ${user?.id}`);
         await mutationCreateLike.mutateAsync({
           postId: post.id,
           ownerId: String(user?.id),
         });
       } else {
-        console.debug(`Unliked by ${user?.id}`);
         await mutationDeleteLike.mutateAsync({
           postId: post.id,
           likeId: post.likes[0]?.id,
