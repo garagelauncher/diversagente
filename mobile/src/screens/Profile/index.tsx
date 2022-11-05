@@ -107,13 +107,6 @@ export const Profile = () => {
       diffInMilliseconds / yearsUnitInMilliseconds,
     );
 
-    console.log('currentISODate', currentISODate);
-    console.log('creationISODate', creationISODate);
-    console.log('diffInDays', diffInDays);
-    console.log('diffInMonths', diffInMonths);
-    console.log('monthUnitInMilliseconds', diffInMonths);
-    console.log('diffInYears', diffInYears);
-
     if (diffInDays <= 0) {
       diffInDays = 1;
     }

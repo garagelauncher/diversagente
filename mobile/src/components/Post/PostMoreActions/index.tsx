@@ -25,12 +25,14 @@ export type PostMoreActionsProps = {
   isOwner: boolean;
   postId: string;
   onActivatePostEditMode: () => void;
+  onDeletedPost?: () => void;
 };
 
 export const PostMoreActions: FunctionComponent<PostMoreActionsProps> = ({
   isOwner,
   postId,
   onActivatePostEditMode,
+  onDeletedPost,
 }) => {
   const clipboard = useClipboard();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -51,7 +53,10 @@ export const PostMoreActions: FunctionComponent<PostMoreActionsProps> = ({
         description: 'Post excluído com sucesso!',
         bg: 'green.500',
       });
-      linkTo('/home');
+
+      if (onDeletedPost) {
+        onDeletedPost();
+      }
     },
     onError: () => {
       toast.show({

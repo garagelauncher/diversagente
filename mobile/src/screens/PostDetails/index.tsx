@@ -75,6 +75,10 @@ export const PostDetails = () => {
 
   const isLoadedNoComment = !isCommentLoading && !lastComment;
 
+  const handleNavigateToForum = () => {
+    navigation.navigate('Forum');
+  };
+
   const handleNavigateGoBack = () => {
     navigation.goBack();
   };
@@ -111,7 +115,7 @@ export const PostDetails = () => {
         fallback={<Skeleton width="100%" height={200} />}
         isLoading={isLoading || !data}
       >
-        {data && <Post post={data} />}
+        {data && <Post post={data} onDeletedPost={handleNavigateToForum} />}
       </LoadingFallback>
 
       <VStack width="100%" padding={6} space={6}>

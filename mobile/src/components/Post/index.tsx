@@ -42,9 +42,14 @@ export type UserHasInteracted = UserHasLiked & UserHasCommented;
 export type PostProps = {
   post: IncludeInto<PostData, UserHasInteracted>;
   isPreview?: boolean;
+  onDeletedPost?: () => void;
 };
 
-export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
+export const Post: FunctionComponent<PostProps> = ({
+  post,
+  isPreview,
+  onDeletedPost,
+}) => {
   const { user } = useAuth();
   const linkTo = useLinkTo();
 
@@ -172,6 +177,7 @@ export const Post: FunctionComponent<PostProps> = ({ post, isPreview }) => {
             isOwner={isOwner}
             postId={post.id}
             onActivatePostEditMode={handleActivePostEditMode}
+            onDeletedPost={onDeletedPost}
           />
         </Flex>
       </Flex>
