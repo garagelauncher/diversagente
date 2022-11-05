@@ -130,6 +130,15 @@ export class UsersService {
       },
     });
 
+    await this.prisma.location.updateMany({
+      where: {
+        ownerId: id,
+      },
+      data: {
+        isActive: false,
+      },
+    });
+
     return await this.prisma.user.update({
       where: { id },
       data: {

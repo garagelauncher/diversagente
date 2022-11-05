@@ -2,13 +2,18 @@ import axios from 'axios';
 
 import { apiBaseUrl } from '@src/configs';
 
+const maxTimeout = 1000 * 30; // 30 seconds
+
 const diversagenteBaseApi = axios.create({
   baseURL: apiBaseUrl,
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
   },
+  timeout: maxTimeout,
 });
+
+diversagenteBaseApi.defaults.timeout = maxTimeout;
 
 async function clearAuthToken() {
   diversagenteBaseApi.defaults.headers.common['Authorization'] = '';

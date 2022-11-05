@@ -4,6 +4,7 @@ import * as ExpoLocation from 'expo-location';
 import {
   Box,
   FormControl,
+  HStack,
   Icon,
   IconButton,
   Input,
@@ -11,6 +12,9 @@ import {
   Spinner,
   Text,
   useToast,
+  VStack,
+  Alert as NativeBaseAlert,
+  PresenceTransition,
 } from 'native-base';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
@@ -34,6 +38,7 @@ const LONGITUDE_DELTA = 0.0421;
 
 export const Locations = () => {
   const toast = useToast();
+  const [isWelcomeLocationOpen, setIsWelcomeLocationOpen] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [isFetchingLocations, setIsFetchingLocations] = useState(false);
   const [radius, setRadius] = useState(20);
@@ -51,6 +56,10 @@ export const Locations = () => {
 
   function handleNavigateToSelectLocationMap() {
     navigation.navigate('SelectLocationMap');
+  }
+
+  function handleCloseWelcomeLocation() {
+    setIsWelcomeLocationOpen(false);
   }
 
   const getCurrentUserLocation = useCallback(async () => {
@@ -131,6 +140,47 @@ export const Locations = () => {
 
   return (
     <Box flex={1}>
+      <PresenceTransition
+        visible={isWelcomeLocationOpen}
+        initial={{
+          opacity: 0,
+        }}
+        animate={{
+          opacity: 1,
+          transition: {
+            duration: 250,
+          },
+        }}
+      >
+        <NativeBaseAlert
+          w="90%"
+          status={'info'}
+          position="absolute"
+          bottom={10}
+          zIndex={2}
+          alignSelf="center"
+        >
+          <VStack space={2} flexShrink={1} w="100%">
+            <HStack flexShrink={1} space={2} justifyContent="space-between">
+              <HStack space={2} flexShrink={1}>
+                <Text fontSize="md" color="coolGray.600">
+                  Aqui você encontra locais próximos avaliados pela comunidade
+                  neurodiversa do diversaGente
+                </Text>
+              </HStack>
+              <IconButton
+                variant="unstyled"
+                _focus={{
+                  borderWidth: 0,
+                }}
+                icon={<Icon as={<Feather name="x" color="coolGray.600" />} />}
+                onPress={handleCloseWelcomeLocation}
+              />
+            </HStack>
+          </VStack>
+        </NativeBaseAlert>
+      </PresenceTransition>
+
       <Modal isOpen={showModal} onClose={onCloseModal}>
         <Modal.Content maxWidth="400px">
           <Modal.CloseButton />
