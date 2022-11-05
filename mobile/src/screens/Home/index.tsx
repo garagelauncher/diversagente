@@ -70,6 +70,7 @@ export const Home = () => {
       filter: {
         ...(postCategoryFilters.categoryId ? postCategoryFilters : {}),
         ...(searchPostText ? postTextFilters : {}),
+        isActive: true,
       },
       include: {
         likes: {

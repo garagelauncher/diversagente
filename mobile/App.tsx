@@ -52,6 +52,13 @@ export default function App() {
             SelectComplaint: 'complaints/:resource/:resourceId/',
           },
         },
+        LocationsStack: {
+          screens: {
+            Locations: 'locations',
+            LocationDetails: 'locations/:locationId',
+            Reviews: 'locations/:locationId/reviews',
+          },
+        },
         ProfileStack: {
           screens: {
             Profile: 'profile',

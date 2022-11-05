@@ -5,6 +5,7 @@ import * as complaintsMethods from './complaints';
 import * as devicesMethods from './devices';
 import * as likesMethods from './likes';
 import * as locationsMethods from './locations';
+import * as reviewsMethods from './reviews';
 import * as postsMethods from './posts';
 import * as subcategoriesMethods from './subcategories';
 import * as usersMethods from './users';
@@ -22,4 +23,5 @@ export const diversaGenteServices = {
   ...devicesMethods,
   ...complaintsMethods,
   ...usersMethods,
+  ...reviewsMethods
 };

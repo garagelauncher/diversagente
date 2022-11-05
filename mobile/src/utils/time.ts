@@ -23,3 +23,6 @@ export const formatDateSocialMedia = (
     weekday: 'long',
   }).format(new Date(date));
 };
+
+
+export const subtractDate = (unit: number, period: string) => dayjs().subtract(unit, period);

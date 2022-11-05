@@ -19,7 +19,6 @@ import {
   ScrollView,
 } from 'native-base';
 import React, { useState } from 'react';
-import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { AirbnbRating } from 'react-native-ratings';
 
 import { Review } from '@src/contracts/Review';
@@ -39,13 +38,13 @@ export const FormCreateReview = () => {
   const [reviewRate, setReviewRate] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
-  const isAllowedToSubmit = reviewText.length > 0 && !isLoading;
+  const isAllowedToSubmit =
+    reviewText.length > 0 && !isLoading && reviewRate > 0;
 
   const navigation = useNavigation<FormCreateReviewScreenNavigationProps>();
   const route =
     useRoute<RouteProp<StackLocationNavigatorParamList, 'FormCreateReview'>>();
   const { locationId } = route.params;
-  // const [errors, setErrors] = useState({});
 
   const createReview = async () => {
     const review: Partial<Review> = {
@@ -61,7 +60,6 @@ export const FormCreateReview = () => {
     navigation.goBack();
   };
 
-  const statusBarHeight = getStatusBarHeight();
   const ratingCompleted = (rating: number) => {
     console.log('Rating is: ' + rating);
     setReviewRate(rating);
@@ -93,7 +91,9 @@ export const FormCreateReview = () => {
       await createReview();
       console.log(reviewText);
       console.log(reviewRate);
-      navigation.navigate('Locations');
+      navigation.navigate('LocationDetails', {
+        id: locationId,
+      });
     } catch (error) {
       console.error('FormCreateReview: handleSubmit: error: reviewText: ');
     } finally {
@@ -103,66 +103,64 @@ export const FormCreateReview = () => {
   };
 
   return (
-    <Box w="100%" flex={1} justifyContent="center" mt={statusBarHeight}>
-      <VStack p={4}>
-        <IconButton
-          colorScheme="gray"
-          variant={'solid'}
-          icon={<Icon as={<Feather name="arrow-left" />} />}
-          onPress={handleNavigateGoBack}
-          position="absolute"
-          top={6}
-          ml={4}
-          mb={2}
-          zIndex={1}
-        />
-        <Heading fontSize={30} alignSelf={'center'} mt={3} mb={10}>
-          Avaliar local
-        </Heading>
+    <ScrollView w="100%" flex={1} py={10}>
+      <IconButton
+        colorScheme="gray"
+        variant={'solid'}
+        icon={<Icon as={<Feather name="arrow-left" />} />}
+        onPress={handleNavigateGoBack}
+        position="absolute"
+        top={3}
+        ml={4}
+        mb={2}
+        zIndex={1}
+      />
+      <Heading fontSize={30} alignSelf={'center'} mt={3} mb={4}>
+        Avaliar local
+      </Heading>
+      <VStack>
+        <FormControl px={9}>
+          <Stack space={5}>
+            <FormControl.Label mb={5}>
+              <Text fontSize={22}> Como foi a sua experiência? </Text>
+            </FormControl.Label>
+            <TextArea
+              bg={'warning.50'}
+              p={5}
+              h={200}
+              fontSize={16}
+              placeholder="Conte aqui o que achou desse local!"
+              maxW="100%"
+              autoCompleteType={undefined}
+              onChangeText={textValue}
+            />
+          </Stack>
+          <Stack mt={4}>
+            <FormControl.Label>
+              <Heading>Dê uma nota: </Heading>
+            </FormControl.Label>
+            <AirbnbRating
+              defaultRating={0}
+              selectedColor="#d6c103"
+              showRating={true}
+              onFinishRating={ratingCompleted}
+              reviews={['Ruim', 'Regular', 'Bom', 'Muito bom', 'Excelente']}
+            />
+          </Stack>
+          <Button
+            borderRadius={20}
+            mt={10}
+            onPress={handleSubmit}
+            colorScheme={isAllowedToSubmit ? 'orange' : 'gray'}
+            disabled={!isAllowedToSubmit}
+            isLoading={isLoading}
+          >
+            <Text fontSize={20} color={'white'}>
+              Enviar avaliação
+            </Text>
+          </Button>
+        </FormControl>
       </VStack>
-      <ScrollView>
-        <VStack>
-          <FormControl px={9}>
-            <Stack space={5}>
-              <FormControl.Label mb={5}>
-                <Text fontSize={22}> Como foi a sua experiência? </Text>
-              </FormControl.Label>
-              <TextArea
-                bg={'warning.50'}
-                p={5}
-                h={200}
-                fontSize={16}
-                placeholder="Conte aqui!"
-                maxW="100%"
-                autoCompleteType={undefined}
-                onChangeText={textValue}
-              />
-            </Stack>
-            <Stack mt={5}>
-              <FormControl.Label mb={5}>
-                <Text fontSize={22}>Dê uma nota: </Text>
-              </FormControl.Label>
-              <AirbnbRating
-                defaultRating={0}
-                selectedColor="#d6c103"
-                showRating={false}
-                onFinishRating={ratingCompleted}
-              />
-            </Stack>
-            <Button
-              borderRadius={20}
-              mt={10}
-              bg={'warning.600'}
-              onPress={handleSubmit}
-              colorScheme={isAllowedToSubmit ? 'orange' : 'gray'}
-              disabled={!isAllowedToSubmit}
-              isLoading={isLoading}
-            >
-              <Text fontSize={20}>Enviar avaliação</Text>
-            </Button>
-          </FormControl>
-        </VStack>
-      </ScrollView>
-    </Box>
+    </ScrollView>
   );
 };

@@ -37,7 +37,7 @@ export const CategoriesList: FunctionComponent<CategoriesListProps> = ({
       >
         <Button
           variant={selectedCategoryId === null ? 'solid' : 'outline'}
-          height={10}
+          height={12}
           marginLeft={5}
           onPress={() => onSelectCategory(null)}
           colorScheme={selectedCategoryId === null ? 'blue' : 'gray'}
@@ -65,7 +65,7 @@ export const CategoriesList: FunctionComponent<CategoriesListProps> = ({
             fontWeight={600}
             variant={selectedCategoryId === category.id ? 'solid' : 'outline'}
             marginLeft={5}
-            height={10}
+            height={12}
             key={category.name}
             onPress={() => onSelectCategory(category.id)}
           >
@@ -75,7 +75,7 @@ export const CategoriesList: FunctionComponent<CategoriesListProps> = ({
 
       <Button
         variant="outline"
-        height={10}
+        height={12}
         marginLeft={5}
         marginRight={15}
         onPress={onPressSeeMore}

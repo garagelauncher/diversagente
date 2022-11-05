@@ -4,7 +4,7 @@ import { Box, Icon, Menu, Pressable, Spinner, useToast } from 'native-base';
 import { FunctionComponent, useCallback, useState } from 'react';
 import { useMutation } from 'react-query';
 
-import { CommentActionMenuItem } from './CommentActionMenuItem';
+import { ReviewActionMenuItem } from './ReviewActionMenuItem';
 
 import { ConditionallyRender } from '@src/components/ConditionallyRender';
 import { LoadingFallback } from '@src/components/LoadingFallback';
@@ -12,16 +12,16 @@ import { ModalConfirmAction } from '@src/components/ModalConfirmAction';
 import { diversaGenteServices } from '@src/services/diversaGente';
 import { queryClient } from '@src/services/queryClient';
 
-export type CommentMoreActionsProps = {
+export type ReviewMoreActionsProps = {
   isOwner: boolean;
-  commentId: string;
-  onActivateCommentEditMode: () => void;
+  reviewId: string;
+  locationId: string;
 };
 
-export const CommentMoreActions: FunctionComponent<CommentMoreActionsProps> = ({
+export const ReviewMoreActions: FunctionComponent<ReviewMoreActionsProps> = ({
   isOwner,
-  commentId,
-  onActivateCommentEditMode,
+  reviewId,
+  locationId,
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [
@@ -30,24 +30,24 @@ export const CommentMoreActions: FunctionComponent<CommentMoreActionsProps> = ({
   ] = useState(false);
   const linkTo = useLinkTo();
   const toast = useToast();
-  const deleteCommentMutation = useMutation(
-    diversaGenteServices.deleteCommentById,
+  const deleteReviewMutation = useMutation(
+    diversaGenteServices.deleteReviewById,
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['diversagente@comments', commentId]);
+        queryClient.invalidateQueries(['diversagente@reviews', reviewId]);
 
         toast.show({
-          description: 'Comentário excluído com sucesso!',
+          description: 'Review excluído com sucesso!',
           bg: 'green.500',
         });
-        linkTo('/home');
+        linkTo(`/locations/${locationId}`);
       },
       onError: () => {
         toast.show({
-          description: 'Não foi possível excluir o comentário!',
+          description: 'Não foi possível excluir o review!',
           background: 'red.500',
         });
-        linkTo('/home');
+        linkTo(`/locations/${locationId}`);
       },
     },
   );
@@ -59,18 +59,21 @@ export const CommentMoreActions: FunctionComponent<CommentMoreActionsProps> = ({
     });
   };
 
-  const handleWantRemoveComment = () => {
+  const handleWantRemoveReview = () => {
     setIsModalVisible(true);
   };
 
-  const handleConfirmDeleteComment = useCallback(async () => {
+  const handleConfirmDeleteReview = useCallback(async () => {
     if (isOwner) {
-      await deleteCommentMutation.mutateAsync(commentId);
+      await deleteReviewMutation.mutateAsync({
+        locationId,
+        reviewId,
+      });
     }
-  }, [deleteCommentMutation, isOwner, commentId]);
+  }, [deleteReviewMutation, isOwner, locationId, reviewId]);
 
   const handleOpenComplaint = () => {
-    linkTo(`/complaints/comment/${commentId}`);
+    linkTo(`/complaints/review/${reviewId}`);
   };
 
   return (
@@ -82,11 +85,11 @@ export const CommentMoreActions: FunctionComponent<CommentMoreActionsProps> = ({
         trigger={(triggerProps) => {
           return (
             <Pressable
-              accessibilityLabel="More comment options menu"
+              accessibilityLabel="More review options menu"
               {...triggerProps}
             >
               <LoadingFallback
-                isLoading={deleteCommentMutation.isLoading}
+                isLoading={deleteReviewMutation.isLoading}
                 fallback={<Spinner size="lg" color="orange.500" />}
               >
                 <Icon as={Feather} name="more-horizontal" size={6} />
@@ -98,7 +101,7 @@ export const CommentMoreActions: FunctionComponent<CommentMoreActionsProps> = ({
         <ConditionallyRender
           condition={!isOwner}
           trueComponent={
-            <CommentActionMenuItem
+            <ReviewActionMenuItem
               icon="frown"
               label="Não tenho interesse"
               onPress={handleDontLike}
@@ -110,28 +113,16 @@ export const CommentMoreActions: FunctionComponent<CommentMoreActionsProps> = ({
         <ConditionallyRender
           condition={isOwner}
           trueComponent={
-            <CommentActionMenuItem
-              icon="edit"
-              label="Editar conteúdo"
-              onPress={onActivateCommentEditMode}
-            />
-          }
-          falseComponent={<></>}
-        />
-
-        <ConditionallyRender
-          condition={isOwner}
-          trueComponent={
-            <CommentActionMenuItem
+            <ReviewActionMenuItem
               icon="trash-2"
-              label="Excluir comentário"
-              onPress={handleWantRemoveComment}
+              label="Excluir review"
+              onPress={handleWantRemoveReview}
             />
           }
           falseComponent={<></>}
         />
 
-        <CommentActionMenuItem
+        <ReviewActionMenuItem
           icon="flag"
           label="Denunciar"
           onPress={() => setIsConfirmationComplaintModalVisible(true)}
@@ -141,9 +132,9 @@ export const CommentMoreActions: FunctionComponent<CommentMoreActionsProps> = ({
       <ModalConfirmAction
         isOpen={isModalVisible}
         onClose={() => setIsModalVisible(false)}
-        onConfirm={handleConfirmDeleteComment}
-        title="Remover comentário"
-        description="Você tem certeza que deseja remover o seu comentário nessa publicação? Essa ação não pode ser desfeita."
+        onConfirm={handleConfirmDeleteReview}
+        title="Remover review"
+        description="Você tem certeza que deseja remover o seu review nessa localização? Essa ação não pode ser desfeita."
         confirmText="Sim, tenho certeza"
         confirmColor="red"
       />
@@ -152,8 +143,8 @@ export const CommentMoreActions: FunctionComponent<CommentMoreActionsProps> = ({
         isOpen={isConfirmationComplaintModalVisible}
         onClose={() => setIsConfirmationComplaintModalVisible(false)}
         onConfirm={handleOpenComplaint}
-        title="Abrir denúncia de comentário"
-        description="Você tem certeza que deseja abrir uma denúncia para esse comentário?"
+        title="Abrir denúncia de review"
+        description="Você tem certeza que deseja abrir uma denúncia para esse review?"
         confirmText="Sim, tenho certeza"
         confirmColor="red"
       />

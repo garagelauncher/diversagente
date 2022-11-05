@@ -107,13 +107,6 @@ export const Profile = () => {
       diffInMilliseconds / yearsUnitInMilliseconds,
     );
 
-    console.log('currentISODate', currentISODate);
-    console.log('creationISODate', creationISODate);
-    console.log('diffInDays', diffInDays);
-    console.log('diffInMonths', diffInMonths);
-    console.log('monthUnitInMilliseconds', diffInMonths);
-    console.log('diffInYears', diffInYears);
-
     if (diffInDays <= 0) {
       diffInDays = 1;
     }
@@ -138,7 +131,10 @@ export const Profile = () => {
   } = usePosts<UserHasInteracted>({
     sort: ['createdAt', 'DESC'],
     range: [0, PER_PAGE_ITEMS],
-    filter: { ownerId: user?.id ?? userIdHelper },
+    filter: {
+      isActive: true,
+      ownerId: user?.id ?? userIdHelper,
+    },
     include: {
       likes: {
         select: { id: true },
@@ -286,6 +282,11 @@ export const Profile = () => {
                   </Text>
                 </Flex>
               </LoadingFallback>
+            }
+            ListEmptyComponent={
+              <Flex width="100%" alignItems="center" justifyContent="center">
+                <Text color="gray.500">Nenhum post encontrado.</Text>
+              </Flex>
             }
           />
         </LoadingFallback>
