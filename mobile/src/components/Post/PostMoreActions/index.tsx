@@ -69,8 +69,7 @@ export const PostMoreActions: FunctionComponent<PostMoreActionsProps> = ({
 
   const handleDontLike = () => {
     toast.show({
-      description:
-        'Obrigado. O diversagente usará isso para aprimorar sua timeline.',
+      description: 'Agradecemos o feedback.',
       background: 'muted.400',
     });
   };

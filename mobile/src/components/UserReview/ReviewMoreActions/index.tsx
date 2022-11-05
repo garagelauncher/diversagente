@@ -54,7 +54,7 @@ export const ReviewMoreActions: FunctionComponent<ReviewMoreActionsProps> = ({
 
   const handleDontLike = () => {
     toast.show({
-      description: 'O diversagente usará isso para aprimorar sua timeline.',
+      description: 'Agradecemos o feedback.',
       background: 'muted.400',
     });
   };
