@@ -133,7 +133,7 @@ export const SubcategoryFilter = () => {
 
   return (
     <>
-      <Box bgColor={'darkBlue.700'} height={350} mb={4}>
+      <Box bgColor={'darkBlue.700'} height={350}>
         <Box marginBottom={4}>
           <SubcategoriesFilterHeader
             isLoading={isLoading}
