@@ -17,12 +17,15 @@ import {
   Input,
   IconButton,
   ScrollView,
+  useToast,
+  Pressable,
 } from 'native-base';
-import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { TouchableOpacity, Keyboard } from 'react-native';
 
 import { SubcategoriesFilterHeader } from './SubcategoriesFilterHeader';
 
+import { ConditionallyRender } from '@src/components/ConditionallyRender';
 import { LoadingFallback } from '@src/components/LoadingFallback';
 import { useCategoryDetails } from '@src/hooks/queries/details/useCategoryDetails';
 import { useSubcategories } from '@src/hooks/queries/useSubcategories';
@@ -30,10 +33,9 @@ import { useAuth } from '@src/hooks/useAuth';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
 import { getUsernameInitials } from '@src/utils/getUsernameInitials';
 
-type SubcategoriesNavigationProps = NavigationProp<
+export type SubcategoriesNavigationProps = NavigationProp<
   StackForumNavigatorParamList,
-  'SelectSubcategory',
-  'Subcategory'
+  'SelectSubcategory'
 >;
 
 export const SubcategoryFilter = () => {
@@ -42,9 +44,20 @@ export const SubcategoryFilter = () => {
   const { categoryId } = route.params;
 
   const { user } = useAuth();
+  const toast = useToast();
 
   const { data: category, isLoading: isLoadingCategory } =
     useCategoryDetails(categoryId);
+  const [searchSubcategoryText, setSearchCategoryText] = useState('');
+  const [searchTypingValue, setSearchTypingValue] = useState('');
+
+  const subcategoriesTextFilters = {
+    OR: [
+      { description: { contains: searchSubcategoryText, mode: 'insensitive' } },
+      { title: { contains: searchSubcategoryText, mode: 'insensitive' } },
+    ],
+  };
+
   const {
     data,
     hasNextPage,
@@ -56,6 +69,7 @@ export const SubcategoryFilter = () => {
       categoriesIds: {
         hasSome: [categoryId],
       },
+      ...(searchSubcategoryText ? subcategoriesTextFilters : {}),
     },
   });
 
@@ -88,6 +102,34 @@ export const SubcategoryFilter = () => {
   const handleNavigateToSelectCategory = () => {
     navigation.navigate('SelectCategory');
   };
+
+  const handleResetSearch = useCallback(() => {
+    setSearchCategoryText('');
+    setSearchTypingValue('');
+    Keyboard.dismiss();
+  }, [setSearchCategoryText]);
+
+  const handleSearchSubcategory = useCallback(
+    (text: string) => {
+      console.log('handleSearchSubcategory', text);
+      Keyboard.dismiss();
+      if (text && text.length > 3) {
+        const normalizedText = text
+          .trim()
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '');
+        console.log('normalizedText', normalizedText);
+        setSearchCategoryText(normalizedText);
+      } else {
+        toast.show({
+          description: 'Digite pelo menos 4 caracteres',
+          background: 'blue.500',
+        });
+      }
+    },
+    [toast],
+  );
 
   return (
     <>
@@ -149,10 +191,54 @@ export const SubcategoryFilter = () => {
             placeholder="Pesquise uma subcategoria"
             borderRadius={90}
             width={'80%'}
+            keyboardType="web-search"
+            returnKeyType="search"
+            onChangeText={setSearchTypingValue}
+            onSubmitEditing={(event) =>
+              handleSearchSubcategory(event.nativeEvent.text)
+            }
+            clearButtonMode="while-editing"
+            value={searchTypingValue}
+            InputLeftElement={
+              <ConditionallyRender
+                condition={searchTypingValue.length > 0}
+                trueComponent={
+                  <Pressable
+                    px="3"
+                    py="4"
+                    rounded="md"
+                    backgroundColor="transparent"
+                    _pressed={{ backgroundColor: 'gray.100' }}
+                    onPress={handleResetSearch}
+                  >
+                    <Icon
+                      as={<AntDesign name="close" />}
+                      size="sm"
+                      ml="2"
+                      color="warmGray.700"
+                    />
+                  </Pressable>
+                }
+                falseComponent={<></>}
+              />
+            }
             InputRightElement={
-              <TouchableOpacity activeOpacity={0.5}>
-                <Icon as={AntDesign} name="search1" size={4} marginRight={2} />
-              </TouchableOpacity>
+              <Pressable
+                px="3"
+                py="4"
+                rounded="md"
+                backgroundColor="transparent"
+                _pressed={{ backgroundColor: 'gray.100' }}
+                onPress={() => handleSearchSubcategory(searchTypingValue)}
+              >
+                <Icon
+                  as={AntDesign}
+                  name="search1"
+                  size={4}
+                  marginRight={3}
+                  color={'warmGray.700'}
+                />
+              </Pressable>
             }
           />
           <TouchableOpacity
