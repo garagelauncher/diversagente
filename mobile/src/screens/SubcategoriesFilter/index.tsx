@@ -1,4 +1,4 @@
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, Feather } from '@expo/vector-icons';
 import {
   NavigationProp,
   RouteProp,
@@ -15,11 +15,14 @@ import {
   Spinner,
   Icon,
   Input,
+  IconButton,
 } from 'native-base';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 
-import { Header } from '@src/components/Header';
+import { SubcategoriesFilterHeader } from './SubcategoriesFilterHeader';
+
+import { useCategoryDetails } from '@src/hooks/queries/details/useCategoryDetails';
 import { useSubcategories } from '@src/hooks/queries/useSubcategories';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
@@ -33,18 +36,27 @@ type SubcategoriesNavigationProps = NavigationProp<
 export const SubcategoryFilter = () => {
   const route =
     useRoute<RouteProp<StackForumNavigatorParamList, 'SelectSubcategory'>>();
-  const { categoryId, categoryTitle, icon, iconProvider } = route.params;
+  const { categoryId } = route.params;
 
   const { user } = useAuth();
 
-  const { data, hasNextPage, fetchNextPage, isLoading, isFetchingNextPage } =
-    useSubcategories({
-      filter: {
-        categoriesIds: {
-          hasSome: [categoryId],
-        },
+  const { data: category, isLoading: isLoadingCategory } =
+    useCategoryDetails(categoryId);
+  const {
+    data,
+    hasNextPage,
+    fetchNextPage,
+    isLoading: isLoadingSubcategories,
+    isFetchingNextPage,
+  } = useSubcategories({
+    filter: {
+      categoriesIds: {
+        hasSome: [categoryId],
       },
-    });
+    },
+  });
+
+  const isLoading = isLoadingSubcategories || isLoadingCategory;
 
   const skeletonsSubcategories = new Array(4).fill(0);
 
@@ -66,22 +78,47 @@ export const SubcategoryFilter = () => {
   const handleNavigateToSubcategory = (subcategoryId: string) => {
     navigation.navigate('Subcategory', {
       subcategoryId,
-      categoryTitle,
       categoryId,
     });
+  };
+
+  const handleNavigateToSelectCategory = () => {
+    navigation.navigate('SelectCategory');
   };
 
   return (
     <>
       <Box bgColor={'darkBlue.700'} height={340} mb={10}>
         <Box marginBottom={4}>
-          <Header
+          <SubcategoriesFilterHeader
+            userInitials={'JB'}
             avatar={user?.picture}
-            screenName={`${categoryTitle}`}
-            subtitle={`Aqui estarão todas as subcategorias que se relacionam com a categoria ${categoryTitle}.\nSe não encontrar o que procura, crie uma nova subcategoria! 😃`}
-            icon={icon}
-            iconProvider={iconProvider}
-          ></Header>
+            title={category?.title ?? ''}
+            subtitle={`Aqui estarão todas as subcategorias que se relacionam com a categoria ${category?.title}.\nSe não encontrar o que procura, crie uma nova subcategoria! 😃`}
+            icon={category?.icon}
+            iconProvider={category?.iconProvider}
+            gobackComponent={
+              <IconButton
+                onPress={handleNavigateToSelectCategory}
+                _pressed={{ opacity: '0.6' }}
+                variant="solid"
+                marginTop={18}
+                bgColor={'darkBlue.700'}
+                icon={
+                  <Icon
+                    size={'2xl'}
+                    color={'white'}
+                    marginBottom={2}
+                    as={<Feather name="arrow-left" size={32} />}
+                  />
+                }
+                position="absolute"
+                top={6}
+                ml={4}
+                zIndex={1}
+              />
+            }
+          />
         </Box>
       </Box>
 

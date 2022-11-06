@@ -41,7 +41,7 @@ enum CategoriesFilterEnum {
 
 export type CategoriesFilterNavigationProps = NavigationProp<
   StackForumNavigatorParamList,
-  'SelectSubcategory'
+  'SelectCategory'
 >;
 
 export const CategoriesFilter = () => {

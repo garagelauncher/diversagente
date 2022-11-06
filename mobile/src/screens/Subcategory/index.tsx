@@ -25,6 +25,7 @@ import { SubcategoryHeader } from './SubcategoryHeader';
 import { LoadingFallback } from '@src/components/LoadingFallback';
 import { Post, UserHasInteracted } from '@src/components/Post';
 import { PER_PAGE_ITEMS, userIdHelper } from '@src/configs';
+import { useCategoryDetails } from '@src/hooks/queries/details/useCategoryDetails';
 import { usePosts } from '@src/hooks/queries/usePosts';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
@@ -50,6 +51,8 @@ export const Subcategory = () => {
   const postFilters = {
     subcategoryId: subcategoryId,
   };
+  const { data: category, isLoading: isLoadingCategory } =
+    useCategoryDetails(categoryId);
 
   const {
     data,
@@ -107,7 +110,10 @@ export const Subcategory = () => {
       >
         {!isReadingModeActive && (
           <>
-            <SubcategoryHeader categoryId={categoryId} />
+            <SubcategoryHeader
+              categoryId={categoryId}
+              categoryTitle={category?.title}
+            />
           </>
         )}
 

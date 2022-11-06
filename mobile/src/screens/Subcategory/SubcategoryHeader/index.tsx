@@ -8,16 +8,15 @@ import { useAuth } from '@src/hooks/useAuth';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
 
 type HeaderSubcategoryProps = {
-  categoryId: string | undefined;
+  categoryId?: string;
+  categoryTitle?: string;
 };
 
-export const SubcategoryHeader = ({ categoryId }: HeaderSubcategoryProps) => {
-  const route =
-    useRoute<RouteProp<StackForumNavigatorParamList, 'Subcategory'>>();
-  const { subcategoryId, categoryTitle } = route.params;
+export const SubcategoryHeader = ({
+  categoryId,
+  categoryTitle,
+}: HeaderSubcategoryProps) => {
   const { user } = useAuth();
-
-  const { data } = useSubcategoryDetails(subcategoryId as string);
 
   const navigateBackScreenName = 'SelectSubcategory';
   const navigateBackParams = { categoryId, categoryTitle };
@@ -34,8 +33,8 @@ export const SubcategoryHeader = ({ categoryId }: HeaderSubcategoryProps) => {
           <>
             <Header
               avatar={user?.picture}
-              screenName={data?.title}
-              subtitle={data?.description ?? ''}
+              screenName={'asdfasf'}
+              subtitle={'dafasdfas'}
               badgeName={categoryTitle}
               navigationToScreenName={navigateBackScreenName}
               navigationParams={navigateBackParams}
