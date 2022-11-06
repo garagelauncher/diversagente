@@ -38,9 +38,9 @@ export const findCategoryById = async <GenericIncluded extends object = object>(
       },
     });
 
-    const subcategory = response.data;
+    const category = response.data;
     console.info('CATEGORY!', response.data);
-    return subcategory;
+    return category;
   } catch (error: any) {
     console.error('error when fetching category info', categoryId);
 

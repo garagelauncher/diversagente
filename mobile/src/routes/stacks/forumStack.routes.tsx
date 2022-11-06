@@ -17,15 +17,11 @@ export type StackForumNavigatorParamList = {
   FormCreatePost: { categoryId?: string | null; subcategoryId?: string | null };
   SelectCategory: undefined;
   SelectSubcategory: {
-    categoryId?: string;
-    categoryTitle?: string;
-    icon?: string;
-    iconProvider?: string;
+    categoryId: string;
   };
   Subcategory: {
-    subcategoryId?: string;
-    categoryId?: string;
-    categoryTitle?: string;
+    categoryId: string;
+    subcategoryId: string;
   };
   PostDetails: { postId: string };
   Comments: { postId: string };

@@ -2,7 +2,6 @@
 
 import {
   Avatar,
-  Badge,
   Box,
   Flex,
   Heading,
@@ -20,7 +19,6 @@ type HeaderProps = {
   avatar?: string | null;
   userInitials: string;
   title: string;
-  badgeName: string;
   subtitle: string;
   icon?: string;
   iconProvider?: string;
@@ -28,10 +26,9 @@ type HeaderProps = {
   isLoading?: boolean;
 };
 
-export const SubcategoryHeader: FunctionComponent<HeaderProps> = ({
+export const SubcategoriesFilterHeader: FunctionComponent<HeaderProps> = ({
   title,
   subtitle,
-  badgeName,
   userInitials,
   avatar,
   icon,
@@ -61,6 +58,7 @@ export const SubcategoryHeader: FunctionComponent<HeaderProps> = ({
       <Flex
         paddingTop={0}
         paddingX={4}
+        paddingBottom={4}
         backgroundColor="darkBlue.700"
         flexDirection={'row'}
         justifyContent="space-between"
@@ -70,8 +68,8 @@ export const SubcategoryHeader: FunctionComponent<HeaderProps> = ({
           isLoading={isLoading}
           fallback={
             <Flex paddingX={4} paddingY={6} flexDir={'column'} w={'100%'}>
-              <Skeleton px="4" my="4" rounded="md" startColor="blue.500" />
-              <Skeleton.Text px="4" startColor="blue.500" />
+              <Skeleton my="4" rounded="md" startColor="blue.500" />
+              <Skeleton.Text startColor="blue.500" />
             </Flex>
           }
         >
@@ -80,7 +78,6 @@ export const SubcategoryHeader: FunctionComponent<HeaderProps> = ({
               flexDirection={'row'}
               justifyContent={'space-between'}
               alignItems={'center'}
-              wrap={'wrap'}
             >
               <Heading
                 paddingRight={4}
@@ -88,19 +85,7 @@ export const SubcategoryHeader: FunctionComponent<HeaderProps> = ({
                 fontSize={'32'}
                 letterSpacing={0.85}
               >
-                {title}{' '}
-                <Flex justifyContent={'center'}>
-                  <Badge height={8} borderRadius={8}>
-                    <Text
-                      alignItems={'center'}
-                      fontSize={16}
-                      color={'darkBlue.600'}
-                      fontWeight="bold"
-                    >
-                      {badgeName}
-                    </Text>
-                  </Badge>
-                </Flex>
+                {title}
               </Heading>
               <IconButton
                 variant={'ghost'}
