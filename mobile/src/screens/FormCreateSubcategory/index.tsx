@@ -36,10 +36,9 @@ import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.rout
 import { diversaGenteServices } from '@src/services/diversaGente';
 import { queryClient } from '@src/services/queryClient';
 
-type FormCreateSubcategoryNavigationProps = NavigationProp<
+export type FormCreateSubcategoryNavigationProps = NavigationProp<
   StackForumNavigatorParamList,
-  'FormCreateSubcategory',
-  'Subcategory'
+  'FormCreateSubcategory'
 >;
 
 export const FormCreateSubcategory = () => {
@@ -113,8 +112,7 @@ export const FormCreateSubcategory = () => {
         reset();
 
         navigation.navigate('Subcategory', {
-          categoryTitle: categoryData.data?.title,
-          categoryId: categoryData.data?.id,
+          categoryId: String(categoryData.data?.id),
           subcategoryId: data.id,
         });
       },
@@ -211,6 +209,7 @@ export const FormCreateSubcategory = () => {
                 onPress={handleSubmit(onSubmitSubcategoryCreation)}
                 colorScheme="blue"
                 type="submit"
+                isLoading={mutationCreateSubcategory.isLoading}
               >
                 Criar
               </Button>

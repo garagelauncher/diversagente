@@ -26,7 +26,7 @@ export type StackForumNavigatorParamList = {
   PostDetails: { postId: string };
   Comments: { postId: string };
   Likes: { postId: string };
-  FormCreateSubcategory: { categoryId?: string; subcategoryId?: string };
+  FormCreateSubcategory: { categoryId: string; subcategoryId?: string };
   SelectComplaint: { resource: ComplaintResources; resourceId: string };
 };
 
