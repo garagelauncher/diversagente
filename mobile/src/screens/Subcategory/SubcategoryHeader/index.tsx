@@ -7,11 +7,13 @@ import {
   Flex,
   Heading,
   IconButton,
+  Skeleton,
   Text,
 } from 'native-base';
 import React, { FunctionComponent } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import { LoadingFallback } from '@src/components/LoadingFallback';
 import { getIconProviderByName } from '@src/utils/getIconProvider';
 
 type HeaderProps = {
@@ -23,6 +25,7 @@ type HeaderProps = {
   icon?: string;
   iconProvider?: string;
   gobackComponent?: React.ReactNode;
+  isLoading?: boolean;
 };
 
 export const SubcategoryHeader: FunctionComponent<HeaderProps> = ({
@@ -34,6 +37,7 @@ export const SubcategoryHeader: FunctionComponent<HeaderProps> = ({
   icon,
   iconProvider,
   gobackComponent: GobackComponent,
+  isLoading = false,
 }) => {
   const avatarUri = String(avatar);
 
@@ -62,49 +66,59 @@ export const SubcategoryHeader: FunctionComponent<HeaderProps> = ({
         justifyContent="space-between"
         width={'100%'}
       >
-        <Flex paddingX={4} paddingY={6} flexDir={'column'} w={'100%'}>
-          <Flex
-            flexDirection={'row'}
-            justifyContent={'space-between'}
-            alignItems={'center'}
-            wrap={'wrap'}
-          >
-            <Heading
-              paddingRight={4}
-              color="white"
-              fontSize={'32'}
-              letterSpacing={0.85}
+        <LoadingFallback
+          isLoading={isLoading}
+          fallback={
+            <Flex paddingX={4} paddingY={6} flexDir={'column'} w={'100%'}>
+              <Skeleton px="4" my="4" rounded="md" startColor="blue.500" />
+              <Skeleton.Text px="4" startColor="blue.500" />
+            </Flex>
+          }
+        >
+          <Flex paddingX={4} paddingY={6} flexDir={'column'} w={'100%'}>
+            <Flex
+              flexDirection={'row'}
+              justifyContent={'space-between'}
+              alignItems={'center'}
+              wrap={'wrap'}
             >
-              {title}{' '}
-              <Flex justifyContent={'center'}>
-                <Badge height={8} borderRadius={8}>
-                  <Text
-                    alignItems={'center'}
-                    fontSize={16}
-                    color={'darkBlue.600'}
-                    fontWeight="bold"
-                  >
-                    {badgeName}
-                  </Text>
-                </Badge>
-              </Flex>
-            </Heading>
-            <IconButton
-              variant={'ghost'}
-              size={'lg'}
-              _icon={{
-                as: getIconProviderByName(iconProvider),
-                name: icon ?? 'book-open',
-                color: 'white',
-              }}
-            />
+              <Heading
+                paddingRight={4}
+                color="white"
+                fontSize={'32'}
+                letterSpacing={0.85}
+              >
+                {title}{' '}
+                <Flex justifyContent={'center'}>
+                  <Badge height={8} borderRadius={8}>
+                    <Text
+                      alignItems={'center'}
+                      fontSize={16}
+                      color={'darkBlue.600'}
+                      fontWeight="bold"
+                    >
+                      {badgeName}
+                    </Text>
+                  </Badge>
+                </Flex>
+              </Heading>
+              <IconButton
+                variant={'ghost'}
+                size={'lg'}
+                _icon={{
+                  as: getIconProviderByName(iconProvider),
+                  name: icon ?? 'book-open',
+                  color: 'white',
+                }}
+              />
+            </Flex>
+            <Flex w={'100%'}>
+              <Text color="gray.200" marginTop={3} fontSize={16}>
+                {subtitle}
+              </Text>
+            </Flex>
           </Flex>
-          <Flex w={'100%'}>
-            <Text color="gray.200" marginTop={3} fontSize={16}>
-              {subtitle}
-            </Text>
-          </Flex>
-        </Flex>
+        </LoadingFallback>
       </Flex>
     </>
   );

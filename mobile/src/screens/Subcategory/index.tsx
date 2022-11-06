@@ -123,6 +123,7 @@ export const Subcategory = () => {
         {!isReadingModeActive && (
           <Box bgColor={'darkBlue.700'}>
             <SubcategoryHeader
+              isLoading={isLoading}
               userInitials={getUsernameInitials(String(user?.name))}
               avatar={user?.picture}
               title={subcategory?.title ?? ''}
