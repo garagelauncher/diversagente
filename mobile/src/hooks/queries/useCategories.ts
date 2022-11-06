@@ -6,7 +6,7 @@ import { diversaGenteServices } from '@src/services/diversaGente';
 
 export const useCategories = (options: QueryOptions = {}) =>
   useInfiniteQuery(
-    ['diversagente@categories', options.cursor, options.range, options.filter],
+    ['diversagente@categories', options.filter, options.cursor, options.range],
     ({ pageParam = {} }) =>
       diversaGenteServices.findAllCategories({
         ...options,
