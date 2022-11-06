@@ -1,9 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Avatar, Box, Flex, Heading, IconButton, Text } from 'native-base';
+import {
+  Avatar,
+  Box,
+  Flex,
+  Heading,
+  IconButton,
+  Skeleton,
+  Text,
+} from 'native-base';
 import React, { FunctionComponent } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import { LoadingFallback } from '@src/components/LoadingFallback';
 import { getIconProviderByName } from '@src/utils/getIconProvider';
 
 type HeaderProps = {
@@ -14,6 +23,7 @@ type HeaderProps = {
   icon?: string;
   iconProvider?: string;
   gobackComponent?: React.ReactNode;
+  isLoading?: boolean;
 };
 
 export const SubcategoriesFilterHeader: FunctionComponent<HeaderProps> = ({
@@ -24,6 +34,7 @@ export const SubcategoriesFilterHeader: FunctionComponent<HeaderProps> = ({
   icon,
   iconProvider,
   gobackComponent: GobackComponent,
+  isLoading = false,
 }) => {
   const avatarUri = String(avatar);
 
@@ -53,36 +64,46 @@ export const SubcategoriesFilterHeader: FunctionComponent<HeaderProps> = ({
         justifyContent="space-between"
         width={'100%'}
       >
-        <Flex paddingX={4} paddingY={6} flexDir={'column'} w={'100%'}>
-          <Flex
-            flexDirection={'row'}
-            justifyContent={'space-between'}
-            alignItems={'center'}
-          >
-            <Heading
-              paddingRight={4}
-              color="white"
-              fontSize={'32'}
-              letterSpacing={0.85}
+        <LoadingFallback
+          isLoading={isLoading}
+          fallback={
+            <Flex paddingX={4} paddingY={6} flexDir={'column'} w={'100%'}>
+              <Skeleton my="4" rounded="md" startColor="blue.500" />
+              <Skeleton.Text startColor="blue.500" />
+            </Flex>
+          }
+        >
+          <Flex paddingX={4} paddingY={6} flexDir={'column'} w={'100%'}>
+            <Flex
+              flexDirection={'row'}
+              justifyContent={'space-between'}
+              alignItems={'center'}
             >
-              {title}
-            </Heading>
-            <IconButton
-              variant={'ghost'}
-              size={'lg'}
-              _icon={{
-                as: getIconProviderByName(iconProvider),
-                name: icon ?? 'book-open',
-                color: 'white',
-              }}
-            />
+              <Heading
+                paddingRight={4}
+                color="white"
+                fontSize={'32'}
+                letterSpacing={0.85}
+              >
+                {title}
+              </Heading>
+              <IconButton
+                variant={'ghost'}
+                size={'lg'}
+                _icon={{
+                  as: getIconProviderByName(iconProvider),
+                  name: icon ?? 'book-open',
+                  color: 'white',
+                }}
+              />
+            </Flex>
+            <Flex w={'100%'}>
+              <Text color="gray.200" marginTop={3} fontSize={16}>
+                {subtitle}
+              </Text>
+            </Flex>
           </Flex>
-          <Flex w={'100%'}>
-            <Text color="gray.200" marginTop={3} fontSize={16}>
-              {subtitle}
-            </Text>
-          </Flex>
-        </Flex>
+        </LoadingFallback>
       </Flex>
     </>
   );

@@ -91,9 +91,10 @@ export const SubcategoryFilter = () => {
 
   return (
     <>
-      <Box bgColor={'darkBlue.700'} height={340} mb={10}>
+      <Box bgColor={'darkBlue.700'} height={350} mb={4}>
         <Box marginBottom={4}>
           <SubcategoriesFilterHeader
+            isLoading={isLoading}
             userInitials={getUsernameInitials(String(user?.name))}
             avatar={user?.picture}
             title={category?.title ?? ''}
