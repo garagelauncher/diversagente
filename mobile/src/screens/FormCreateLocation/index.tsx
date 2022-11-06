@@ -69,14 +69,14 @@ export const FormCreateLocation = () => {
     navigation.navigate('SelectLocationMap');
   };
 
-  const fetchAllCategories = async () => {
+  const fetchAllCategories = useCallback(async () => {
     try {
       const categoriesFromApi = await diversaGenteServices.findAllCategories();
       setCategories(categoriesFromApi.results);
     } catch (error) {
       console.info('Error while fetching all categories', error);
     }
-  };
+  }, []);
 
   const getCurrentUserLocation = useCallback(async () => {
     const { status } = await ExpoLocation.requestForegroundPermissionsAsync();
@@ -132,11 +132,12 @@ export const FormCreateLocation = () => {
 
   useEffect(() => {
     getCurrentUserLocation();
+    fetchAllCategories();
 
     return () => {
       setInitialPosition(undefined);
     };
-  }, [getCurrentUserLocation]);
+  }, [getCurrentUserLocation, fetchAllCategories]);
 
   const updateCategoryIdSelected = (category: Category) => {
     setCategory(category);
@@ -262,7 +263,6 @@ export const FormCreateLocation = () => {
                 endIcon: <CheckIcon size={5} />,
               }}
               mt="1"
-              onOpen={fetchAllCategories}
             >
               {categories.map((category) => {
                 return (
