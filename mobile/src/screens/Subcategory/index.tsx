@@ -26,9 +26,11 @@ import { LoadingFallback } from '@src/components/LoadingFallback';
 import { Post, UserHasInteracted } from '@src/components/Post';
 import { PER_PAGE_ITEMS, userIdHelper } from '@src/configs';
 import { useCategoryDetails } from '@src/hooks/queries/details/useCategoryDetails';
+import { useSubcategoryDetails } from '@src/hooks/queries/details/useSubcategoryDetails';
 import { usePosts } from '@src/hooks/queries/usePosts';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
+import { getUsernameInitials } from '@src/utils/getUsernameInitials';
 
 type SubcategoriesNavigationProps = NavigationProp<
   StackForumNavigatorParamList,
@@ -53,12 +55,14 @@ export const Subcategory = () => {
   };
   const { data: category, isLoading: isLoadingCategory } =
     useCategoryDetails(categoryId);
+  const { data: subcategory, isLoading: isLoadingSubcategory } =
+    useSubcategoryDetails(subcategoryId);
 
   const {
     data,
     hasNextPage,
     fetchNextPage,
-    isLoading,
+    isLoading: isLoadingPosts,
     isFetchingNextPage,
     refetch,
     isRefetching,
@@ -79,6 +83,8 @@ export const Subcategory = () => {
       },
     },
   });
+
+  const isLoading = isLoadingPosts || isLoadingCategory || isLoadingSubcategory;
 
   const handleLoadMorePosts = () => {
     if (hasNextPage) {
@@ -101,6 +107,12 @@ export const Subcategory = () => {
 
   const navigation = useNavigation<SubcategoriesNavigationProps>();
 
+  const handleNavigateToSelectSubcategory = () => {
+    navigation.navigate('SelectSubcategory', {
+      categoryId,
+    });
+  };
+
   return (
     <>
       <Flex
@@ -109,12 +121,38 @@ export const Subcategory = () => {
         marginTop={[isReadingModeActive ? 6 : 0]}
       >
         {!isReadingModeActive && (
-          <>
+          <Box bgColor={'darkBlue.700'}>
             <SubcategoryHeader
-              categoryId={categoryId}
-              categoryTitle={category?.title}
+              userInitials={getUsernameInitials(String(user?.name))}
+              avatar={user?.picture}
+              title={subcategory?.title ?? ''}
+              subtitle={subcategory?.description ?? ''}
+              badgeName={category?.title ?? ''}
+              icon={category?.icon}
+              iconProvider={category?.iconProvider}
+              gobackComponent={
+                <IconButton
+                  onPress={handleNavigateToSelectSubcategory}
+                  _pressed={{ opacity: '0.6' }}
+                  variant="solid"
+                  marginTop={18}
+                  bgColor={'darkBlue.700'}
+                  icon={
+                    <Icon
+                      size={'2xl'}
+                      color={'white'}
+                      marginBottom={2}
+                      as={<Feather name="arrow-left" size={32} />}
+                    />
+                  }
+                  position="absolute"
+                  top={6}
+                  ml={4}
+                  zIndex={1}
+                />
+              }
             />
-          </>
+          </Box>
         )}
 
         <Flex

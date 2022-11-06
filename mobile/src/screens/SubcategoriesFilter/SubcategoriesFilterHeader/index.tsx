@@ -1,20 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Feather } from '@expo/vector-icons';
-import {
-  NavigationProp,
-  useLinkTo,
-  useNavigation,
-} from '@react-navigation/native';
-import {
-  Avatar,
-  Badge,
-  Box,
-  Flex,
-  Heading,
-  Icon,
-  IconButton,
-  Text,
-} from 'native-base';
+
+import { Avatar, Box, Flex, Heading, IconButton, Text } from 'native-base';
 import React, { FunctionComponent } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 

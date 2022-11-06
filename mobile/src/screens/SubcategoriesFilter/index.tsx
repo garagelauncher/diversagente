@@ -26,6 +26,7 @@ import { useCategoryDetails } from '@src/hooks/queries/details/useCategoryDetail
 import { useSubcategories } from '@src/hooks/queries/useSubcategories';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
+import { getUsernameInitials } from '@src/utils/getUsernameInitials';
 
 type SubcategoriesNavigationProps = NavigationProp<
   StackForumNavigatorParamList,
@@ -91,7 +92,7 @@ export const SubcategoryFilter = () => {
       <Box bgColor={'darkBlue.700'} height={340} mb={10}>
         <Box marginBottom={4}>
           <SubcategoriesFilterHeader
-            userInitials={'JB'}
+            userInitials={getUsernameInitials(String(user?.name))}
             avatar={user?.picture}
             title={category?.title ?? ''}
             subtitle={`Aqui estarão todas as subcategorias que se relacionam com a categoria ${category?.title}.\nSe não encontrar o que procura, crie uma nova subcategoria! 😃`}
