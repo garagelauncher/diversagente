@@ -263,22 +263,33 @@ export const Post: FunctionComponent<PostProps> = ({
             </Pressable>
           </Flex>
           <Flex direction="row" alignItems="center">
-            <Icon
-              as={Feather}
-              name="message-circle"
-              size={7}
-              onPress={handleNavigateToPostComments}
-            />
-            <Text
-              marginLeft={2}
-              fontSize={18}
-              onPress={handleNavigateToPostComments}
-            >
-              {post._count.comments}
-            </Text>
+            <TouchableOpacity>
+              <Icon
+                as={Feather}
+                name="message-circle"
+                size={7}
+                onPress={handleNavigateToPostComments}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Text
+                marginLeft={2}
+                fontSize={18}
+                onPress={handleNavigateToPostComments}
+              >
+                {post._count.comments}
+              </Text>
+            </TouchableOpacity>
           </Flex>
         </HStack>
-        <Icon as={Feather} name="share-2" size={7} onPress={handleSharePost} />
+        <TouchableOpacity>
+          <Icon
+            as={Feather}
+            name="share-2"
+            size={7}
+            onPress={handleSharePost}
+          />
+        </TouchableOpacity>
       </Flex>
     </Flex>
   );
