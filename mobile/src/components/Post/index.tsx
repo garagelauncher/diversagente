@@ -10,6 +10,7 @@ import {
   Text,
   FavouriteIcon,
   Pressable,
+  useToast,
 } from 'native-base';
 import { FunctionComponent, useState } from 'react';
 import { Share } from 'react-native';
@@ -52,6 +53,7 @@ export const Post: FunctionComponent<PostProps> = ({
 }) => {
   const { user } = useAuth();
   const linkTo = useLinkTo();
+  const toast = useToast();
 
   const onSuccessToggleLike = async (data: Like) => {
     const post = await diversaGenteServices.findPostById(data.postId);
@@ -133,13 +135,21 @@ export const Post: FunctionComponent<PostProps> = ({
         if (result.activityType) {
           alert('shared with activity type of ' + result.activityType);
         } else {
-          alert('shared');
+          console.log('shared');
+          toast.show({
+            title: 'Post compartilhado!',
+            bg: 'green.500',
+          });
         }
       } else if (result.action === Share.dismissedAction) {
-        alert('dismissed');
+        console.log('dismissed');
       }
     } catch (error: any) {
       alert(error.message);
+      toast.show({
+        title: 'Erro ao compartilhar',
+        bg: 'red.500',
+      });
     }
   };
 
