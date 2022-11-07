@@ -46,6 +46,7 @@ export type CategoriesFilterNavigationProps = NavigationProp<
 
 export const CategoriesFilter = () => {
   const { user } = useAuth();
+
   const [selectedCategoryFilterOption, setSelectedCategoryFilterOption] =
     useState<string>(CategoriesFilterEnum.POPULAR);
   const filterCategoryOptions = [
@@ -149,7 +150,7 @@ export const CategoriesFilter = () => {
         borderTopLeftRadius={16}
         borderTopRightRadius={16}
         paddingX={4}
-        paddingY={8}
+        paddingTop={8}
       >
         <Flex direction={'row'} width={'100%'} justifyContent="space-between">
           {filterCategoryOptions.map((currentCategoryOption, index) => (
