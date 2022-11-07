@@ -71,6 +71,14 @@ async function bootstrap() {
     return next();
   });
 
+  app.use(function (req, res, next) {
+    if (req.path.startsWith('/mobile')) {
+      res.redirect('/public/mobile.html');
+    } else {
+      return next();
+    }
+  });
+
   app.use(
     permissionsPolicy({
       features: {
