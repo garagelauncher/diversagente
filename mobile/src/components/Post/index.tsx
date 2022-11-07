@@ -127,7 +127,7 @@ export const Post: FunctionComponent<PostProps> = ({
 
     try {
       const result = await Share.share({
-        message: `https://www.diversagente.com/posts/${post.id}`,
+        message: `https://dev-diversagente.herokuapp.com/mobile/posts/${post.id}`,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {

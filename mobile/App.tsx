@@ -36,8 +36,8 @@ export default function App() {
       prefix,
       'https://www.diversagente.com.br',
       'https://www.diversagente.com',
-      'https://dev-diversagente.herokuapp.com',
-      'https://diversagente.herokuapp.com',
+      'https://dev-diversagente.herokuapp.com/mobile',
+      'https://diversagente.herokuapp.com/mobile',
       'diversagente://app',
     ],
     config: {
