@@ -5,7 +5,9 @@ import * as AuthSession from 'expo-auth-session';
 import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import { useMutation } from 'react-query';
-
+import {
+  useToast,
+} from 'native-base';
 import { Oauth2 } from '@src/configs';
 import {
   AuthContext,
@@ -28,6 +30,7 @@ type AuthResponse = {
 };
 
 export const AuthProvider = ({ children }: AuthProvidersProps) => {
+  const toast = useToast();
   const mutationCreateDevice = useMutation(diversaGenteServices.createDevice, {
     onSuccess: () => {
       console.log('Device created');
@@ -37,6 +40,19 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState<UserData | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const mutationDisableAccount = useMutation(diversaGenteServices.deleteUser, {
+    onSuccess: async () => {
+      toast.show({
+        description: 'Conta desativada!',
+        bg: 'green.500',
+      });
+      console.log('disableAccount');
+      await AsyncStorage.removeItem('diversagente@user');
+      setLoggedIn(false);
+      setUser(undefined as UserData | undefined);
+    },
+  });
 
   const storeUserDevice = useCallback(
     async (ownerId: string) => {
@@ -183,6 +199,11 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
     await AsyncStorage.removeItem('diversagente@user');
   }
 
+
+  async function disableAccount() {
+    await mutationCreateDevice.mutateAsync(user.id);
+  }
+
   useEffect(() => {
     async function getUser() {
       const user = await AsyncStorage.getItem('diversagente@user');
@@ -231,6 +252,7 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
         setUser,
         isLoading,
         refetchUser,
+        isLoadingDisablingAccount: mutationDisableAccount.isLoading
       }}
     >
       {children}
