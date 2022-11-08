@@ -20,6 +20,7 @@ import React, { useEffect, useState } from 'react';
 import { Alert, FlatList, Pressable } from 'react-native';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
+import { AppBar } from '@src/components/AppBar';
 import { LoadingFallback } from '@src/components/LoadingFallback';
 import { Post, UserHasInteracted } from '@src/components/Post';
 import { PER_PAGE_ITEMS, userIdHelper } from '@src/configs';
@@ -150,7 +151,8 @@ export const Profile = () => {
   return (
     <>
       <Flex>
-        <Flex alignItems="center" mt={statusBarHeight + 38}>
+        <AppBar />
+        <Flex alignItems="center" mt={5}>
           <Flex flexDir={'row'} justifyContent={'flex-end'} w={'90%'}>
             <Menu
               mt={1}
@@ -236,7 +238,7 @@ export const Profile = () => {
                   fontWeight={'bold'}
                   fontSize={16}
                 >
-                  dias como membro do diversaGente 🎉
+                  dias como membro
                 </Text>
               </Flex>
             </SimpleGrid>

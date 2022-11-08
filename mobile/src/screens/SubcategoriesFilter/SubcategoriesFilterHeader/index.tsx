@@ -12,6 +12,7 @@ import {
 import React, { FunctionComponent } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import { AppBar } from '@src/components/AppBar';
 import { LoadingFallback } from '@src/components/LoadingFallback';
 import { getIconProviderByName } from '@src/utils/getIconProvider';
 
@@ -41,8 +42,9 @@ export const SubcategoriesFilterHeader: FunctionComponent<HeaderProps> = ({
   return (
     <>
       {GobackComponent ? GobackComponent : <Box />}
+      <AppBar backgroundColor="darkBlue.700" />
       <TouchableOpacity onPress={console.log}>
-        <Flex width={'24'} alignSelf={'flex-end'} marginTop={12} paddingX={6}>
+        <Flex width={'24'} alignSelf={'flex-end'} marginTop={2} paddingX={6}>
           <Avatar
             backgroundColor={'orange.500'}
             alignSelf="flex-end"
@@ -58,7 +60,7 @@ export const SubcategoriesFilterHeader: FunctionComponent<HeaderProps> = ({
       <Flex
         paddingTop={0}
         paddingX={4}
-        paddingBottom={4}
+        paddingBottom={6}
         backgroundColor="darkBlue.700"
         flexDirection={'row'}
         justifyContent="space-between"

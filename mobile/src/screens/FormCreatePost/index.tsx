@@ -31,6 +31,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useMutation } from 'react-query';
 import * as yup from 'yup';
 
+import { AppBar } from '@src/components/AppBar';
 import { ControlledInput } from '@src/components/ControlledInput';
 import { Category } from '@src/contracts/Category';
 import { PostForm } from '@src/contracts/Post';
@@ -207,9 +208,10 @@ export const FormCreatePost = () => {
 
   return (
     <KeyboardAvoidingView behavior={'height'}>
+      <AppBar />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView>
-          <VStack space={4} marginTop="16" padding="8">
+          <VStack space={4} marginTop={2} padding="8">
             <HStack alignContent={'center'} justifyContent="space-between">
               <Heading>Nova postagem</Heading>
               <TouchableOpacity>

@@ -24,6 +24,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useMutation } from 'react-query';
 import * as yup from 'yup';
 
+import { AppBar } from '@src/components/AppBar';
 import { UserEditProps } from '@src/contracts/User';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackProfileNavigatorParamList } from '@src/routes/stacks/profileStack.routes';
@@ -144,6 +145,7 @@ export const EditProfile = () => {
 
   return (
     <ScrollView>
+      <AppBar position="absolute" left={0} right={0} top={0} />
       <Flex px={8} py={12} alignItems={'center'}>
         <Heading fontSize={20} fontWeight={'semibold'}>
           Edição do perfil

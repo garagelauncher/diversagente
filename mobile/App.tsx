@@ -4,6 +4,7 @@ import 'intl/locale-data/jsonp/pt-BR';
 import 'react-native-gesture-handler';
 import './src/services/notifications/config';
 
+import { CarterOne_400Regular } from '@expo-google-fonts/carter-one';
 import { Poppins_700Bold } from '@expo-google-fonts/poppins';
 import { LinkingOptions, NavigationContainer } from '@react-navigation/native';
 import * as Font from 'expo-font';
@@ -18,11 +19,13 @@ import { QueryClientProvider, focusManager } from 'react-query';
 
 import { getPushNotificationToken } from './src/services/notifications';
 
+import { Connectivitybar } from '@src/components/Connectivitybar';
 import { AuthProvider } from '@src/providers/AuthProvider';
 import { Routes } from '@src/routes';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
 import { RootBottomTabParamList } from '@src/routes/tabs';
 import { queryClient } from '@src/services/queryClient';
+import { customTheme } from '@src/styles/theme';
 
 const prefix = Linking.createURL('/');
 
@@ -126,6 +129,7 @@ export default function App() {
         await SplashScreen.preventAutoHideAsync();
         await Font.loadAsync({
           Poppins_700Bold,
+          CarterOne_400Regular,
         });
       } catch (e) {
         console.warn(e);
@@ -148,7 +152,7 @@ export default function App() {
   }
 
   return (
-    <NativeBaseProvider>
+    <NativeBaseProvider theme={customTheme}>
       <QueryClientProvider client={queryClient}>
         <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
           <NavigationContainer
@@ -156,6 +160,7 @@ export default function App() {
             fallback={<Text>Loading...</Text>}
           >
             <AuthProvider>
+              <Connectivitybar />
               <Routes />
             </AuthProvider>
           </NavigationContainer>

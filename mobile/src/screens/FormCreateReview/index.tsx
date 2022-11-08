@@ -21,6 +21,7 @@ import {
 import React, { useState } from 'react';
 import { AirbnbRating } from 'react-native-ratings';
 
+import { AppBar } from '@src/components/AppBar';
 import { Review } from '@src/contracts/Review';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackLocationNavigatorParamList } from '@src/routes/stacks/locationStack.routes';
@@ -103,7 +104,8 @@ export const FormCreateReview = () => {
   };
 
   return (
-    <ScrollView w="100%" flex={1} py={10}>
+    <ScrollView w="100%" flex={1} pb={10}>
+      <AppBar />
       <IconButton
         colorScheme="gray"
         variant={'solid'}

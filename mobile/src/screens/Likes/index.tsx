@@ -16,6 +16,7 @@ import {
 } from 'native-base';
 import React from 'react';
 
+import { AppBar } from '@src/components/AppBar';
 import { LoadingFallback } from '@src/components/LoadingFallback';
 import { UserLike } from '@src/components/UserLike';
 import { PER_PAGE_ITEMS } from '@src/configs';
@@ -69,7 +70,8 @@ export const Likes = () => {
   };
 
   return (
-    <Flex px={4} flex={1} pt={24}>
+    <Flex px={4} flex={1}>
+      <AppBar />
       <IconButton
         colorScheme="gray"
         variant={'solid'}
@@ -81,6 +83,7 @@ export const Likes = () => {
         zIndex={1}
       />
       <FlatList
+        mt={12}
         width={'100%'}
         data={data?.pages.map((page) => page.results).flat()}
         renderItem={({ item }) => (
@@ -103,6 +106,11 @@ export const Likes = () => {
               <Text color="gray.500">Esses foram os likes desse post.</Text>
             </Flex>
           </LoadingFallback>
+        }
+        ListEmptyComponent={
+          <Flex width="100%" alignItems="center" justifyContent="center">
+            <Text color="gray.500">Ninguém curtiu esse post ainda.</Text>
+          </Flex>
         }
       />
     </Flex>

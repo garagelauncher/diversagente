@@ -1,67 +1,53 @@
-import { Feather } from '@expo/vector-icons';
-import { useNetInfo } from '@react-native-community/netinfo';
-import { Flex, Heading, Icon, StatusBar } from 'native-base';
-import { useEffect, useState } from 'react';
+import { Flex, IFlexProps, Image, StatusBar, Text } from 'native-base';
+import { ColorType } from 'native-base/lib/typescript/components/types';
+import { FunctionComponent } from 'react';
 
-import { ConditionallyRender } from '../ConditionallyRender';
+import DiversagenteLogo from '@src/assets/logo.png';
 
-export const AppBar = () => {
-  const netInfo = useNetInfo();
-  const [isVisible, setIsVisible] = useState(false);
+export type AppBarProps = {
+  fontcolor?: ColorType;
+} & IFlexProps;
 
-  useEffect(() => {
-    setIsVisible(true);
-
-    const timeoutClear = setTimeout(() => {
-      setIsVisible(false);
-    }, 10000);
-
-    if (!netInfo.isConnected) {
-      clearTimeout(timeoutClear);
-    }
-
-    return () => {
-      if (timeoutClear && netInfo.isConnected) {
-        clearTimeout(timeoutClear);
-      }
-    };
-  }, [netInfo.isConnected]);
-
+export const AppBar: FunctionComponent<AppBarProps> = ({
+  fontcolor,
+  ...rest
+}) => {
   return (
-    <Flex>
+    <Flex width="100%" {...rest}>
       <StatusBar barStyle="light-content" backgroundColor="black" />
-      <ConditionallyRender
-        condition={isVisible}
-        trueComponent={
-          <Flex
-            bg={netInfo.isConnected ? 'green.500' : 'red.500'}
-            alignItems="center"
-            justifyContent="center"
-            direction="row"
-            h={25}
+      <Flex
+        direction="row"
+        width="100%"
+        fontFamily="CarterOne_400Regular"
+        justifyContent="space-between"
+        alignItems="center"
+        p={2}
+      >
+        <Flex>
+          <Image
+            source={DiversagenteLogo}
+            alt="Logomarca diversagente"
+            height={35}
+            width={35}
+          />
+        </Flex>
+        <Flex direction="row">
+          <Text
+            color={fontcolor ?? 'blue.600'}
+            fontSize="sm"
+            fontFamily="CarterOne_400Regular"
           >
-            <Icon
-              as={Feather}
-              name={netInfo.isConnected ? 'wifi' : 'wifi-off'}
-              size="sm"
-              color="white"
-            />
-            <Heading
-              marginLeft={4}
-              color="white"
-              size="sm"
-              fontSize={14}
-              fontWeight="medium"
-            >
-              {netInfo.isConnected
-                ? `Conectado: ${netInfo.type.toString()}`
-                : 'Sem conexão com a internet'}
-            </Heading>
-          </Flex>
-        }
-        falseComponent={null}
-      />
-      {/* <Heading>diversaGente</Heading> */}
+            DIVERSA
+          </Text>
+          <Text
+            color={fontcolor ?? 'amber.500'}
+            fontSize="sm"
+            fontFamily="CarterOne_400Regular"
+          >
+            GENTE
+          </Text>
+        </Flex>
+      </Flex>
     </Flex>
   );
 };
