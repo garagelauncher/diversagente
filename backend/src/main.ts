@@ -59,13 +59,17 @@ async function bootstrap() {
       ) as string;
 
       // PUT new CSP header
-      res.setHeader(
-        'Content-Security-Policy',
-        oldContentSecurityPolicy.replace(
+      const contentSecurityPolicy = `${oldContentSecurityPolicy
+        .replace(
           "style-src 'self'",
-          "style-src 'self' 'unsafe-inline'",
-        ),
-      );
+          "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+        )
+        .replace(
+          "font-src 'self' https: data:",
+          "font-src 'self' https: data: https://fonts.gstatic.com",
+        )}`;
+
+      res.setHeader('Content-Security-Policy', contentSecurityPolicy);
     }
 
     return next();
