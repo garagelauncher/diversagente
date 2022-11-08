@@ -29,6 +29,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useMutation } from 'react-query';
 import * as yup from 'yup';
 
+import { AppBar } from '@src/components/AppBar';
 import { ControlledInput } from '@src/components/ControlledInput';
 import { SubcategoryForm } from '@src/contracts/Subcategory';
 import { useCategoryDetails } from '@src/hooks/queries/details/useCategoryDetails';
@@ -128,9 +129,10 @@ export const FormCreateSubcategory = () => {
 
   return (
     <KeyboardAvoidingView behavior={'height'}>
+      <AppBar />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView>
-          <VStack space={4} marginTop="16" padding="8">
+          <VStack space={4} marginTop={2} padding="8">
             <HStack alignContent={'center'} justifyContent="space-between">
               <Heading>Nova subcategoria</Heading>
               <TouchableOpacity>

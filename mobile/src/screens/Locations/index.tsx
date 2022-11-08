@@ -22,6 +22,7 @@ import MapView, { Marker, Region, PROVIDER_GOOGLE } from 'react-native-maps';
 
 import * as customStyles from './styles';
 
+import { AppBar } from '@src/components/AppBar';
 import { Location } from '@src/contracts/Location';
 import { translate } from '@src/i18n';
 import { StackLocationNavigatorParamList } from '@src/routes/stacks/locationStack.routes';
@@ -207,6 +208,8 @@ export const Locations = () => {
           </Modal.Body>
         </Modal.Content>
       </Modal>
+
+      <AppBar position="absolute" top={0} left={0} right={0} zIndex={1} />
 
       <IconButton
         colorScheme="blue"

@@ -28,7 +28,14 @@ export const Connectivitybar = () => {
   }, [netInfo.isConnected]);
 
   return (
-    <Flex width="100%">
+    <Flex
+      width="100%"
+      position="absolute"
+      top={0}
+      zIndex={1000}
+      left={0}
+      right={0}
+    >
       <ConditionallyRender
         condition={isVisible}
         trueComponent={
