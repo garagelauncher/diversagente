@@ -40,6 +40,8 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState<UserData | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isFirstLogin, setIsFirstLogin] = useState<boolean>(false);
+  const [isRecoveringAccount, setIsRecoveringAccount] = useState<boolean>(false);
 
   const mutationDisableAccount = useMutation(diversaGenteServices.deleteUser, {
     onSuccess: async () => {
@@ -204,6 +206,14 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
     await mutationCreateDevice.mutateAsync(user.id);
   }
 
+  async function checkFirstLogin() {
+    
+  }
+
+  async function finishFirstLogin() {
+
+  }
+
   useEffect(() => {
     async function getUser() {
       const user = await AsyncStorage.getItem('diversagente@user');
@@ -245,7 +255,7 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
   return (
     <AuthContext.Provider
       value={{
-        isLoggedIn,
+        isLoggedIn: isLoggedIn && !isFirstLogin,
         signInWithGoogle,
         signOut,
         user,
