@@ -29,6 +29,10 @@ import { UserEditProps } from '@src/contracts/User';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackProfileNavigatorParamList } from '@src/routes/stacks/profileStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
+import { useCategories } from '@src/hooks/queries/useCategories';
+1
+	
+import MultiSelect from 'react-native-multiple-select';
 
 type ProfileScreenNavigationProps = NavigationProp<
   StackProfileNavigatorParamList,
@@ -37,8 +41,19 @@ type ProfileScreenNavigationProps = NavigationProp<
 
 export const EditProfile = () => {
   const { user, refetchUser } = useAuth();
+  
   const [isPersonalInfoOpen, setPersonalInfoOpen] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [selectedCategories, setSelectedCategories] = useState(user?.lovelyCategoriesIds); // put something like user?.lovelyCategoriesIds ?? []
+1
+  const {
+    data: categoriesData,
+  } = useCategories({
+    range: [0, 30],
+    sort: ['createdAt', 'ASC'],
+  });
+  const categories = categoriesData?.pages.map((page) => page.results).flat() ?? [];
 
   const schema = yup.object({
     name: yup
@@ -71,6 +86,7 @@ export const EditProfile = () => {
         language: user?.preferences.language,
         canReceivedMessage: user?.preferences.canReceivedMessage ?? true,
       },
+      lovelyCategoriesIds: selectedCategories,
     },
   });
   console.log('errors', errors);
@@ -141,6 +157,17 @@ export const EditProfile = () => {
 
   const handleNavigateBackToProfile = () => {
     navigation.navigate('Profile', { userId: user?.id as string });
+  };
+
+  const onSelectedCategoriesChange = (newSelectedCategories) => {
+ 
+    setSelectedCategories(newSelectedCategories);
+ 
+    for (let i = 0; i < newSelectedCategories.length; i++) {
+      var tempItem = categories.find(item => item.id === newSelectedCategories[i]);
+      console.log(tempItem);
+    }
+ 
   };
 
   return (
@@ -275,6 +302,61 @@ export const EditProfile = () => {
                 onPress={handleSubmit(handleUpdateUserPersonalInfo)}
               >
                 Salvar informações pessoais
+              </Button>
+            </Collapse>
+          </Box>
+
+
+
+          <Box mt={6}>
+            <TouchableOpacity onPress={handlePerfonalInfoClose}>
+              <Flex flexDir="row" mt={5}>
+                <Text fontSize={20} fontWeight={'semibold'}>
+                  Informações pessoais
+                </Text>
+                <MaterialIcons
+                  style={{
+                    transform: [
+                      { rotateX: isPersonalInfoOpen ? '180deg' : '0deg' },
+                    ],
+                  }}
+                  name="expand-more"
+                  size={24}
+                  color="black"
+                />
+              </Flex>
+            </TouchableOpacity>
+
+            <Collapse isOpen={isPersonalInfoOpen} mt={2} w={'100%'}>
+              <Box mb={6}>
+                <MultiSelect
+                  hideTags
+                  items={categories}
+                  uniqueKey="id"
+                  onSelectedItemsChange={onSelectedCategoriesChange}
+                  selectedItems={selectedCategories}
+                  selectText="Selecione categorias"
+                  searchInputPlaceholderText="Procure categorias aqui..."
+                  onChangeInput={(text) => console.log(text)}
+                  tagRemoveIconColor="#CCC"
+                  tagBorderColor="#CCC"
+                  tagTextColor="#CCC"
+                  selectedItemTextColor="#CCC"
+                  selectedItemIconColor="#CCC"
+                  itemTextColor="#000"
+                  displayKey="title"
+                  searchInputStyle={{ color: '#CCC' }}
+                  submitButtonColor="#00BFA5"
+                  submitButtonText="Selecionar"
+                />
+              </Box>
+
+              <Button
+                bgColor={'darkBlue.600'}
+                isLoading={isLoading}
+                onPress={handleSubmit(handleUpdateUserPersonalInfo)}
+              >
+                Salvar categorias favoritas
               </Button>
             </Collapse>
           </Box>
