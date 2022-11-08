@@ -85,7 +85,10 @@ export const CategoriesFilter = () => {
       sort: ['Post', { _count: 'desc' }],
     },
     FAVORITE: {
-      filter: {},
+      filter: {
+        id: user?.lovelyCategoriesIds === undefined || Array.isArray(user?.lovelyCategoriesIds) && user?.lovelyCategoriesIds.length === 0 ? ["bbbbbbbbbbbbbbbbbbbbbbbb"
+        ] : user?.lovelyCategoriesIds
+      },
       sort: undefined,
     },
   };
@@ -95,19 +98,19 @@ export const CategoriesFilter = () => {
       sort:
         selectedCategoryFilterOption === CategoriesFilterEnum.POPULAR
           ? (filterCategory.POPULAR.sort as
-              | [string, object | 'ASC' | 'DESC']
-              | undefined)
+            | [string, object | 'ASC' | 'DESC']
+            | undefined)
           : (filterCategory.FAVORITE.sort as
-              | [string, object | 'ASC' | 'DESC']
-              | undefined),
+            | [string, object | 'ASC' | 'DESC']
+            | undefined),
       filter:
         selectedCategoryFilterOption === CategoriesFilterEnum.POPULAR
           ? {
-              ...filterCategory.POPULAR.filter,
-            }
+            ...filterCategory.POPULAR.filter,
+          }
           : {
-              ...filterCategory.FAVORITE.filter,
-            },
+            ...filterCategory.FAVORITE.filter,
+          },
     });
 
   const handleLoadMoreCategories = () => {
