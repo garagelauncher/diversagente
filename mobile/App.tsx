@@ -4,10 +4,9 @@ import 'intl/locale-data/jsonp/pt-BR';
 import 'react-native-gesture-handler';
 import './src/services/notifications/config';
 
-import { useFonts, CarterOne_400Regular } from '@expo-google-fonts/carter-one';
+import { CarterOne_400Regular } from '@expo-google-fonts/carter-one';
 import { Poppins_700Bold } from '@expo-google-fonts/poppins';
 import { LinkingOptions, NavigationContainer } from '@react-navigation/native';
-import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import * as Linking from 'expo-linking';
 import { Subscription } from 'expo-modules-core';
@@ -30,11 +29,6 @@ import { customTheme } from '@src/styles/theme';
 const prefix = Linking.createURL('/');
 
 export default function App() {
-  const [fontsLoaded] = useFonts({
-    CarterOne_400Regular,
-    Poppins_700Bold,
-  });
-
   console.log(prefix);
 
   const linking: LinkingOptions<
@@ -152,12 +146,8 @@ export default function App() {
     }
   }, [appIsReady]);
 
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  }
-
   if (!appIsReady) {
-    return <AppLoading />;
+    return null;
   }
 
   return (
