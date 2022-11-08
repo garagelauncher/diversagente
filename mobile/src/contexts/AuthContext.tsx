@@ -25,6 +25,8 @@ export type AuthContextProps = {
   setUser: (user: UserData | undefined) => void;
   isLoading: boolean;
   refetchUser: () => Promise<void>;
+  isLoadingDisablingAccount: boolean;
+  disableAccount: () => Promise<void>;
 };
 
 export const AuthContext = createContext<AuthContextProps>(

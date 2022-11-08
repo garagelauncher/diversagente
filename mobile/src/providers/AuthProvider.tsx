@@ -2,12 +2,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import * as AuthSession from 'expo-auth-session';
+import { useToast } from 'native-base';
 import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import { useMutation } from 'react-query';
-import {
-  useToast,
-} from 'native-base';
+
 import { Oauth2 } from '@src/configs';
 import {
   AuthContext,
@@ -41,7 +40,8 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
   const [user, setUser] = useState<UserData | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isFirstLogin, setIsFirstLogin] = useState<boolean>(false);
-  const [isRecoveringAccount, setIsRecoveringAccount] = useState<boolean>(false);
+  const [isRecoveringAccount, setIsRecoveringAccount] =
+    useState<boolean>(false);
 
   const mutationDisableAccount = useMutation(diversaGenteServices.deleteUser, {
     onSuccess: async () => {
@@ -184,10 +184,11 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
       console.error(error.name);
       console.error(error.message);
 
+      console.log('Error', error);
+
       Alert.alert(
         'Falha no login',
-        error.message ||
-          'Não foi possível fazer login com o Google, tente novamente mais tarde.',
+        `Não foi possível fazer login com o Google, tente novamente mais tarde. ${error.message}`,
       );
     } finally {
       setIsLoading(false);
@@ -201,18 +202,13 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
     await AsyncStorage.removeItem('diversagente@user');
   }
 
-
   async function disableAccount() {
-    await mutationCreateDevice.mutateAsync(user.id);
+    await mutationDisableAccount.mutateAsync(String(user?.id));
   }
 
-  async function checkFirstLogin() {
-    
-  }
+  // async function checkFirstLogin() {}
 
-  async function finishFirstLogin() {
-
-  }
+  // async function finishFirstLogin() {}
 
   useEffect(() => {
     async function getUser() {
@@ -262,7 +258,8 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
         setUser,
         isLoading,
         refetchUser,
-        isLoadingDisablingAccount: mutationDisableAccount.isLoading
+        isLoadingDisablingAccount: mutationDisableAccount.isLoading,
+        disableAccount,
       }}
     >
       {children}
