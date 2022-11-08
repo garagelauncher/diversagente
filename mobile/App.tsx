@@ -19,6 +19,7 @@ import { QueryClientProvider, focusManager } from 'react-query';
 
 import { getPushNotificationToken } from './src/services/notifications';
 
+import { Connectivitybar } from '@src/components/Connectivitybar';
 import { AuthProvider } from '@src/providers/AuthProvider';
 import { Routes } from '@src/routes';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
@@ -159,6 +160,7 @@ export default function App() {
             fallback={<Text>Loading...</Text>}
           >
             <AuthProvider>
+              <Connectivitybar />
               <Routes />
             </AuthProvider>
           </NavigationContainer>

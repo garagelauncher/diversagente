@@ -238,7 +238,7 @@ export const Profile = () => {
                   fontWeight={'bold'}
                   fontSize={16}
                 >
-                  dias como membro do diversaGente 🎉
+                  dias como membro
                 </Text>
               </Flex>
             </SimpleGrid>

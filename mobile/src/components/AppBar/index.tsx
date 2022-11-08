@@ -2,8 +2,6 @@ import { Flex, IFlexProps, Image, StatusBar, Text } from 'native-base';
 import { ColorType } from 'native-base/lib/typescript/components/types';
 import { FunctionComponent } from 'react';
 
-import { Connectivitybar } from '../Connectivitybar';
-
 import DiversagenteLogo from '@src/assets/logo.png';
 
 export type AppBarProps = {
@@ -17,7 +15,6 @@ export const AppBar: FunctionComponent<AppBarProps> = ({
   return (
     <Flex width="100%" {...rest}>
       <StatusBar barStyle="light-content" backgroundColor="black" />
-      <Connectivitybar />
       <Flex
         direction="row"
         width="100%"

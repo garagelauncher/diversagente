@@ -60,7 +60,7 @@ export const Connectivitybar = () => {
               fontWeight="medium"
             >
               {netInfo.isConnected
-                ? `Conectado: ${netInfo.type.toString()}`
+                ? `Conectado na internet`
                 : 'Sem conexão com a internet'}
             </Heading>
           </Flex>
