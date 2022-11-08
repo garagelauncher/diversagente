@@ -11,7 +11,7 @@ import {
   extendTheme,
   Center,
 } from 'native-base';
-import React, { useState } from 'react';
+import React from 'react';
 
 import DiversagenteLogo from '@src/assets/logo.png';
 import { apiBaseUrl, Oauth2 } from '@src/configs';
@@ -21,13 +21,6 @@ export const Login = () => {
   const { signInWithGoogle, isLoading } = useAuth();
   // const [isActiveDeveloperHelper, setIsActiveDeveloperHelper] = useState(false);
 
-  const [fontsLoaded] = useFonts({
-    CarterOne_400Regular,
-  });
-
-  if (!fontsLoaded) {
-    return null;
-  }
   const config = {
     dependencies: {
       // eslint-disable-next-line @typescript-eslint/no-var-requires

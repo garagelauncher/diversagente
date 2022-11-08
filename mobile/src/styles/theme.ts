@@ -1,3 +1,5 @@
+import { extendTheme } from 'native-base';
+
 export const theme = {
   colors: {
     darkBlue700: '#004282',
@@ -19,3 +21,13 @@ export const theme = {
     grey: '#fafaf9',
   },
 };
+
+export const customTheme = extendTheme({
+  fontConfig: {
+    CarterOne: {
+      400: {
+        normal: 'CarterOne_400Regular',
+      },
+    },
+  },
+});

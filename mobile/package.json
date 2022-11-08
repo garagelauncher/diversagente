@@ -61,7 +61,8 @@
     "react-native-webview": "11.18.1",
     "react-query": "^3.39.2",
     "webpack-dev-server": "~3.11.0",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "expo-app-loading": "~2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

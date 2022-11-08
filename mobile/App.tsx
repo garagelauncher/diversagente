@@ -4,8 +4,10 @@ import 'intl/locale-data/jsonp/pt-BR';
 import 'react-native-gesture-handler';
 import './src/services/notifications/config';
 
+import { useFonts, CarterOne_400Regular } from '@expo-google-fonts/carter-one';
 import { Poppins_700Bold } from '@expo-google-fonts/poppins';
 import { LinkingOptions, NavigationContainer } from '@react-navigation/native';
+import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import * as Linking from 'expo-linking';
 import { Subscription } from 'expo-modules-core';
@@ -23,10 +25,16 @@ import { Routes } from '@src/routes';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
 import { RootBottomTabParamList } from '@src/routes/tabs';
 import { queryClient } from '@src/services/queryClient';
+import { customTheme } from '@src/styles/theme';
 
 const prefix = Linking.createURL('/');
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    CarterOne_400Regular,
+    Poppins_700Bold,
+  });
+
   console.log(prefix);
 
   const linking: LinkingOptions<
@@ -126,6 +134,7 @@ export default function App() {
         await SplashScreen.preventAutoHideAsync();
         await Font.loadAsync({
           Poppins_700Bold,
+          CarterOne_400Regular,
         });
       } catch (e) {
         console.warn(e);
@@ -143,12 +152,16 @@ export default function App() {
     }
   }, [appIsReady]);
 
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
+
   if (!appIsReady) {
-    return null;
+    return <AppLoading />;
   }
 
   return (
-    <NativeBaseProvider>
+    <NativeBaseProvider theme={customTheme}>
       <QueryClientProvider client={queryClient}>
         <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
           <NavigationContainer
