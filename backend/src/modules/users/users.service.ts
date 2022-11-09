@@ -169,6 +169,7 @@ export class UsersService {
       Logger.debug(result);
       return updatedData;
     } catch (error) {
+      console.log(error);
       Logger.error(error);
       throw new BadRequestException('Invalid file type.');
     }

@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import * as ImagePicker from 'expo-image-picker';
 import {
   ScrollView,
   Button,
@@ -17,17 +19,17 @@ import {
   WarningOutlineIcon,
   TextArea,
   Input,
-  Spinner
+  Spinner,
 } from 'native-base';
-
-import * as ImagePicker from 'expo-image-picker';
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { Alert } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useMutation } from 'react-query';
 import * as yup from 'yup';
 
 import { AppBar } from '@src/components/AppBar';
+import { ConditionallyRender } from '@src/components/ConditionallyRender';
 import { UserEditProps } from '@src/contracts/User';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackProfileNavigatorParamList } from '@src/routes/stacks/profileStack.routes';
@@ -168,29 +170,55 @@ export const EditProfile = () => {
     navigation.navigate('Profile', { userId: user?.id as string });
   };
 
+  async function takeGalleryAndUploadPhotoAsync() {
+    try {
+      setIsLoading(true);
 
+      const maxSize = 10 * 1024 * 1024; // 10MB
+      const pickerResult = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+        size: maxSize,
+      });
 
-  async function takeAndUploadPhotoAsync() {
-    setIsLoading(true);
-    const result = await ImagePicker.launchCameraAsync({
-      allowsEditing: true,
-      aspect: [4, 3],
-    });
-  
-    if (result.cancelled) {
-      return;
+      console.log('image data', pickerResult);
+
+      if (pickerResult.cancelled) {
+        return;
+      }
+
+      const localUri = pickerResult.uri;
+      const filename = localUri.split('/').pop();
+
+      if (!filename) {
+        return;
+      }
+
+      const match = /\.(\w+)$/.exec(filename);
+      const type = match ? `image/${match[1]}` : `image`;
+
+      const formData = new FormData();
+
+      const blob: Blob = {
+        uri: localUri,
+        name: filename,
+        type,
+      } as any;
+      console.log('blob', blob);
+      formData.append('file', blob);
+
+      await updateUserAvatarMutation.mutateAsync({
+        username: String(user?.email),
+        body: formData,
+      });
+    } catch (error) {
+      console.log('error update profile image', error);
+      Alert.alert('Erro', 'Não foi possível atualizar a foto de perfil.');
+    } finally {
+      setIsLoading(false);
     }
-  
-    const localUri = result.uri;
-    const filename = localUri.split('/').pop();
-  
-    const match = /\.(\w+)$/.exec(filename);
-    const type = match ? `image/${match[1]}` : `image`;
-  
-    const formData = new FormData();
-    formData.append('file', { uri: localUri, name: filename, type });
-  
-    await updateUserAvatarMutation.mutateAsync(user?.email, formData);
   }
 
   return (
@@ -230,14 +258,18 @@ export const EditProfile = () => {
             >
               NB
             </Avatar>
-            
+
             <Box mt={-8} ml={32} bgColor={'blue.600'} p={2} borderRadius={20}>
-              {isLoading && <Spinner size={'lg'} color="orange.500"/>}
-              <TouchableOpacity onPress={takeAndUploadPhotoAsync}>
-                <Feather name="edit" size={16} color="white" />
-              </TouchableOpacity>
+              <ConditionallyRender
+                condition={isLoading || updateUserAvatarMutation.isLoading}
+                trueComponent={<Spinner size={'lg'} color="orange.500" />}
+                falseComponent={
+                  <TouchableOpacity onPress={takeGalleryAndUploadPhotoAsync}>
+                    <Feather name="edit" size={16} color="white" />
+                  </TouchableOpacity>
+                }
+              />
             </Box>
-           
           </Flex>
 
           <Box mt={6}>

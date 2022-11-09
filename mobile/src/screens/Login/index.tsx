@@ -10,6 +10,7 @@ import {
   NativeBaseProvider,
   extendTheme,
   Center,
+  StatusBar,
 } from 'native-base';
 import React from 'react';
 
@@ -56,6 +57,7 @@ export const Login = () => {
 
   return (
     <NativeBaseProvider config={config} theme={theme}>
+      <StatusBar barStyle="light-content" backgroundColor="transparent" />
       <Flex flex={1} justifyContent="space-evenly">
         <Box bg={'yellow.200'} width={'100%'} height={'100%'}>
           <Flex alignItems="center">

@@ -83,17 +83,28 @@ export const updateUserData = async ({
   }
 };
 
-export const updateUserAvatar = async (
-  username?: string,
-  body: any,
-) => {
+export const updateUserAvatar = async ({
+  username,
+  body,
+}: {
+  username: string;
+  body: FormData;
+}) => {
+  if (!body) {
+    console.debug('no body provided');
+    return;
+  }
+
   try {
-    const response = await diversagenteBaseApi.patch(`/users/${username}/avatar`, {
+    const response = await diversagenteBaseApi.patch(
+      `/users/${username}/avatar`,
       body,
-      headers: {
-        'content-type': 'multipart/form-data',
+      {
+        headers: {
+          'content-type': 'multipart/form-data',
+        },
       },
-    });
+    );
 
     const user = response.data;
     console.info('user avatar!', response.data);
