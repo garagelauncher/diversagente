@@ -119,6 +119,7 @@ export const Subcategory = () => {
         backgroundColor="gray.50"
         width="100%"
         marginTop={[isReadingModeActive ? 6 : 0]}
+        paddingBottom={16}
       >
         {!isReadingModeActive && (
           <Box bgColor={'darkBlue.700'}>
@@ -209,7 +210,7 @@ export const Subcategory = () => {
               </Box>
             )}
             keyExtractor={(item) => item.id}
-            contentContainerStyle={{ paddingBottom: 350 }}
+            contentContainerStyle={{ paddingBottom: 450 }}
             onEndReached={handleLoadMorePosts}
             onEndReachedThreshold={0.85}
             refreshing={isRefetching && !isFetchingNextPage}

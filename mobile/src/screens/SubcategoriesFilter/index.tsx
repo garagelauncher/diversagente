@@ -64,6 +64,8 @@ export const SubcategoryFilter = () => {
     fetchNextPage,
     isLoading: isLoadingSubcategories,
     isFetchingNextPage,
+    refetch,
+    isRefetching,
   } = useSubcategories({
     filter: {
       categoriesIds: {
@@ -109,6 +111,10 @@ export const SubcategoryFilter = () => {
     Keyboard.dismiss();
   }, [setSearchCategoryText]);
 
+  const handlePullSubcategoryListToRefresh = () => {
+    refetch();
+  };
+
   const handleSearchSubcategory = useCallback(
     (text: string) => {
       console.log('handleSearchSubcategory', text);
@@ -133,7 +139,7 @@ export const SubcategoryFilter = () => {
 
   return (
     <>
-      <Box bgColor={'darkBlue.700'} height={350}>
+      <Box bgColor={'darkBlue.700'}>
         <Box marginBottom={4}>
           <SubcategoriesFilterHeader
             isLoading={isLoading}
@@ -308,6 +314,8 @@ export const SubcategoryFilter = () => {
             contentContainerStyle={{ padding: 4 }}
             onEndReached={handleLoadMoreSubcategories}
             onEndReachedThreshold={0.9}
+            refreshing={isRefetching && !isFetchingNextPage}
+            onRefresh={handlePullSubcategoryListToRefresh}
             ListFooterComponent={
               isFetchingNextPage && !hasNextPage ? (
                 <Spinner color="orange.500" size="sm" />

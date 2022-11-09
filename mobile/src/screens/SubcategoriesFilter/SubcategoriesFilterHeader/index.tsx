@@ -60,7 +60,7 @@ export const SubcategoriesFilterHeader: FunctionComponent<HeaderProps> = ({
       <Flex
         paddingTop={0}
         paddingX={4}
-        paddingBottom={6}
+        paddingBottom={9}
         backgroundColor="darkBlue.700"
         flexDirection={'row'}
         justifyContent="space-between"

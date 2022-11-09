@@ -249,7 +249,7 @@ export const Profile = () => {
       <Heading fontSize={20} px={8} py={6} pt={4} fontWeight="medium">
         Postagens de {userFirstname}
       </Heading>
-      <Flex mb={20}>
+      <Flex paddingBottom={20}>
         <LoadingFallback
           isLoading={isLoading}
           fallback={
@@ -268,7 +268,7 @@ export const Profile = () => {
               </Box>
             )}
             keyExtractor={(item) => item.id}
-            contentContainerStyle={{ paddingBottom: 350 }}
+            contentContainerStyle={{ paddingBottom: 450 }}
             onEndReached={handleLoadMorePosts}
             onEndReachedThreshold={0.85}
             refreshing={isRefetching && !isFetchingNextPage}

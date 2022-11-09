@@ -49,8 +49,7 @@ export const EditProfile = () => {
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
     user?.lovelyCategoriesIds ?? [],
-  ); // put something like
-  console.log('selectedCategories', selectedCategories);
+  );
   const { data: categoriesData, isLoading: isLoadingCategories } =
     useCategories({
       range: [0, 30],
