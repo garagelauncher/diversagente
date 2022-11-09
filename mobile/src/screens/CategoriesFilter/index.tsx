@@ -136,7 +136,7 @@ export const CategoriesFilter = () => {
     });
   };
   const handleNavigationToUserProfile = () => {
-    linkTo('/profile');
+    linkTo('/profile/edit');
   };
 
   const changeCategoryFilterOption = (categoryFilterOption: string) => {
@@ -312,10 +312,15 @@ export const CategoriesFilter = () => {
                     <TouchableOpacity activeOpacity={0.8}>
                       <Button
                         bgColor={'blue.500'}
-                        height={12}
                         onPress={handleNavigationToUserProfile}
                       >
-                        Adicionar outras categorias aos meus favoritos
+                        <Text
+                          color={'white'}
+                          fontSize={'lg'}
+                          textAlign={'center'}
+                        >
+                          Adicionar categorias aos meus favoritos
+                        </Text>
                       </Button>
                     </TouchableOpacity>
                   }

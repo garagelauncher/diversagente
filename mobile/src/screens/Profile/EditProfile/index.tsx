@@ -47,7 +47,9 @@ type ProfileScreenNavigationProps = NavigationProp<
 export const EditProfile = () => {
   const { user, refetchUser } = useAuth();
 
-  const [isPersonalInfoOpen, setPersonalInfoOpen] = useState(true);
+  const [isPersonalInfoOpen, setPersonalInfoOpen] = useState(false);
+  const [isFavoriteCategoriesOpen, setIsFavoriteCategoriesOpen] =
+    useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
@@ -389,7 +391,11 @@ export const EditProfile = () => {
           </Box>
 
           <Box mt={6}>
-            <TouchableOpacity onPress={handlePerfonalInfoClose}>
+            <TouchableOpacity
+              onPress={() =>
+                setIsFavoriteCategoriesOpen((prevState) => !prevState)
+              }
+            >
               <Flex flexDir="row" mt={5}>
                 <Text fontSize={20} fontWeight={'semibold'}>
                   Categorias favoritas
@@ -407,7 +413,7 @@ export const EditProfile = () => {
               </Flex>
             </TouchableOpacity>
 
-            <Collapse isOpen={isPersonalInfoOpen} mt={2} w={'100%'}>
+            <Collapse isOpen={isFavoriteCategoriesOpen} mt={2} w={'100%'}>
               <Box mb={6}>
                 <LoadingFallback
                   fallback={<Spinner color="orange.500" size="lg" />}
@@ -447,6 +453,7 @@ export const EditProfile = () => {
               </Button>
             </Collapse>
           </Box>
+
           {/*
           <Box>
             <TouchableOpacity onPress={handlePreferencesAtAppClose}>

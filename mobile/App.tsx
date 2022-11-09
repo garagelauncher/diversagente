@@ -65,6 +65,7 @@ export default function App() {
         ProfileStack: {
           screens: {
             Profile: 'profile',
+            EditProfile: 'profile/edit',
           },
         },
       },
