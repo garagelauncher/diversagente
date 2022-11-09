@@ -39,9 +39,6 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState<UserData | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isFirstLogin, setIsFirstLogin] = useState<boolean>(false);
-  const [isRecoveringAccount, setIsRecoveringAccount] =
-    useState<boolean>(false);
 
   const mutationDisableAccount = useMutation(diversaGenteServices.deleteUser, {
     onSuccess: async () => {
@@ -53,6 +50,7 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
       await AsyncStorage.removeItem('diversagente@user');
       setLoggedIn(false);
       setUser(undefined as UserData | undefined);
+      await AsyncStorage.clear();
     },
   });
 
@@ -157,6 +155,14 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
           return;
         }
 
+        if (responseCreateUser.data.isActive === false) {
+          Alert.alert(
+            'Conta desativada',
+            'Entre em contato com a equipe do diversaGente para reativar sua conta garagelauncher@gmail.com para que seja feita uma análise do motivo da desativação da sua conta e se você está habilitado a voltar a fazer parte da comunidade neurodiversa',
+          );
+          return;
+        }
+
         const userPayload: UserData = {
           id: responseCreateUser.data.id || '',
           googleUserData,
@@ -251,7 +257,7 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
   return (
     <AuthContext.Provider
       value={{
-        isLoggedIn: isLoggedIn && !isFirstLogin,
+        isLoggedIn,
         signInWithGoogle,
         signOut,
         user,

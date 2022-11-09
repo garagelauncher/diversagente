@@ -131,7 +131,11 @@ export const FormCreateSubcategory = () => {
     <KeyboardAvoidingView behavior={'height'}>
       <AppBar />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <ScrollView>
+        <ScrollView
+          contentContainerStyle={{
+            paddingBottom: 100,
+          }}
+        >
           <VStack space={4} marginTop={2} padding="8">
             <HStack alignContent={'center'} justifyContent="space-between">
               <Heading>Nova subcategoria</Heading>

@@ -32,6 +32,7 @@ import * as yup from 'yup';
 import { AppBar } from '@src/components/AppBar';
 import { ConditionallyRender } from '@src/components/ConditionallyRender';
 import { LoadingFallback } from '@src/components/LoadingFallback';
+import { ModalConfirmAction } from '@src/components/ModalConfirmAction';
 import { UserEditProps } from '@src/contracts/User';
 import { useCategories } from '@src/hooks/queries/useCategories';
 import { useAuth } from '@src/hooks/useAuth';
@@ -45,12 +46,19 @@ type ProfileScreenNavigationProps = NavigationProp<
 >;
 
 export const EditProfile = () => {
-  const { user, refetchUser } = useAuth();
+  const { user, refetchUser, disableAccount, isLoadingDisablingAccount } =
+    useAuth();
 
   const [isPersonalInfoOpen, setPersonalInfoOpen] = useState(false);
   const [isFavoriteCategoriesOpen, setIsFavoriteCategoriesOpen] =
     useState(false);
+  const [isDeleteAccountOpen, setIsDeleteAccountOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [
+    isDisableAccountModalConfirmVisible,
+    setIsDisableAccountModalConfirmVisible,
+  ] = useState(false);
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
     user?.lovelyCategoriesIds ?? [],
@@ -403,7 +411,7 @@ export const EditProfile = () => {
                 <MaterialIcons
                   style={{
                     transform: [
-                      { rotateX: isPersonalInfoOpen ? '180deg' : '0deg' },
+                      { rotateX: isFavoriteCategoriesOpen ? '180deg' : '0deg' },
                     ],
                   }}
                   name="expand-more"
@@ -454,6 +462,48 @@ export const EditProfile = () => {
             </Collapse>
           </Box>
 
+          <Box mt={6}>
+            <TouchableOpacity
+              onPress={() => setIsDeleteAccountOpen((prevState) => !prevState)}
+            >
+              <Flex flexDir="row" mt={5}>
+                <Text fontSize={20} fontWeight={'semibold'}>
+                  Conta do app
+                </Text>
+                <MaterialIcons
+                  style={{
+                    transform: [
+                      { rotateX: isDeleteAccountOpen ? '180deg' : '0deg' },
+                    ],
+                  }}
+                  name="expand-more"
+                  size={24}
+                  color="black"
+                />
+              </Flex>
+            </TouchableOpacity>
+
+            <Collapse isOpen={isDeleteAccountOpen} mt={2} w={'100%'}>
+              <Box mb={6}>
+                <Button
+                  colorScheme={'red'}
+                  isLoading={isLoadingDisablingAccount}
+                  onPress={() => setIsDisableAccountModalConfirmVisible(true)}
+                >
+                  Desativar a conta
+                </Button>
+              </Box>
+            </Collapse>
+          </Box>
+          <ModalConfirmAction
+            isOpen={isDisableAccountModalConfirmVisible}
+            onClose={() => setIsDisableAccountModalConfirmVisible(false)}
+            onConfirm={disableAccount}
+            title="Desativar a conta"
+            description="Ao desativar a sua conta, você não poderá mais recuperar os seus dados de antes de você desativar. Tem certeza que deseja desativar a sua conta e deixar de fazer parte da comunidade neurodiversa? Serão mantidos por alguns dias o nome do usuário, email e descrição do perfil para que possamos analisar a causa da desativação e para reativar você deverá entrar em contato com a equipe do app pelo e-mail garagelauncher@gmail.com."
+            confirmText="Sim, tenho certeza"
+            confirmColor="red"
+          />
           {/*
           <Box>
             <TouchableOpacity onPress={handlePreferencesAtAppClose}>
