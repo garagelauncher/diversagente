@@ -354,6 +354,11 @@ export const CategoriesFilter = () => {
                 />
               </LoadingFallback>
             }
+            ListEmptyComponent={
+              <Flex width="100%" alignItems="center" justifyContent="center">
+                <Text color="gray.500">Não há categorias nesse filtro.</Text>
+              </Flex>
+            }
           />
         </LoadingFallback>
       </Box>
