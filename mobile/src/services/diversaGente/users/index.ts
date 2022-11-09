@@ -25,9 +25,16 @@ export const findAllUsers = async (options: QueryOptions = {}) => {
   }
 };
 
-export const findUserByUsername = async (username?: string) => {
+export const findUserByUsername = async <
+  GenericIncluded extends object = object,
+>(
+  username?: string,
+  options: QueryOptions = {},
+) => {
   try {
-    const response = await diversagenteBaseApi.get<User>(`/users/${username}`);
+    const response = await diversagenteBaseApi.get<
+      IncludeInto<User, GenericIncluded>
+    >(`/users/${username}`, {});
 
     const user = response.data;
     console.info('USER!', response.data);
