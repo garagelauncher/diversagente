@@ -10,6 +10,7 @@ import {
   Text,
   FavouriteIcon,
   Pressable,
+  useToast,
 } from 'native-base';
 import { FunctionComponent, useState } from 'react';
 import { Share } from 'react-native';
@@ -114,6 +115,10 @@ export const Post: FunctionComponent<PostProps> = ({
     linkTo(`/posts/${post.id}`);
   };
 
+  const handleNavigateToProfileDetails = () => {
+    linkTo(`/profile/${post.owner.username}`);
+  };
+
   const handleNavigateToPostComments = () => {
     linkTo(`/posts/${post.id}/comments`);
   };
@@ -127,19 +132,19 @@ export const Post: FunctionComponent<PostProps> = ({
 
     try {
       const result = await Share.share({
-        message: `https://www.diversagente.com/posts/${post.id}`,
+        message: `https://dev-diversagente.herokuapp.com/mobile/posts/${post.id}`,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
           alert('shared with activity type of ' + result.activityType);
         } else {
-          alert('shared');
+          console.log('shared');
         }
       } else if (result.action === Share.dismissedAction) {
-        alert('dismissed');
+        console.log('dismissed');
       }
     } catch (error: any) {
-      alert(error.message);
+      console.log(error.message);
     }
   };
 
@@ -157,15 +162,19 @@ export const Post: FunctionComponent<PostProps> = ({
         justifyContent="space-between"
       >
         <Flex direction="row" alignItems="center">
-          <Avatar
-            borderRadius={6}
-            backgroundColor={post.owner.picture ? 'transparent' : 'primary.500'}
-            source={{
-              uri: String(post.owner.picture),
-            }}
-          >
-            {userInitials}
-          </Avatar>
+          <TouchableOpacity onPress={handleNavigateToProfileDetails}>
+            <Avatar
+              borderRadius={6}
+              backgroundColor={
+                post.owner.picture ? 'transparent' : 'primary.500'
+              }
+              source={{
+                uri: String(post.owner.picture),
+              }}
+            >
+              {userInitials}
+            </Avatar>
+          </TouchableOpacity>
           <Flex marginLeft={5}>
             <Text fontWeight={'bold'}>{post.owner.name}</Text>
             <Text color="gray.500">{formattedCreatedAtDate}</Text>
@@ -262,22 +271,33 @@ export const Post: FunctionComponent<PostProps> = ({
             </Pressable>
           </Flex>
           <Flex direction="row" alignItems="center">
-            <Icon
-              as={Feather}
-              name="message-circle"
-              size={7}
-              onPress={handleNavigateToPostComments}
-            />
-            <Text
-              marginLeft={2}
-              fontSize={18}
-              onPress={handleNavigateToPostComments}
-            >
-              {post._count.comments}
-            </Text>
+            <TouchableOpacity>
+              <Icon
+                as={Feather}
+                name="message-circle"
+                size={7}
+                onPress={handleNavigateToPostComments}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Text
+                marginLeft={2}
+                fontSize={18}
+                onPress={handleNavigateToPostComments}
+              >
+                {post._count.comments}
+              </Text>
+            </TouchableOpacity>
           </Flex>
         </HStack>
-        <Icon as={Feather} name="share-2" size={7} onPress={handleSharePost} />
+        <TouchableOpacity>
+          <Icon
+            as={Feather}
+            name="share-2"
+            size={7}
+            onPress={handleSharePost}
+          />
+        </TouchableOpacity>
       </Flex>
     </Flex>
   );

@@ -23,6 +23,7 @@ import { Alert, Dimensions, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import MapView, { Marker, Region } from 'react-native-maps';
 
+import { AppBar } from '@src/components/AppBar';
 import { baseCoordinates } from '@src/configs';
 import { Category } from '@src/contracts/Category';
 import { useAuth } from '@src/hooks/useAuth';
@@ -69,14 +70,14 @@ export const FormCreateLocation = () => {
     navigation.navigate('SelectLocationMap');
   };
 
-  const fetchAllCategories = async () => {
+  const fetchAllCategories = useCallback(async () => {
     try {
       const categoriesFromApi = await diversaGenteServices.findAllCategories();
       setCategories(categoriesFromApi.results);
     } catch (error) {
       console.info('Error while fetching all categories', error);
     }
-  };
+  }, []);
 
   const getCurrentUserLocation = useCallback(async () => {
     const { status } = await ExpoLocation.requestForegroundPermissionsAsync();
@@ -132,11 +133,12 @@ export const FormCreateLocation = () => {
 
   useEffect(() => {
     getCurrentUserLocation();
+    fetchAllCategories();
 
     return () => {
       setInitialPosition(undefined);
     };
-  }, [getCurrentUserLocation]);
+  }, [getCurrentUserLocation, fetchAllCategories]);
 
   const updateCategoryIdSelected = (category: Category) => {
     setCategory(category);
@@ -144,6 +146,8 @@ export const FormCreateLocation = () => {
 
   return (
     <Box width="100%" backgroundColor="gray.100" flex={1}>
+      <AppBar />
+
       <ScrollView
         flex={1}
         padding={4}
@@ -151,7 +155,7 @@ export const FormCreateLocation = () => {
         _contentContainerStyle={{
           minW: '72',
         }}
-        paddingTop={10}
+        paddingTop={2}
       >
         <VStack space={4}>
           <Heading color="gray.900">Criar um novo local</Heading>
@@ -262,7 +266,6 @@ export const FormCreateLocation = () => {
                 endIcon: <CheckIcon size={5} />,
               }}
               mt="1"
-              onOpen={fetchAllCategories}
             >
               {categories.map((category) => {
                 return (

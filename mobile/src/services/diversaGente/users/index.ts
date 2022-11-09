@@ -25,9 +25,16 @@ export const findAllUsers = async (options: QueryOptions = {}) => {
   }
 };
 
-export const findUserByUsername = async (username?: string) => {
+export const findUserByUsername = async <
+  GenericIncluded extends object = object,
+>(
+  username?: string,
+  options: QueryOptions = {},
+) => {
   try {
-    const response = await diversagenteBaseApi.get<User>(`/users/${username}`);
+    const response = await diversagenteBaseApi.get<
+      IncludeInto<User, GenericIncluded>
+    >(`/users/${username}`, {});
 
     const user = response.data;
     console.info('USER!', response.data);
@@ -83,24 +90,34 @@ export const updateUserData = async ({
   }
 };
 
-export const updateUserAvatar = async <GenericIncluded extends object = object>(
-  username?: string,
-  options: QueryOptions = {},
-) => {
+export const updateUserAvatar = async ({
+  username,
+  body,
+}: {
+  username: string;
+  body: FormData;
+}) => {
+  if (!body) {
+    console.debug('no body provided');
+    return;
+  }
+
   try {
-    const response = await diversagenteBaseApi.patch<
-      IncludeInto<User, GenericIncluded>
-    >(`/users/${username}/avatar`, {
-      params: {
-        ...parseQueryOptions(options),
+    const response = await diversagenteBaseApi.patch(
+      `/users/${username}/avatar`,
+      body,
+      {
+        headers: {
+          'content-type': 'multipart/form-data',
+        },
       },
-    });
+    );
 
     const user = response.data;
-    console.info('CATEGORY!', response.data);
+    console.info('user avatar!', response.data);
     return user;
   } catch (error: any) {
-    console.error('error when fetching category info', username);
+    console.error('error when patching user avatar info', username);
 
     if (error.isAxiosError) {
       console.error(error.response);

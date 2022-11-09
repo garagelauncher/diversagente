@@ -10,8 +10,9 @@ import {
   NativeBaseProvider,
   extendTheme,
   Center,
+  StatusBar,
 } from 'native-base';
-import React, { useState } from 'react';
+import React from 'react';
 
 import DiversagenteLogo from '@src/assets/logo.png';
 import { apiBaseUrl, Oauth2 } from '@src/configs';
@@ -19,15 +20,8 @@ import { useAuth } from '@src/hooks/useAuth';
 
 export const Login = () => {
   const { signInWithGoogle, isLoading } = useAuth();
-  const [isActiveDeveloperHelper, setIsActiveDeveloperHelper] = useState(false);
+  // const [isActiveDeveloperHelper, setIsActiveDeveloperHelper] = useState(false);
 
-  const [fontsLoaded] = useFonts({
-    CarterOne_400Regular,
-  });
-
-  if (!fontsLoaded) {
-    return null;
-  }
   const config = {
     dependencies: {
       // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -57,73 +51,57 @@ export const Login = () => {
   console.info(Oauth2);
   console.log(apiBaseUrl);
 
-  function handleDeveloperHelper() {
-    setIsActiveDeveloperHelper(!isActiveDeveloperHelper);
-  }
+  // function handleDeveloperHelper() {
+  //   setIsActiveDeveloperHelper(!isActiveDeveloperHelper);
+  // }
 
   return (
     <NativeBaseProvider config={config} theme={theme}>
+      <StatusBar barStyle="light-content" backgroundColor="transparent" />
       <Flex flex={1} justifyContent="space-evenly">
-        <Box
-          bg={{
-            linearGradient: {
-              colors: ['amber.200', 'lime.400', 'cyan.300'],
-              start: [0, 0],
-              end: [1, 0],
-            },
-          }}
-          width={'100%'}
-          height={'100%'}
-        >
-          <Image
-            source={DiversagenteLogo}
-            alt="Diversagente"
-            height={400}
-            width={360}
-            alignItems="center"
-            marginLeft={5}
-          />
+        <Box bg={'yellow.200'} width={'100%'} height={'100%'}>
+          <Flex alignItems="center">
+            <Image
+              source={DiversagenteLogo}
+              alt="Diversagente"
+              height={400}
+              width={360}
+              alignItems="center"
+              marginLeft={5}
+            />
+            <Flex direction="row">
+              <Text color={'blue.600'} fontSize="4xl">
+                DIVERSA
+              </Text>
+              <Text color={'amber.500'} fontSize="4xl">
+                GENTE
+              </Text>
+            </Flex>
+          </Flex>
           <Flex direction="column">
-            <Box
-              width="310"
-              bg="yellow.400"
-              p="4"
-              marginLeft={12}
-              borderColor={'orange.400'}
-              borderLeftWidth={4}
-              borderRightWidth={4}
-              borderTopWidth={4}
-            >
-              <Box></Box>
-            </Box>
             <Center
               bg="lime.50"
-              _text={{
-                color: 'info.500',
-                fontSize: '30',
-              }}
               marginLeft={12}
-              height={250}
               shadow={4}
               width={{
                 base: 310,
                 lg: 250,
               }}
-              borderColor={'orange.400'}
               borderWidth={4}
+              borderColor="info.200"
+              background="info.200"
+              borderRadius={10}
+              padding={4}
             >
-              Bem-vindo ao
-              <Flex direction="row">
-                <Text color={'blue.600'} fontSize="4xl">
-                  DIVERSA
-                </Text>
-                <Text color={'amber.500'} fontSize="4xl">
-                  GENTE
-                </Text>
-              </Flex>
+              <Text color="muted.600" fontFamily={'Roboto'} bold fontSize="lg">
+                Venha fazer parte da
+              </Text>
+              <Text color="muted.600" fontFamily={'Roboto'} bold fontSize="lg">
+                comunidade neurodiversa!
+              </Text>
               <Button
                 leftIcon={<Icon as={AntDesign} name="google" size={5} />}
-                colorScheme={'blue'}
+                colorScheme="red"
                 borderRadius={4}
                 onPress={handleLogin}
                 size="sm"
@@ -132,19 +110,10 @@ export const Login = () => {
                 height={16}
                 width={225}
               >
-                <Text color="white" fontSize="md">
+                <Text color="white" fontSize="md" fontFamily={'Roboto'} bold>
                   Entrar com o Google
                 </Text>
               </Button>
-              <Button
-                size={'lg'}
-                backgroundColor={
-                  isActiveDeveloperHelper ? 'pink.600' : 'transparent'
-                }
-                onPress={handleDeveloperHelper}
-                alignSelf={'flex-end'}
-              />
-              {isActiveDeveloperHelper && <Text>{JSON.stringify(Oauth2)}</Text>}
             </Center>
           </Flex>
         </Box>

@@ -11,27 +11,25 @@ import { PostDetails } from '@src/screens/PostDetails';
 import { SelectComplaint } from '@src/screens/SelectComplaint';
 import { SubcategoryFilter } from '@src/screens/SubcategoriesFilter';
 import { Subcategory } from '@src/screens/Subcategory';
+import { ViewProfile } from '@src/screens/ViewProfile';
 
 export type StackForumNavigatorParamList = {
   Forum: undefined;
   FormCreatePost: { categoryId?: string | null; subcategoryId?: string | null };
   SelectCategory: undefined;
   SelectSubcategory: {
-    categoryId?: string;
-    categoryTitle?: string;
-    icon?: string;
-    iconProvider?: string;
+    categoryId: string;
   };
   Subcategory: {
-    subcategoryId?: string;
-    categoryId?: string;
-    categoryTitle?: string;
+    categoryId: string;
+    subcategoryId: string;
   };
   PostDetails: { postId: string };
   Comments: { postId: string };
   Likes: { postId: string };
-  FormCreateSubcategory: { categoryId?: string; subcategoryId?: string };
+  FormCreateSubcategory: { categoryId: string; subcategoryId?: string };
   SelectComplaint: { resource: ComplaintResources; resourceId: string };
+  ViewProfile: { username: string };
 };
 
 const { Navigator, Screen } =
@@ -55,6 +53,7 @@ export const StackForumPrivateRoutes = () => {
       <Screen name="Subcategory" component={Subcategory} />
       <Screen name="FormCreateSubcategory" component={FormCreateSubcategory} />
       <Screen name="SelectComplaint" component={SelectComplaint} />
+      <Screen name="ViewProfile" component={ViewProfile} />
     </Navigator>
   );
 };

@@ -25,9 +25,12 @@ import { SubcategoryHeader } from './SubcategoryHeader';
 import { LoadingFallback } from '@src/components/LoadingFallback';
 import { Post, UserHasInteracted } from '@src/components/Post';
 import { PER_PAGE_ITEMS, userIdHelper } from '@src/configs';
+import { useCategoryDetails } from '@src/hooks/queries/details/useCategoryDetails';
+import { useSubcategoryDetails } from '@src/hooks/queries/details/useSubcategoryDetails';
 import { usePosts } from '@src/hooks/queries/usePosts';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.routes';
+import { getUsernameInitials } from '@src/utils/getUsernameInitials';
 
 type SubcategoriesNavigationProps = NavigationProp<
   StackForumNavigatorParamList,
@@ -50,12 +53,16 @@ export const Subcategory = () => {
   const postFilters = {
     subcategoryId: subcategoryId,
   };
+  const { data: category, isLoading: isLoadingCategory } =
+    useCategoryDetails(categoryId);
+  const { data: subcategory, isLoading: isLoadingSubcategory } =
+    useSubcategoryDetails(subcategoryId);
 
   const {
     data,
     hasNextPage,
     fetchNextPage,
-    isLoading,
+    isLoading: isLoadingPosts,
     isFetchingNextPage,
     refetch,
     isRefetching,
@@ -76,6 +83,8 @@ export const Subcategory = () => {
       },
     },
   });
+
+  const isLoading = isLoadingPosts || isLoadingCategory || isLoadingSubcategory;
 
   const handleLoadMorePosts = () => {
     if (hasNextPage) {
@@ -98,17 +107,54 @@ export const Subcategory = () => {
 
   const navigation = useNavigation<SubcategoriesNavigationProps>();
 
+  const handleNavigateToSelectSubcategory = () => {
+    navigation.navigate('SelectSubcategory', {
+      categoryId,
+    });
+  };
+
   return (
     <>
       <Flex
         backgroundColor="gray.50"
         width="100%"
         marginTop={[isReadingModeActive ? 6 : 0]}
+        paddingBottom={16}
       >
         {!isReadingModeActive && (
-          <>
-            <SubcategoryHeader categoryId={categoryId} />
-          </>
+          <Box bgColor={'darkBlue.700'}>
+            <SubcategoryHeader
+              isLoading={isLoading}
+              userInitials={getUsernameInitials(String(user?.name))}
+              avatar={user?.picture}
+              title={subcategory?.title ?? ''}
+              subtitle={subcategory?.description ?? ''}
+              badgeName={category?.title ?? ''}
+              icon={category?.icon}
+              iconProvider={category?.iconProvider}
+              gobackComponent={
+                <IconButton
+                  onPress={handleNavigateToSelectSubcategory}
+                  _pressed={{ opacity: '0.6' }}
+                  variant="solid"
+                  marginTop={18}
+                  bgColor={'darkBlue.700'}
+                  icon={
+                    <Icon
+                      size={'2xl'}
+                      color={'white'}
+                      marginBottom={2}
+                      as={<Feather name="arrow-left" size={32} />}
+                    />
+                  }
+                  position="absolute"
+                  top={6}
+                  ml={4}
+                  zIndex={1}
+                />
+              }
+            />
+          </Box>
         )}
 
         <Flex
@@ -164,7 +210,7 @@ export const Subcategory = () => {
               </Box>
             )}
             keyExtractor={(item) => item.id}
-            contentContainerStyle={{ paddingBottom: 350 }}
+            contentContainerStyle={{ paddingBottom: 450 }}
             onEndReached={handleLoadMorePosts}
             onEndReachedThreshold={0.85}
             refreshing={isRefetching && !isFetchingNextPage}

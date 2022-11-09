@@ -33,7 +33,7 @@ describe('SubcategoriesService', () => {
   });
 
   it('should be able to create a subcategory with success', async () => {
-    const subcategory = {
+    const subcategory1 = {
       id: 'aaaaaa-1111',
       name: 'especificação x',
       title: 'subcategoria de saúde específica',
@@ -44,7 +44,7 @@ describe('SubcategoriesService', () => {
       categoryId: 'aaaaaa-1111-aaaaaaa-1111',
     };
 
-    const createdSubcategory = await subcategoryService.create(subcategory);
+    const createdSubcategory = await subcategoryService.create(subcategory1);
     expect(createdSubcategory).toEqual(subcategoryMock);
   });
 

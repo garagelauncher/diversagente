@@ -20,6 +20,7 @@ import {
 } from 'native-base';
 import React, { useMemo, useState } from 'react';
 
+import { AppBar } from '@src/components/AppBar';
 import { LoadingFallback } from '@src/components/LoadingFallback';
 import { UserReview } from '@src/components/UserReview';
 import { PER_PAGE_ITEMS } from '@src/configs';
@@ -86,7 +87,8 @@ export const Reviews = () => {
   };
 
   return (
-    <VStack space={2} px={4} pt={12} flex={1}>
+    <VStack space={2} px={4} flex={1}>
+      <AppBar />
       <IconButton
         colorScheme="gray"
         variant={'solid'}

@@ -68,13 +68,13 @@
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="https" android:host="dev-diversagente.herokuapp.com" />
+        <data android:scheme="https" android:host="dev-diversagente.herokuapp.com" android:pathPrefix="/mobile" />
       </intent-filter>
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="https" android:host="diversagente.herokuapp.com" />
+        <data android:scheme="https" android:host="diversagente.herokuapp.com" android:pathPrefix="/mobile" />
       </intent-filter>
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>

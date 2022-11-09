@@ -17,6 +17,7 @@ import {
 } from 'native-base';
 import { useState } from 'react';
 
+import { AppBar } from '@src/components/AppBar';
 import { ConditionallyRender } from '@src/components/ConditionallyRender';
 import { LoadingFallback } from '@src/components/LoadingFallback';
 import { ModalNewComment } from '@src/components/ModalNewComment';
@@ -101,6 +102,7 @@ export const PostDetails = () => {
       backgroundColor="gray.100"
       contentContainerStyle={{ paddingBottom: 100, paddingTop: 100 }}
     >
+      <AppBar position="absolute" top={0} left={0} right={0} zIndex={1} />
       <IconButton
         colorScheme="gray"
         variant={'solid'}

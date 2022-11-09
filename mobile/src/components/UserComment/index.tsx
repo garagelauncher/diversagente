@@ -1,5 +1,7 @@
+import { useLinkTo } from '@react-navigation/native';
 import { Avatar, Flex, Text } from 'native-base';
 import { FunctionComponent, useState } from 'react';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { ConditionallyRender } from '../ConditionallyRender';
 import { CommentEdit } from './CommentEdit';
@@ -19,11 +21,16 @@ export const UserComment: FunctionComponent<UserCommentProps> = ({
   comment: { owner, text, createdAt, id, postId },
 }) => {
   const { user } = useAuth();
+  const linkTo = useLinkTo();
   const [isEditModeActive, setIsEditModeActive] = useState(false);
 
   const isOwner = user?.id === owner.id;
   const userInitials = getUsernameInitials(owner.name);
   const formattedCreatedAtDate = formatDateSocialMedia(createdAt);
+
+  const handleNavigateToProfileDetails = () => {
+    linkTo(`/profile/${owner.username}`);
+  };
 
   return (
     <Flex
@@ -39,15 +46,17 @@ export const UserComment: FunctionComponent<UserCommentProps> = ({
         justifyContent="space-between"
       >
         <Flex direction="row" alignItems="center">
-          <Avatar
-            borderRadius={6}
-            backgroundColor={owner.picture ? 'transparent' : 'primary.500'}
-            source={{
-              uri: String(owner.picture),
-            }}
-          >
-            {userInitials}
-          </Avatar>
+          <TouchableOpacity onPress={handleNavigateToProfileDetails}>
+            <Avatar
+              borderRadius={6}
+              backgroundColor={owner.picture ? 'transparent' : 'primary.500'}
+              source={{
+                uri: String(owner.picture),
+              }}
+            >
+              {userInitials}
+            </Avatar>
+          </TouchableOpacity>
           <Flex marginLeft={5}>
             <Text fontWeight={'bold'}>{owner.name}</Text>
             <Text color="gray.500">{formattedCreatedAtDate}</Text>

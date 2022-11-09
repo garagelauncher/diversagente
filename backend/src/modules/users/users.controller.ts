@@ -122,7 +122,7 @@ export class UsersController {
     @UploadedFile() file: Express.Multer.File,
   ) {
     console.debug(email);
-    console.debug(file);
+    console.debug('file', file);
 
     return this.usersService.uploadAvatar(email, file);
   }

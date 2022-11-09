@@ -111,12 +111,12 @@ export const Header: FunctionComponent<HeaderProps> = ({
           </TouchableOpacity>
         </>
       )}
-      <AppBar />
+      <AppBar backgroundColor="darkBlue.700" />
 
       <Flex
-        paddingTop={[screenName ? 0 : 8]}
+        paddingTop={1}
         paddingX={4}
-        paddingBottom={4}
+        paddingBottom={8}
         backgroundColor="darkBlue.700"
         flexDirection={'row'}
         justifyContent="space-between"
