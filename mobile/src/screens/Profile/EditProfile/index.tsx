@@ -17,7 +17,10 @@ import {
   WarningOutlineIcon,
   TextArea,
   Input,
+  Spinner
 } from 'native-base';
+
+import * as ImagePicker from 'expo-image-picker';
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -75,6 +78,28 @@ export const EditProfile = () => {
   });
   console.log('errors', errors);
   const toast = useToast();
+
+  const updateUserAvatarMutation = useMutation(
+    diversaGenteServices.updateUserAvatar,
+    {
+      onSuccess: async () => {
+        toast.show({
+          description: 'Foto atualizada!',
+          bg: 'green.500',
+        });
+        setIsLoading(false);
+        await refetchUser();
+      },
+      onError: () => {
+        toast.show({
+          description: 'Não foi possível atualizar a foto!',
+          background: 'red.500',
+        });
+        setIsLoading(false);
+      },
+    },
+  );
+
   const updateUserDataMutation = useMutation(
     diversaGenteServices.updateUserData,
     {
@@ -143,6 +168,31 @@ export const EditProfile = () => {
     navigation.navigate('Profile', { userId: user?.id as string });
   };
 
+
+
+  async function takeAndUploadPhotoAsync() {
+    setIsLoading(true);
+    const result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+    });
+  
+    if (result.cancelled) {
+      return;
+    }
+  
+    const localUri = result.uri;
+    const filename = localUri.split('/').pop();
+  
+    const match = /\.(\w+)$/.exec(filename);
+    const type = match ? `image/${match[1]}` : `image`;
+  
+    const formData = new FormData();
+    formData.append('file', { uri: localUri, name: filename, type });
+  
+    await updateUserAvatarMutation.mutateAsync(user?.email, formData);
+  }
+
   return (
     <ScrollView>
       <AppBar position="absolute" left={0} right={0} top={0} />
@@ -180,13 +230,14 @@ export const EditProfile = () => {
             >
               NB
             </Avatar>
-            {/**
+            
             <Box mt={-8} ml={32} bgColor={'blue.600'} p={2} borderRadius={20}>
-              <TouchableOpacity>
+              {isLoading && <Spinner size={'lg'} color="orange.500"/>}
+              <TouchableOpacity onPress={takeAndUploadPhotoAsync}>
                 <Feather name="edit" size={16} color="white" />
               </TouchableOpacity>
             </Box>
-            */}
+           
           </Flex>
 
           <Box mt={6}>

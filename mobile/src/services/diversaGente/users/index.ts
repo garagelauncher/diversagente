@@ -83,24 +83,23 @@ export const updateUserData = async ({
   }
 };
 
-export const updateUserAvatar = async <GenericIncluded extends object = object>(
+export const updateUserAvatar = async (
   username?: string,
-  options: QueryOptions = {},
+  body: any,
 ) => {
   try {
-    const response = await diversagenteBaseApi.patch<
-      IncludeInto<User, GenericIncluded>
-    >(`/users/${username}/avatar`, {
-      params: {
-        ...parseQueryOptions(options),
+    const response = await diversagenteBaseApi.patch(`/users/${username}/avatar`, {
+      body,
+      headers: {
+        'content-type': 'multipart/form-data',
       },
     });
 
     const user = response.data;
-    console.info('CATEGORY!', response.data);
+    console.info('user avatar!', response.data);
     return user;
   } catch (error: any) {
-    console.error('error when fetching category info', username);
+    console.error('error when patching user avatar info', username);
 
     if (error.isAxiosError) {
       console.error(error.response);
