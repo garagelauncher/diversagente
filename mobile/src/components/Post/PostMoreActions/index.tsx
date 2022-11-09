@@ -87,7 +87,7 @@ export const PostMoreActions: FunctionComponent<PostMoreActionsProps> = ({
   };
 
   const handleCopyToClipboard = useCallback(async () => {
-    await clipboard.onCopy(`https://diversagente.com.br/post/${postId}`);
+    await clipboard.onCopy(`https://dev-diversagente.herokuapp.com/mobile/posts/${postId}`);
     toast.show({
       description: 'Link copiado com sucesso!',
       bg: 'green.500',
