@@ -1,6 +1,8 @@
 import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
 
+import { isProduction } from '@src/configs';
+
 export const getPushNotificationToken = async () => {
   console.log('@getPushNotificationToken');
   const { granted } = await Notifications.getPermissionsAsync();
@@ -17,7 +19,10 @@ export const getPushNotificationToken = async () => {
 
   if (granted) {
     console.log('@getExpoPushTokenAsync');
-    const pushToken = await Notifications.getExpoPushTokenAsync();
+    const pushToken = isProduction
+      ? await Notifications.getDevicePushTokenAsync()
+      : await Notifications.getExpoPushTokenAsync();
+
     console.log(' pushToken', pushToken);
     console.log('@pushToken');
     return pushToken.data;

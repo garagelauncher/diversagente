@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-unresolved
-import { API_URL, CLIENT_ID, REDIRECT_URI } from '@env';
+import { API_URL, CLIENT_ID, REDIRECT_URI, IS_PRODUCTION } from '@env';
 
 export const apiBaseUrl = API_URL;
 
@@ -16,3 +16,5 @@ export const baseCoordinates = {
 export const userIdHelper = 'aaaaaaaaaaaaaaaaaaaaaaaa';
 
 export const PER_PAGE_ITEMS = 3;
+
+export const isProduction = Boolean(IS_PRODUCTION || false);
