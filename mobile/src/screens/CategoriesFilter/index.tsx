@@ -86,32 +86,43 @@ export const CategoriesFilter = () => {
     },
     FAVORITE: {
       filter: {
-        id: user?.lovelyCategoriesIds === undefined || Array.isArray(user?.lovelyCategoriesIds) && user?.lovelyCategoriesIds.length === 0 ? ["bbbbbbbbbbbbbbbbbbbbbbbb"
-        ] : user?.lovelyCategoriesIds
+        id:
+          user?.lovelyCategoriesIds === undefined ||
+          (Array.isArray(user?.lovelyCategoriesIds) &&
+            user?.lovelyCategoriesIds.length === 0)
+            ? ['bbbbbbbbbbbbbbbbbbbbbbbb']
+            : user?.lovelyCategoriesIds,
       },
       sort: undefined,
     },
   };
 
-  const { data, hasNextPage, fetchNextPage, isLoading, isFetchingNextPage } =
-    useCategories({
-      sort:
-        selectedCategoryFilterOption === CategoriesFilterEnum.POPULAR
-          ? (filterCategory.POPULAR.sort as
+  const {
+    data,
+    hasNextPage,
+    fetchNextPage,
+    isLoading,
+    isFetchingNextPage,
+    refetch,
+    isRefetching,
+  } = useCategories({
+    sort:
+      selectedCategoryFilterOption === CategoriesFilterEnum.POPULAR
+        ? (filterCategory.POPULAR.sort as
             | [string, object | 'ASC' | 'DESC']
             | undefined)
-          : (filterCategory.FAVORITE.sort as
+        : (filterCategory.FAVORITE.sort as
             | [string, object | 'ASC' | 'DESC']
             | undefined),
-      filter:
-        selectedCategoryFilterOption === CategoriesFilterEnum.POPULAR
-          ? {
+    filter:
+      selectedCategoryFilterOption === CategoriesFilterEnum.POPULAR
+        ? {
             ...filterCategory.POPULAR.filter,
           }
-          : {
+        : {
             ...filterCategory.FAVORITE.filter,
           },
-    });
+  });
 
   const handleLoadMoreCategories = () => {
     if (hasNextPage) {
@@ -131,6 +142,10 @@ export const CategoriesFilter = () => {
   const changeCategoryFilterOption = (categoryFilterOption: string) => {
     console.log(categoryFilterOption);
     setSelectedCategoryFilterOption(categoryFilterOption);
+  };
+
+  const handlePullCategoryListToRefresh = () => {
+    refetch();
   };
 
   const skeletonsCategories = new Array(5).fill(0);
@@ -281,6 +296,8 @@ export const CategoriesFilter = () => {
             contentContainerStyle={{ padding: 20 }}
             onEndReached={handleLoadMoreCategories}
             onEndReachedThreshold={0.9}
+            refreshing={isRefetching && !isFetchingNextPage}
+            onRefresh={handlePullCategoryListToRefresh}
             ListFooterComponent={
               <LoadingFallback
                 fallback={<Spinner color="orange.500" size="lg" />}

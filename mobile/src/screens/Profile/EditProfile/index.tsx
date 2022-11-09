@@ -17,22 +17,24 @@ import {
   WarningOutlineIcon,
   TextArea,
   Input,
+  Spinner,
 } from 'native-base';
+import { convertRemToAbsolute } from 'native-base/lib/typescript/theme/v33x-theme/tools';
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import MultiSelect from 'react-native-multiple-select';
 import { useMutation } from 'react-query';
 import * as yup from 'yup';
 
 import { AppBar } from '@src/components/AppBar';
+import { LoadingFallback } from '@src/components/LoadingFallback';
 import { UserEditProps } from '@src/contracts/User';
+import { useCategories } from '@src/hooks/queries/useCategories';
 import { useAuth } from '@src/hooks/useAuth';
 import { StackProfileNavigatorParamList } from '@src/routes/stacks/profileStack.routes';
 import { diversaGenteServices } from '@src/services/diversaGente';
-import { useCategories } from '@src/hooks/queries/useCategories';
-1
-	
-import MultiSelect from 'react-native-multiple-select';
+import { queryClient } from '@src/services/queryClient';
 
 type ProfileScreenNavigationProps = NavigationProp<
   StackProfileNavigatorParamList,
@@ -41,19 +43,21 @@ type ProfileScreenNavigationProps = NavigationProp<
 
 export const EditProfile = () => {
   const { user, refetchUser } = useAuth();
-  
+
   const [isPersonalInfoOpen, setPersonalInfoOpen] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [selectedCategories, setSelectedCategories] = useState(user?.lovelyCategoriesIds); // put something like user?.lovelyCategoriesIds ?? []
-1
-  const {
-    data: categoriesData,
-  } = useCategories({
-    range: [0, 30],
-    sort: ['createdAt', 'ASC'],
-  });
-  const categories = categoriesData?.pages.map((page) => page.results).flat() ?? [];
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(
+    user?.lovelyCategoriesIds ?? [],
+  ); // put something like
+  console.log('selectedCategories', selectedCategories);
+  const { data: categoriesData, isLoading: isLoadingCategories } =
+    useCategories({
+      range: [0, 30],
+      sort: ['createdAt', 'ASC'],
+    });
+  const categories =
+    categoriesData?.pages.map((page) => page.results).flat() ?? [];
 
   const schema = yup.object({
     name: yup
@@ -65,11 +69,7 @@ export const EditProfile = () => {
       .string()
       .max(100, 'A descrição deve conter no máximo 100 caracteres')
       .optional(),
-    // lovelyCategoriesIds: yup
-    //   .array()
-    //   .of(yup.string())
-    //   .min(1, 'Selecione pelo menos uma categoria de interesse.')
-    //   .required('Por favor, selecione ao menos uma categoria.'),
+    lovelyCategoriesIds: yup.array().of(yup.string()).optional(),
     language: yup.string().optional(),
   });
 
@@ -100,6 +100,7 @@ export const EditProfile = () => {
           bg: 'green.500',
         });
         setIsLoading(false);
+        queryClient.invalidateQueries(['diversagente@categories']);
         await refetchUser();
       },
       onError: () => {
@@ -119,6 +120,13 @@ export const EditProfile = () => {
       username: user?.username,
       biograph: data.biograph,
       name: data.name,
+    });
+  };
+
+  const handleUpdateCategories = async () => {
+    await updateUserDataMutation.mutateAsync({
+      username: user?.username,
+      lovelyCategoriesIds: selectedCategories,
     });
   };
 
@@ -159,15 +167,9 @@ export const EditProfile = () => {
     navigation.navigate('Profile', { userId: user?.id as string });
   };
 
-  const onSelectedCategoriesChange = (newSelectedCategories) => {
- 
+  const onSelectedCategoriesChange = (newSelectedCategories: string[]) => {
+    console.log('newSelectedCategories', newSelectedCategories);
     setSelectedCategories(newSelectedCategories);
- 
-    for (let i = 0; i < newSelectedCategories.length; i++) {
-      var tempItem = categories.find(item => item.id === newSelectedCategories[i]);
-      console.log(tempItem);
-    }
- 
   };
 
   return (
@@ -306,13 +308,11 @@ export const EditProfile = () => {
             </Collapse>
           </Box>
 
-
-
           <Box mt={6}>
             <TouchableOpacity onPress={handlePerfonalInfoClose}>
               <Flex flexDir="row" mt={5}>
                 <Text fontSize={20} fontWeight={'semibold'}>
-                  Informações pessoais
+                  Categorias favoritas
                 </Text>
                 <MaterialIcons
                   style={{
@@ -329,32 +329,39 @@ export const EditProfile = () => {
 
             <Collapse isOpen={isPersonalInfoOpen} mt={2} w={'100%'}>
               <Box mb={6}>
-                <MultiSelect
-                  hideTags
-                  items={categories}
-                  uniqueKey="id"
-                  onSelectedItemsChange={onSelectedCategoriesChange}
-                  selectedItems={selectedCategories}
-                  selectText="Selecione categorias"
-                  searchInputPlaceholderText="Procure categorias aqui..."
-                  onChangeInput={(text) => console.log(text)}
-                  tagRemoveIconColor="#CCC"
-                  tagBorderColor="#CCC"
-                  tagTextColor="#CCC"
-                  selectedItemTextColor="#CCC"
-                  selectedItemIconColor="#CCC"
-                  itemTextColor="#000"
-                  displayKey="title"
-                  searchInputStyle={{ color: '#CCC' }}
-                  submitButtonColor="#00BFA5"
-                  submitButtonText="Selecionar"
-                />
+                <LoadingFallback
+                  fallback={<Spinner color="orange.500" size="lg" />}
+                  isLoading={isLoadingCategories}
+                >
+                  <MultiSelect
+                    hideTags
+                    items={categories}
+                    uniqueKey="id"
+                    onSelectedItemsChange={onSelectedCategoriesChange}
+                    selectedItems={selectedCategories}
+                    selectText="Selecione categorias"
+                    searchInputPlaceholderText="Procure categorias aqui..."
+                    onChangeInput={(text) => console.log(text)}
+                    tagRemoveIconColor="#CCC"
+                    tagBorderColor="#CCC"
+                    tagTextColor="#CCC"
+                    selectedItemTextColor="#CCC"
+                    selectedItemIconColor="#CCC"
+                    itemTextColor="#000"
+                    displayKey="title"
+                    searchInputStyle={{ color: '#CCC' }}
+                    submitButtonColor="#004282"
+                    submitButtonText="Selecionar"
+                    selectedText="selecionadas"
+                    noItemsText="Nenhuma categoria com esse texto"
+                  />
+                </LoadingFallback>
               </Box>
 
               <Button
                 bgColor={'darkBlue.600'}
-                isLoading={isLoading}
-                onPress={handleSubmit(handleUpdateUserPersonalInfo)}
+                isLoading={updateUserDataMutation.isLoading}
+                onPress={handleUpdateCategories}
               >
                 Salvar categorias favoritas
               </Button>
