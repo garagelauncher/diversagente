@@ -1,4 +1,5 @@
 import { Feather } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import * as ExpoLocation from 'expo-location';
 import {
@@ -14,7 +15,8 @@ import {
   useToast,
   VStack,
   Alert as NativeBaseAlert,
-  PresenceTransition,
+  Heading,
+  Flex,
 } from 'native-base';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
@@ -23,6 +25,7 @@ import MapView, { Marker, Region, PROVIDER_GOOGLE } from 'react-native-maps';
 import * as customStyles from './styles';
 
 import { AppBar } from '@src/components/AppBar';
+import { ConditionallyRender } from '@src/components/ConditionallyRender';
 import { Location } from '@src/contracts/Location';
 import { translate } from '@src/i18n';
 import { StackLocationNavigatorParamList } from '@src/routes/stacks/locationStack.routes';
@@ -39,11 +42,11 @@ const LONGITUDE_DELTA = 0.0421;
 
 export const Locations = () => {
   const toast = useToast();
-  const [isWelcomeLocationOpen, setIsWelcomeLocationOpen] = useState(true);
+  const [isWelcomeLocationOpen, setIsWelcomeLocationOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isFetchingLocations, setIsFetchingLocations] = useState(false);
   const [radius, setRadius] = useState(20);
-  const [quantity, setQuantity] = useState(2);
+  const [quantity, setQuantity] = useState(10);
   const [locations, setLocations] = useState<Location[]>([]);
   const [initialPosition, setInitialPosition] = useState<Region | undefined>(
     undefined,
@@ -59,8 +62,9 @@ export const Locations = () => {
     navigation.navigate('SelectLocationMap');
   }
 
-  function handleCloseWelcomeLocation() {
+  async function handleCloseWelcomeLocation() {
     setIsWelcomeLocationOpen(false);
+    await AsyncStorage.setItem('diversagente@welcomeLocation', 'false');
   }
 
   const getCurrentUserLocation = useCallback(async () => {
@@ -139,48 +143,65 @@ export const Locations = () => {
     };
   }, [onOpenLocationTab]);
 
+  useEffect(() => {
+    async function checkWelcomeLocation() {
+      const welcomeLocation = await AsyncStorage.getItem(
+        'diversagente@welcomeLocation',
+      );
+      if (!welcomeLocation) {
+        setIsWelcomeLocationOpen(true);
+      }
+    }
+
+    checkWelcomeLocation();
+  }, []);
+
   return (
     <Box flex={1}>
-      <PresenceTransition
-        visible={isWelcomeLocationOpen}
-        initial={{
-          opacity: 0,
-        }}
-        animate={{
-          opacity: 1,
-          transition: {
-            duration: 250,
-          },
-        }}
-      >
-        <NativeBaseAlert
-          w="90%"
-          status={'info'}
-          position="absolute"
-          bottom={10}
-          zIndex={2}
-          alignSelf="center"
-        >
-          <VStack space={2} flexShrink={1} w="100%">
-            <HStack flexShrink={1} space={2} justifyContent="space-between">
-              <HStack space={2} flexShrink={1}>
+      <ConditionallyRender
+        condition={isWelcomeLocationOpen}
+        trueComponent={
+          <NativeBaseAlert
+            w="90%"
+            status={'info'}
+            position="absolute"
+            top={'40%'}
+            zIndex={2}
+            alignSelf="center"
+          >
+            <VStack space={2} flexShrink={1} w="100%">
+              <Flex
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Heading>Locais próximos avaliados</Heading>
+                <IconButton
+                  variant="unstyled"
+                  _focus={{
+                    borderWidth: 0,
+                  }}
+                  icon={<Icon as={<Feather name="x" color="coolGray.600" />} />}
+                  onPress={handleCloseWelcomeLocation}
+                />
+              </Flex>
+              <HStack flexShrink={1} space={2} justifyContent="space-between">
                 <Text fontSize="md" color="coolGray.600">
-                  Aqui você encontra locais próximos avaliados pela comunidade
-                  neurodiversa do diversaGente
+                  Aqui você encontra locais próximos para serem avaliados pela
+                  comunidade neurodiversa do diversaGente!
                 </Text>
               </HStack>
-              <IconButton
-                variant="unstyled"
-                _focus={{
-                  borderWidth: 0,
-                }}
-                icon={<Icon as={<Feather name="x" color="coolGray.600" />} />}
-                onPress={handleCloseWelcomeLocation}
-              />
-            </HStack>
-          </VStack>
-        </NativeBaseAlert>
-      </PresenceTransition>
+              <Text fontSize="md" color="coolGray.400">
+                Você pode criar novos locais, visualizar resenhas e dar sua
+                própria avaliação com uma nota de 1 a 5 estrelas. Os ícones dos
+                locais simbolizam a sua categoria que é aderente as demais
+                categorias do app.
+              </Text>
+            </VStack>
+          </NativeBaseAlert>
+        }
+        falseComponent={null}
+      ></ConditionallyRender>
 
       <Modal isOpen={showModal} onClose={onCloseModal}>
         <Modal.Content maxWidth="400px">
@@ -188,7 +209,7 @@ export const Locations = () => {
           <Modal.Header>{translate('filters')}</Modal.Header>
           <Modal.Body>
             <FormControl>
-              <FormControl.Label>Quantidade</FormControl.Label>
+              <FormControl.Label>Quantidade de locais</FormControl.Label>
               <Input
                 value={String(quantity)}
                 onChangeText={(text) => setQuantity(Number(text || 10))}
@@ -197,7 +218,7 @@ export const Locations = () => {
               />
             </FormControl>
             <FormControl mt="3">
-              <FormControl.Label>Raio em Km</FormControl.Label>
+              <FormControl.Label>Raio em quilômetro</FormControl.Label>
               <Input
                 value={String(radius)}
                 onChangeText={(text) => setRadius(Number(text || 10))}
