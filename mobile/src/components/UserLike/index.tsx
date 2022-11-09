@@ -1,5 +1,7 @@
+import { useLinkTo } from '@react-navigation/native';
 import { Avatar, Flex, Text } from 'native-base';
 import { FunctionComponent } from 'react';
+import { TouchableOpacity } from 'react-native';
 
 import { IncludeInto } from '@src/@types/generics/includeInto';
 import { Like, LikeOwner } from '@src/contracts/Like';
@@ -12,7 +14,12 @@ export type UserLikeProps = {
 export const UserLike: FunctionComponent<UserLikeProps> = ({
   like: { owner },
 }) => {
+  const linkTo = useLinkTo();
   const userInitials = getUsernameInitials(owner.name);
+
+  const handleNavigateToProfileDetails = () => {
+    linkTo(`/profile/${owner.username}`);
+  };
 
   return (
     <Flex
@@ -25,15 +32,17 @@ export const UserLike: FunctionComponent<UserLikeProps> = ({
       alignItems="center"
       justifyContent="flex-start"
     >
-      <Avatar
-        borderRadius={6}
-        backgroundColor={owner.picture ? 'transparent' : 'primary.500'}
-        source={{
-          uri: String(owner.picture),
-        }}
-      >
-        {userInitials}
-      </Avatar>
+      <TouchableOpacity onPress={handleNavigateToProfileDetails}>
+        <Avatar
+          borderRadius={6}
+          backgroundColor={owner.picture ? 'transparent' : 'primary.500'}
+          source={{
+            uri: String(owner.picture),
+          }}
+        >
+          {userInitials}
+        </Avatar>
+      </TouchableOpacity>
       <Text fontWeight={'bold'} marginLeft={5}>
         {owner.name}
       </Text>

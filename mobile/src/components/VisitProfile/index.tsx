@@ -1,13 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/jsx-no-duplicate-props */
 import { Feather, Ionicons } from '@expo/vector-icons';
-import {
-  NavigationProp,
-  useLinkTo,
-  useNavigation,
-} from '@react-navigation/native';
-import axios from 'axios';
-import * as ExpoLocation from 'expo-location';
+import { useLinkTo } from '@react-navigation/native';
 import {
   Avatar,
   Box,
@@ -19,10 +13,10 @@ import {
   Skeleton,
   Spinner,
   Menu,
+  IconButton,
 } from 'native-base';
-import React, { useEffect, useState, FunctionComponent } from 'react';
-import { Alert, FlatList, Pressable } from 'react-native';
-import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import React, { useState, FunctionComponent } from 'react';
+import { FlatList, Pressable } from 'react-native';
 
 import { ConditionallyRender } from '../ConditionallyRender';
 import { ModalConfirmAction } from '../ModalConfirmAction';
@@ -41,26 +35,43 @@ export type VisitProfileProps = {
   username: string;
 };
 
+export interface CountUser {
+  _count: Count;
+}
+
+export interface Count {
+  Comment: number;
+  Complaint: number;
+  Like: number;
+  Location: number;
+  Post: number;
+  Review: number;
+}
+
 export const VisitProfile: FunctionComponent<VisitProfileProps> = ({
   username,
 }) => {
-  const { data: user, isLoading: isUserLoading } = useProfile(username, {
-    include: {
-      _count: {
-        select: {
-          Comment: true,
-          Like: true,
-          Post: true,
-          Review: true,
-          Location: true,
-          Complaint: true,
+  const { data: user, isLoading: isUserLoading } = useProfile<CountUser>(
+    username,
+    {
+      include: {
+        _count: {
+          select: {
+            Comment: true,
+            Like: true,
+            Post: true,
+            Review: true,
+            Location: true,
+            Complaint: true,
+          },
         },
       },
     },
-  });
-  console.log('abc', user);
+  );
+
   const { signOut, user: loggedUser } = useAuth();
   const [isVisibleModalSignOut, setIsVisibleModalSignOut] = useState(false);
+  const [isReadingModeActive, setIsReadingModeActive] = useState(true);
   const linkTo = useLinkTo();
 
   const userFirstname = user?.name?.split(' ')[0];
@@ -136,6 +147,12 @@ export const VisitProfile: FunctionComponent<VisitProfileProps> = ({
       },
     },
   });
+
+  const toggleReadingMode = () => {
+    setIsReadingModeActive(
+      (previousIsReadingModeActive) => !previousIsReadingModeActive,
+    );
+  };
 
   if (isUserLoading) {
     return <LoadingScreen />;
@@ -216,51 +233,189 @@ export const VisitProfile: FunctionComponent<VisitProfileProps> = ({
             </Box>
           </Flex>
 
-          <Box
-            w={'85%'}
-            mt={10}
-            mb={4}
-            py={4}
-            h={24}
-            borderRadius={10}
-            borderWidth={2}
-            borderColor={'darkBlue.600'}
-            padding={1}
-          >
-            <SimpleGrid
-              ml={3}
-              columns={3}
-              space={4}
-              w={'90%'}
-              alignItems={'center'}
-            >
-              <Flex flexDir={'column'} alignItems={'center'}>
-                <Text
-                  color={'darkBlue.600'}
-                  fontWeight={'bold'}
-                  fontSize={18}
-                  opacity={1}
-                  zIndex={1}
+          <ConditionallyRender
+            condition={isReadingModeActive}
+            trueComponent={null}
+            falseComponent={
+              <>
+                <Box
+                  w={'85%'}
+                  mt={10}
+                  mb={4}
+                  py={4}
+                  borderRadius={10}
+                  borderWidth={2}
+                  borderColor={'darkBlue.600'}
+                  padding={1}
                 >
-                  {verifyDateSinceMember()}
-                </Text>
-                <Text
-                  mt={2}
-                  color={'darkBlue.600'}
-                  fontWeight={'bold'}
-                  fontSize={16}
+                  <SimpleGrid
+                    ml={3}
+                    columns={3}
+                    space={4}
+                    w={'100%'}
+                    alignItems={'center'}
+                  >
+                    <Flex flexDir={'column'} alignItems={'center'}>
+                      <Text
+                        color={'darkBlue.600'}
+                        fontWeight={'bold'}
+                        fontSize={18}
+                        opacity={1}
+                        zIndex={1}
+                      >
+                        {user?._count.Post}
+                      </Text>
+                      <Text
+                        mt={2}
+                        color={'darkBlue.600'}
+                        fontWeight={'bold'}
+                        fontSize={16}
+                      >
+                        posts
+                      </Text>
+                    </Flex>
+                    <Flex flexDir={'column'} alignItems={'center'}>
+                      <Text
+                        color={'darkBlue.600'}
+                        fontWeight={'bold'}
+                        fontSize={18}
+                        opacity={1}
+                        zIndex={1}
+                      >
+                        {user?._count.Like}
+                      </Text>
+                      <Text
+                        mt={2}
+                        color={'darkBlue.600'}
+                        fontWeight={'bold'}
+                        fontSize={16}
+                      >
+                        likes
+                      </Text>
+                    </Flex>
+                    <Flex flexDir={'column'} alignItems={'center'}>
+                      <Text
+                        color={'darkBlue.600'}
+                        fontWeight={'bold'}
+                        fontSize={18}
+                        opacity={1}
+                        zIndex={1}
+                      >
+                        {user?._count.Comment}
+                      </Text>
+                      <Text
+                        mt={2}
+                        color={'darkBlue.600'}
+                        fontWeight={'bold'}
+                        fontSize={16}
+                      >
+                        comentários
+                      </Text>
+                    </Flex>
+                  </SimpleGrid>
+                </Box>
+
+                <Box
+                  w={'85%'}
+                  mb={4}
+                  py={4}
+                  borderRadius={10}
+                  borderWidth={2}
+                  borderColor={'darkBlue.600'}
+                  padding={1}
                 >
-                  dias como membro
-                </Text>
-              </Flex>
-            </SimpleGrid>
-          </Box>
+                  <SimpleGrid
+                    ml={3}
+                    columns={3}
+                    space={4}
+                    w={'100%'}
+                    alignItems={'center'}
+                  >
+                    <Flex flexDir={'column'} alignItems={'center'}>
+                      <Text
+                        color={'darkBlue.600'}
+                        fontWeight={'bold'}
+                        fontSize={18}
+                        opacity={1}
+                        zIndex={1}
+                      >
+                        {user?._count.Review}
+                      </Text>
+                      <Text
+                        mt={2}
+                        color={'darkBlue.600'}
+                        fontWeight={'bold'}
+                        fontSize={16}
+                      >
+                        reviews
+                      </Text>
+                    </Flex>
+                    <Flex flexDir={'column'} alignItems={'center'}>
+                      <Text
+                        color={'darkBlue.600'}
+                        fontWeight={'bold'}
+                        fontSize={18}
+                        opacity={1}
+                        zIndex={1}
+                      >
+                        {user?._count.Location}
+                      </Text>
+                      <Text
+                        mt={2}
+                        color={'darkBlue.600'}
+                        fontWeight={'bold'}
+                        fontSize={16}
+                      >
+                        locais
+                      </Text>
+                    </Flex>
+                    <Flex flexDir={'column'} alignItems={'center'}>
+                      <Text
+                        color={'darkBlue.600'}
+                        fontWeight={'bold'}
+                        fontSize={18}
+                        opacity={1}
+                        zIndex={1}
+                      >
+                        {verifyDateSinceMember()}
+                      </Text>
+                      <Text
+                        mt={2}
+                        color={'darkBlue.600'}
+                        fontWeight={'bold'}
+                        fontSize={16}
+                      >
+                        dias membro
+                      </Text>
+                    </Flex>
+                  </SimpleGrid>
+                </Box>
+              </>
+            }
+          />
         </Flex>
       </Flex>
 
-      <Heading fontSize={20} px={8} py={6} pt={4} fontWeight="medium">
-        Postagens de {userFirstname}
-      </Heading>
+      <Flex
+        width="100%"
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+      >
+        <Heading fontSize={20} px={8} py={6} pt={4} fontWeight="medium">
+          Postagens de {userFirstname}
+        </Heading>
+        <IconButton
+          colorScheme={isReadingModeActive ? 'orange' : 'coolGray'}
+          variant={'ghost'}
+          size={'lg'}
+          _icon={{
+            as: Feather,
+            name: isReadingModeActive ? 'list' : 'grid',
+          }}
+          onPress={toggleReadingMode}
+        />
+      </Flex>
       <Flex paddingBottom={20}>
         <LoadingFallback
           isLoading={isLoading}

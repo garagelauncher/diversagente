@@ -210,7 +210,7 @@ export const LocationDetails = () => {
                 fontWeight={'bold'}
               >
                 {location.starsAverage === null
-                  ? 'N/A - não avaliado no período abaixo'
+                  ? 'N/A - não avaliado no período'
                   : location.starsAverage}
               </Text>
             </Flex>

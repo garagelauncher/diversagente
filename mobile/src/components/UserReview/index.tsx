@@ -1,5 +1,7 @@
+import { useLinkTo } from '@react-navigation/native';
 import { Avatar, Divider, Flex, Text } from 'native-base';
 import { FunctionComponent, useState } from 'react';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { AirbnbRating } from 'react-native-ratings';
 
 import { ReviewMoreActions } from './ReviewMoreActions';
@@ -15,11 +17,16 @@ export type UserReviewProps = {
 
 export const UserReview: FunctionComponent<UserReviewProps> = ({ review }) => {
   const { user } = useAuth();
+  const linkTo = useLinkTo();
   const [isEditModeActive, setIsEditModeActive] = useState(false);
 
   const isOwner = user?.id === review.owner.id;
   const userInitials = getUsernameInitials(review.owner.name);
   const formattedCreatedAtDate = formatDateSocialMedia(review.createdAt);
+
+  const handleNavigateToProfileDetails = () => {
+    linkTo(`/profile/${review.owner.username}`);
+  };
 
   return (
     <Flex
@@ -35,17 +42,19 @@ export const UserReview: FunctionComponent<UserReviewProps> = ({ review }) => {
         justifyContent="space-between"
       >
         <Flex direction="row" alignItems="center">
-          <Avatar
-            borderRadius={6}
-            backgroundColor={
-              review.owner.picture ? 'transparent' : 'primary.500'
-            }
-            source={{
-              uri: String(review.owner.picture),
-            }}
-          >
-            {userInitials}
-          </Avatar>
+          <TouchableOpacity onPress={handleNavigateToProfileDetails}>
+            <Avatar
+              borderRadius={6}
+              backgroundColor={
+                review.owner.picture ? 'transparent' : 'primary.500'
+              }
+              source={{
+                uri: String(review.owner.picture),
+              }}
+            >
+              {userInitials}
+            </Avatar>
+          </TouchableOpacity>
           <Flex marginLeft={5}>
             <Text fontWeight={'bold'}>{review.owner.name}</Text>
             <Text color="gray.500">{formattedCreatedAtDate}</Text>

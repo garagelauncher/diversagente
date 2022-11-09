@@ -53,7 +53,7 @@ export default function App() {
             Comments: 'posts/:postId/comments',
             Likes: 'posts/:postId/likes',
             SelectComplaint: 'complaints/:resource/:resourceId/',
-            VisitProfile: 'profile/:username',
+            ViewProfile: 'profile/:username',
           },
         },
         LocationsStack: {

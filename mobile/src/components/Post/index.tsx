@@ -115,6 +115,10 @@ export const Post: FunctionComponent<PostProps> = ({
     linkTo(`/posts/${post.id}`);
   };
 
+  const handleNavigateToProfileDetails = () => {
+    linkTo(`/profile/${post.owner.username}`);
+  };
+
   const handleNavigateToPostComments = () => {
     linkTo(`/posts/${post.id}/comments`);
   };
@@ -158,15 +162,19 @@ export const Post: FunctionComponent<PostProps> = ({
         justifyContent="space-between"
       >
         <Flex direction="row" alignItems="center">
-          <Avatar
-            borderRadius={6}
-            backgroundColor={post.owner.picture ? 'transparent' : 'primary.500'}
-            source={{
-              uri: String(post.owner.picture),
-            }}
-          >
-            {userInitials}
-          </Avatar>
+          <TouchableOpacity onPress={handleNavigateToProfileDetails}>
+            <Avatar
+              borderRadius={6}
+              backgroundColor={
+                post.owner.picture ? 'transparent' : 'primary.500'
+              }
+              source={{
+                uri: String(post.owner.picture),
+              }}
+            >
+              {userInitials}
+            </Avatar>
+          </TouchableOpacity>
           <Flex marginLeft={5}>
             <Text fontWeight={'bold'}>{post.owner.name}</Text>
             <Text color="gray.500">{formattedCreatedAtDate}</Text>
