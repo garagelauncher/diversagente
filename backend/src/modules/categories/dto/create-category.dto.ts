@@ -34,10 +34,4 @@ export class CreateCategoryDto {
       'Nesta categoria poderão ser debatidos temas como alimentação, rotina de exercícios e desenvolvimento social',
   })
   description?: string;
-
-  @ApiProperty({
-    description: 'O ícone será utilizado como elemento visual da categoria.',
-    example: '[URL da imagem]',
-  })
-  icon?: string;
 }
