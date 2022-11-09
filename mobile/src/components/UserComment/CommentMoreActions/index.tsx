@@ -54,7 +54,7 @@ export const CommentMoreActions: FunctionComponent<CommentMoreActionsProps> = ({
 
   const handleDontLike = () => {
     toast.show({
-      description: 'O diversagente usará isso para aprimorar sua timeline.',
+      description: 'Agradecemos o feedback.',
       background: 'muted.400',
     });
   };
@@ -124,7 +124,7 @@ export const CommentMoreActions: FunctionComponent<CommentMoreActionsProps> = ({
           trueComponent={
             <CommentActionMenuItem
               icon="trash-2"
-              label="Excluir post"
+              label="Excluir comentário"
               onPress={handleWantRemoveComment}
             />
           }

@@ -29,6 +29,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useMutation } from 'react-query';
 import * as yup from 'yup';
 
+import { AppBar } from '@src/components/AppBar';
 import { ControlledInput } from '@src/components/ControlledInput';
 import { SubcategoryForm } from '@src/contracts/Subcategory';
 import { useCategoryDetails } from '@src/hooks/queries/details/useCategoryDetails';
@@ -36,10 +37,9 @@ import { StackForumNavigatorParamList } from '@src/routes/stacks/forumStack.rout
 import { diversaGenteServices } from '@src/services/diversaGente';
 import { queryClient } from '@src/services/queryClient';
 
-type FormCreateSubcategoryNavigationProps = NavigationProp<
+export type FormCreateSubcategoryNavigationProps = NavigationProp<
   StackForumNavigatorParamList,
-  'FormCreateSubcategory',
-  'Subcategory'
+  'FormCreateSubcategory'
 >;
 
 export const FormCreateSubcategory = () => {
@@ -113,8 +113,7 @@ export const FormCreateSubcategory = () => {
         reset();
 
         navigation.navigate('Subcategory', {
-          categoryTitle: categoryData.data?.title,
-          categoryId: categoryData.data?.id,
+          categoryId: String(categoryData.data?.id),
           subcategoryId: data.id,
         });
       },
@@ -130,9 +129,14 @@ export const FormCreateSubcategory = () => {
 
   return (
     <KeyboardAvoidingView behavior={'height'}>
+      <AppBar />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <ScrollView>
-          <VStack space={4} marginTop="16" padding="8">
+        <ScrollView
+          contentContainerStyle={{
+            paddingBottom: 100,
+          }}
+        >
+          <VStack space={4} marginTop={2} padding="8">
             <HStack alignContent={'center'} justifyContent="space-between">
               <Heading>Nova subcategoria</Heading>
               <TouchableOpacity>
@@ -211,6 +215,7 @@ export const FormCreateSubcategory = () => {
                 onPress={handleSubmit(onSubmitSubcategoryCreation)}
                 colorScheme="blue"
                 type="submit"
+                isLoading={mutationCreateSubcategory.isLoading}
               >
                 Criar
               </Button>

@@ -17,6 +17,8 @@ import {
 import React, { FunctionComponent } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import { AppBar } from '../AppBar';
+
 import { getIconProviderByName } from '@src/utils/getIconProvider';
 import { getUsernameInitials } from '@src/utils/getUsernameInitials';
 
@@ -109,10 +111,12 @@ export const Header: FunctionComponent<HeaderProps> = ({
           </TouchableOpacity>
         </>
       )}
+      <AppBar backgroundColor="darkBlue.700" />
+
       <Flex
-        paddingTop={[screenName ? 0 : 8]}
+        paddingTop={1}
         paddingX={4}
-        paddingBottom={4}
+        paddingBottom={8}
         backgroundColor="darkBlue.700"
         flexDirection={'row'}
         justifyContent="space-between"

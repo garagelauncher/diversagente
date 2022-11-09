@@ -16,10 +16,13 @@ describe('UsersService', () => {
     },
   };
 
-
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [UsersService, mockCloudinaryService, createPrismaProviderMock()],
+      providers: [
+        UsersService,
+        mockCloudinaryService,
+        createPrismaProviderMock(),
+      ],
     }).compile();
 
     userService = module.get<UsersService>(UsersService);
@@ -30,7 +33,7 @@ describe('UsersService', () => {
       ...userMock,
       username: 'novoUsername',
     });
-});
+  });
 
   it('should be defined', () => {
     expect(userService).toBeDefined();
@@ -39,26 +42,23 @@ describe('UsersService', () => {
   it('should be able to create a user with success', async () => {
     const user = {
       id: 'aaaaaa-1111',
-      email: "gabriel@email.com",
-      username: "gabiru",
-      name: "gabriel",
+      email: 'gabriel@email.com',
+      username: 'gabiru',
+      name: 'gabriel',
       createdAt: '2021-01-01T00:00:00.000Z',
       updatedAt: '2021-01-01T00:00:00.000Z',
-      }
+    };
 
     const createdUser = await userService.create(user);
     expect(createdUser).toEqual(userMock);
   });
 
   it('should be able to delete a user with success', async () => {
-
     prisma.user.update = jest.fn().mockResolvedValue({
-      ...userMock
+      ...userMock,
     });
 
-    const deletedUser = await userService.remove(
-      'aaaaaa-2222',
-    );
+    const deletedUser = await userService.remove('aaaaaa-2222');
     expect(deletedUser).toEqual(userMock);
   });
 
@@ -67,10 +67,7 @@ describe('UsersService', () => {
       username: 'novoUsername',
     };
 
-    const userUpdated = await userService.update(
-      userMock.id,
-      userToUpdate,
-    );
+    const userUpdated = await userService.update(userMock.id, userToUpdate);
 
     expect(userUpdated).toEqual({
       ...userMock,
@@ -81,11 +78,9 @@ describe('UsersService', () => {
   it('should be able to get one user by id with success', async () => {
     prisma.user.findUnique = jest.fn().mockResolvedValue({
       ...userMock,
-  });
+    });
 
-    const foundUser = await userService.findOne(
-      'aaaaaa-2222',
-    );
+    const foundUser = await userService.findOne('aaaaaa-2222');
 
     const expectedUser = {
       ...userMock,
@@ -93,5 +88,4 @@ describe('UsersService', () => {
 
     expect(foundUser).toEqual(expect.objectContaining(expectedUser));
   });
-
 });

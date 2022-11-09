@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from 'src/shared/database/prisma.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CloudinaryService } from 'src/shared/services/cloudinary/cloudinary.service';
@@ -77,6 +77,7 @@ export class UsersService {
             Complaint: true,
           },
         },
+        ...include,
       },
     });
 
@@ -129,6 +130,15 @@ export class UsersService {
       },
     });
 
+    await this.prisma.location.updateMany({
+      where: {
+        ownerId: id,
+      },
+      data: {
+        isActive: false,
+      },
+    });
+
     return await this.prisma.user.update({
       where: { id },
       data: {
@@ -159,6 +169,7 @@ export class UsersService {
       Logger.debug(result);
       return updatedData;
     } catch (error) {
+      console.log(error);
       Logger.error(error);
       throw new BadRequestException('Invalid file type.');
     }

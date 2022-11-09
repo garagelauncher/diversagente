@@ -27,6 +27,7 @@ import { Linking } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import MapView, { Marker } from 'react-native-maps';
 
+import { AppBar } from '@src/components/AppBar';
 import { LoadingScreen } from '@src/components/LoadingScreen';
 import { Location } from '@src/contracts/Location';
 import { RatePeriod } from '@src/contracts/Review';
@@ -115,6 +116,7 @@ export const LocationDetails = () => {
 
   return (
     <Box width="100%" backgroundColor="gray.100" flex={1}>
+      <AppBar />
       {isLoading && (
         <Spinner
           size={'lg'}
@@ -157,7 +159,7 @@ export const LocationDetails = () => {
         icon={<Icon as={<Feather name="arrow-left" />} />}
         onPress={handleNavigateGoBack}
         position="absolute"
-        top={10}
+        top={20}
         left={4}
         zIndex={1}
       />
@@ -167,10 +169,10 @@ export const LocationDetails = () => {
         width={'100%'}
         alignItems="center"
         justifyContent="center"
+        pt={3}
       >
         <IconButton
           variant={'ghost'}
-          size={'lg'}
           _icon={{
             as: getIconProviderByName(location.iconProvider),
             name: location.icon ?? 'map-pin',
@@ -200,7 +202,7 @@ export const LocationDetails = () => {
               alignItems="center"
             >
               <Text fontSize={16} color={'gray.800'} fontWeight={'bold'}>
-                Nota média:{' '}
+                Nota média:{'   '}
               </Text>
               <Text
                 fontSize={location.starsAverage === null ? 16 : 32}
@@ -208,7 +210,7 @@ export const LocationDetails = () => {
                 fontWeight={'bold'}
               >
                 {location.starsAverage === null
-                  ? 'N/A - não avaliado no período abaixo'
+                  ? 'N/A - não avaliado no período'
                   : location.starsAverage}
               </Text>
             </Flex>

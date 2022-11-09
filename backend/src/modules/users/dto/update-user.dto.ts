@@ -17,4 +17,7 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   updatedAt?: string | Date;
   preferences?: UserPreference;
   lovelyCategoriesIds?: string[];
+
+  @ApiProperty()
+  isActive?: boolean;
 }

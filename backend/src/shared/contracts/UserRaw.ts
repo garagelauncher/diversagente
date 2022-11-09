@@ -30,7 +30,6 @@ interface UserRawDate {
   $date: string;
 }
 
-
 export interface UserRaw {
   _id: ID;
   email: email;

@@ -16,6 +16,7 @@ import {
 } from 'native-base';
 import React from 'react';
 
+import { AppBar } from '@src/components/AppBar';
 import { LoadingFallback } from '@src/components/LoadingFallback';
 import { UserComment } from '@src/components/UserComment';
 import { PER_PAGE_ITEMS } from '@src/configs';
@@ -49,6 +50,7 @@ export const Comments = () => {
     sort: ['createdAt', 'DESC'],
     filter: {
       postId,
+      isActive: true,
     },
     include: {
       owner: true,
@@ -70,7 +72,8 @@ export const Comments = () => {
   };
 
   return (
-    <Flex px={4} flex={1} pt={24}>
+    <Flex px={4} flex={1}>
+      <AppBar />
       <IconButton
         colorScheme="gray"
         variant={'solid'}
@@ -82,6 +85,7 @@ export const Comments = () => {
         zIndex={1}
       />
       <FlatList
+        mt={24}
         width={'100%'}
         data={data?.pages.map((page) => page.results).flat()}
         renderItem={({ item }) => (
@@ -106,6 +110,11 @@ export const Comments = () => {
               </Text>
             </Flex>
           </LoadingFallback>
+        }
+        ListEmptyComponent={
+          <Flex width="100%" alignItems="center" justifyContent="center">
+            <Text color="gray.500">Não há comentários para esse post.</Text>
+          </Flex>
         }
       />
     </Flex>

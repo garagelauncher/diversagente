@@ -14,6 +14,8 @@ export type CreatePostFormProps = {
   onResetSearch?: () => void;
 };
 
+const MIN_SEARCH_POST_TEXT_SIZE = 2;
+
 export const CreatePostForm: FunctionComponent<CreatePostFormProps> = ({
   onSearch,
   onResetSearch = () => {
@@ -31,12 +33,9 @@ export const CreatePostForm: FunctionComponent<CreatePostFormProps> = ({
   const handleSearchPost = useCallback(
     (text: string) => {
       Keyboard.dismiss();
-      if (text && text.length > 3) {
-        const normalizedText = text
-          .trim()
-          .toLowerCase()
-          .normalize('NFD')
-          .replace(/[\u0300-\u036f]/g, '');
+      if (text && text.length > MIN_SEARCH_POST_TEXT_SIZE) {
+        const normalizedText = text.trim().toLowerCase();
+
         onSearch(normalizedText);
       } else {
         toast.show({

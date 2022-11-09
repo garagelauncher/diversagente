@@ -17,6 +17,7 @@ import {
 } from 'native-base';
 import { useState } from 'react';
 
+import { AppBar } from '@src/components/AppBar';
 import { ConditionallyRender } from '@src/components/ConditionallyRender';
 import { LoadingFallback } from '@src/components/LoadingFallback';
 import { ModalNewComment } from '@src/components/ModalNewComment';
@@ -65,6 +66,7 @@ export const PostDetails = () => {
     sort: ['createdAt', 'DESC'],
     filter: {
       postId,
+      isActive: true,
     },
     include: {
       owner: true,
@@ -73,6 +75,10 @@ export const PostDetails = () => {
   const lastComment = commentData?.pages[0]?.results[0] || null;
 
   const isLoadedNoComment = !isCommentLoading && !lastComment;
+
+  const handleNavigateToForum = () => {
+    navigation.navigate('Forum');
+  };
 
   const handleNavigateGoBack = () => {
     navigation.goBack();
@@ -96,6 +102,7 @@ export const PostDetails = () => {
       backgroundColor="gray.100"
       contentContainerStyle={{ paddingBottom: 100, paddingTop: 100 }}
     >
+      <AppBar position="absolute" top={0} left={0} right={0} zIndex={1} />
       <IconButton
         colorScheme="gray"
         variant={'solid'}
@@ -110,7 +117,7 @@ export const PostDetails = () => {
         fallback={<Skeleton width="100%" height={200} />}
         isLoading={isLoading || !data}
       >
-        {data && <Post post={data} />}
+        {data && <Post post={data} onDeletedPost={handleNavigateToForum} />}
       </LoadingFallback>
 
       <VStack width="100%" padding={6} space={6}>

@@ -19,7 +19,7 @@ export const findAllSubcategories = async (options: QueryOptions = {}) => {
       { params: parseQueryOptions(options) },
     );
     const subcategories = response.data;
-    console.info('SUBCATEGORIES!', response.data);
+    console.info('findAllSubcategories!', response.data);
     return { results: subcategories };
   } catch (error) {
     console.error(error);

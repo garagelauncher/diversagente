@@ -2,6 +2,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import * as AuthSession from 'expo-auth-session';
+import { useToast } from 'native-base';
 import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import { useMutation } from 'react-query';
@@ -28,6 +29,7 @@ type AuthResponse = {
 };
 
 export const AuthProvider = ({ children }: AuthProvidersProps) => {
+  const toast = useToast();
   const mutationCreateDevice = useMutation(diversaGenteServices.createDevice, {
     onSuccess: () => {
       console.log('Device created');
@@ -37,6 +39,20 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState<UserData | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const mutationDisableAccount = useMutation(diversaGenteServices.deleteUser, {
+    onSuccess: async () => {
+      toast.show({
+        description: 'Conta desativada!',
+        bg: 'green.500',
+      });
+      console.log('disableAccount');
+      await AsyncStorage.removeItem('diversagente@user');
+      setLoggedIn(false);
+      setUser(undefined as UserData | undefined);
+      await AsyncStorage.clear();
+    },
+  });
 
   const storeUserDevice = useCallback(
     async (ownerId: string) => {
@@ -139,6 +155,14 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
           return;
         }
 
+        if (responseCreateUser.data.isActive === false) {
+          Alert.alert(
+            'Conta desativada',
+            'Entre em contato com a equipe do diversaGente para reativar sua conta garagelauncher@gmail.com para que seja feita uma análise do motivo da desativação da sua conta e se você está habilitado a voltar a fazer parte da comunidade neurodiversa',
+          );
+          return;
+        }
+
         const userPayload: UserData = {
           id: responseCreateUser.data.id || '',
           googleUserData,
@@ -166,10 +190,11 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
       console.error(error.name);
       console.error(error.message);
 
+      console.log('Error', error);
+
       Alert.alert(
         'Falha no login',
-        error.message ||
-          'Não foi possível fazer login com o Google, tente novamente mais tarde.',
+        `Não foi possível fazer login com o Google, tente novamente mais tarde. ${error.message}`,
       );
     } finally {
       setIsLoading(false);
@@ -182,6 +207,14 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
     setUser(undefined as UserData | undefined);
     await AsyncStorage.removeItem('diversagente@user');
   }
+
+  async function disableAccount() {
+    await mutationDisableAccount.mutateAsync(String(user?.id));
+  }
+
+  // async function checkFirstLogin() {}
+
+  // async function finishFirstLogin() {}
 
   useEffect(() => {
     async function getUser() {
@@ -231,6 +264,8 @@ export const AuthProvider = ({ children }: AuthProvidersProps) => {
         setUser,
         isLoading,
         refetchUser,
+        isLoadingDisablingAccount: mutationDisableAccount.isLoading,
+        disableAccount,
       }}
     >
       {children}
