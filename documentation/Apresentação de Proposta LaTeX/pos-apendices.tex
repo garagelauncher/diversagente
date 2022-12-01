@@ -11,7 +11,7 @@
 % Imprime uma página indicando o início dos apêndices
 \partapendices
 
-\chapter{Diagrama de casos de uso Part I}
+\chapter{Diagrama de casos de uso Parte I}
 \label{diagrama-casos-uso-old}
 
 \begin{figure}[htb]
@@ -1020,7 +1020,7 @@
 	\caption{\label{fig_arq_virado}Métricas Security  Part I}
 	\includegraphics[width=0.90\textwidth]{anexos/metricas1.png}
 	\label{metricas-1}
-	\fonte{Security Headers, 2022}
+	\fonte{Equipe diversaGente (2022)}
 \end{figure}
 
 \begin{figure}[h]
@@ -1028,7 +1028,7 @@
 	\caption{\label{fig_arq_virado}Métricas Security Headers Part II}
 	\includegraphics[width=0.90\textwidth]{anexos/securityHeadersII.png}
 	\label{securityHeadersII}
-	\fonte{Security Headers, 2022}
+	\fonte{Equipe diversaGente (2022)}
 \end{figure}
 
 \begin{figure}[h]
@@ -1036,9 +1036,160 @@
 	\caption{\label{fig_arq_virado}Teste Qualys Etapa I \ac{ssl} Labs}
 	\includegraphics[width=0.90\textwidth]{anexos/metricas4.png}
 	\label{metricas-4}
-	\fonte{Qualys SSL Labs, 2022 }
+	\fonte{Equipe diversaGente (2022)}
 \end{figure}
 
+
+% ----------------------------------------------------------
+\chapter{Casos de teste }
+% ----------------------------------------------------------
+\label{casoDeTeste}
+
+Os requisistos de um teste \autoref{casosDeUso1}, identificiam o que será testado, ou seja os testes precisam fazer o que está descrito no requisito, para aplicação diversaGente, temos um total de 9 requistos que especificam todos os testes mapeados pelos desenvolvedores e produto. 
+\begin{figure}[h]
+	\centering
+	\caption{\label{fig_arq_virado}Requisitos Testes}
+	\includegraphics[width=1\textwidth]{anexos/casosDeTeste/testesRequisitos.png}
+	\label{casosDeUso1}
+	\fonte{Equipe diversaGente (2022)}
+\end{figure}
+
+\pagebreak
+
+Os testes de gerenciamento de local \autoref{casosDeUso1}, detalha o que um usuário consegue fazer através da aplicação para gerenciar um local, como criar uma localização para que outros usuários ou ele mesmo possam avaliar e verificar se o lugar é adequado para o que o usuário deseja naquele momento. 
+
+\begin{figure}[h]
+	\centering
+	\caption{\label{fig_arq_virado}Teste gerenciar locais}
+	\includegraphics[width=1\textwidth]{anexos/casosDeTeste/testesLocais.png}
+	\label{casosDeUso2}
+	\fonte{Equipe diversaGente (2022)}
+\end{figure}
+
+\pagebreak
+
+
+Os testes de gerenciamento de review  \autoref{casosDeUso3}, detalha o que um usuário consegue fazer através da aplicação para gerenciar review, como o caminho dentro da aplicação que precisa chegar até conseguir criar e avaliar uma localização. Esse teste tem relevância para a a aplicação, pois é através dela que se consegue verificar o status atual de um local e também é um maneira de expressar uma opinião para o benefício da comunidade neurodiversa. 
+
+\begin{figure}[h]
+	\centering
+	\caption{\label{fig_arq_virado}Teste gerenciar reviews}
+	\includegraphics[width=1\textwidth]{anexos/casosDeTeste/testesAvaliacoes.png}
+	\label{casosDeUso3}
+	\fonte{Equipe diversaGente (2022)}
+\end{figure}
+
+
+Os testes de gerenciamento de subcategoria  \autoref{casosDeUso4}, detalha o que um usuário consegue fazer através da aplicação para gerenciar subcategoria, como o caminho dentro da aplicação que precisa chegar até conseguir criar e listar uma subcategoria . Esse teste tem o intuito de categorizar posts de maneira mais nichada para que os usuários da aplicação consigam localizar melhor assuntos de seu interesse.
+
+\begin{figure}[h]
+	\centering
+	\caption{\label{fig_arq_virado}Teste gerenciar subcategorias}
+	\includegraphics[width=1\textwidth]{anexos/casosDeTeste/testesSubcategorias.png}
+	\label{casosDeUso4}
+	\fonte{Equipe diversaGente (2022)}
+\end{figure}
+
+Os testes de gerenciamento de posts \autoref{casosDeUso5}, detalha o que um usuário consegue fazer através da aplicação para gerenciar posts, como o caminho dentro da aplicação que precisa chegar até conseguir criar, listar, editar e deletar uma subcategoria . Esse teste tem o intuito de deixar os usuários expressarem suas sensações e ideias através de postagens sobre diferentes assuntos. Os posts são parte central da aplicação pois será através deles que haverá a troca de comentários na plataforma. 
+
+\begin{figure}[h]
+	\centering
+	\caption{\label{fig_arq_virado}Teste gerenciar posts}
+	\includegraphics[width=0.80\textwidth]{anexos/casosDeTeste/testesPosts.png}
+	\label{casosDeUso5}
+	\fonte{Equipe diversaGente (2022)}
+\end{figure}
+
+Os testes de gerenciamento de posts \autoref{casosDeUso6}, detalha o que um usuário consegue fazer através da aplicação para gerenciar comentários, como o caminho dentro da aplicação que precisa chegar até conseguir criar, listar, editar e deletar comentários . Esse teste tem o intuito de fazer o usuários responder posts, fazendo com que eles consigam se expressar sobre suas opiniões e experiências convivendo e cuidando de uma pessoa neurodivergente. 
+
+
+
+\begin{figure}[h]
+	\centering
+	\caption{\label{fig_arq_virado}Teste gerenciar comentários}
+	\includegraphics[width=1\textwidth]{anexos/casosDeTeste/testesComentarios.png}
+	\label{casosDeUso6}
+	\fonte{Equipe diversaGente (2022)}
+\end{figure}
+
+Os testes de gerenciamento de cadastro social \autoref{casosDeUso7}, detalha o que um usuário consegue fazer através da aplicação para realizar o login social. Possivelmente o teste mais fácil de ser realizado na aplicação, pois é o primeiro acesso do usuário. Dentro das regras de negócio do teste, o usuário precisa ter um conta do google sendo essa a única maneira do usuário conseguir fazer login na aplicação. 
+
+\begin{figure}[h]
+	\centering
+	\caption{\label{fig_arq_virado}Teste gerenciar cadastro social usuário}
+	\includegraphics[width=1\textwidth]{anexos/casosDeTeste/testesLoginSocial.png}
+	\label{casosDeUso7}
+	\fonte{Equipe diversaGente (2022)}
+\end{figure}
+
+
+Os testes de gerenciamento de perfil \autoref{casosDeUso8}, detalha o que um usuário consegue fazer através da aplicação para gerenciar o seu perfil. O usuário consegue fazer algumas edições no seu perfil. 
+
+
+\begin{figure}[h]
+	\centering
+	\caption{\label{fig_arq_virado}Teste gerenciar perfil}
+	\includegraphics[width=1\textwidth]{anexos/casosDeTeste/testesPerfil.png}
+	\label{casosDeUso8}
+	\fonte{Equipe diversaGente (2022)}
+\end{figure}
+
+Os testes de gerenciamento de likes \autoref{casosDeUso9}, detalha o que um usuário consegue fazer através da aplicação para gerenciar likes. Teste bem simples de ser feito, pois só possui dois estados, o de um post com like e um post sem o like. Como em qualquer outra rede social, os likes podem ser um termometro para verificar o popularidade de um post dentro da aplicação, podendo ser um post útil que ajudou bastante pessoas com o seu conteúdo.
+
+\begin{figure}[h]
+	\centering
+	\caption{\label{fig_arq_virado}Teste gerenciar likes}
+	\includegraphics[width=1\textwidth]{anexos/casosDeTeste/testesLikes.png}
+	\label{casosDeUso9}
+	\fonte{Equipe diversaGente (2022)}
+\end{figure}
+
+% ----------------------------------------------------------
+\chapter{Testes de Processo }
+% ----------------------------------------------------------
+\label{testesProcesso}
+Esse apêndice trás a casos de testes de processo com resultados. 
+
+\begin{figure}[htb]
+	\centering
+	\caption{\label{fig_arq_virado}Teste de Processo com Resultado - Buscar post na barra de pesquisa - Título encontrado}
+	\includegraphics[width=0.50\textwidth]{anexos/casosDeTeste/resultado_ct_buscapost_encontrado.PNG}
+	\label{ct_post_encontrado}
+	\fonte{Equipe diversaGente, 2022}
+\end{figure}
+
+
+\begin{figure}[htb]
+	\centering
+	\caption{\label{fig_arq_virado}Teste de Processo com Resultado - Buscar post na barra de pesquisa - Título não encontrado}
+	\includegraphics[width=0.50\textwidth]{anexos/casosDeTeste/resultado_ct_buscaPost_naoencontrado.PNG}
+	\label{ct_post_nao_encontrado}
+	\fonte{Equipe diversaGente, 2022}
+\end{figure}
+
+\begin{figure}[htb]
+	\centering
+	\caption{\label{fig_arq_virado}Teste de Processo com Resultado - Filtrar Localidade}
+	\includegraphics[width=0.50\textwidth]{anexos/casosDeTeste/resultado_ct_localidade_filtro.PNG}
+	\label{ct_localidade_filtro}
+	\fonte{Equipe diversaGente, 2022}
+\end{figure}
+
+\begin{figure}[htb]
+	\centering
+	\caption{\label{fig_arq_virado}Teste de Processo com Resultado - Filtrar Localidade}
+	\includegraphics[width=0.50\textwidth]{anexos/casosDeTeste/resultado_ct_localidade_.PNG}
+	\label{ct_localidade_}
+	\fonte{Equipe diversaGente, 2022}
+\end{figure}
+
+\begin{figure}[htb]
+	\centering
+	\caption{\label{fig_arq_virado}Teste de Processo com Resultado - Filtrar Localidade}
+	\includegraphics[width=0.50\textwidth]{anexos/casosDeTeste/resultado_ct_localidade_detalhes.PNG}
+	\label{ct_localidade_}
+	\fonte{Equipe diversaGente, 2022}
+\end{figure}
 
 % ----------------------------------------------------------
 \chapter{GitStats Part I }
@@ -1051,7 +1202,7 @@
 	\caption{\label{fig_arq_virado}Gitstats métricas gerais Parte I}
 	\includegraphics[width=1.00\textwidth]{anexos/metricas5.png}
 	\label{metricas-5}
-	\fonte{Gitstats, 2022}
+	\fonte{Equipe diversaGente (2022)}
 \end{figure}
 
 \begin{figure}[htb]
@@ -1059,7 +1210,7 @@
 	\caption{\label{fig_arq_virado}Gitstats métricas atividades Parte I}
 	\includegraphics[width=0.90\textwidth]{anexos/metricas6.png}
 	\label{metricas-6}
-	\fonte{Gitstats, 2022}
+	\fonte{Equipe diversaGente (2022)}
 \end{figure}
 
 \begin{figure}[htb]
@@ -1067,7 +1218,7 @@
 	\caption{\label{fig_arq_virado}Gitstats métricas autores Parte I}
 	\includegraphics[width=1.00\textwidth]{anexos/metricas7.png}
 	\label{metricas-7}
-	\fonte{Gitstats, 2022}
+	\fonte{Equipe diversaGente (2022)}
 \end{figure}
 
 \begin{figure}[htb]
@@ -1075,7 +1226,7 @@
 	\caption{\label{fig_arq_virado}Gitstats métricas arquivos Parte I}
 	\includegraphics[width=1.00\textwidth]{anexos/metricas8.png}
 	\label{metricas-8}
-	\fonte{Gitstats, 2022}
+	\fonte{Equipe diversaGente (2022)}
 \end{figure}
 
 \begin{figure}[htb]
@@ -1083,7 +1234,7 @@
 	\caption{\label{fig_arq_virado}Gitstats tags Parte I}
 	\includegraphics[width=1.00\textwidth]{anexos/metricas9.png}
 	\label{metricas-9}
-	\fonte{Gitstats, 2022}
+	\fonte{Equipe diversaGente (2022)}
 \end{figure}
 
 % ----------------------------------------------------------
@@ -1144,12 +1295,12 @@ O foco atual é a plataforma Android, amplamente utilizada no Brasil e que de ac
 
 A fim de realizar a prototipação, a equipe utilizará a ferramenta Figma, editor colaborativo online de design gráfico que permite a criação de interfaces de alta fidelidade e que ajudará os desenvolvedores a construir telas coesas e baseadas nos conceitos e práticas de User Experience (UX) e User Interface (UI).
 
-Para a construção desse aplicativo, sabe-se que serão necessários serviços, processos, persistência dos dados e uma interface. Por conta disso, nós optamos pelo uso da Stack MERN, essa sigla se refere a um conjunto de tecnologias amplamente utilizado para o desenvolvimento de aplicações, sendo respectivamente a base de dados não relacional MongoDB, um módulo minimalista de roteamento chamado Express.js, um framework desenvolvido pelo Facebook baseado em React feito para o desenvolvimento de aplicativos mobile e multiplataforma que usa de recursos nativos das plataformas de smartphone que é o React Native e por fim o Node.js que é um executor de Javascript no lado do servidor para criação de aplicações que executam no servidor como APIs (Application Programming Interface, isto é interface de programação de aplicações).
+Para a construção desse aplicativo, sabe-se que serão necessários serviços, processos, persistência dos dados e uma interface. Por conta disso, nós optamos pelo uso da Stack MERN, essa sigla se refere a um conjunto de tecnologias amplamente utilizado para o desenvolvimento de aplicações, sendo respectivamente a base de dados não relacional MongoDB, um módulo minimalista de roteamento chamado Express.js, um framework desenvolvido pelo Facebook baseado em React feito para o desenvolvimento de aplicativos mobile e multiplataforma que usa de recursos nativos das plataformas de smartphone que é o React Native e por fim o Node.js que é um executor de Javascript no lado do servidor para criação de aplicações que executam no servidor como APIs.
 
-Nesse contexto, necessitamos provisionar, documentar e testar a aplicação desenvolvida. Para lidar com o ambiente em máquinas de diferentes sistemas operacionais utilizaremos os containers Docker para possuirmos alta descartabilidade e reprodutibilidade do ambiente de desenvolvimento. Da mesma forma, entende-se que a existência de uma API bem documentada é essencial para um desenvolvimento com menos ruído de informação, então utilizaremos a especificação OpenAPI, também conhecida como especificação Swagger para documentar os recursos da API. Enfim, com o objetivo de atingir alta confiabilidade também optamos pelo uso do Jest, um framework de testes que facilita o processo de execução, criação, manutenção, gera relatórios sobre a cobertura total de código e aponta trechos de código que carecem de testes.
+Nesse contexto, necessitamos provisionar, documentar e testar a aplicação desenvolvida. Para lidar com o ambiente em máquinas de diferentes sistemas operacionais utilizaremos os containers Docker para possuirmos alta descartabilidade e reprodutibilidade do ambiente de desenvolvimento. Da mesma forma, entende-se que a existência de uma \ac{api} bem documentada é essencial para um desenvolvimento com menos ruído de informação, então utilizaremos a especificação OpenAPI, também conhecida como especificação Swagger para documentar os recursos da \ac{api}. Enfim, com o objetivo de atingir alta confiabilidade também optamos pelo uso do Jest, um framework de testes que facilita o processo de execução, criação, manutenção, gera relatórios sobre a cobertura total de código e aponta trechos de código que carecem de testes.
 
-Junto disso, em questão de comunicação entre cliente e servidor, temos como escolha por requisições (HTTP) para comunicação síncrona e para comunicação em tempo real utilizaremos a tecnologia WebSockets. Como parte dessa comunicação, haverão integrações com o Firebase (plataforma desenvolvida pelo Google para a criação de aplicativos móveis e da Web) para autenticação social com o Google e uso de mapas do Google Mapas.
-Eventualmente, compreende-se que precisaremos disponibilizar esse aplicativo (app) ao usuário final e para isso pretendemos utilizar a plataforma PlayStore para publicação da versão Android do app, será utilizado a plataforma de nuvem Mongodb Atlas para implantar em produção o banco de dados e o Heroku para provisionar em produção a API.
+Junto disso, em questão de comunicação entre cliente e servidor, temos como escolha por requisições \ac{http} para comunicação síncrona e para comunicação em tempo real utilizaremos a tecnologia WebSockets. Como parte dessa comunicação, haverão integrações com o Firebase (plataforma desenvolvida pelo Google para a criação de aplicativos móveis e da Web) para autenticação social com o Google e uso de mapas do Google Mapas.
+Eventualmente, compreende-se que precisaremos disponibilizar esse aplicativo ao usuário final e para isso pretendemos utilizar a plataforma PlayStore para publicação da versão Android do app, será utilizado a plataforma de nuvem Mongodb Atlas para implantar em produção o banco de dados e o Heroku para provisionar em produção a \ac{api}.
 
 
 
@@ -1193,11 +1344,11 @@ A partir de uma análise, foram constatados que algumas integrações com outras
 \subsection{Login:}
 As ferramentas necessárias aqui são as principais de redes sociais de e-mails, caso o usuário não queira fazer o cadastro diretamente pela aplicação. 
 \subsection{Feed de notícias:}
-API de noticiais do governo e google news C
+API de noticiais do governo e google news.
 \subsection{Comunicação Instantânea:}
 Chat bot pelo para FAQ, chat Pro. 
 \subsection{Localização:}
-Google maps
+API do Google maps.
 \subsection{Compartilhamento:}
 Principais redes de conversa e sociais além do e-mail. 
 
@@ -1211,7 +1362,7 @@ As parcerias além de ajudarem a divulgar a nossa rede social para inclusão e r
 Revista periódica especializada em transtorno do Espectro do Autismo (TEA)
 
 \subsection{Fundação Getúlio Vargas - FGV}
-Fundação de educação e pesquisa de grande excelência no Brasil
+Fundação de educação e pesquisa de grande excelência no Brasil.
 
 \subsection{Generation Brasil}
 ONG mundial que qualifica alunos para estudarem programação.

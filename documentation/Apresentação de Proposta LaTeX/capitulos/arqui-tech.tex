@@ -1,13 +1,13 @@
-\chapter{Desenvolvimento do Projeto}
+\chapter{Desenvolvimento do projeto}
 
-Neste capítulo é abordado tudo o que foi necessário para chegar em um projeto viável, como tecnologias utilizadas, arquitetura do sistema, viabilidade financeira, critérios necessários para segurança da aplicação, casos de uso e regras de negócio como também métricas para dimensionar dificuldades, qualidade e tamanho do aplicativo.   
+Neste capítulo é abordado tudo o que foi necessário para chegar em um projeto viável, como tecnologias utilizadas, arquitetura do sistema, viabilidade financeira, critérios necessários para segurança da aplicação, casos de uso e regras de negócio como também métricas para dimensionar dificuldades, qualidade, paleta de cores e tamanho do aplicativo.   
 
 
 
 \section{Arquitetura do sistema}
-O aplicativo em React Native será provisionado na loja de aplicativos do Android, PlayStore, e, a partir do momento em que o usuário efetuar o download desse e estiver conectado à internet, o aplicativo se comunica com os servidores da Google para efetuar a autenticação social com o Google via OAuth 2.0. 
+O aplicativo em React Native será provisionado na loja de aplicativos do Android, PlayStore e, a partir do momento em que o usuário efetuar o download desse e estiver conectado à internet, o aplicativo se comunica com os servidores da Google para efetuar a autenticação social com o Google via OAuth 2.0. 
 
-E, devido a uma eficiente integração com a plataforma Node.js., a plataforma Heroku foi a escolhida para provisionar em produção a API que será consumida pelo front-end, como mostrado na \autoref{arquitetura-sistema}. Essa API (Application Programming Interface) é a responsável por receber as requisições do aplicativo e comunicar-se com outras duas aplicações: a primeira é o banco de dados MongoDB, hospedado em produção na plataforma de nuvem MongoDB Atlas - a qual foi desenvolvida exclusivamente para hospedar esse banco de dados não relacional -, e a segunda aplicação trata-se do Cloudinary, uma CDN (Content Delivery Network) que, nesse primeiro momento, será utilizada para armazenar as fotos de perfil dos usuários cadastrados no aplicativo.
+E, devido a uma eficiente integração com a plataforma Node.js., a plataforma Heroku foi a escolhida para provisionar em produção a \ac{api} que será consumida pelo front-end, como mostrado na \autoref{arquitetura-sistema}. Essa \ac{api} é a responsável por receber as requisições do aplicativo e comunicar-se com outras duas aplicações: a primeira é o banco de dados MongoDB, hospedado em produção na plataforma de nuvem MongoDB Atlas - a qual foi desenvolvida exclusivamente para hospedar esse banco de dados não relacional -, e a segunda aplicação trata-se do Cloudinary, uma  que, nesse primeiro momento, será utilizada para armazenar as fotos de perfil dos usuários cadastrados no aplicativo.
 
 
 \begin{figure}[htb]
@@ -21,7 +21,7 @@ E, devido a uma eficiente integração com a plataforma Node.js., a plataforma H
 
 \section{Motivação para a escolha da plataforma Android}
 A empresa data.ai, que utiliza Ciência de Dados para analisar o mercado mobile em todo o mundo, divulgou um relatório que demonstra que o Brasil é líder na utilização de smartphones. A população brasileira passa, em média, 5,4 horas diárias consumindo conteúdos pelo celular, enquanto a média global é de 4,8 horas \cite{stateof}.
-PER
+
 Somente em 2021, foram lançados 2 milhões de aplicativos móveis, de acordo com o mesmo relatório da data.ai. Diante dessa massiva demanda por aplicativos móveis, é crescente a busca dessa indústria por soluções que abarquem diversas áreas da vida da população de forma simples e eficiente. 
 
 Como resultado, existem hoje ferramentas de código aberto de alta qualidade que possibilitam a construção de aplicativos intuitivos, acessíveis e escaláveis, tornando a entrega de novas soluções mais rápidas e fáceis às equipes de software. 
@@ -34,43 +34,43 @@ Assim, após a escolha do tipo de aplicação a ser construída, foram elencadas
 
 \section{Escolhas das tecnologias para o back-end}
 Para a construção back-end desse aplicativo, são necessários necessários serviços, processos, persistência dos dados e uma interface. Então para atender essas necessidades, foi escolhida uma Stack amplamente utilizada e bem estabelecida na indústria conhecida como MERN, a qual supre a necessidade do contexto do aplicativo diversaGente. 
-MERN refere-se a um conjunto de tecnologias utilizado para o desenvolvimento de aplicações, sendo, respectivamente, a base de dados não relacional MongoDB, um módulo minimalista de roteamento chamado Express.js, um framework desenvolvido pelo Facebook baseado em React mencionado na seção seguinte sobre as tecnologias do front-end,  o React Native, e, por fim, o Node.js, um executor de Javascript no lado do servidor para criação de aplicações que executam no servidor como APIs.
+MERN refere-se a um conjunto de tecnologias utilizado para o desenvolvimento de aplicações, sendo, respectivamente, a base de dados não relacional MongoDB, um módulo minimalista de roteamento chamado Express.js, um framework desenvolvido pelo Facebook baseado em React mencionado na seção seguinte sobre as tecnologias do front-end,  o React Native, e, por fim, o Node.js, um executor de Javascript no lado do servidor para criação de aplicações que executam no servidor como \ac{api}.
 
 Nesse contexto, ainda se faz necessário provisionar o ambiente local para os desenvolvedores atuarem, bem como documentar e testar a aplicação desenvolvida. Então, para lidar com o ambiente em máquinas de diferentes sistemas operacionais, os containers Docker foram escolhidos, pois provêm alta descartabilidade e reprodutibilidade do ambiente de desenvolvimento e contribuem com menor tempo de configuração local. 
 
-Ainda considerando a eficiência, a existência de uma API bem documentada contribui para um desenvolvimento com menos ruído de informação, então, foi escolhida a especificação OpenAPI, também conhecida como especificação Swagger, para documentar os recursos da API. E, com o objetivo de atingir alta confiabilidade do código back-end, optou-se pelo uso do framework de testes Jest no desenvolvimento.
+Ainda considerando a eficiência, a existência de uma \ac{api} bem documentada contribui para um desenvolvimento com menos ruído de informação, então, foi escolhida a especificação OpenAPI, também conhecida como especificação Swagger, para documentar os recursos da \ac{api}. E, com o objetivo de atingir alta confiabilidade do código back-end, optou-se pelo uso do framework de testes Jest no desenvolvimento.
 
-Junto disso, a escolha de comunicação entre cliente e servidor foi de ocorrer por meio de requisições HTTP (Hypertext Transfer Protocol) para comunicação síncrona por meio de uma API Restful e Websockets, ideal para comunicação em tempo real, necessária no chat que haverá dentro do aplicativo. 
-Além disso, foi escolhido o protocolo de autorização OAuth2.0 para a autenticação social do usuário com uma conta do Google, pois, frente ao Firebase inicialmente considerado, esse é um recurso mais simples e enxuto de ser implementado, permitindo que os desenvolvedores dediquem menos tempo em configuração e assim possam investir mais tempo desenvolvendo o que agrega maior valor ao usuário final. Por fim, foi determinada a integração com as APIs do Google Maps para implementação das funcionalidades que envolvem geolocalização. 
+Junto disso, a escolha de comunicação entre cliente e servidor foi de ocorrer por meio de requisições \ac{http} para comunicação síncrona por meio de uma \ac{api} Restful e Websockets, ideal para comunicação em tempo real, necessária no chat que haverá dentro do aplicativo. 
+Além disso, foi escolhido o protocolo de autorização OAuth2.0 para a autenticação social do usuário com uma conta do Google, pois, frente ao Firebase inicialmente considerado, esse é um recurso mais simples e enxuto de ser implementado, permitindo que os desenvolvedores dediquem menos tempo em configuração e assim possam investir mais tempo desenvolvendo o que agrega maior valor ao usuário final. Por fim, foi determinada a integração com as \ac{api} do Google Maps para implementação das funcionalidades que envolvem geolocalização. 
 
 
 \section{Escolhas das tecnologias para o front-end}
 Para auxiliar o desenvolvimento da interface a partir de um  protótipo, foi escolhida a ferramenta Figma, editor colaborativo online de design gráfico que permite a criação de interfaces de alta fidelidade e que ajuda desenvolvedores a construir telas coesas. Com essa ferramenta, é almejado alcançar produtividade na construção da interface a partir de um layout pré-definido, poupando decisões de design junto às implementações de código.
 
-E, para obter acesso às APIs nativas do Android, foi escolhida a ferramenta Expo por ela tornar desnecessária a instalação de distintas bibliotecas para acesso aos recursos nativo do smartphone como a localização do dispositivo, câmera e microfone. Dessa forma, diminui-se o número de dependências as quais os desenvolvedores precisam se atentar acerca de grandes atualizações, descontinuamento ou depreciação, bem como possíveis incompatibilidades.
+E, para obter acesso às \ac{api} nativas do Android, foi escolhida a ferramenta Expo por ela tornar desnecessária a instalação de distintas bibliotecas para acesso aos recursos nativo do smartphone como a localização do dispositivo, câmera e microfone. Dessa forma, diminui-se o número de dependências as quais os desenvolvedores precisam se atentar acerca de grandes atualizações, descontinuamento ou depreciação, bem como possíveis incompatibilidades.
 
-Além disso, o framework de desenvolvimento front-end mobile React Native, baseado em React, foi o escolhido por contar com uma comunidade de desenvolvedores ativos, os quais disponibilizam uma ampla gama de frameworks e outras bibliotecas que podem ser usadas de forma combinada e que provêm soluções bem estruturadas para lidar com questões comuns ao desenvolvimento front-end no geral, como, por exemplo, requisições a APIs, roteamento entre telas e estilização.
+Além disso, o framework de desenvolvimento front-end mobile React Native, baseado em React, foi o escolhido por contar com uma comunidade de desenvolvedores ativos, os quais disponibilizam uma ampla gama de frameworks e outras bibliotecas que podem ser usadas de forma combinada e que provêm soluções bem estruturadas para lidar com questões comuns ao desenvolvimento front-end no geral, como, por exemplo, requisições a \ac{api}, roteamento entre telas e estilização.
 
 Além disso, o React é multiplataforma, o que facilita uma possível expansão do aplicativo em versões futuras para a web bem como para uma adaptação para ser otimizado também ao sistema operacional iOS.
-Por fim, para a construção de um layout moderno e que segue boas práticas de UI (User Interface), foi escolhida a biblioteca Native Base, a qual é voltada para a construção de interfaces com o React Native.
+Por fim, para a construção de um layout moderno e que segue boas práticas de \ac{ui}, foi escolhida a biblioteca Native Base, a qual é voltada para a construção de interfaces com o React Native.
 
 \section{Testes automatizados e análise estática}
 A fim de garantir uma boa manutenibilidade do código desenvolvido, buscou-se a adoção de um framework de testes automatizados voltado ao ecossistema JavaScript que cumprisse três principais requisitos: o primeiro, receber atualizações rotineiras de melhoria pela equipe de desenvolvimento, o que contribui para  diminuição das chances de que a ferramenta torne-se depreciada em pouco tempo; o segundo, não possuir uma curva de aprendizado muito longa, para facilitar o aprendizado dos conceitos de testes automatizados pelos integrantes do grupo ao passo que os testes são construídos por esses, ou seja, que não demande muito estudo teórico anterior à prática, e terceiro, que gere relatórios de cobertura de código de forma visual e que facilite a interpretação do status de cobertura. 
 
-Diante desses pré-requisitos, foi escolhida a ferramenta de testes automatizados Jest, que conta com uma comunidade ativa, é escrito em JavaScript (linguagem de conhecimento da maioria dos membros da equipe) e que gera páginas HTML com a cobertura de linhas de código de forma visual. 
+Diante desses pré-requisitos, foi escolhida a ferramenta de testes automatizados Jest, que conta com uma comunidade ativa, é escrito em JavaScript (linguagem de conhecimento da maioria dos membros da equipe) e que gera páginas \ac{html} com a cobertura de linhas de código de forma visual. 
 
-Já para a análise estática do código, a ferramenta escolhida foi o ESLint, o qual também foi desenvolvido em JavaScript, possui integrações com a maioria das IDEs (Integrated Development Environment) e é utilizada, hoje, por grandes empresas como Airbnb e American Express. E a especificação utilizada é a especificação padrão que a ferramenta já fornece após configuração na aplicação, a qual conta com sugestões para correção de sintaxe, possíveis problemas de lógica e formatação do layout do código, além de oferecer a possibilidade de ser configurado no fluxo de CI/CD (Continuous Integration/Continuous Delivery). 
+Já para a análise estática do código, a ferramenta escolhida foi o ESLint, o qual também foi desenvolvido em JavaScript, possui integrações com a maioria das \ac{ide} e é utilizada, hoje, por grandes empresas como Airbnb e American Express. E a especificação utilizada é a especificação padrão que a ferramenta já fornece após configuração na aplicação, a qual conta com sugestões para correção de sintaxe, possíveis problemas de lógica e formatação do layout do código, além de oferecer a possibilidade de ser configurado no fluxo de \ac{ci}/\ac{cd}. 
 
 
-\section{Sistemas de logs e processo de Integração Contínua}
-A plataforma de hospedagem Heroku recomenda algumas ferramentas e serviços que podem ser integrados junto aos aplicativos lá hospedados, e um deles chama-se SolarWinds® Papertrail™. Esse serviço foi escolhido pois, além da fácil integração, oferece uma coleta em tempo real dos logs da aplicação e permite que mensagens de log sejam analisadas de forma simples através de um console acessado pelo navegador, tal como o que é oferecido pela Amazon Web Services (AWS), o que facilita aos desenvolvedores a análise de possíveis problemas e identificação de tendências dos usuários dentro da plataforma como, por exemplo, a que horas geralmente ocorre um pico de usuários ativos.
+\section{Sistemas de logs e processo de integração contínua}
+A plataforma de hospedagem Heroku recomenda algumas ferramentas e serviços que podem ser integrados junto aos aplicativos lá hospedados, e um deles chama-se SolarWinds® Papertrail™. Esse serviço foi escolhido pois, além da fácil integração, oferece uma coleta em tempo real dos logs da aplicação e permite que mensagens de log sejam analisadas de forma simples através de um console acessado pelo navegador, tal como o que é oferecido pela \ac{aws}, o que facilita aos desenvolvedores a análise de possíveis problemas e identificação de tendências dos usuários dentro da plataforma como, por exemplo, a que horas geralmente ocorre um pico de usuários ativos.
 
-Já para o processo de integração contínua, importante para garantir que o aplicativo não chegue com falhas à produção, foi estabelecido um fluxo de CI/CD por meio das Github Actions. Para o status atual do projeto, foi estabelecido um fluxo de trabalho executado sempre antes de a API em Node.js ser atualizada em ambiente de desenvolvimento e de produção no Heroku que engloba a preparação do container que receberá as atualizações, download do código atualizado, setup do Node.js, instalação das dependências, execução dos linters, deploy na plataforma Heroku e encerramento dos processos após conclusão do deploy.
+Já para o processo de integração contínua, importante para garantir que o aplicativo não chegue com falhas à produção, foi estabelecido um fluxo de \ac{ci}/\ac{cd} por meio das Github Actions. Para o status atual do projeto, foi estabelecido um fluxo de trabalho executado sempre antes de a \ac{api} em Node.js ser atualizada em ambiente de desenvolvimento e de produção no Heroku que engloba a preparação do container que receberá as atualizações, download do código atualizado, setup do Node.js, instalação das dependências, execução dos linters, deploy na plataforma Heroku e encerramento dos processos após conclusão do deploy.
 
 
 \section{Design patterns pertinentes à aplicação}
 Por padrão, o React, utilizado no front-end do aplicativo, possui a presença de Injeção de 
-Dependência devido a utilização dos arquivos do tipo JavaScript XML (JSX). A utilização de JavaScript junto ao HTML permite a renderização de elementos injetados como componentes, além da utilização de props, que também oferecem a possibilidade de injetar dependências. 
+Dependência devido a utilização dos arquivos do tipo JavaScript XML (JSX). A utilização de JavaScript junto ao \ac{html} permite a renderização de elementos injetados como componentes, além da utilização de props, que também oferecem a possibilidade de injetar dependências. 
 
 Além disso, existe tanto no back-end quanto no front-end a utilização do padrão Singleton para compartilhar a instância dos serviços, classes e objetos literais. Dessa forma, pode-se garantir a coesão dos dados que serão enviados ao banco de dados no momento em que uma operação for disparada no sistema, como, por exemplo, o cadastro do usuário ou a busca de uma localização específica.
 
@@ -81,9 +81,9 @@ Além disso, existe tanto no back-end quanto no front-end a utilização do padr
 
 Nesta seção possui todos os diagramas criados do sistema, para facilitar o entendimento e desenvolvimento da aplicação. 
 
-O diagrama de casos de uso  \autoref{diagrama-caso-uso} foi apresentado na primeira parte da execução do projeto, que foi verificado possíveis utilizações do usuário no sistema. A imagem se encontra no \autoref{diagrama-casos-uso-old}
+O diagrama de casos de uso  \autoref{diagrama-caso-uso} foi apresentado na primeira parte da execução do projeto, que foi verificado possíveis utilizações do usuário no sistema. A imagem se encontra no \autoref{diagrama-casos-uso-old}.
 
-Como houveram mudanças de escopo para a utilizações do usuário junto a aplicação foi visto a necessidade de criar um novo diagrama de casos de uso conforme a \autoref{diagrama-caso-uso-novo}
+Como houveram mudanças de escopo para a utilizações do usuário junto a aplicação foi visto a necessidade de criar um novo diagrama de casos de uso conforme a \autoref{diagrama-caso-uso-novo}.
 
 
 
@@ -91,8 +91,8 @@ Como houveram mudanças de escopo para a utilizações do usuário junto a aplic
 
 \begin{figure}[htb]
 	\centering
-	\caption{\label{fig_arq_virado}Diagrama de caso de uso}
-	\includegraphics[width=0.90\textwidth]{anexos/Casos de uso.jpeg}
+	\caption{\label{fig_arq_virado}Diagrama de casos de uso}
+	\includegraphics[width=0.90\textwidth]{anexos/novocasodeusoemoutroformato.jpeg}
 	\label{diagrama-caso-uso-novo}
 	\fonte{Equipe diversaGente (2022)}
 \end{figure}
@@ -100,7 +100,7 @@ Como houveram mudanças de escopo para a utilizações do usuário junto a aplic
 
 
 As especificações de casos de uso informam através de texto a utilização do usuário ou administrador dentro da aplicação. São identificadas através de códigos que se iniciam com UC, indo do
-UC01 \autoref{casos-de-uso1} até o UC21 do \autoref{casos-de-uso21}. Os textos podem ser encontrados no \autoref{casos-de-uso-especificacao}
+UC01 \autoref{casos-de-uso1} até o UC21 do \autoref{casos-de-uso20}. Os textos podem ser encontrados no \autoref{casos-de-uso-especificacao}.
 
 Após as definições das tecnologias a serem utilizadas e desenho das funcionalidades esperadas na aplicação, foi modelado o Diagrama de Classes conforme presente na \autoref{diagrama-classe} com o objetivo de estabelecer uma boa performance e bom relacionamento entre as entidades do sistema. 
 Dentro do aplicativo diversaGente, tem-se a classe User como a principal, pois essa representa o usuário que está atrelado a grande parte das demais classes, como a classe de Posts, Review e Chat, as quais possuem dependência direta da existência do usuário no sistema para que também existam. 
@@ -361,17 +361,16 @@ Tomando direção para a entrega final da aplicação houveram novas conversas c
 
 A funcionalidade de denúncia de posts foi mais uma importante sugestão dada pelos professores e que a equipe considerou se tratar de uma implantação importante e, por isso, foi incluída entre os recursos importantes da entrega final. A última maior ideia trazida pelos professores foi relacionada à criação de um local recomendado dentro na plataforma; a ideia sugerida foi que a caixa de texto única disponível para que o usuário conte sua experiência no local fosse substituída por duas caixas de texto, uma reservada aos pontos positivos do local observados pelo usuário, e a outra reservada aos pontos de atenção, após a equipe conversar sobre esta última ideia, foi decidido que, apesar de ser uma boa ideia, não era algo de extrema importância para ser considerado prioritário nos momentos finais da entrega do aplicativo e, por isso, não deveria ser implementado no momento.
 
-Decisões de escopo anteriormente informadas para entrega final do projeto como informa o \autoref{descisoes-entrega} precisaram ser modificadas devidos a alguns fatores. Com a verificação dos pontos centrais e do que seria necessário para agregar um valor para a entrega final e ter um conteúdo que a equipe acredita ser condizente com o propósito inicial do projeto, uma rede social para que pais e responsáveis de pessoas neurodiversas possam compartilhar e encontrar recomendações de lugares, dicas e profissionais com que se sintam confortáveis para frequentar ou adquirir algum tipo de serviço, e com isso, para a aplicação ter um valor agregado grande na apresentação, melhor distribuição de tarefas no decorrer do semestre e devido ao curto período disponível para o desenvolvimento, o chat e o feed de notícias foram retirados do escopo. Com o novo fluxo de login social se tornou, no momento, desncessário a implantação de cadastro através da aplicação e recuperação de senha, já que o usuário nesse primeiro momento consegue se logar apenas através do seu e-mail gmail. 
- 
+Decisões de escopo anteriormente informadas para entrega final do projeto como informa o \autoref{descisoes-entrega} precisaram ser modificadas devidos a alguns fatores. Com a verificação dos pontos centrais e do que seria necessário para agregar um valor para a entrega final e ter um conteúdo que a equipe acredita ser condizente com o propósito inicial do projeto, uma rede social para que pais e responsáveis de pessoas neurodiversas possam compartilhar e encontrar recomendações de lugares, dicas e profissionais com que se sintam confortáveis para frequentar ou adquirir algum tipo de serviço, e com isso, para a aplicação ter um valor agregado grande na apresentação, melhor distribuição de tarefas no decorrer do semestre e devido ao curto período disponível para o desenvolvimento, o chat e o feed de notícias foram retirados do escopo. Com o novo fluxo de login social se tornou, no momento, desncessário a implantação de cadastro através da aplicação e recuperação de senha, já que o usuário nesse primeiro momento consegue se logar apenas através do seu e-mail gmail.
 %---------------------------------------------------------------
 \section{Análises}
 
-A aplicação em Node.js é acessível via protocolo \ac{https} e no site \waUrlTitle{https://securityheaders.com/}{Security Headers}  obteve a nota A tanto para a parte I e II da construção do projeto conforme evidenciam \autoref{metricas-1} e \autoref{securityHeadersII} respectivamente no \autoref{analiseExterna}. Os headers configurados na aplicação contribuem para prevenir ataques como os do tipo \ac{xxs}, ou, clickjacking,  caracterizados pela alteração indevida da interface por atacantes e que confundem o usuário a fim de levá-lo a acessar locais diferentes do que está sendo exibido, além de conter headers que visam reforçar a segurança provida pelo \ac{tls}, como o Strict-Transport-Security, e que permitem definições específicas e bem delimitadas acerca do que e quanto deve aparecer acerca das visitações que a \ac{url} recebeu, com o header Referrer-Policy. 
+A aplicação em Node.js é acessível via protocolo \ac{https} e no site \waUrlTitle{https://securityheaders.com/}{Security Headers}  obteve a nota A para a parte I e 'A+" para a parte II da construção do projeto conforme evidenciam \autoref{metricas-1} e \autoref{securityHeadersII} respectivamente no \autoref{analiseExterna}. Os headers configurados na aplicação contribuem para prevenir ataques como os do tipo \ac{xxs}, ou, clickjacking,  caracterizados pela alteração indevida da interface por atacantes e que confundem o usuário a fim de levá-lo a acessar locais diferentes do que está sendo exibido, além de conter headers que visam reforçar a segurança provida pelo \ac{tls}, como o Strict-Transport-Security, e que permitem definições específicas e bem delimitadas acerca do que e quanto deve aparecer acerca das visitações que a \ac{url} recebeu, com o header Referrer-Policy. 
 
 
 
 
-Além disso, o aplicativo obteve as notas 'A' para a primeira parte de construção do projeto, como mostra a \autoref{metricas-4} que pode ser encontrada dentro do \autoref{analiseExterna} e na segunda parte de desenvolvimento a nota máxima 'A+' \autoref{SSLLabsII} foi alcançada na   na análise externa do site \waUrlTitle{https://www.ssllabs.com}{SSL Labs}, este conta com o certificado SSL configurado automaticamente pelo Heroku nos aplicativos hospedados na plataforma chamado Automated Certificate Management, o qual implementa o protocolo Let’s Encrypt.
+Além disso, o aplicativo obteve as notas 'A' para a primeira parte de construção do projeto, como mostra a \autoref{metricas-4} que pode ser encontrada dentro do \autoref{analiseExterna} e na segunda parte de desenvolvimento a nota máxima 'A+' \autoref{SSLLabsII} foi alcançada na   na análise externa do site \waUrlTitle{https://www.ssllabs.com}{SSL Labs}, este conta com o certificado \ac{ssl} configurado automaticamente pelo Heroku nos aplicativos hospedados na plataforma chamado Automated Certificate Management, o qual implementa o protocolo Let’s Encrypt.
 
 \begin{figure}[h]
 	\centering
@@ -382,6 +381,67 @@ Além disso, o aplicativo obteve as notas 'A' para a primeira parte de construç
 \end{figure}
 
 \pagebreak
+
+\section{Casos de teste}
+
+O capítulo se trata de testes feitos pelos membos da equipe para verificar tanto a usuabilidade da aplicação mobile quanto a qualidade do código criado. 
+
+
+\subsection{Testes unitários}
+
+
+
+Os casos de teste unitários dizem respeito aos testes de funções e métodos de uma funcionalidade do sistema. Para melhor ilustrar a realização dos casos de teste unitários a equipe entrou em acordo sobre a separação dos casos por funcionalidade do aplicativo, dessa forma há melhor organização e mais naturalidade no entendimento.
+
+Foram definidas como funcionalidades do sistema \autoref{casosDeUso1}: realizar o cadastro social do usuário, gerenciar locais, gerenciar avaliações de locais, gerenciar categorias, gerenciar subcategorias, gerenciar posts, gerenciar comentários, gerenciar perfil e gerenciar likes. Em cada uma das funcionalidades foram testadas todas as operações \ac{rest}.
+
+Para melhor entendimento do cliente que usa a aplicação, foram feitos testes para uma rotina do usuário, verificando os locais que precisam ser clicados para se conseguir efetuar as funcionalidades, desse modo se torna mais efetivo a execução dos testes por uma pessoa que não participou do desenvolvimento do produto ou do código. 
+
+Como foi recomendado pelos professores, serão incluídas no \autoref{casoDeTeste} as imagens  de \autoref{casosDeUso2} até \autoref{casosDeUso9} das planilhas modelo com as quais foram feitas as entregas dos planos de teste durante o mês de outubro de 2022.
+
+
+
+\subsection{Cobertura de testes}
+
+A cobertura de testes diz respeito à porcentagem de situações de uso que já foram pensadas e avaliadas por um framework de teste.
+
+O framework utilizado para realizar os testes automatizados e gerar o relatório de cobertura dos testes do sistema foi o Jest. É possível observar que o maior foco nos testes foi no módulo de Posts e Locations, por serem os locais onde estão o maior número de processos da aplicação. \pagebreak
+
+\begin{figure}[htb]
+	\centering
+	\caption{\label{fig_arq_virado}Relatório de porcentagem de testes gerado pelo Jest}
+	\includegraphics[width=1.00\textwidth]{anexos/biggerTest.png}
+	\label{testsPart1}
+\end{figure}
+
+\begin{figure}[htb]
+	\centering
+	\caption{\label{fig_arq_virado}Relatório de porcentagem de testes gerado pelo Jest}
+	\includegraphics[width=1.00\textwidth]{anexos/otherTests.png}
+	\label{testsPart1}
+\end{figure}
+
+\subsection{Testes de processo}
+
+Nessa etapa, iremos demonstrar alguns testes de processo com resultado dentro da nossa aplicação. 
+
+O primeiro cenário de teste que iremos demonstrar é o de buscar post na barra de pesquisa. Como explicado no caso de teste 05 da \autoref{casosDeUso5}:, esse processo tem como objetivo facilitar a busca do usuário por um tema específico, uma vez que ele digita uma palavra de algum interesse dele e o aplicativo irá buscar com essa informação algum post relacionado a esse item inserido pelo usuário. Dessa maneira, caso a busca seja sucesso, ele irá conseguir visualizar o post com a informação desejada \autoref{ct_post_encontrado}. Caso a busca não seja encontrada, o aplicativo irá informa-lo que não existe ainda um post criado relacionado a sua busca e irá sugerir a criação do mesmo como mostra na  \autoref{ct_post_nao_encontrado}.  
+
+O segundo cenário de processo é o de localidade. Uma vez que o usuário entrou na aba "locais" do app e clicou no filtro de locais e inseriu o raio de aproximação que deseja encontrar o local procurado, ele terá como resultado cards com os locais cadastrados da nossa aplicação. Em seguida, ele conseguirá observar os dados sobre aquele local e sua avaliação. Esse processo ajuda o usuário a visualizar dentro da sua rota desejada os locais avaliados, facilitando assim a escolha de locais comuns como parque e restaurantes até locais específicos como: consultórios médicos, psicólogos, fonoaudiólogos, escolas e entre outros. O resultado da busca pode ser observado na \autoref{ct_localidade_filtro}. 
+
+\section{Paletas de Cores}
+
+Pensando em uma conexão a ser criada entre a nossa aplicação com o tema abordado, estudamos entender e aplicar as cores no nosso logotipo e em todo o aplicativo, pois sabendo que  cada pessoa tem uma percepção diferente frente a um conjunto de cores, para uma pessoa neurodiversa isso não seria diferente. Dessa maneira, escolhemos três cores predominantes para serem destacadas neste trabalho. Começando pelo azul, uma cor símbolo do autismo, a coloração azulada é destaque para referenciar a causa, pois ela remete o bem-estar e influência na comunicação verbal trazendo uma sensação de equilíbrio e relaxamento. Em seguida, o laranja e o amarelo trazem um estímulo para o bom humor, pois são cores energéticas, de alta vibração e luminosidade. Sendo assim, juntando esses significados emocionais separamos, principalmente, essas três paletas de cores para serem ressaltadas em toda a nossa aplicação e o primeiro resultado delas, podem ser visualizadas no logo da figura abaixo: 
+
+\begin{figure}[htb]
+	\centering
+	\caption{\label{fig_arq_virado} Logotipo diversaGente}
+	\includegraphics[width=0.5\textwidth]{anexos/logoDiversagente.png}
+	\fonte{Equipe diversaGente, 2022}
+\end{figure}
+
+\pagebreak
+
 
 \section{Gitstats}
 
@@ -397,7 +457,7 @@ Nas métricas gerais do projeto \autoref{metricas1PartII}, a branch analisada co
 	\caption{\label{fig_arq_virado}Gitstats métricas gerais Parte II}
 	\includegraphics[width=1.00\textwidth]{anexos/metricas1PartII.png}
 	\label{metricas1PartII}
-	\fonte{Gitstats, 2022}
+	\fonte{Equipe diversaGente, 2022}
 \end{figure}
 
 \pagebreak
@@ -413,7 +473,7 @@ Na aba de atividades \autoref{metricas2PartII}, são encontrados gráficos acerc
 	\caption{\label{fig_arq_virado}Gitstats métricas atividades Parte II}
 	\includegraphics[width=0.90\textwidth]{anexos/metricas2PartII.png}
 	\label{metricas2PartII}
-	\fonte{Gitstats, 2022}
+	\fonte{Equipe diversaGente, 2022}
 \end{figure}
 
 Esse indicador demonstra \autoref{metricas3PartII} os autores mais ativos no projeto ao longo de sua existência. Devido as preparações para as demonstrações de \ac{poc} e \ac{mvp} e projeto final durante o ano, atuaram de forma mais intensa os que tinham um pouco mais de experiência com desenvolvimento, mas todos puderam contribuir para a entrega do projeto como um todo. 
@@ -423,7 +483,7 @@ Esse indicador demonstra \autoref{metricas3PartII} os autores mais ativos no pro
 	\caption{\label{fig_arq_virado}Gitstats métricas autores Parte II}
 	\includegraphics[width=1.00\textwidth]{anexos/metricas3PartII.png}
 	\label{metricas3PartII}
-	\fonte{Gitstats, 2022}
+	\fonte{Equipe diversaGente, 2022}
 \end{figure}
 
 Com essa métrica  \autoref{metricas4PartII}, é possível constatar que atualmente a base de códigos do projeto possui tamanho de 29.6 \ac{mb}, 637 arquivos no total, sendo os arquivos do tipo typescript os mais presentes em todo o projeto. 
@@ -440,7 +500,7 @@ No momento, o projeto consta com apenas uma única tag \autoref{metricas5PartII}
 	\caption{\label{fig_arq_virado}Gitstats métricas arquivos Parte II}
 	\includegraphics[width=1.00\textwidth]{anexos/metricas4PartII.png}
 	\label{metricas4PartII}
-	\fonte{Gitstats, 2022}
+	\fonte{Equipe diversaGente, 2022}
 \end{figure}
 
 \begin{figure}[htb]
@@ -448,5 +508,6 @@ No momento, o projeto consta com apenas uma única tag \autoref{metricas5PartII}
 	\caption{\label{fig_arq_virado}Gitstats tags Parte II }
 	\includegraphics[width=1.00\textwidth]{anexos/metricas5PartII.png}
 	\label{metricas5PartII}
-	\fonte{Gitstats, 2022}
-\end{figure}
+	\fonte{Equipe diversaGente, 2022}
+ \end{figure}
+
